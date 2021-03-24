@@ -1,0 +1,8 @@
+name: Shops
+version: maven-version-number
+api-version: 1.13
+main: ca.tweetzy.shops.Shops
+description: Ever wanted to setup categorized shops, this plugin is for you
+website: https://tweetzy.ca/
+authors: [Kiran Hart]
+depend: [Vault]
