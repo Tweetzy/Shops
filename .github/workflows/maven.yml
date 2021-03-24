@@ -1,0 +1,54 @@
+name: Shops Build
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+      - '.github/workflows/maven.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-package: jdk
+          java-version: 1.8
+
+      - name: Cache Maven Packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build with Maven
+        run: mvn verify -B --file pom.xml
+
+  transfer:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Transfer main branch to Tweetzy
+        uses: andstor/copycat-action@v3
+        with:
+          personal_token: ${{ secrets.API_TOKEN_GITHUB }}
+          src_path: /.
+          dst_owner: Tweetzy
+          dst_repo_name: Shops
+          email: kiran.hart@live.com
+          src_branch: main
+          dst_branch: main
+          commit_message: ${{ github.event.head_commit.message }}
+          exclude: .github/*
+          clean: true
+
+  jitpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: badasintended/autojitpack@v0
