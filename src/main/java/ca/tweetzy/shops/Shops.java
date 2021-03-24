@@ -29,7 +29,7 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onPluginDisable() {
-
+        instance = null;
     }
 
     @Override
