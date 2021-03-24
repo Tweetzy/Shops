@@ -25,6 +25,7 @@ public class Shops extends TweetyPlugin {
     @Override
     public void onPluginEnable() {
         TweetyCore.registerPlugin(this, (int) PluginID.SHOPS.getTweetzyID(), "CHEST");
+
     }
 
     @Override
