@@ -34,6 +34,7 @@ public class StorageManager {
                     Shops.getInstance().getLocale().getMessage("shop.already_exists").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
                 } else {
                     Shops.getInstance().getShopManager().addShop(shop);
+                    Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
                     Shops.getInstance().getLocale().getMessage("shop.created").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
                 }
             });
@@ -44,6 +45,7 @@ public class StorageManager {
             }
             ShopAPI.getInstance().createShop(shop);
             Shops.getInstance().getShopManager().addShop(shop);
+            Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
             Shops.getInstance().getLocale().getMessage("shop.created").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
         }
         return AbstractCommand.ReturnType.SUCCESS;
@@ -56,6 +58,7 @@ public class StorageManager {
                     Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
                 } else {
                     Shops.getInstance().getShopManager().removeShop(shopId);
+                    Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
                     Shops.getInstance().getLocale().getMessage("shop.removed").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
                 }
             });
@@ -66,6 +69,7 @@ public class StorageManager {
             }
             ShopAPI.getInstance().removeShop(shopId);
             Shops.getInstance().getShopManager().removeShop(shopId);
+            Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
             Shops.getInstance().getLocale().getMessage("shop.removed").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
         }
         return AbstractCommand.ReturnType.SUCCESS;

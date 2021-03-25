@@ -1,8 +1,12 @@
 package ca.tweetzy.shops.settings;
 
+import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.core.configuration.Config;
 import ca.tweetzy.core.configuration.ConfigSetting;
 import ca.tweetzy.shops.Shops;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * The current file has been created by Kiran Hart
@@ -27,7 +31,42 @@ public class Settings {
     public static final ConfigSetting DATABASE_PASSWORD = new ConfigSetting(config, "database.password", "Password1.", "What is the password to the user connecting?");
     public static final ConfigSetting DATABASE_USE_SSL = new ConfigSetting(config, "database.use ssl", true, "Should the database connection use ssl?");
 
+    /*
+   =========== GLOBAL BUTTONS FOR GUIS ===========
+    */
+    public static final ConfigSetting GUI_BACK_BTN_ITEM = new ConfigSetting(config, "guis.global items.back button.item", "ARROW", "Settings for the back button");
+    public static final ConfigSetting GUI_BACK_BTN_NAME = new ConfigSetting(config, "guis.global items.back button.name", "&e<< Back");
+    public static final ConfigSetting GUI_BACK_BTN_LORE = new ConfigSetting(config, "guis.global items.back button.lore", Arrays.asList("&7Click the button to go", "&7back to the previous page."));
 
+    public static final ConfigSetting GUI_CLOSE_BTN_ITEM = new ConfigSetting(config, "guis.global items.close button.item", "BARRIER", "Settings for the close button");
+    public static final ConfigSetting GUI_CLOSE_BTN_NAME = new ConfigSetting(config, "guis.global items.close button.name", "&cClose");
+    public static final ConfigSetting GUI_CLOSE_BTN_LORE = new ConfigSetting(config, "guis.global items.close button.lore", Collections.singletonList("&7Click to close this menu."));
+
+    public static final ConfigSetting GUI_NEXT_BTN_ITEM = new ConfigSetting(config, "guis.global items.next button.item", "ARROW", "Settings for the next button");
+    public static final ConfigSetting GUI_NEXT_BTN_NAME = new ConfigSetting(config, "guis.global items.next button.name", "&eNext >>");
+    public static final ConfigSetting GUI_NEXT_BTN_LORE = new ConfigSetting(config, "guis.global items.next button.lore", Arrays.asList("&7Click the button to go", "&7to the next page."));
+
+    public static final ConfigSetting GUI_REFRESH_BTN_ITEM = new ConfigSetting(config, "guis.global items.refresh button.item", "CHEST", "Settings for the refresh page");
+    public static final ConfigSetting GUI_REFRESH_BTN_NAME = new ConfigSetting(config, "guis.global items.refresh button.name", "&6&LRefresh Page");
+    public static final ConfigSetting GUI_REFRESH_BTN_LORE = new ConfigSetting(config, "guis.global items.refresh button.lore", Arrays.asList("&7Click to refresh the currently", "&7available auction listings."));
+
+
+    /*
+    =========== SHOP LIST OPTIONS ===========
+     */
+    public static final ConfigSetting GUI_SHOP_LIST_TITLE = new ConfigSetting(config, "guis.shop list.title", "&eListing Shops", "The name of the inventory");
+    public static final ConfigSetting GUI_SHOP_LIST_DYNAMIC = new ConfigSetting(config, "guis.shop list.dynamic", true, "Should the inventory resize depending on the number of shops?");
+    public static final ConfigSetting GUI_SHOP_LIST_FILL_BG = new ConfigSetting(config, "guis.shop list.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOP_LIST_BG_ITEM = new ConfigSetting(config, "guis.shop list.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+    public static final ConfigSetting GUI_SHOP_ITEM_NAME = new ConfigSetting(config, "guis.shop list.shop name", "%shop_display_name%", "Valid Placeholders", "%shop_display_name%", "%shop_id%");
+    public static final ConfigSetting GUI_SHOP_ITEM_LORE = new ConfigSetting(config, "guis.shop list.shop lore", Arrays.asList(
+            "&7Shop ID: &e%shop_id%",
+            "&7Shop Display Name: &e%shop_display_name%",
+            "&7Public: &e%shop_is_public%",
+            "&7Sell Only: &e%shop_is_sell_only%",
+            "&7Buy Only: &e%shop_is_buy_only%",
+            "&7Total Items: &e%shop_item_count%"
+    ), "Valid Placeholders", "%shop_display_name%", "%shop_id%", "%shop_is_public%", "%shop_item_count%", "%shop_is_sell_only%", "%shop_is_buy_only%");
 
     public static void setup() {
         config.load();
