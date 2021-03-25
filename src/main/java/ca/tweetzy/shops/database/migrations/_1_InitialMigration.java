@@ -25,6 +25,9 @@ public class _1_InitialMigration extends DataMigration {
         String autoIncrement = Shops.getInstance().getDatabaseConnector() instanceof MySQLConnector ? " AUTO_INCREMENT" : "";
 
         try (Statement statement = connection.createStatement()) {
+            statement.execute("CREATE TABLE" + tablePrefix + "shops (" +
+                    "shop_id VARCHAR(32) PRIMARY KEY, " +
+                    "shop_data TEXT NOT NULL)");
         }
     }
 }

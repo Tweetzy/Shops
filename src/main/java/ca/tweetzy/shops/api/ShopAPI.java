@@ -4,11 +4,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Base64;
 
 /**
  * The current file has been created by Kiran Hart
@@ -79,5 +78,44 @@ public class ShopAPI {
             e.printStackTrace();
         }
         return stack;
+    }
+
+    /**
+     * Used to convert a serializable object into a base64 string
+     *
+     * @param object is the class that implements Serializable
+     * @return the base64 encoded string
+     */
+    public String convertToBase64(Serializable object) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream;
+        try {
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(object);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
+    }
+
+    /**
+     * Used to convert a base64 string into an object
+     *
+     * @param string is the base64 string
+     * @return an object
+     */
+    public Object convertBase64ToObject(String string) {
+        byte[] data = Base64.getDecoder().decode(string);
+        ObjectInputStream objectInputStream;
+        Object object = null;
+        try {
+            objectInputStream = new ObjectInputStream(new ByteArrayInputStream(data));
+            object = objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 }

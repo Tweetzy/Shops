@@ -2,6 +2,7 @@ package ca.tweetzy.shops.database;
 
 import ca.tweetzy.core.database.DataManagerAbstract;
 import ca.tweetzy.core.database.DatabaseConnector;
+import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.plugin.Plugin;
 
@@ -22,10 +23,10 @@ public class DataManager extends DataManagerAbstract {
 
     public void createShop(Shop shop, Consumer<Boolean> result) {
         this.async(() -> this.databaseConnector.connect(connection -> {
-            String createShop = "INSERT INTO...";
+            String createShop = "INSERT IGNORE INTO " + this.getTablePrefix() + "shops SET shop_id = ?, shop_data = ?";
             try (PreparedStatement statement = connection.prepareStatement(createShop)) {
-                statement.setString(1, "");
-                // other statements
+                statement.setString(1, shop.getId());
+                statement.setString(2, ShopAPI.getInstance().convertToBase64(shop));
 
                 int status = statement.executeUpdate();
                 this.sync(() -> result.accept(status == 0));
