@@ -85,7 +85,7 @@ public class GUIShops extends Gui {
         if (!Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean()) {
             setPrivateDefaultAction(e -> {
                 if (e.clickType == ClickType.SHIFT_RIGHT && e.player.hasPermission("shops.admin")) clicksToEdit++;
-                if (clicksToEdit >= 8 && e.player.hasPermission("shops.admin")) {
+                if (clicksToEdit >= 3 && e.player.hasPermission("shops.admin")) {
                     clicksToEdit = 0;
                     editing = true;
                     setUnlockedRange(0, (9 * getRows()) - 1);
@@ -125,6 +125,8 @@ public class GUIShops extends Gui {
                     Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_list").sendPrefixedMessage(close.player);
                     Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
                 }
+
+                close.manager.showGUI(close.player, new GUIShops());
             }
         });
     }
