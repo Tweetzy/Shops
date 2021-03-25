@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,8 @@ public class Shop implements Serializable {
 
     private String id;
     private String displayName;
+    private boolean isPublic;
+    private ArrayList<ShopItem> shopItems;
 
     public Shop(String id) {
         this.id = id;
