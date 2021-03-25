@@ -31,6 +31,7 @@ public class Shop implements Serializable {
 
     public Shop(String id) {
         this.id = id;
+        this.displayName = id;
         this.displayIcon = ShopAPI.getInstance().serializeItemStack(XMaterial.GRASS_BLOCK.parseItem());
         this.shopItems = new ArrayList<>();
     }

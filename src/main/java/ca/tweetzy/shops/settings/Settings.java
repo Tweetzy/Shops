@@ -46,7 +46,7 @@ public class Settings {
     public static final ConfigSetting GUI_NEXT_BTN_NAME = new ConfigSetting(config, "guis.global items.next button.name", "&eNext >>");
     public static final ConfigSetting GUI_NEXT_BTN_LORE = new ConfigSetting(config, "guis.global items.next button.lore", Arrays.asList("&7Click the button to go", "&7to the next page."));
 
-    public static final ConfigSetting GUI_REFRESH_BTN_ITEM = new ConfigSetting(config, "guis.global items.refresh button.item", "CHEST", "Settings for the refresh page");
+    public static final ConfigSetting GUI_REFRESH_BTN_ITEM = new ConfigSetting(config, "guis.global items.refresh button.item", "NETHER_STAR", "Settings for the refresh page");
     public static final ConfigSetting GUI_REFRESH_BTN_NAME = new ConfigSetting(config, "guis.global items.refresh button.name", "&6&LRefresh Page");
     public static final ConfigSetting GUI_REFRESH_BTN_LORE = new ConfigSetting(config, "guis.global items.refresh button.lore", Arrays.asList("&7Click to refresh the currently", "&7available auction listings."));
 
@@ -55,7 +55,6 @@ public class Settings {
     =========== SHOP LIST OPTIONS ===========
      */
     public static final ConfigSetting GUI_SHOP_LIST_TITLE = new ConfigSetting(config, "guis.shop list.title", "&eListing Shops", "The name of the inventory");
-    public static final ConfigSetting GUI_SHOP_LIST_DYNAMIC = new ConfigSetting(config, "guis.shop list.dynamic", true, "Should the inventory resize depending on the number of shops?");
     public static final ConfigSetting GUI_SHOP_LIST_FILL_BG = new ConfigSetting(config, "guis.shop list.fill background", true, "Should the empty slots of the gui be filled?");
     public static final ConfigSetting GUI_SHOP_LIST_BG_ITEM = new ConfigSetting(config, "guis.shop list.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
     public static final ConfigSetting GUI_SHOP_ITEM_NAME = new ConfigSetting(config, "guis.shop list.shop name", "%shop_display_name%", "Valid Placeholders", "%shop_display_name%", "%shop_id%");

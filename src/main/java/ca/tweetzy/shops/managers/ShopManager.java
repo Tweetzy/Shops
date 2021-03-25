@@ -51,7 +51,7 @@ public class ShopManager {
         } else {
             ConfigurationSection section = Shops.getInstance().getData().getConfigurationSection("shops");
             if (section == null || section.getKeys(false).size() == 0) return;
-            section.getKeys(false).forEach(key -> addShop((Shop) ShopAPI.getInstance().convertBase64ToObject(Shops.getInstance().getData().getString("shops." + key))));
+            section.getKeys(false).forEach(key -> addShop((Shop) ShopAPI.getInstance().convertBase64ToObject(Shops.getInstance().getData().getString("shops." + key + ".data"))));
         }
     }
 }
