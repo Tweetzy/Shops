@@ -101,6 +101,7 @@ public class Shops extends TweetyPlugin {
         this.shopManager = new ShopManager();
         this.guiManager.init();
         this.shopManager.loadShops(false, Settings.DATABASE_USE.getBoolean());
+        this.shopManager.loadCustomGuiItems(false, Settings.DATABASE_USE.getBoolean());
 
         // Commands
         this.commandManager = new CommandManager(this);

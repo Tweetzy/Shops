@@ -1,6 +1,8 @@
 package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.core.commands.AbstractCommand;
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.guis.GUIShops;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,7 +24,7 @@ public class CommandShop extends AbstractCommand {
     protected ReturnType runCommand(CommandSender sender, String... args) {
         if(sender instanceof Player) {
             Player player = (Player) sender;
-
+            Shops.getInstance().getGuiManager().showGUI(player, new GUIShops());
         }
         return ReturnType.SUCCESS;
     }

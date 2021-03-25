@@ -6,3 +6,4 @@ shop:
     does_not_exists: "&cCould not find any shops with the id &4%shop_id%"
     created: "&aCreated a new shop with the id &2%shop_id%"
     removed: "&cRemoved the shop with the id &4%shop_id%"
+    saved_inventory_edit_for_list: "&aSaved the inventory edits for /shops"

@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.shop;
 
 import ca.tweetzy.core.compatibility.XMaterial;
-import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,11 @@ public class Shop implements Serializable {
 
     private String id;
     private String displayName;
+    private String description;
     private byte[] displayIcon;
+
+    private int page;
+    private int slot;
 
     private boolean isPublic;
     private boolean isSellOnly;
@@ -47,7 +50,10 @@ public class Shop implements Serializable {
     public Shop(String id) {
         this.id = id;
         this.displayName = id;
+        this.description = "Default shop description";
         this.displayIcon = ShopAPI.getInstance().serializeItemStack(XMaterial.GRASS_BLOCK.parseItem());
+        this.page = 1;
+        this.slot = 0;
         this.useSellDiscount = false;
         this.useBuyDiscount = false;
         this.requiresPermissionToSee = false;

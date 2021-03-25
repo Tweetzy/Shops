@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.api;
 
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -42,6 +43,11 @@ public class ShopAPI {
 
     public void removeShop(String shopId) {
         Shops.getInstance().getData().set("shops." + shopId.toLowerCase(), null);
+        Shops.getInstance().getData().save();
+    }
+
+    public void saveCustomGuiItems(CustomGUIItemHolder holder) {
+        Shops.getInstance().getData().set("custom gui items." + holder.getGuiName().toLowerCase() + ".data", convertToBase64(holder));
         Shops.getInstance().getData().save();
     }
 
@@ -134,4 +140,5 @@ public class ShopAPI {
         }
         return object;
     }
+
 }
