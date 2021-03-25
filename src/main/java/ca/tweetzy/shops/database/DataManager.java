@@ -7,6 +7,10 @@ import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.plugin.Plugin;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -31,6 +35,20 @@ public class DataManager extends DataManagerAbstract {
                 int status = statement.executeUpdate();
                 this.sync(() -> result.accept(status == 0));
             }
+        }));
+    }
+
+    public void getShops(Consumer<List<Shop>> callback) {
+        List<Shop> shops = new ArrayList<>();
+        this.async(() -> this.databaseConnector.connect(connection -> {
+            try (Statement statement = connection.createStatement()) {
+                String getShops = "SELECT * FROM " + this.getTablePrefix() + "shops";
+                ResultSet result = statement.executeQuery(getShops);
+                while (result.next()) {
+                    shops.add((Shop) ShopAPI.getInstance().convertBase64ToObject(result.getString("shop_data")));
+                }
+            }
+            this.sync(() -> callback.accept(shops));
         }));
     }
 }
