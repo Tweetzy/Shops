@@ -7,10 +7,15 @@ import ca.tweetzy.core.compatibility.ServerVersion;
 import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.core.configuration.Config;
 import ca.tweetzy.core.core.PluginID;
+import ca.tweetzy.core.database.DataMigrationManager;
+import ca.tweetzy.core.database.DatabaseConnector;
+import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.commands.CommandSettings;
 import ca.tweetzy.shops.commands.CommandShop;
+import ca.tweetzy.shops.database.DataManager;
+import ca.tweetzy.shops.database.migrations._1_InitialMigration;
 import ca.tweetzy.shops.managers.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import lombok.Getter;
@@ -46,6 +51,11 @@ public class Shops extends TweetyPlugin {
     @Getter
     private Economy economy;
 
+    @Getter
+    private DatabaseConnector databaseConnector;
+    @Getter
+    private DataManager dataManager;
+
     protected Metrics metrics;
 
     @Override
@@ -78,6 +88,14 @@ public class Shops extends TweetyPlugin {
         // Listeners
         // Load the data file
         this.data.load();
+
+        // Setup the database if enabled
+        if (Settings.DATABASE_USE.getBoolean()) {
+            this.databaseConnector = new MySQLConnector(this, Settings.DATABASE_HOST.getString(), Settings.DATABASE_PORT.getInt(), Settings.DATABASE_NAME.getString(), Settings.DATABASE_USERNAME.getString(), Settings.DATABASE_PASSWORD.getString(), Settings.DATABASE_USE_SSL.getBoolean());
+            this.dataManager = new DataManager(this.databaseConnector, this);
+            DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager, new _1_InitialMigration());
+            dataMigrationManager.runMigrations();
+        }
 
         // managers
         this.shopManager = new ShopManager();
