@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.shop;
 
 import ca.tweetzy.core.compatibility.XMaterial;
-import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import lombok.Getter;
 import lombok.Setter;
