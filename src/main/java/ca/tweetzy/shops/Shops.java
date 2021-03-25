@@ -30,6 +30,7 @@ import java.util.List;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 
+@SuppressWarnings("unused")
 public class Shops extends TweetyPlugin {
 
     @Getter
@@ -127,4 +128,12 @@ public class Shops extends TweetyPlugin {
     public List<Config> getExtraConfig() {
         return null;
     }
+
+    String IS_SONGODA_DOWNLOAD = "%%__SONGODA__%%";
+    String SONGODA_NODE = "%%__SONGODA_NODE__%%";
+    String TIMESTAMP = "%%__TIMESTAMP__%%";
+    String USER = "%%__USER__%%";
+    String USERNAME = "%%__USERNAME__%%";
+    String RESOURCE = "%%__RESOURCE__%%";
+    String NONCE = "%%__NONCE__%%";
 }
