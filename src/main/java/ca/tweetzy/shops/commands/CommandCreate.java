@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * The current file has been created by Kiran Hart
@@ -27,7 +26,7 @@ public class CommandCreate extends AbstractCommand {
 
         Player player = (Player) sender;
         String shopId = args[0].toLowerCase();
-        return StorageManager.getStorageManager().createShop(player, new Shop(shopId));
+        return StorageManager.getInstance().createShop(player, new Shop(shopId));
     }
 
     @Override

@@ -1,8 +1,6 @@
 package ca.tweetzy.shops.database.migrations;
 
 import ca.tweetzy.core.database.DataMigration;
-import ca.tweetzy.core.database.MySQLConnector;
-import ca.tweetzy.shops.Shops;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,12 +20,10 @@ public class _1_InitialMigration extends DataMigration {
 
     @Override
     public void migrate(Connection connection, String tablePrefix) throws SQLException {
-        String autoIncrement = Shops.getInstance().getDatabaseConnector() instanceof MySQLConnector ? " AUTO_INCREMENT" : "";
-
         try (Statement statement = connection.createStatement()) {
-            statement.execute("CREATE TABLE" + tablePrefix + "shops (" +
+            statement.execute("CREATE TABLE " + tablePrefix + "shops (" +
                     "shop_id VARCHAR(32) PRIMARY KEY, " +
-                    "shop_data TEXT NOT NULL)");
+                    "shop_data TEXT NOT NULL )");
         }
     }
 }

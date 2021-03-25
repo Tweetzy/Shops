@@ -40,8 +40,8 @@ public class ShopAPI {
         Shops.getInstance().getData().save();
     }
 
-    public void removeShop(Shop shop) {
-        Shops.getInstance().getData().set("shops." + shop.getId().toLowerCase(), null);
+    public void removeShop(String shopId) {
+        Shops.getInstance().getData().set("shops." + shopId.toLowerCase(), null);
         Shops.getInstance().getData().save();
     }
 

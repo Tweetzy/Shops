@@ -15,16 +15,16 @@ import org.bukkit.entity.Player;
  */
 public class StorageManager {
 
-    private static StorageManager storageManager;
+    private static StorageManager instance;
 
     private StorageManager() {
     }
 
-    public static StorageManager getStorageManager() {
-        if (storageManager == null) {
-            storageManager = new StorageManager();
+    public static StorageManager getInstance() {
+        if (instance == null) {
+            instance = new StorageManager();
         }
-        return storageManager;
+        return instance;
     }
 
     public AbstractCommand.ReturnType createShop(Player player, Shop shop) {
@@ -38,11 +38,35 @@ public class StorageManager {
                 }
             });
         } else {
-            if (ShopAPI.getInstance().exists(shop.getId())) return AbstractCommand.ReturnType.FAILURE;
+            if (ShopAPI.getInstance().exists(shop.getId())) {
+                Shops.getInstance().getLocale().getMessage("shop.already_exists").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
+                return AbstractCommand.ReturnType.FAILURE;
+            }
             ShopAPI.getInstance().createShop(shop);
             Shops.getInstance().getShopManager().addShop(shop);
             Shops.getInstance().getLocale().getMessage("shop.created").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
+        }
+        return AbstractCommand.ReturnType.SUCCESS;
+    }
 
+    public AbstractCommand.ReturnType removeShop(Player player, String shopId) {
+        if (Settings.DATABASE_USE.getBoolean()) {
+            Shops.getInstance().getDataManager().removeShop(shopId, failure -> {
+                if (failure) {
+                    Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
+                } else {
+                    Shops.getInstance().getShopManager().removeShop(shopId);
+                    Shops.getInstance().getLocale().getMessage("shop.removed").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
+                }
+            });
+        } else {
+            if (!ShopAPI.getInstance().exists(shopId)) {
+                Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
+                return AbstractCommand.ReturnType.FAILURE;
+            }
+            ShopAPI.getInstance().removeShop(shopId);
+            Shops.getInstance().getShopManager().removeShop(shopId);
+            Shops.getInstance().getLocale().getMessage("shop.removed").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
         }
         return AbstractCommand.ReturnType.SUCCESS;
     }

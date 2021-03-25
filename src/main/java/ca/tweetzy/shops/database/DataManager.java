@@ -38,6 +38,17 @@ public class DataManager extends DataManagerAbstract {
         }));
     }
 
+    public void removeShop(String shopId, Consumer<Boolean> result) {
+        this.async(() -> this.databaseConnector.connect(connection -> {
+            String removeShop = "DELETE FROM " + this.getTablePrefix() + "shops WHERE shop_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(removeShop)) {
+                statement.setString(1, shopId);
+                int status = statement.executeUpdate();
+                this.sync(() -> result.accept(status == 0));
+            }
+        }));
+    }
+
     public void getShops(Consumer<List<Shop>> callback) {
         List<Shop> shops = new ArrayList<>();
         this.async(() -> this.databaseConnector.connect(connection -> {

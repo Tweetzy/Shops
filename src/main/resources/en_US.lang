@@ -3,4 +3,6 @@ general:
 
 shop:
     already_exists: "&cA shop with the id &4%shop_id% &calready exists!"
+    does_not_exists: "&cCould not find any shops with the id &4%shop_id%"
     created: "&aCreated a new shop with the id &2%shop_id%"
+    removed: "&cRemoved the shop with the id &4%shop_id%"
