@@ -12,10 +12,7 @@ import ca.tweetzy.core.database.DatabaseConnector;
 import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
-import ca.tweetzy.shops.commands.CommandCreate;
-import ca.tweetzy.shops.commands.CommandRemove;
-import ca.tweetzy.shops.commands.CommandSettings;
-import ca.tweetzy.shops.commands.CommandShop;
+import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
 import ca.tweetzy.shops.managers.ShopManager;
@@ -109,6 +106,7 @@ public class Shops extends TweetyPlugin {
         this.commandManager.addCommand(new CommandShop()).addSubCommands(
                 new CommandCreate(),
                 new CommandRemove(),
+                new CommandList(),
                 new CommandSettings()
         );
 
