@@ -55,6 +55,8 @@ public class Settings {
     */
     public static final ConfigSetting GUI_SHOPS_TITLE = new ConfigSetting(config, "guis.shops.title", "&eShops", "The name of the inventory");
     public static final ConfigSetting GUI_SHOPS_DYNAMIC = new ConfigSetting(config, "guis.shops.dynamic", true, "Should the inventory size according to the total amount of shops?");
+    public static final ConfigSetting GUI_SHOPS_SIZE = new ConfigSetting(config, "guis.shops.dynamic", 6, "If dynamic is false, it will be use this size (min 2, max 6)");
+    public static final ConfigSetting GUI_SHOPS_AUTO_ARRANGE = new ConfigSetting(config, "guis.shops.dynamic", true, "Should the items auto arrange themselves inside the gui, or should items use their specified slots?");
     public static final ConfigSetting GUI_SHOPS_FILL_BG = new ConfigSetting(config, "guis.shops.fill background", true, "Should the empty slots of the gui be filled?");
     public static final ConfigSetting GUI_SHOPS_BG_ITEM = new ConfigSetting(config, "guis.shops.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
 
