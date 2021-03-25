@@ -125,6 +125,8 @@ public class GUIShops extends Gui {
                     Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_list").sendPrefixedMessage(close.player);
                     Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
                 }
+
+                close.manager.showGUI(close.player, new GUIShops());
             }
         });
     }
