@@ -21,8 +21,9 @@ public class ShopItem implements Serializable {
 
     private String shopId;
     private byte[] item;
-    private int row;
-    private int col;
+
+    private int page;
+    private int slot;
 
     private double sellPrice;
     private double buyPrice;
@@ -37,8 +38,8 @@ public class ShopItem implements Serializable {
         this.buyPrice = buyPrice;
         this.isSellOnly = isSellOnly;
         this.isBuyOnly = isBuyOnly;
-        this.row = 0;
-        this.col = 0;
+        this.page = 1;
+        this.slot = 0;
     }
 
     public ShopItem(String shopId, ItemStack item, double sellPrice, double buyPrice) {
