@@ -24,6 +24,8 @@ public class _1_InitialMigration extends DataMigration {
             statement.execute("CREATE TABLE " + tablePrefix + "shops (" +
                     "shop_id VARCHAR(32) PRIMARY KEY, " +
                     "shop_data TEXT NOT NULL )");
+
+            statement.execute("CREATE TABLE " + tablePrefix + "custom_gui_items (gui VARCHAR(32) PRIMARY KEY, data TEXT NOT NULL )");
         }
     }
 }
