@@ -11,6 +11,7 @@ import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.commands.CommandSettings;
 import ca.tweetzy.shops.commands.CommandShop;
+import ca.tweetzy.shops.managers.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
@@ -38,6 +39,9 @@ public class Shops extends TweetyPlugin {
 
     @Getter
     private CommandManager commandManager;
+
+    @Getter
+    private ShopManager shopManager;
 
     @Getter
     private Economy economy;
@@ -74,7 +78,9 @@ public class Shops extends TweetyPlugin {
         // Listeners
         // Load the data file
         this.data.load();
+
         // managers
+        this.shopManager = new ShopManager();
         this.guiManager.init();
 
         // Commands
