@@ -13,6 +13,7 @@ import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.commands.CommandCreate;
+import ca.tweetzy.shops.commands.CommandRemove;
 import ca.tweetzy.shops.commands.CommandSettings;
 import ca.tweetzy.shops.commands.CommandShop;
 import ca.tweetzy.shops.database.DataManager;
@@ -107,6 +108,7 @@ public class Shops extends TweetyPlugin {
         this.commandManager = new CommandManager(this);
         this.commandManager.addCommand(new CommandShop()).addSubCommands(
                 new CommandCreate(),
+                new CommandRemove(),
                 new CommandSettings()
         );
 
@@ -121,7 +123,6 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onConfigReload() {
-
     }
 
     @Override
