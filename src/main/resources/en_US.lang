@@ -1,2 +1,6 @@
 general:
     prefix: "&8[&eShops&8]"
+
+shop:
+    already_exists: "&cA shop with the id &4%shop_id% &calready exists!"
+    created: "&aCreated a new shop with the id &2%shop_id%"

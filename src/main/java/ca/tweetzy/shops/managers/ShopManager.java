@@ -1,6 +1,9 @@
 package ca.tweetzy.shops.managers;
 
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.shop.Shop;
+import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,5 +42,16 @@ public class ShopManager {
 
     public List<Shop> getShops() {
         return Collections.unmodifiableList(this.shops);
+    }
+
+    public void loadShops(boolean reload, boolean useDatabase) {
+        if (reload) this.shops.clear();
+        if (useDatabase) {
+            Shops.getInstance().getDataManager().getShops(shop -> shop.forEach(this::addShop));
+        } else {
+            ConfigurationSection section = Shops.getInstance().getData().getConfigurationSection("shops");
+            if (section == null || section.getKeys(false).size() == 0) return;
+            section.getKeys(false).forEach(key -> addShop((Shop) ShopAPI.getInstance().convertBase64ToObject(Shops.getInstance().getData().getString("shops." + key))));
+        }
     }
 }

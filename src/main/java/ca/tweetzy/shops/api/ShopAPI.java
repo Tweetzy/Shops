@@ -1,5 +1,7 @@
 package ca.tweetzy.shops.api;
 
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -27,6 +29,20 @@ public class ShopAPI {
             instance = new ShopAPI();
         }
         return instance;
+    }
+
+    public boolean exists(String shopId) {
+        return Shops.getInstance().getData().contains("shops." + shopId.toLowerCase());
+    }
+
+    public void createShop(Shop shop) {
+        Shops.getInstance().getData().set("shops." + shop.getId().toLowerCase() + ".data", convertToBase64(shop));
+        Shops.getInstance().getData().save();
+    }
+
+    public void removeShop(Shop shop) {
+        Shops.getInstance().getData().set("shops." + shop.getId().toLowerCase(), null);
+        Shops.getInstance().getData().save();
     }
 
     /**
