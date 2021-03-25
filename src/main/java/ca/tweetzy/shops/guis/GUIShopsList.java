@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
-import ca.tweetzy.core.gui.GuiUtils;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.shops.Shops;
@@ -47,7 +46,7 @@ public class GUIShopsList extends Gui {
         int slot = 0;
         List<Shop> data = this.shops.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
         for (Shop shop : data) {
-            setItem(slot++, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOP_ITEM_NAME.getString(), Settings.GUI_SHOP_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
+            setItem(slot++, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOP_LIST_ITEM_NAME.getString(), Settings.GUI_SHOP_LIST_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
                 put("%shop_id%", shop.getId());
                 put("%shop_display_name%", shop.getDisplayName());
                 put("%shop_is_public%", shop.isPublic());
