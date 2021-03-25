@@ -9,6 +9,8 @@ import ca.tweetzy.core.configuration.Config;
 import ca.tweetzy.core.core.PluginID;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
+import ca.tweetzy.shops.commands.CommandSettings;
+import ca.tweetzy.shops.commands.CommandShop;
 import ca.tweetzy.shops.settings.Settings;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
@@ -77,6 +79,9 @@ public class Shops extends TweetyPlugin {
 
         // Commands
         this.commandManager = new CommandManager(this);
+        this.commandManager.addCommand(new CommandShop()).addSubCommands(
+                new CommandSettings()
+        );
 
         // Metrics, don't ask them if they want it enabled since bStats has it's on system
         this.metrics = new Metrics(this, (int) PluginID.SHOPS.getbStatsID());
