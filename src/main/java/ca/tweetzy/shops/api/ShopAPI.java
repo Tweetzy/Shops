@@ -1,5 +1,12 @@
 package ca.tweetzy.shops.api;
 
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -42,5 +49,35 @@ public class ShopAPI {
         return formatted.length() > 4 ? formatted.replaceAll("\\.[0-9]+", "") : formatted;
     }
 
+    /**
+     * Used to convert an item stack to a byte array
+     *
+     * @param item is the item you want to serialize
+     * @return a byte array (serialized item)
+     */
+    public byte[] serializeItemStack(ItemStack item) {
+        try (ByteArrayOutputStream stream = new ByteArrayOutputStream(); BukkitObjectOutputStream bukkitStream = new BukkitObjectOutputStream(stream)) {
+            bukkitStream.writeObject(item);
+            return stream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    /**
+     * Used to deserialize an item from a byte array
+     *
+     * @param serializedItem is the byte array (serialize item)
+     * @return an item stack from the byte array
+     */
+    public ItemStack deserializeItem(byte[] serializedItem) {
+        ItemStack stack = null;
+        try (BukkitObjectInputStream stream = new BukkitObjectInputStream(new ByteArrayInputStream(serializedItem))) {
+            stack = (ItemStack) stream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return stack;
+    }
 }
