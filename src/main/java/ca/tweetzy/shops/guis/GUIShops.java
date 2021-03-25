@@ -85,7 +85,7 @@ public class GUIShops extends Gui {
         if (!Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean()) {
             setPrivateDefaultAction(e -> {
                 if (e.clickType == ClickType.SHIFT_RIGHT && e.player.hasPermission("shops.admin")) clicksToEdit++;
-                if (clicksToEdit >= 8 && e.player.hasPermission("shops.admin")) {
+                if (clicksToEdit >= 3 && e.player.hasPermission("shops.admin")) {
                     clicksToEdit = 0;
                     editing = true;
                     setUnlockedRange(0, (9 * getRows()) - 1);
