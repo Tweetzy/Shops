@@ -5,13 +5,15 @@ import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.nms.NBTEditor;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
+import ca.tweetzy.shops.custom.CustomGUIItem;
+import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
-import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class GUIShops extends Gui {
 
     List<Shop> shops;
+    List<CustomGUIItemHolder> customItems;
     int clicksToEdit = 0;
     boolean editing = false;
 
@@ -40,6 +43,7 @@ public class GUIShops extends Gui {
 
     private void adjustSize() {
         this.shops = Shops.getInstance().getShopManager().getShops();
+        this.customItems = Shops.getInstance().getShopManager().getCustomGuiItems();
 
         if (Settings.GUI_SHOPS_DYNAMIC.getBoolean()) {
             // TODO loop this
@@ -60,12 +64,20 @@ public class GUIShops extends Gui {
     private void draw() {
         reset();
         adjustSize();
+        // add the custom items if available first
+        if (!Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean()) {
+            if (this.customItems.stream().noneMatch(holders -> holders.getGuiName().equalsIgnoreCase("main"))) {
+                this.customItems.add(new CustomGUIItemHolder("main"));
+            } else {
+                this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("main")).findFirst().get().getItems().forEach(guiItem -> setItem(guiItem.getSlot(), ShopAPI.getInstance().deserializeItem(guiItem.getItem())));
+            }
+        }
 
         int slot = 0;
         long perPage = getRows() < 6 ? (getRows() * 9L) : 45L;
         List<Shop> data = this.shops.stream().skip((page - 1) * perPage).limit(perPage).collect(Collectors.toList());
         for (Shop shop : data) {
-            setItem(Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop));
+            setItem(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop));
         }
     }
 
@@ -85,14 +97,40 @@ public class GUIShops extends Gui {
         }
 
         setOnClose(close -> {
-            for (int i = 0; i < (getRows() * 9) - 1; i++) {
+            if (editing) {
+                List<Shop> toUpdate = new ArrayList<>();
 
+                for (int i = 0; i < inventory.getSize(); i++) {
+                    ItemStack slotItem = getItem(i);
+                    if (slotItem != null) {
+                        if (NBTEditor.contains(slotItem, "shops:shop_id")) {
+                            String shopId = NBTEditor.getString(slotItem, "shops:shop_id");
+                            Shop shop = Shops.getInstance().getShopManager().getShop(shopId);
+                            shop.setPage(page);
+                            shop.setSlot(i);
+                            toUpdate.add(shop);
+                        } else {
+                            this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("main")).findFirst().orElse(null).getItems().add(new CustomGUIItem(i, slotItem));
+                        }
+                    }
+                }
+
+                if (Settings.DATABASE_USE.getBoolean()) {
+                    Shops.getInstance().getDataManager().updateShops(toUpdate);
+                    Shops.getInstance().getDataManager().updateCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("main")).findFirst().get());
+                    Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_list").sendPrefixedMessage(close.player);
+                } else {
+                    toUpdate.forEach(ShopAPI.getInstance()::createShop);
+                    ShopAPI.getInstance().saveCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("main")).findFirst().get());
+                    Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_list").sendPrefixedMessage(close.player);
+                    Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
+                }
             }
         });
     }
 
     private ItemStack getShopIcon(Shop shop) {
-        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), new HashMap<String, Object>(){{
+        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
             put("%shop_display_name%", shop.getDisplayName());
             put("%shop_description%", shop.getDescription());
             put("%shop_is_sell_only%", shop.isSellOnly());
