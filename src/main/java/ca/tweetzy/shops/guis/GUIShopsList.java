@@ -32,27 +32,20 @@ public class GUIShopsList extends Gui {
         setUseLockedCells(Settings.GUI_SHOP_LIST_FILL_BG.getBoolean());
         setAcceptsItems(false);
         setRows(6);
-
-        if (Settings.GUI_SHOP_LIST_DYNAMIC.getBoolean()) {
-            for (int i = 1; i <= 5; i++) {
-                if (shops.size() <= 9 * i) setRows(i);
-            }
-        }
-
         draw();
     }
 
     private void draw() {
         reset();
 
-        pages = getRows() != 6 ? 1 : (int) Math.max(1, Math.ceil(this.shops.size() / (double) 45));
+        pages = (int) Math.max(1, Math.ceil(this.shops.size() / (double) 45));
         setPrevPage(5, 3, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
         setButton(5, 4, new TItemBuilder(Objects.requireNonNull(Settings.GUI_REFRESH_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_REFRESH_BTN_NAME.getString()).setLore(Settings.GUI_REFRESH_BTN_LORE.getStringList()).toItemStack(), e -> e.manager.showGUI(e.player, new GUIShopsList()));
         setNextPage(5, 5, new TItemBuilder(Objects.requireNonNull(Settings.GUI_NEXT_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_NEXT_BTN_NAME.getString()).setLore(Settings.GUI_NEXT_BTN_LORE.getStringList()).toItemStack());
         setOnPage(e -> draw());
 
         int slot = 0;
-        List<Shop> data = this.shops.stream().skip((page - 1) * getRows() == 6 ? 45L : (long) 9 * getRows()).limit(getRows() == 6 ? 45L : (long) 9 * getRows()).collect(Collectors.toList());
+        List<Shop> data = this.shops.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
         for (Shop shop : data) {
             setItem(slot++, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOP_ITEM_NAME.getString(), Settings.GUI_SHOP_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
                 put("%shop_id%", shop.getId());
