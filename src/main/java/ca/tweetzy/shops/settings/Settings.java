@@ -50,21 +50,31 @@ public class Settings {
     public static final ConfigSetting GUI_REFRESH_BTN_NAME = new ConfigSetting(config, "guis.global items.refresh button.name", "&6&LRefresh Page");
     public static final ConfigSetting GUI_REFRESH_BTN_LORE = new ConfigSetting(config, "guis.global items.refresh button.lore", Arrays.asList("&7Click to refresh the currently", "&7available auction listings."));
 
+    /*
+   =========== SHOPS MAIN GUI OPTIONS ===========
+    */
+    public static final ConfigSetting GUI_SHOPS_TITLE = new ConfigSetting(config, "guis.shops.title", "&eShops", "The name of the inventory");
+    public static final ConfigSetting GUI_SHOPS_DYNAMIC = new ConfigSetting(config, "guis.shops.dynamic", true, "Should the inventory size according to the total amount of shops?");
+    public static final ConfigSetting GUI_SHOPS_FILL_BG = new ConfigSetting(config, "guis.shops.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOPS_BG_ITEM = new ConfigSetting(config, "guis.shops.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+
 
     /*
-    =========== SHOP LIST OPTIONS ===========
+    =========== SHOP LIST GUI OPTIONS ===========
      */
     public static final ConfigSetting GUI_SHOP_LIST_TITLE = new ConfigSetting(config, "guis.shop list.title", "&eListing Shops", "The name of the inventory");
     public static final ConfigSetting GUI_SHOP_LIST_FILL_BG = new ConfigSetting(config, "guis.shop list.fill background", true, "Should the empty slots of the gui be filled?");
     public static final ConfigSetting GUI_SHOP_LIST_BG_ITEM = new ConfigSetting(config, "guis.shop list.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
     public static final ConfigSetting GUI_SHOP_ITEM_NAME = new ConfigSetting(config, "guis.shop list.shop name", "%shop_display_name%", "Valid Placeholders", "%shop_display_name%", "%shop_id%");
     public static final ConfigSetting GUI_SHOP_ITEM_LORE = new ConfigSetting(config, "guis.shop list.shop lore", Arrays.asList(
-            "&7Shop ID: &e%shop_id%",
-            "&7Shop Display Name: &e%shop_display_name%",
+            "&7ID: &e%shop_id%",
+            "&7Display Name: &e%shop_display_name%",
             "&7Public: &e%shop_is_public%",
             "&7Sell Only: &e%shop_is_sell_only%",
             "&7Buy Only: &e%shop_is_buy_only%",
-            "&7Total Items: &e%shop_item_count%"
+            "&7Total Items: &e%shop_item_count%",
+            "",
+            "&7Click to edit this shop"
     ), "Valid Placeholders", "%shop_display_name%", "%shop_id%", "%shop_is_public%", "%shop_item_count%", "%shop_is_sell_only%", "%shop_is_buy_only%");
 
     public static void setup() {
