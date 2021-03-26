@@ -70,6 +70,97 @@ public class Settings {
     ), "Valid Placeholders", "%shop_description%", "%shop_item_count%", "%shop_is_sell_only%", "%shop_is_buy_only%");
 
     /*
+   =========== SHOPS EDIT GUI OPTIONS ===========
+    */
+    public static final ConfigSetting GUI_SHOP_EDIT_TITLE = new ConfigSetting(config, "guis.shop edit.title", "&eEditing %shop_id% Shop", "The name of the inventory", "Valid Placeholders", "%shop_id%");
+    public static final ConfigSetting GUI_SHOP_EDIT_USE_DEFAULT_SLOTS = new ConfigSetting(config, "guis.shop edit.use default slots", true, "Should the icons/buttons be placed in their default slot? Set to false if you want to adjust it yourself");
+    public static final ConfigSetting GUI_SHOP_EDIT_FILL_BG = new ConfigSetting(config, "guis.shop edit.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOP_EDIT_BG_ITEM = new ConfigSetting(config, "guis.shop edit.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME = new ConfigSetting(config, "guis.shop edit.items.display icon.name", "&eCurrent Shop Icon");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE = new ConfigSetting(config, "guis.shop edit.items.display icon.lore", Collections.singletonList("&7Click to change the display icon"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_ITEM = new ConfigSetting(config, "guis.shop edit.items.display name.item", XMaterial.OAK_SIGN.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_NAME = new ConfigSetting(config, "guis.shop edit.items.display name.name", "%shop_display_name%");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_LORE = new ConfigSetting(config, "guis.shop edit.items.display name.lore", Collections.singletonList("&7Click to change the display name"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DESCRIPTION_ITEM = new ConfigSetting(config, "guis.shop edit.items.description.item", XMaterial.WRITABLE_BOOK.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DESCRIPTION_NAME = new ConfigSetting(config, "guis.shop edit.items.description.name", "&eShop Description");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_DESCRIPTION_LORE = new ConfigSetting(config, "guis.shop edit.items.description.lore", Arrays.asList(
+            "%shop_description%",
+            "",
+            "&7Click to change the description"
+    ));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_CONTENTS_ITEM = new ConfigSetting(config, "guis.shop edit.items.contents.item", XMaterial.CHEST.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_CONTENTS_NAME = new ConfigSetting(config, "guis.shop edit.items.contents.name", "&eShop Contents");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_CONTENTS_LORE = new ConfigSetting(config, "guis.shop edit.items.contents.lore", Arrays.asList(
+            "&7Total Items&f: &e%shop_item_count%",
+            "&7Click to change item prices to remove them."
+    ));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.item", XMaterial.LIME_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.lore", Collections.singletonList("&7Click to make shop &cprivate"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.item", XMaterial.RED_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.lore", Collections.singletonList("&7Click to make shop &apublic"));
+
+    // TODO https://prnt.sc/10vmb6c
+
+    // Permission to see toggle
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.item", XMaterial.LIME_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.lore", Collections.singletonList("&7Toggle permission to see to &cOff"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.item", XMaterial.RED_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.lore", Collections.singletonList("&7Toggle permission to see to &aOn"));
+
+    // Permission to see toggle
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.item", XMaterial.LIME_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.lore", Collections.singletonList("&7Toggle permission to sell to &cOff"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.item", XMaterial.RED_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.lore", Collections.singletonList("&7Toggle permission to sell to &aOn"));
+
+    // Permission to buy toggle
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.item", XMaterial.LIME_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.lore", Collections.singletonList("&7Toggle permission to buy to &cOff"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.item", XMaterial.RED_WOOL.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.lore", Collections.singletonList("&7Toggle permission to buy to &aOn"));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_ITEM = new ConfigSetting(config, "guis.shop edit.items.see permission.item", XMaterial.PAPER.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_NAME = new ConfigSetting(config, "guis.shop edit.items.see permission.name", "&eSee Permission");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_LORE = new ConfigSetting(config, "guis.shop edit.items.see permission.lore", Arrays.asList(
+            "&7Click to change the see permission",
+            "",
+            "&7Current Permission&f: &e%shop_see_permission%"
+    ));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_ITEM = new ConfigSetting(config, "guis.shop edit.items.sell permission.item", XMaterial.PAPER.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_NAME = new ConfigSetting(config, "guis.shop edit.items.sell permission.name", "&eSell Permission");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_LORE = new ConfigSetting(config, "guis.shop edit.items.sell permission.lore", Arrays.asList(
+            "&7Click to change the sell permission",
+            "",
+            "&7Current Permission&f: &e%shop_sell_permission%"
+    ));
+
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_ITEM = new ConfigSetting(config, "guis.shop edit.items.buy permission.item", XMaterial.PAPER.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_NAME = new ConfigSetting(config, "guis.shop edit.items.buy permission.name", "&eBuy Permission");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_LORE = new ConfigSetting(config, "guis.shop edit.items.buy permission.lore", Arrays.asList(
+            "&7Click to change the buy permission",
+            "",
+            "&7Current Permission&f: &e%shop_buy_permission%"
+    ));
+
+    /*
     =========== SHOP LIST GUI OPTIONS ===========
      */
     public static final ConfigSetting GUI_SHOP_LIST_TITLE = new ConfigSetting(config, "guis.shop list.title", "&eListing Shops", "The name of the inventory");
