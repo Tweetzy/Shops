@@ -2,6 +2,7 @@ package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
 import ca.tweetzy.core.utils.TextUtils;
+import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.core.utils.nms.NBTEditor;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +36,6 @@ public class GUIShops extends Gui {
     public GUIShops() {
         setTitle(TextUtils.formatText(Settings.GUI_SHOPS_TITLE.getString()));
         setDefaultItem(Settings.GUI_SHOPS_BG_ITEM.getMaterial().parseItem());
-        setUseLockedCells(Settings.GUI_SHOPS_FILL_BG.getBoolean());
         setAcceptsItems(false);
         setAllowDrops(false);
         handleEvents();
@@ -59,12 +60,22 @@ public class GUIShops extends Gui {
 
         int toDivide = (int) Math.ceil(this.shops.size() / (double) (9 * getRows()));
         pages = (int) Math.max(1, Math.ceil(this.shops.size() / getRows() == 6 ? 45 : toDivide));
+
+        if (getRows() == 6) {
+            setPrevPage(5, 3, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
+            setNextPage(5, 5, new TItemBuilder(Objects.requireNonNull(Settings.GUI_NEXT_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_NEXT_BTN_NAME.getString()).setLore(Settings.GUI_NEXT_BTN_LORE.getStringList()).toItemStack());
+            setOnPage(e -> draw());
+        }
     }
 
     private void draw() {
         reset();
         adjustSize();
-        // add the custom items if available first
+
+        if (Settings.GUI_SHOPS_FILL_BG.getBoolean()) {
+            for (int i = 0; i < getRows() * 9; i++) setItem(i, getDefaultItem());
+        }
+
         if (!Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean()) {
             if (this.customItems.stream().noneMatch(holders -> holders.getGuiName().equalsIgnoreCase("main"))) {
                 this.customItems.add(new CustomGUIItemHolder("main"));
