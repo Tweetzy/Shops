@@ -1,5 +1,15 @@
 general:
     prefix: "&8[&eShops&8]"
+    percentage_change:
+        sell_percentage: "&ePlease enter sell discount percentage (ex. 24.50):"
+        buy_percentage: "&ePlease enter buy discount percentage (ex. 24.50):"
+    permission_change:
+        see: "&ePlease enter the new see permission:"
+        buy: "&ePlease enter the new buy permission:"
+        sell: "&ePlease enter the new sell permission:"
+    enter_new_display_name: "&ePlease enter the new display name:"
+    change_description: "&ePlease enter the new description:"
+    change_icon: "&eClick any item in your inventory to set the icon."
 
 shop:
     already_exists: "&cA shop with the id &4%shop_id% &calready exists!"
