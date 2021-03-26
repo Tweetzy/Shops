@@ -21,7 +21,9 @@ import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -43,6 +45,9 @@ public class Shops extends TweetyPlugin {
     private final Config data = new Config(this, "data.yml");
 
     @Getter
+    private final ArrayList<UUID> outOfGuiAccess = new ArrayList<>();
+
+    @Getter
     private CommandManager commandManager;
 
     @Getter
@@ -53,6 +58,7 @@ public class Shops extends TweetyPlugin {
 
     @Getter
     private DatabaseConnector databaseConnector;
+
     @Getter
     private DataManager dataManager;
 
