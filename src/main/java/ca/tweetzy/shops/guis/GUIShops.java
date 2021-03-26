@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The current file has been created by Kiran Hart
@@ -73,7 +74,7 @@ public class GUIShops extends Gui {
         adjustSize();
 
         if (Settings.GUI_SHOPS_FILL_BG.getBoolean()) {
-            for (int i = 0; i < getRows() * 9; i++) setItem(i, getDefaultItem());
+            IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, getDefaultItem()));
         }
 
         if (!Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean()) {
