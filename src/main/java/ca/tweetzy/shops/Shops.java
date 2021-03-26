@@ -15,13 +15,17 @@ import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
+import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.managers.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.shop.Shop;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -43,6 +47,9 @@ public class Shops extends TweetyPlugin {
     private final Config data = new Config(this, "data.yml");
 
     @Getter
+    private final HashMap<UUID, Shop> outOfGuiAccess = new HashMap<>();
+
+    @Getter
     private CommandManager commandManager;
 
     @Getter
@@ -53,6 +60,7 @@ public class Shops extends TweetyPlugin {
 
     @Getter
     private DatabaseConnector databaseConnector;
+
     @Getter
     private DataManager dataManager;
 
@@ -86,6 +94,8 @@ public class Shops extends TweetyPlugin {
         setLocale(Settings.LANG.getString(), false);
 
         // Listeners
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
         // Load the data file
         this.data.load();
 
