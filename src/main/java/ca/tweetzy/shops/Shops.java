@@ -15,6 +15,7 @@ import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
+import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.managers.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
@@ -93,6 +94,8 @@ public class Shops extends TweetyPlugin {
         setLocale(Settings.LANG.getString(), false);
 
         // Listeners
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
         // Load the data file
         this.data.load();
 
