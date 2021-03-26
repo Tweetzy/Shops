@@ -100,27 +100,27 @@ public class Settings {
     ));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.name", "&aShop Public");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle public.on.lore", Collections.singletonList("&7Click to make shop &cprivate"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.name", "&cShop Private");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle public.off.lore", Collections.singletonList("&7Click to make shop &apublic"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.on.name", "&aShop is Sell Only");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.on.lore", Collections.singletonList("&7Click to disable sell only mode"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.off.name", "&cShop isn't Sell Only");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle sell only.off.lore", Collections.singletonList("&7Click to enable sell only mode"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.on.name", "&aShop is Buy Only");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.on.lore", Collections.singletonList("&7Click to disable buy only mode"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.name", "&cShop isn't Buy Only");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.lore", Collections.singletonList("&7Click to enable buy only mode"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM = new ConfigSetting(config, "guis.shop edit.items.sell discount.item", XMaterial.SUNFLOWER.name());
@@ -145,29 +145,29 @@ public class Settings {
 
     // Permission to see toggle
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.name", "&aRequire Permission to See Enabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.lore", Collections.singletonList("&7Toggle permission to see to &cOff"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.name", "&cRequire Permission to See Disabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.off.lore", Collections.singletonList("&7Toggle permission to see to &aOn"));
 
     // Permission to see toggle
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.name", "&aRequire Permission to Sell Enabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.on.lore", Collections.singletonList("&7Toggle permission to sell to &cOff"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.name", "&cRequire Permission to Sell Disabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to sell.off.lore", Collections.singletonList("&7Toggle permission to sell to &aOn"));
 
     // Permission to buy toggle
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.item", XMaterial.LIME_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.name", "&aEnabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.name", "&aRequire Permission to Buy Enabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.on.lore", Collections.singletonList("&7Toggle permission to buy to &cOff"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.item", XMaterial.RED_WOOL.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.name", "&cDisabled");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.name", "&cRequire Permission to Buy Disabled");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle permission to buy.off.lore", Collections.singletonList("&7Toggle permission to buy to &aOn"));
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_ITEM = new ConfigSetting(config, "guis.shop edit.items.see permission.item", XMaterial.PAPER.name());
