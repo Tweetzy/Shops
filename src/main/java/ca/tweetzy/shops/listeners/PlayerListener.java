@@ -1,7 +1,12 @@
 package ca.tweetzy.shops.listeners;
 
+import ca.tweetzy.core.gui.GuiHolder;
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.ShopAPI;
+import ca.tweetzy.shops.guis.GUIShopEdit;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,15 +24,21 @@ public class PlayerListener implements Listener {
     public void onPlayerClick(PlayerInteractEvent e) {
         if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getPlayer().getUniqueId())) return;
         if (e.getItem() != null) {
-            Bukkit.broadcastMessage("YOU CLICKED AN ITEM OUT OF GUI");
+            Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getItem()));
+            Shops.getInstance().getGuiManager().showGUI(e.getPlayer(), new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId())));
+            Shops.getInstance().getOutOfGuiAccess().remove(e.getPlayer().getUniqueId());
         }
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getWhoClicked().getUniqueId())) return;
-        if (e.getCurrentItem() != null) {
-            Bukkit.broadcastMessage("YOU CLICKED AN ITEM INSIDE OF A GUI");
+        if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR && !(e.getClickedInventory().getHolder() instanceof GuiHolder)) {
+            Player player = (Player) e.getWhoClicked();
+
+            Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getCurrentItem()));
+            Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId())));
+            Shops.getInstance().getOutOfGuiAccess().remove(player.getUniqueId());
         }
     }
 }
