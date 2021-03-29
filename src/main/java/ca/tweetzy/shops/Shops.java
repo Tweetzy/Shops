@@ -118,6 +118,7 @@ public class Shops extends TweetyPlugin {
         this.commandManager.addCommand(new CommandShop()).addSubCommands(
                 new CommandCreate(),
                 new CommandRemove(),
+                new CommandEdit(),
                 new CommandList(),
                 new CommandSettings()
         );
