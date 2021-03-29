@@ -30,6 +30,7 @@ public class GUIShopEdit extends Gui {
     List<CustomGUIItemHolder> customItems;
     int clicksToEdit = 0;
     boolean editing = false;
+    boolean changes = false;
 
     public GUIShopEdit(Shop shop) {
         this.shop = shop;
@@ -40,7 +41,9 @@ public class GUIShopEdit extends Gui {
         setAllowDrops(false);
         draw();
 
-        setOnClose(close -> StorageManager.getInstance().updateShop(close.player, this.shop));
+        setOnClose(close -> {
+            if (this.changes) StorageManager.getInstance().updateShop(close.player, this.shop);
+        });
     }
 
     private void draw() {
@@ -121,6 +124,7 @@ public class GUIShopEdit extends Gui {
         setActionForRange(0, 53, e -> {
             if (e.clickedItem == null) return;
             if (!NBTEditor.contains(e.clickedItem, "shops:edit:button")) return;
+            this.changes = true;
             switch (NBTEditor.getString(e.clickedItem, "shops:edit:button")) {
                 case "permission_to_see_toggle":
                     this.shop.setRequiresPermissionToSee(!this.shop.isRequiresPermissionToSee());

@@ -5,7 +5,7 @@ import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.core.utils.NumberUtils;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
-import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.managers.StorageManager;
 import ca.tweetzy.shops.shop.Shop;
 import ca.tweetzy.shops.shop.ShopItem;
 import org.bukkit.command.CommandSender;
@@ -55,11 +55,11 @@ public class CommandAddItem extends AbstractCommand {
             shop.getShopItems().add(new ShopItem(shop.getId(), toAdd, Double.parseDouble(args[1]), Double.parseDouble(args[2])));
         } else {
             // they're passing in the additional arguments to state whether the item is buy/sell only
-            shop.getShopItems().add(new ShopItem(shop.getId(), toAdd, Double.parseDouble(args[1]), Double.parseDouble(args[2]), Boolean.parseBoolean(args[3]), Boolean.parseBoolean(args[4])));
+            shop.getShopItems().add(new ShopItem(shop.getId(), toAdd, Double.parseDouble(args[1]), Double.parseDouble(args[2]), Boolean.parseBoolean(args[3]), args.length == 5 && Boolean.parseBoolean(args[4])));
         }
 
-        Shops.getInstance().getLocale().getMessage("shop.add_item").processPlaceholder("shop_id", args[0]).processPlaceholder("buy_price", String.format("%,.2f", Double.parseDouble(args[2]))).processPlaceholder("sell_price", String.format("%,.2f", Double.parseDouble(args[1]))).sendPrefixedMessage(player);
-        Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
+        Shops.getInstance().getLocale().getMessage("shop.add_new_item").processPlaceholder("shop_id", args[0]).processPlaceholder("sell_price", args[1]).processPlaceholder("buy_price", args[2]).sendPrefixedMessage(player);
+        StorageManager.getInstance().updateShop(player, shop);
         return ReturnType.SUCCESS;
     }
 
