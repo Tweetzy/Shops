@@ -9,6 +9,7 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
+import ca.tweetzy.shops.managers.StorageManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.event.inventory.ClickType;
@@ -39,22 +40,7 @@ public class GUIShopEdit extends Gui {
         setAllowDrops(false);
         draw();
 
-        setOnClose(close -> {
-            if (Settings.DATABASE_USE.getBoolean()) {
-                Shops.getInstance().getDataManager().updateShop(this.shop, failure -> {
-                    if (failure) {
-                        Shops.getInstance().getLocale().getMessage("shop.fail_updated_shop_settings").processPlaceholder("shop_id", this.shop.getId()).sendPrefixedMessage(close.player);
-                    } else {
-                        Shops.getInstance().getLocale().getMessage("shop.updated_shop_settings").processPlaceholder("shop_id", this.shop.getId()).sendPrefixedMessage(close.player);
-                        Shops.getInstance().getShopManager().loadShops(true, true);
-                    }
-                });
-            } else {
-                ShopAPI.getInstance().createShop(this.shop);
-                Shops.getInstance().getLocale().getMessage("shop.updated_shop_settings").processPlaceholder("shop_id", this.shop.getId()).sendPrefixedMessage(close.player);
-                Shops.getInstance().getShopManager().loadShops(true, false);
-            }
-        });
+        setOnClose(close -> StorageManager.getInstance().updateShop(close.player, this.shop));
     }
 
     private void draw() {
