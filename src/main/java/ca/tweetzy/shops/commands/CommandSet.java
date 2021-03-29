@@ -3,6 +3,7 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.core.commands.AbstractCommand;
 import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.core.utils.NumberUtils;
+import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.managers.StorageManager;
@@ -22,13 +23,32 @@ import java.util.stream.Collectors;
  */
 public class CommandSet extends AbstractCommand {
 
+    private final String[] validSetOptions = new String[]{
+            "public",
+            "sellonly",
+            "buyonly",
+            "selldiscount",
+            "buydiscount",
+            "useselldiscount",
+            "usebuydiscount",
+            "useseepermission",
+            "usesellpermission",
+            "usebuypermission",
+            "seepermission",
+            "sellpermission",
+            "buypermission",
+            "displayname",
+            "description",
+            "icon"
+    };
+
     public CommandSet() {
         super(CommandType.PLAYER_ONLY, "set");
     }
 
     @Override
     protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length < 3) return ReturnType.SYNTAX_ERROR;
+        if (args.length < 2) return ReturnType.SYNTAX_ERROR;
         Player player = (Player) sender;
 
         Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
@@ -40,7 +60,25 @@ public class CommandSet extends AbstractCommand {
         String setOption = args[1].toLowerCase();
         StringBuilder builder;
 
-        if (args.length == 3) {
+        if (args.length == 2 && Arrays.stream(validSetOptions).noneMatch(options -> options.equalsIgnoreCase(setOption))) {
+            sendValidSetOptions(player);
+            return ReturnType.FAILURE;
+        }
+
+        /*
+        This is a special case, since the `set icon` option doesn't need a 3rd argument
+         */
+        if (args.length == 2 && args[1].equalsIgnoreCase("icon")) {
+            if (ShopAPI.getInstance().getHeldItem(player) == null || ShopAPI.getInstance().getHeldItem(player).getType() == XMaterial.AIR.parseMaterial()) {
+                Shops.getInstance().getLocale().getMessage("general.nothing_in_hand").sendPrefixedMessage(player);
+                return ReturnType.FAILURE;
+            }
+            shop.setDisplayIcon(ShopAPI.getInstance().serializeItemStack(ShopAPI.getInstance().getHeldItem(player)));
+            Shops.getInstance().getLocale().getMessage("set_command.changed_shop_icon").sendPrefixedMessage(player);
+            return StorageManager.getInstance().updateShop(player, shop);
+        }
+
+        if (args.length >= 3) {
             switch (setOption) {
                 case "public":
                     if (isValidBooleanOption(player, args[2])) {
@@ -48,69 +86,69 @@ public class CommandSet extends AbstractCommand {
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_visibility").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "sellOnly":
+                case "sellonly":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setSellOnly(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_only").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "buyOnly":
+                case "buyonly":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setBuyOnly(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_buy_only").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useSellDiscount":
+                case "useselldiscount":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setUseSellDiscount(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_sell_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useBuyDiscount":
+                case "usebuydiscount":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setUseBuyDiscount(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_buy_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useSeePermission":
+                case "useseepermission":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setRequiresPermissionToSee(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_see_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useSellPermission":
+                case "usesellpermission":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setRequiresPermissionToSell(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_sell_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useBuyPermission":
+                case "usebuypermission":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setRequiresPermissionToBuy(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_buy_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "sellDiscount":
+                case "selldiscount":
                     if (isValidPercentage(player, args[2])) {
                         shop.setSellDiscount(Double.parseDouble(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "buyDiscount":
+                case "buydiscount":
                     if (isValidPercentage(player, args[2])) {
                         shop.setBuyDiscount(Double.parseDouble(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_buy_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "seePermission":
+                case "seepermission":
                     shop.setSeePermission(args[2]);
                     Shops.getInstance().getLocale().getMessage("set_command.changed_shop_see_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     break;
-                case "sellPermission":
+                case "sellpermission":
                     shop.setSellPermission(args[2]);
                     Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     break;
-                case "buyPermission":
+                case "buypermission":
                     shop.setBuyPermission(args[2]);
                     Shops.getInstance().getLocale().getMessage("set_command.changed_shop_buy_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     break;
@@ -120,7 +158,7 @@ public class CommandSet extends AbstractCommand {
                         builder.append(args[i]).append(" ");
                     }
                     shop.setDisplayName(builder.toString().trim());
-                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_display_name").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_display_name").processPlaceholder("value", builder.toString().trim()).sendPrefixedMessage(player);
                     break;
                 case "description":
                     builder = new StringBuilder();
@@ -128,19 +166,11 @@ public class CommandSet extends AbstractCommand {
                         builder.append(args[i]).append(" ");
                     }
                     shop.setDescription(builder.toString().trim());
-                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_description_name").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
-                    break;
-                case "icon":
-                    if (ShopAPI.getInstance().getHeldItem(player) == null || ShopAPI.getInstance().getHeldItem(player).getType() == XMaterial.AIR.parseMaterial()) {
-                        Shops.getInstance().getLocale().getMessage("general.nothing_in_hand").sendPrefixedMessage(player);
-                        return ReturnType.FAILURE;
-                    }
-                    shop.setDisplayIcon(ShopAPI.getInstance().serializeItemStack(ShopAPI.getInstance().getHeldItem(player)));
-                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_display_name").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_description").processPlaceholder("value", builder.toString().trim()).sendPrefixedMessage(player);
                     break;
                 default:
-                    Shops.getInstance().getLocale().getMessage("set_command.changed_shop_icon").sendPrefixedMessage(player);
-                    break;
+                    sendValidSetOptions(player);
+                    return ReturnType.FAILURE;
             }
             return StorageManager.getInstance().updateShop(player, shop);
         }
@@ -151,37 +181,20 @@ public class CommandSet extends AbstractCommand {
     protected List<String> onTab(CommandSender sender, String... args) {
         if (args.length == 1)
             return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
-        if (args.length == 2) return Arrays.asList(
-                "public",
-                "sellOnly",
-                "buyOnly",
-                "sellDiscount",
-                "buyDiscount",
-                "useSellDiscount",
-                "useBuyDiscount",
-                "useSeePermission",
-                "useSellPermission",
-                "useBuyPermission",
-                "seePermission",
-                "sellPermission",
-                "buyPermission",
-                "displayname",
-                "description"
-        );
-
+        if (args.length == 2) return Arrays.asList(validSetOptions);
         if (args.length == 3) {
             switch (args[1].toLowerCase()) {
-                case "useSellDiscount":
-                case "useBuyDiscount":
-                case "useSeePermission":
-                case "useSellPermission":
-                case "useBuyPermission":
-                case "csellOnly":
-                case "buyOnly":
+                case "public":
+                case "useselldiscount":
+                case "usebuydiscount":
+                case "useseepermission":
+                case "usesellpermission":
+                case "usebuypermission":
+                case "sellonly":
+                case "buyonly":
                     return Arrays.asList("true", "false");
             }
         }
-
         return null;
     }
 
@@ -216,5 +229,11 @@ public class CommandSet extends AbstractCommand {
             return false;
         }
         return true;
+    }
+
+    private void sendValidSetOptions(Player player) {
+        Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&eValid Set Options&F:")).sendPrefixedMessage(player);
+        for (String validSetOption : validSetOptions)
+            player.sendMessage(TextUtils.formatText("   &f- &e" + validSetOption));
     }
 }
