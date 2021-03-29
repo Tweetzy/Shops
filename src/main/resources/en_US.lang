@@ -40,4 +40,5 @@ shop:
     removed: "&cRemoved the shop with the id &4%shop_id%"
     saved_inventory_edit_for_list: "&aSaved the inventory edits for /shops"
     updated_shop_settings: "&aUpdated the settings for shop: &2%shop_id%"
-    fail_updated_shop_settings: "&c Could not update the settings for shop: &2%shop_id%"
+    fail_updated_shop_settings: "&cCould not update the settings for shop: &2%shop_id%"
+    add_item: "&aAdded the item to the &2%shop_id% &ashop &F(&aS: $%sell_price%, B: $%buy_price% &f)"
