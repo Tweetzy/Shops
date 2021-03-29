@@ -1,8 +1,10 @@
 package ca.tweetzy.shops.api;
 
+import ca.tweetzy.core.compatibility.ServerVersion;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.shop.Shop;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -49,6 +51,10 @@ public class ShopAPI {
     public void saveCustomGuiItems(CustomGUIItemHolder holder) {
         Shops.getInstance().getData().set("custom gui items." + holder.getGuiName().toLowerCase() + ".data", convertToBase64(holder));
         Shops.getInstance().getData().save();
+    }
+
+    public ItemStack getHeldItem(Player player) {
+        return ServerVersion.isServerVersionAbove(ServerVersion.V1_8) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInHand();
     }
 
     /**

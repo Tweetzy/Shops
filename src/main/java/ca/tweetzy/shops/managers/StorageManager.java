@@ -74,4 +74,22 @@ public class StorageManager {
         }
         return AbstractCommand.ReturnType.SUCCESS;
     }
+
+    public AbstractCommand.ReturnType updateShop(Player player, Shop shop) {
+        if (Settings.DATABASE_USE.getBoolean()) {
+            Shops.getInstance().getDataManager().updateShop(shop, failure -> {
+                if (failure) {
+                    Shops.getInstance().getLocale().getMessage("shop.fail_updated_shop_settings").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
+                } else {
+                    Shops.getInstance().getLocale().getMessage("shop.updated_shop_settings").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
+                    Shops.getInstance().getShopManager().loadShops(true, true);
+                }
+            });
+        } else {
+            ShopAPI.getInstance().createShop(shop);
+            Shops.getInstance().getLocale().getMessage("shop.updated_shop_settings").processPlaceholder("shop_id", shop.getId()).sendPrefixedMessage(player);
+            Shops.getInstance().getShopManager().loadShops(true, false);
+        }
+        return AbstractCommand.ReturnType.SUCCESS;
+    }
 }

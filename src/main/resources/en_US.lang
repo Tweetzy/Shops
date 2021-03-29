@@ -10,6 +10,28 @@ general:
     enter_new_display_name: "&ePlease enter the new display name:"
     change_description: "&ePlease enter the new description:"
     change_icon: "&eClick any item in your inventory to set the icon."
+    not_boolean_value: "&cNot a valid true/false response!"
+    not_double_value: "&cNot a valid number!"
+    nothing_in_hand: "&cYou're not holding an item!"
+
+set_command:
+    invalid_set_option: "&cThat is not a valid shop setting!"
+    changed_shop_visibility: "&aSet the shop visibility to &2%value%"
+    changed_shop_sell_only: "&aSet the shop sell only mode to &2%value%"
+    changed_shop_buy_only: "&aSet the shop buy only mode to &2%value%"
+    changed_shop_use_sell_discount: "&aSet the shop to use a sell discount to &2%value%"
+    changed_shop_use_buy_discount: "&aSet the shop to use a buy discount to &2%value%"
+    changed_shop_use_see_permission: "&aSet the shop to require see perm to &2%value%"
+    changed_shop_use_buy_permission: "&aSet the shop to require buy perm to &2%value%"
+    changed_shop_use_sell_permission: "&aSet the shop to require sell perm to &2%value%"
+    changed_shop_sell_discount: "&aSet the shop sell discount to &2%value%%"
+    changed_shop_buy_discount: "&aSet the shop buy discount to &2%value%%"
+    changed_shop_see_permission: "&aSet the shop see permission to &2%value%"
+    changed_shop_sell_permission: "&aSet the shop sell permission to &2%value%"
+    changed_shop_buy_permission: "&aSet the shop buy permission to &2%value%"
+    changed_shop_display_name: "&aSet the shop display name to %value%"
+    changed_shop_description: "&aSet the shop description to %value%"
+    changed_shop_icon: "&aSet the shop icon to the item in your hand!"
 
 shop:
     already_exists: "&cA shop with the id &4%shop_id% &calready exists!"
