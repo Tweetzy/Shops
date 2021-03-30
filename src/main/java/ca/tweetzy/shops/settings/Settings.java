@@ -212,6 +212,37 @@ public class Settings {
             "&7Click to edit this shop"
     ), "Valid Placeholders", "%shop_display_name%", "%shop_id%", "%shop_is_public%", "%shop_item_count%", "%shop_is_sell_only%", "%shop_is_buy_only%");
 
+    /*
+    =========== SHOP CONTENTS OPTIONS ===========
+     */
+    public static final ConfigSetting GUI_SHOP_CONTENTS_TITLE = new ConfigSetting(config, "guis.shop contents.title", "&e%shop_display_name%", "The name of the inventory", "Valid Placeholders", "%shop_id%", "%shop_display_name%");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_FILL_BG = new ConfigSetting(config, "guis.shop contents.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_BG_ITEM = new ConfigSetting(config, "guis.shop contents.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_ITEM_NAME = new ConfigSetting(config, "guis.shop contents.item name", "%shop_item_name%", "Valid Placeholders", "%shop_item_name%");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_ITEM_LORE = new ConfigSetting(config, "guis.shop contents.item lore", Arrays.asList(
+            "&7Click to purchase this item.",
+            "",
+            "&7Sell Price&f: &a$%shop_item_sell_price%",
+            "&7Buy Price&f: &a$%shop_item_buy_price%",
+            "&7Base Quantity&f: &a%shop_item_quantity%"
+    ), "Valid Placeholders", "%shop_item_sell_price%", "%shop_item_buy_price%", "%shop_item_quantity%");
+
+    public static final ConfigSetting GUI_SHOP_CONTENTS_CART_ITEM = new ConfigSetting(config, "guis.shop contents.cart item", XMaterial.CHEST.name());
+    public static final ConfigSetting GUI_SHOP_CONTENTS_CART_NAME = new ConfigSetting(config, "guis.shop contents.cart name", "&eView Cart");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_CART_LORE = new ConfigSetting(config, "guis.shop contents.cart lore", Arrays.asList(
+            "&7Click to view your cart",
+            "",
+            "&7Cart Items&f: &a%shop_cart_item_count%",
+            "&7Cart Total&f: &a$%shop_cart_total%"
+    ), "Valid Placeholders", "%shop_cart_item_count%", "%shop_cart_total%");
+
+    /*
+   =========== SHOP CONTENTS OPTIONS ===========
+     */
+    public static final ConfigSetting GUI_SHOP_CART_TITLE = new ConfigSetting(config, "guis.cart.title", "&eYour Cart", "The name of the inventory");
+    public static final ConfigSetting GUI_SHOP_CART_FILL_BG = new ConfigSetting(config, "guis.cart.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOP_CART_BG_ITEM = new ConfigSetting(config, "guis.cart.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+
     public static void setup() {
         config.load();
         config.setAutoremove(true).setAutosave(true);
