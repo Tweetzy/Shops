@@ -78,6 +78,11 @@ public class GUIShopEdit extends Gui {
                 put("%shop_buy_discount%", shop.getBuyDiscount());
                 put("%shop_buy_discount_enable%", shop.isUseBuyDiscount());
             }}, "shops:edit:button;buy_discount"));
+            // Shop Tax
+//            setItem(4, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_TAX_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_TAX_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_TAX_LORE.getStringList(), new HashMap<String, Object>() {{
+//                put("%shop_tax%", shop.getTax());
+//                put("%shop_tax_enable%", shop.isUseTax());
+//            }}, "shops:edit:button;tax"));
 
             // Display Icon
             setItem(1, 4, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(this.shop.getDisplayIcon()), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE.getStringList(), null, "shops:edit:button;display_icon"));
@@ -165,6 +170,16 @@ public class GUIShopEdit extends Gui {
                         }).setOnClose(() -> e.manager.showGUI(e.player, new GUIShopEdit(this.shop))).setOnCancel(() -> e.manager.showGUI(e.player, this));
                     }
                     break;
+//                case "tax":
+//                    if (e.clickType == ClickType.RIGHT) this.shop.setUseTax(!this.shop.isUseTax());
+//                    if (e.clickType == ClickType.LEFT) {
+//                        e.gui.exit();
+//                        ChatPrompt.showPrompt(Shops.getInstance(), e.player, Shops.getInstance().getLocale().getMessage("general.percentage_change.tax").getMessage(), chat -> {
+//                            if (NumberUtils.isDouble(chat.getMessage().trim()))
+//                                this.shop.setTax(Double.parseDouble(chat.getMessage().trim()));
+//                        }).setOnClose(() -> e.manager.showGUI(e.player, new GUIShopEdit(this.shop))).setOnCancel(() -> e.manager.showGUI(e.player, this));
+//                    }
+//                    break;
                 case "display_icon":
                     Shops.getInstance().getOutOfGuiAccess().put(e.player.getUniqueId(), this.shop);
                     Shops.getInstance().getLocale().getMessage("general.change_icon").sendPrefixedMessage(e.player);

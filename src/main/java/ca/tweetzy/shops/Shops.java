@@ -18,11 +18,13 @@ import ca.tweetzy.shops.database.migrations._1_InitialMigration;
 import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.managers.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -48,6 +50,9 @@ public class Shops extends TweetyPlugin {
 
     @Getter
     private final HashMap<UUID, Shop> outOfGuiAccess = new HashMap<>();
+
+    @Getter
+    private final HashMap<UUID, ArrayList<CartItem>> playerCart = new HashMap<>();
 
     @Getter
     private CommandManager commandManager;

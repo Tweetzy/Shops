@@ -29,8 +29,10 @@ public class CommandSet extends AbstractCommand {
             "buyonly",
             "selldiscount",
             "buydiscount",
+            "tax",
             "useselldiscount",
             "usebuydiscount",
+            "usetax",
             "useseepermission",
             "usesellpermission",
             "usebuypermission",
@@ -110,6 +112,12 @@ public class CommandSet extends AbstractCommand {
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_buy_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
+                case "usetax":
+                    if (isValidBooleanOption(player, args[2])) {
+                        shop.setUseTax(Boolean.parseBoolean(args[2]));
+                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_tax").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                    }
+                    break;
                 case "useseepermission":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setRequiresPermissionToSee(Boolean.parseBoolean(args[2]));
@@ -138,6 +146,12 @@ public class CommandSet extends AbstractCommand {
                     if (isValidPercentage(player, args[2])) {
                         shop.setBuyDiscount(Double.parseDouble(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_buy_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                    }
+                    break;
+                case "tax":
+                    if (isValidPercentage(player, args[2])) {
+                        shop.setTax(Double.parseDouble(args[2]));
+                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_tax").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
                 case "seepermission":
@@ -187,6 +201,7 @@ public class CommandSet extends AbstractCommand {
                 case "public":
                 case "useselldiscount":
                 case "usebuydiscount":
+                case "usetax":
                 case "useseepermission":
                 case "usesellpermission":
                 case "usebuypermission":

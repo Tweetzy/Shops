@@ -33,6 +33,7 @@ public class Shop implements Serializable {
 
     private boolean useSellDiscount;
     private boolean useBuyDiscount;
+    private boolean useTax;
 
     private boolean requiresPermissionToSee;
     private boolean requiresPermissionToSell;
@@ -40,6 +41,7 @@ public class Shop implements Serializable {
 
     private double sellDiscount;
     private double buyDiscount;
+    private double tax;
 
     private String seePermission;
     private String sellPermission;
@@ -56,11 +58,13 @@ public class Shop implements Serializable {
         this.slot = 0;
         this.useSellDiscount = false;
         this.useBuyDiscount = false;
+        this.useTax = false;
         this.requiresPermissionToSee = false;
         this.requiresPermissionToSell = false;
         this.requiresPermissionToBuy = false;
         this.sellDiscount = 0.0D;
         this.buyDiscount = 0.0D;
+        this.tax = 0.0D;
         this.seePermission = "shops.see." + id.toLowerCase();
         this.sellPermission = "shops.sell." + id.toLowerCase();
         this.buyPermission = "shops.buy." + id.toLowerCase();
