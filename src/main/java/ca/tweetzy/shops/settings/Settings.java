@@ -19,6 +19,8 @@ public class Settings {
     static final Config config = Shops.getInstance().getCoreConfig();
 
     public static final ConfigSetting LANG = new ConfigSetting(config, "lang", "en_US", "Default language file");
+    public static final ConfigSetting USE_TAX = new ConfigSetting(config, "tax.enabled", true, "Should tax be applied to the purchase?");
+    public static final ConfigSetting TAX_AMOUNT = new ConfigSetting(config, "tax.amount", 13.0D, "Tax percentage as decimal");
 
     /*
     =========== DATABASE OPTIONS ===========
@@ -143,6 +145,16 @@ public class Settings {
             "&7Right-Click to toggle it on/off"
     ), "Valid Placeholders", "%shop_buy_discount%", "%shop_buy_discount_enable%");
 
+//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_ITEM = new ConfigSetting(config, "guis.shop edit.items.tax.item", XMaterial.SUNFLOWER.name());
+//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_NAME = new ConfigSetting(config, "guis.shop edit.items.tax.name", "&eShop Tax");
+//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_LORE = new ConfigSetting(config, "guis.shop edit.items.tax.lore", Arrays.asList(
+//            "&7Current Tax&f: &a%shop_tax%%",
+//            "&7Status&f: &e%shop_tax_enable%",
+//            "",
+//            "&7Left-Click to adjust tax",
+//            "&7Right-Click to toggle it on/off"
+//    ), "Valid Placeholders", "%shop_tax%", "%shop_tax_enable%");
+
     // Permission to see toggle
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.item", XMaterial.LIME_WOOL.name());
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.name", "&aRequire Permission to See Enabled");
@@ -240,8 +252,29 @@ public class Settings {
    =========== SHOP CONTENTS OPTIONS ===========
      */
     public static final ConfigSetting GUI_SHOP_CART_TITLE = new ConfigSetting(config, "guis.cart.title", "&eYour Cart", "The name of the inventory");
-    public static final ConfigSetting GUI_SHOP_CART_FILL_BG = new ConfigSetting(config, "guis.cart.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_SHOP_CART_FILL_BG = new ConfigSetting(config, "guis.cart.fill background", false, "Should the empty slots of the gui be filled?");
     public static final ConfigSetting GUI_SHOP_CART_BG_ITEM = new ConfigSetting(config, "guis.cart.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+    public static final ConfigSetting GUI_SHOP_CART_BAR_ITEM = new ConfigSetting(config, "guis.cart.bar item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CLEAR_ITEM = new ConfigSetting(config, "guis.cart.items.clear.item", XMaterial.RED_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CLEAR_NAME = new ConfigSetting(config, "guis.cart.items.clear.name", "&cClear Cart");
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CLEAR_LORE = new ConfigSetting(config, "guis.cart.items.clear.lore", Collections.singletonList("&7Click to clear the cart"));
+
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_ITEM = new ConfigSetting(config, "guis.cart.items.confirm.item", XMaterial.LIME_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_NAME = new ConfigSetting(config, "guis.cart.items.confirm.name", "&aConfirm Purchase");
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_LORE = new ConfigSetting(config, "guis.cart.items.confirm.lore", Collections.singletonList("&7Click to make purchase"));
+
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_INFO_ITEM = new ConfigSetting(config, "guis.cart.items.info.item", XMaterial.PAPER.name());
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_INFO_NAME = new ConfigSetting(config, "guis.cart.items.info.name", "&eCart Information");
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_INFO_LORE = new ConfigSetting(config, "guis.cart.items.info.lore", Arrays.asList(
+            "&7Total Items&f: &e%shop_cart_item_count%",
+            "",
+            "&7Sub-Total&f: &a$%shop_cart_sub_total%",
+            "&7Tax&f: &a%shop_cart_tax%%",
+            "&7Discounts&f: &a- $%shop_cart_discounts%",
+            "",
+            "&7Total&f: &a$%shop_cart_total%"
+    ));
 
     public static void setup() {
         config.load();

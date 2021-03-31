@@ -3,6 +3,7 @@ general:
     percentage_change:
         sell_percentage: "&ePlease enter sell discount percentage (ex. 24.50):"
         buy_percentage: "&ePlease enter buy discount percentage (ex. 24.50):"
+        tax: "&ePlease enter the tax percentage (ex. 24.50):"
     permission_change:
         see: "&ePlease enter the new see permission:"
         buy: "&ePlease enter the new buy permission:"
@@ -24,8 +25,10 @@ set_command:
     changed_shop_use_see_permission: "&aSet the shop to require see perm to &2%value%"
     changed_shop_use_buy_permission: "&aSet the shop to require buy perm to &2%value%"
     changed_shop_use_sell_permission: "&aSet the shop to require sell perm to &2%value%"
+    changed_shop_use_tax: "&aSet the shop tax to &2%value%%"
     changed_shop_sell_discount: "&aSet the shop sell discount to &2%value%%"
     changed_shop_buy_discount: "&aSet the shop buy discount to &2%value%%"
+    changed_shop_tax: "&aSet the shop tax to &2%value%%"
     changed_shop_see_permission: "&aSet the shop see permission to &2%value%"
     changed_shop_sell_permission: "&aSet the shop sell permission to &2%value%"
     changed_shop_buy_permission: "&aSet the shop buy permission to &2%value%"

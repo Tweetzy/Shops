@@ -7,15 +7,19 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import ca.tweetzy.shops.shop.ShopItem;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The current file has been created by Kiran Hart
@@ -35,7 +39,6 @@ public class GUIShopContents extends Gui {
         this.shopItems = this.shop.getShopItems();
         setTitle(TextUtils.formatText(Settings.GUI_SHOP_CONTENTS_TITLE.getString().replace("%shop_display_name%", this.shop.getDisplayName()).replace("%shop_id%", this.shop.getId())));
         setDefaultItem(Settings.GUI_SHOP_CONTENTS_BG_ITEM.getMaterial().parseItem());
-        setUseLockedCells(Settings.GUI_SHOP_CONTENTS_FILL_BG.getBoolean());
         setAcceptsItems(false);
 
         if (this.shopItems.size() >= 1 && this.shopItems.size() <= 9) setRows(2);
@@ -52,6 +55,11 @@ public class GUIShopContents extends Gui {
         reset();
 
         pages = (int) Math.max(1, Math.ceil(this.shopItems.size() / (double) 45));
+
+        if (Settings.GUI_SHOP_CONTENTS_FILL_BG.getBoolean()) {
+            IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, Settings.GUI_SHOP_CART_BAR_ITEM.getMaterial().parseItem()));
+        }
+
         setPrevPage(getRows() - 1, 3, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
         setNextPage(getRows() - 1, 5, new TItemBuilder(Objects.requireNonNull(Settings.GUI_NEXT_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_NEXT_BTN_NAME.getString()).setLore(Settings.GUI_NEXT_BTN_LORE.getStringList()).toItemStack());
         setOnPage(e -> draw());
@@ -71,7 +79,11 @@ public class GUIShopContents extends Gui {
                 put("%shop_item_sell_price%", item.isBuyOnly() ? "&cN/A" : String.format("%,.2f", item.getSellPrice()));
                 put("%shop_item_buy_price%", item.isSellOnly() ? "&cN/A" : String.format("%,.2f", item.getBuyPrice()));
                 put("%shop_item_quantity%", parsed.getAmount());
-            }}), e -> e.manager.showGUI(e.player, new GUIItemSelection(item)));
+            }}), e -> {
+                if (e.clickType == ClickType.LEFT) {
+                    e.manager.showGUI(e.player, new GUIItemSelection(item));
+                }
+            });
         }
     }
 }

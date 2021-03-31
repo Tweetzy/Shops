@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
+import ca.tweetzy.shops.shop.ShopItem;
 
 /**
  * The current file has been created by Kiran Hart
@@ -10,7 +11,9 @@ import ca.tweetzy.core.gui.Gui;
  */
 public class GUIItemSelection extends Gui {
 
-    public GUIItemSelection() {
+    final ShopItem shopItem;
 
+    public GUIItemSelection(ShopItem shopItem) {
+        this.shopItem = shopItem;
     }
 }
