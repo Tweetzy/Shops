@@ -4,7 +4,6 @@ import ca.tweetzy.core.gui.GuiHolder;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.guis.GUIShopEdit;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

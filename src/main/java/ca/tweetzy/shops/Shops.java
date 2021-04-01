@@ -141,6 +141,9 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onConfigReload() {
+        this.locale.reloadMessages();
+        this.shopManager.loadShops(true, Settings.DATABASE_USE.getBoolean());
+        this.shopManager.loadCustomGuiItems(true, Settings.DATABASE_USE.getBoolean());
     }
 
     @Override

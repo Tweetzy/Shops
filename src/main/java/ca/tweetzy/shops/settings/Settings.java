@@ -232,7 +232,8 @@ public class Settings {
     public static final ConfigSetting GUI_SHOP_CONTENTS_BG_ITEM = new ConfigSetting(config, "guis.shop contents.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
     public static final ConfigSetting GUI_SHOP_CONTENTS_ITEM_NAME = new ConfigSetting(config, "guis.shop contents.item name", "%shop_item_name%", "Valid Placeholders", "%shop_item_name%");
     public static final ConfigSetting GUI_SHOP_CONTENTS_ITEM_LORE = new ConfigSetting(config, "guis.shop contents.item lore", Arrays.asList(
-            "&7Click to purchase this item.",
+            "&7Left-click to purchase this item.",
+            "&7Right-click to add x1 to your cart.",
             "",
             "&7Sell Price&f: &a$%shop_item_sell_price%",
             "&7Buy Price&f: &a$%shop_item_buy_price%",
