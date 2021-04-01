@@ -82,6 +82,9 @@ public class GUIShopContents extends Gui {
                 }
 
                 if (e.clickType == ClickType.RIGHT) {
+                    if (this.shop.isSellOnly()) return;
+                    if (item.isSellOnly()) return;
+
                     if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
                         Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
                     } else {
