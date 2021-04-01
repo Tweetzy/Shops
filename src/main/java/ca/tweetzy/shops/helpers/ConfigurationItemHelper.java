@@ -49,6 +49,10 @@ public class ConfigurationItemHelper {
         return stack;
     }
 
+    public static ItemStack build(String item, String title, List<String> lore, int amount, HashMap<String, Object> replacements, String... nbtData) {
+        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, amount, replacements, nbtData);
+    }
+
     public static ItemStack build(String item, String title, List<String> lore, HashMap<String, Object> replacements, String... nbtData) {
         return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, 1, replacements, nbtData);
     }
