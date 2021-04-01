@@ -144,7 +144,7 @@ public class GUIShops extends Gui {
     }
 
     private ItemStack getShopIcon(Shop shop) {
-        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
+        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
             put("%shop_display_name%", shop.getDisplayName());
             put("%shop_description%", shop.getDescription());
             put("%shop_is_sell_only%", shop.isSellOnly());
