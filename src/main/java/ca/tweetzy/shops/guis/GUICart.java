@@ -88,6 +88,7 @@ public class GUICart extends Gui {
             }
 
             Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
+            Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", cartTotal).sendPrefixedMessage(this.player);
 
             this.shopItems.forEach(cartItem -> {
                 for (int i = 0; i < cartItem.getQuantity(); i++)
