@@ -277,6 +277,86 @@ public class Settings {
             "&7Total&f: &a$%shop_cart_total%"
     ));
 
+    /*
+    =========== SHOP ITEM SELECT OPTIONS ===========
+     */
+    public static final ConfigSetting GUI_ITEM_SELECT_TITLE = new ConfigSetting(config, "guis.item select.title", "&eItem Selection", "The name of the inventory");
+    public static final ConfigSetting GUI_ITEM_SELECT_FILL_BG = new ConfigSetting(config, "guis.item select.fill background", true, "Should the empty slots of the gui be filled?");
+    public static final ConfigSetting GUI_ITEM_SELECT_BG_ITEM = new ConfigSetting(config, "guis.item select.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
+    public static final ConfigSetting GUI_ITEM_SELECT_USE_DEFAULT_SLOTS = new ConfigSetting(config, "guis.item select.use default slots", true, "Should items be placed in their default slots?");
+    public static final ConfigSetting GUI_ITEM_SELECT_ALLOW_SHIFT_CLICK_STACK = new ConfigSetting(config, "guis.item select.shift click to +/- 64", true, "When an increment/decrement button is shift clicked, should it add 64 to the total quantity?");
+
+    public static final ConfigSetting GUI_ITEM_SELECT_INC_ONE = new ConfigSetting(config, "guis.item select.increments.one", 1, "How much should the quantity increase on the first pane click");
+    public static final ConfigSetting GUI_ITEM_SELECT_INC_TWO = new ConfigSetting(config, "guis.item select.increments.two", 5, "How much should the quantity increase on the second pane click");
+    public static final ConfigSetting GUI_ITEM_SELECT_INC_THREE = new ConfigSetting(config, "guis.item select.increments.three", 10, "How much should the quantity increase on the third pane click");
+    public static final ConfigSetting GUI_ITEM_SELECT_DECR_ONE = new ConfigSetting(config, "guis.item select.decrements.one", 1, "How much should the quantity decrease on the first pane click");
+    public static final ConfigSetting GUI_ITEM_SELECT_DECR_TWO = new ConfigSetting(config, "guis.item select.decrements.two", 5, "How much should the quantity decrease on the second pane click");
+    public static final ConfigSetting GUI_ITEM_SELECT_DECR_THREE = new ConfigSetting(config, "guis.item select.decrements.three", 10, "How much should the quantity decrease on the third pane click");
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_ITEM = new ConfigSetting(config, "guis.item select.items.add to cart.item", XMaterial.CHEST.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_NAME = new ConfigSetting(config, "guis.item select.items.add to cart.name", "&eAdd to cart");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_LORE = new ConfigSetting(config, "guis.item select.items.add to cart.lore", Arrays.asList(
+            "&7Click to add this item to your",
+            "&7cart and continue shopping."
+    ));
+
+    public static final ConfigSetting GUI_SHOP_ITEM_SELECT_ITEMS_INFO_ITEM = new ConfigSetting(config, "guis.item select.items.info.item", XMaterial.PAPER.name());
+    public static final ConfigSetting GUI_SHOP_ITEM_SELECT_ITEMS_INFO_NAME = new ConfigSetting(config, "guis.item select.items.info.name", "&eItem Information");
+    public static final ConfigSetting GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE = new ConfigSetting(config, "guis.item select.items.info.lore", Arrays.asList(
+            "&7Stack Quantity&f: &e%item_stack_quantity%",
+            "&7Quantity&f: &e%item_quantity%",
+            "&7Base Price&f: &e%item_price%",
+            "",
+            "&7Sub-Total&f: &a$%item_sub_total%",
+            "&7Tax&f: &a%item_tax%%",
+            "&7Discounts&f: &a- $%item_discounts%",
+            "",
+            "&7Total&f: &a$%item_total%"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_SELL_BUY_ITEM = new ConfigSetting(config, "guis.item select.items.sell and buy.item", XMaterial.SUNFLOWER.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_SELL_BUY_NAME = new ConfigSetting(config, "guis.item select.items.sell and buy.name", "&ePurchase / Sell");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_SELL_BUY_LORE = new ConfigSetting(config, "guis.item select.items.sell and buy.lore", Arrays.asList(
+            "&7Left-click to purchase item(s)",
+            "&7Right-click to sell item(s)"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_ONE_ITEM = new ConfigSetting(config, "guis.item select.items.increment one.item", XMaterial.LIME_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_ONE_NAME = new ConfigSetting(config, "guis.item select.items.increment one.name", "&a+%inc_one_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_ONE_LORE = new ConfigSetting(config, "guis.item select.items.increment one.lore", Collections.singletonList(
+            "&7Click to add &e%inc_one_amount% &7to the quantity"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_TWO_ITEM = new ConfigSetting(config, "guis.item select.items.increment two.item", XMaterial.LIME_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_TWO_NAME = new ConfigSetting(config, "guis.item select.items.increment two.name", "&a+%inc_two_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_TWO_LORE = new ConfigSetting(config, "guis.item select.items.increment two.lore", Collections.singletonList(
+            "&7Click to add &e%inc_two_amount% &7to the quantity"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_THREE_ITEM = new ConfigSetting(config, "guis.item select.items.increment three.item", XMaterial.LIME_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_THREE_NAME = new ConfigSetting(config, "guis.item select.items.increment three.name", "&a+%inc_three_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_INC_THREE_LORE = new ConfigSetting(config, "guis.item select.items.increment three.lore", Collections.singletonList(
+            "&7Click to add &e%inc_three_amount% &7to the quantity"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_ONE_ITEM = new ConfigSetting(config, "guis.item select.items.decrement one.item", XMaterial.RED_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_ONE_NAME = new ConfigSetting(config, "guis.item select.items.decrement one.name", "&c-%decr_one_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_ONE_LORE = new ConfigSetting(config, "guis.item select.items.decrement one.lore", Collections.singletonList(
+            "&7Click to remove &e%decr_one_amount% &7from the quantity"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_TWO_ITEM = new ConfigSetting(config, "guis.item select.items.decrement two.item", XMaterial.RED_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_TWO_NAME = new ConfigSetting(config, "guis.item select.items.decrement two.name", "&c-%decr_two_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_TWO_LORE = new ConfigSetting(config, "guis.item select.items.decrement two.lore", Collections.singletonList(
+            "&7Click to remove &e%decr_two_amount% &7from the quantity"
+    ));
+
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_THREE_ITEM = new ConfigSetting(config, "guis.item select.items.decrement three.item", XMaterial.RED_STAINED_GLASS_PANE.name());
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_THREE_NAME = new ConfigSetting(config, "guis.item select.items.decrement three.name", "&c-%decr_three_amount%");
+    public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_DECR_THREE_LORE = new ConfigSetting(config, "guis.item select.items.decrement three.lore", Collections.singletonList(
+            "&7Click to remove &e%decr_three_amount% &7from the quantity"
+    ));
+
     public static void setup() {
         config.load();
         config.setAutoremove(true).setAutosave(true);
