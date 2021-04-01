@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class ConfigurationItemHelper {
 
-    public static ItemStack build(ItemStack stack, String title, List<String> lore, HashMap<String, Object> replacements, String... nbtData) {
+    public static ItemStack build(ItemStack stack, String title, List<String> lore, int amount, HashMap<String, Object> replacements, String... nbtData) {
         ItemMeta meta = stack.getItemMeta();
         assert meta != null;
         meta.setDisplayName(TextUtils.formatText(title));
@@ -50,10 +50,14 @@ public class ConfigurationItemHelper {
     }
 
     public static ItemStack build(String item, String title, List<String> lore, HashMap<String, Object> replacements, String... nbtData) {
-        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, replacements, nbtData);
+        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, 1, replacements, nbtData);
     }
 
     public static ItemStack build(String item, String title, List<String> lore, HashMap<String, Object> replacements) {
-        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, replacements);
+        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, 1, replacements);
+    }
+
+    public static ItemStack build(String item, String title, List<String> lore, int amount, HashMap<String, Object> replacements) {
+        return build(Objects.requireNonNull(XMaterial.matchXMaterial(item).get().parseItem()), title, lore, amount, replacements);
     }
 }
