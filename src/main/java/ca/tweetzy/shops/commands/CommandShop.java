@@ -24,7 +24,7 @@ public class CommandShop extends AbstractCommand {
     protected ReturnType runCommand(CommandSender sender, String... args) {
         if(sender instanceof Player) {
             Player player = (Player) sender;
-            Shops.getInstance().getGuiManager().showGUI(player, new GUIShops());
+            Shops.getInstance().getGuiManager().showGUI(player, new GUIShops(player));
         }
         return ReturnType.SUCCESS;
     }
