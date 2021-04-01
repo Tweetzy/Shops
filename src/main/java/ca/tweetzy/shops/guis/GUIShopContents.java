@@ -71,7 +71,7 @@ public class GUIShopContents extends Gui {
         List<ShopItem> data = this.shopItems.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
         for (ShopItem item : data) {
             ItemStack parsed = ShopAPI.getInstance().deserializeItem(item.getItem());
-            setButton(slot++, ConfigurationItemHelper.build(parsed, Settings.GUI_SHOP_CONTENTS_ITEM_NAME.getString(), Settings.GUI_SHOP_CONTENTS_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
+            setButton(slot++, ConfigurationItemHelper.build(parsed, Settings.GUI_SHOP_CONTENTS_ITEM_NAME.getString(), Settings.GUI_SHOP_CONTENTS_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
                 put("%shop_item_name%", item.getName());
                 put("%shop_item_sell_price%", item.isBuyOnly() ? "&cN/A" : String.format("%,.2f", item.getSellPrice()));
                 put("%shop_item_buy_price%", item.isSellOnly() ? "&cN/A" : String.format("%,.2f", item.getBuyPrice()));
