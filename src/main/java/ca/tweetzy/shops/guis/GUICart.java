@@ -48,7 +48,7 @@ public class GUICart extends Gui {
         pages = (int) Math.max(1, Math.ceil(this.shopItems.size() / (double) 21));
         setItems(IntStream.range(27, 54).toArray(), getDefaultItem());
         setPrevPage(4, 2, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
-        setButton(5, 0, new TItemBuilder(Objects.requireNonNull(Settings.GUI_CLOSE_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_CLOSE_BTN_NAME.getString()).setLore(Settings.GUI_CLOSE_BTN_LORE.getStringList()).toItemStack(), e -> e.manager.showGUI(e.player, new GUIShops()));
+        setButton(5, 0, new TItemBuilder(Objects.requireNonNull(Settings.GUI_CLOSE_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_CLOSE_BTN_NAME.getString()).setLore(Settings.GUI_CLOSE_BTN_LORE.getStringList()).toItemStack(), e -> e.manager.showGUI(e.player, new GUIShops(e.player)));
         setNextPage(4, 6, new TItemBuilder(Objects.requireNonNull(Settings.GUI_NEXT_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_NEXT_BTN_NAME.getString()).setLore(Settings.GUI_NEXT_BTN_LORE.getStringList()).toItemStack());
         setOnPage(e -> draw());
 
@@ -88,7 +88,7 @@ public class GUICart extends Gui {
             }
 
             Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
-            Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", cartTotal).sendPrefixedMessage(this.player);
+            Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", cartTotal)).sendPrefixedMessage(this.player);
 
             this.shopItems.forEach(cartItem -> {
                 for (int i = 0; i < cartItem.getQuantity(); i++)
