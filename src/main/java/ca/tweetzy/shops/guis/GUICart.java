@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
+import ca.tweetzy.core.utils.PlayerUtils;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.shops.Shops;
@@ -53,14 +54,14 @@ public class GUICart extends Gui {
 
         // do price calculations ahead of time
         double cartSubTotal = this.shopItems.stream().mapToDouble(item -> item.getQuantity() * item.getBuyPrice()).sum();
-        double tax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
         AtomicDouble discounts = new AtomicDouble(0.0);
+        double preTax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
+        double totalTax = (cartSubTotal - discounts.get()) * preTax / 100;
+        double cartTotal = (cartSubTotal - discounts.get()) + totalTax;
 
         HashMap<String, Double> individualDiscounts = new HashMap<>();
         this.shopItems.stream().filter(cartItem -> Shops.getInstance().getShopManager().getShop(cartItem.getShopId()).isUseBuyDiscount()).forEach(cartItem -> individualDiscounts.put(cartItem.getShopId(), Shops.getInstance().getShopManager().getShop(cartItem.getShopId()).getBuyDiscount()));
-        individualDiscounts.keySet().forEach(shops -> {
-            discounts.getAndAdd(this.shopItems.stream().filter(cartItem -> cartItem.getShopId().equalsIgnoreCase(shops)).mapToDouble(cartItem -> (cartItem.getBuyPrice() * cartItem.getQuantity()) * (individualDiscounts.get(shops) / 100)).sum());
-        });
+        individualDiscounts.keySet().forEach(shops -> discounts.getAndAdd(this.shopItems.stream().filter(cartItem -> cartItem.getShopId().equalsIgnoreCase(shops)).mapToDouble(cartItem -> (cartItem.getBuyPrice() * cartItem.getQuantity()) * (individualDiscounts.get(shops) / 100)).sum()));
 
 
         if (Settings.GUI_SHOP_CART_FILL_BG.getBoolean()) {
@@ -72,9 +73,29 @@ public class GUICart extends Gui {
             e.manager.showGUI(this.player, new GUICart(this.player));
         });
 
+        setItem(4, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_CART_ITEMS_INFO_ITEM.getString(), Settings.GUI_SHOP_CART_ITEMS_INFO_NAME.getString(), Settings.GUI_SHOP_CART_ITEMS_INFO_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_cart_item_count%", shopItems.size());
+            put("%shop_cart_sub_total%", String.format("%,.2f", cartSubTotal));
+            put("%shop_cart_tax%", preTax);
+            put("%shop_cart_discounts%", String.format("%,.2f", discounts.get()));
+            put("%shop_cart_total%", String.format("%,.2f", cartTotal));
+        }}));
+
         setButton(4, 5, ConfigurationItemHelper.build(Settings.GUI_SHOP_CART_ITEMS_CONFIRM_ITEM.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_NAME.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_LORE.getStringList(), null), e -> {
+            if (!Shops.getInstance().getEconomy().has(this.player, cartTotal)) {
+                Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
+                return;
+            }
 
+            Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
 
+            this.shopItems.forEach(cartItem -> {
+                for (int i = 0; i < cartItem.getQuantity(); i++)
+                    PlayerUtils.giveItem(this.player, ShopAPI.getInstance().deserializeItem(cartItem.getItem()));
+            });
+
+            Shops.getInstance().getPlayerCart().remove(this.player.getUniqueId());
+            e.gui.close();
         });
 
         int slot = 0;

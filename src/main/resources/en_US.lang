@@ -14,6 +14,7 @@ general:
     not_boolean_value: "&cNot a valid true/false response!"
     not_double_value: "&cNot a valid number!"
     nothing_in_hand: "&cYou're not holding an item!"
+    not_enough_money: "&cYou do not have enough money!"
 
 set_command:
     invalid_set_option: "&cThat is not a valid shop setting!"

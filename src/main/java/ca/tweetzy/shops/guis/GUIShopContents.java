@@ -14,10 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -82,6 +79,17 @@ public class GUIShopContents extends Gui {
             }}), e -> {
                 if (e.clickType == ClickType.LEFT) {
                     e.manager.showGUI(e.player, new GUIItemSelection(item));
+                }
+
+                if (e.clickType == ClickType.RIGHT) {
+                    if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
+                        Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
+                    } else {
+                        Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
+                            add(new CartItem(item, 1));
+                        }});
+                    }
+                    draw();
                 }
             });
         }
