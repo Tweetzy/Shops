@@ -166,6 +166,8 @@ public class GUIItemSelection extends Gui {
                 e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop));
                 break;
             case "add_to_cart":
+                if (this.shop.isSellOnly()) return;
+                if (this.shopItem.isSellOnly()) return;
                 if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
                     Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(this.shopItem, this.quantity));
                 } else {
