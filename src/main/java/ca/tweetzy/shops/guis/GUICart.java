@@ -82,6 +82,8 @@ public class GUICart extends Gui {
         }}));
 
         setButton(4, 5, ConfigurationItemHelper.build(Settings.GUI_SHOP_CART_ITEMS_CONFIRM_ITEM.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_NAME.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_LORE.getStringList(), null), e -> {
+            if (this.shopItems.size() == 0) return;
+
             if (!Shops.getInstance().getEconomy().has(this.player, cartTotal)) {
                 Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
                 return;
