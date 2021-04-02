@@ -53,65 +53,55 @@ public class GUIShopEdit extends Gui {
             IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, getDefaultItem()));
         }
 
-        if (!Settings.GUI_SHOP_EDIT_USE_DEFAULT_SLOTS.getBoolean()) {
-            if (this.customItems.stream().noneMatch(holders -> holders.getGuiName().equalsIgnoreCase("edit"))) {
-                this.customItems.add(new CustomGUIItemHolder("edit"));
-            } else {
-                this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("edit")).findFirst().get().getItems().forEach(item -> {
+        // Public
+        setItem(2, 1, ConfigurationItemHelper.build(this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_ITEM.getString(), this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_NAME.getString(), this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_LORE.getStringList(), null, "shops:edit:button;public"));
+        // Sell Only
+        setItem(3, 1, ConfigurationItemHelper.build(this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_ITEM.getString(), this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_NAME.getString(), this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;sell_only"));
+        // Buy Only
+        setItem(4, 1, ConfigurationItemHelper.build(this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_ITEM.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;buy_only"));
+        // Sell Discount
+        setItem(2, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_sell_discount%", shop.getSellDiscount());
+            put("%shop_sell_discount_enable%", shop.isUseSellDiscount());
+        }}, "shops:edit:button;sell_discount"));
+        // Buy Discount
+        setItem(3, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_buy_discount%", shop.getBuyDiscount());
+            put("%shop_buy_discount_enable%", shop.isUseBuyDiscount());
+        }}, "shops:edit:button;buy_discount"));
+        // Display Icon
+        setItem(1, 4, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(this.shop.getDisplayIcon()), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE.getStringList(), 1, null, "shops:edit:button;display_icon"));
+        // Display Name
+        setItem(2, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_display_name%", shop.getDisplayName());
+        }}, "shops:edit:button;display_name"));
+        // Description
+        setItem(3, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_description%", shop.getDescription());
+        }}, "shops:edit:button;description"));
+        // Contents
+        setItem(4, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_item_count%", shop.getShopItems().size());
+        }}, "shops:edit:button;contents"));
 
-                });
-            }
-        } else {
-            // Public
-            setItem(2, 1, ConfigurationItemHelper.build(this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_ITEM.getString(), this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_NAME.getString(), this.shop.isPublic() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PUBLIC_OFF_LORE.getStringList(), null, "shops:edit:button;public"));
-            // Sell Only
-            setItem(3, 1, ConfigurationItemHelper.build(this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_ITEM.getString(), this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_NAME.getString(), this.shop.isSellOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_SELL_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;sell_only"));
-            // Buy Only
-            setItem(4, 1, ConfigurationItemHelper.build(this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_ITEM.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;buy_only"));
-            // Sell Discount
-            setItem(2, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_sell_discount%", shop.getSellDiscount());
-                put("%shop_sell_discount_enable%", shop.isUseSellDiscount());
-            }}, "shops:edit:button;sell_discount"));
-            // Buy Discount
-            setItem(3, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_buy_discount%", shop.getBuyDiscount());
-                put("%shop_buy_discount_enable%", shop.isUseBuyDiscount());
-            }}, "shops:edit:button;buy_discount"));
-            // Display Icon
-            setItem(1, 4, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(this.shop.getDisplayIcon()), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE.getStringList(), 1, null, "shops:edit:button;display_icon"));
-            // Display Name
-            setItem(2, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_NAME_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_display_name%", shop.getDisplayName());
-            }}, "shops:edit:button;display_name"));
-            // Description
-            setItem(3, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DESCRIPTION_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_description%", shop.getDescription());
-            }}, "shops:edit:button;description"));
-            // Contents
-            setItem(4, 4, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_CONTENTS_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_item_count%", shop.getShopItems().size());
-            }}, "shops:edit:button;contents"));
-
-            // Toggle Require Perm to See
-            setItem(2, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_ITEM.getString(), this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_NAME.getString(), this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_see_toggle"));
-            // Toggle Require Perm to Sell
-            setItem(3, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_ITEM.getString(), this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_NAME.getString(), this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_sell_toggle"));
-            // Toggle Require Perm to Buy
-            setItem(4, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_ITEM.getString(), this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_NAME.getString(), this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_buy_toggle"));
-            // Permission to see
-            setItem(2, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_see_permission%", shop.getSeePermission());
-            }}, "shops:edit:button;see_permission"));
-            // Permission to sell
-            setItem(3, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_sell_permission%", shop.getSellPermission());
-            }}, "shops:edit:button;sell_permission"));
-            // Permission to buy
-            setItem(4, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
-                put("%shop_buy_permission%", shop.getBuyPermission());
-            }}, "shops:edit:button;buy_permission"));
-        }
+        // Toggle Require Perm to See
+        setItem(2, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_ITEM.getString(), this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_NAME.getString(), this.shop.isRequiresPermissionToSee() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_see_toggle"));
+        // Toggle Require Perm to Sell
+        setItem(3, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_ITEM.getString(), this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_NAME.getString(), this.shop.isRequiresPermissionToSell() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SELL_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_sell_toggle"));
+        // Toggle Require Perm to Buy
+        setItem(4, 6, ConfigurationItemHelper.build(this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_ITEM.getString(), this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_NAME.getString(), this.shop.isRequiresPermissionToBuy() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_BUY_OFF_LORE.getStringList(), null, "shops:edit:button;permission_to_buy_toggle"));
+        // Permission to see
+        setItem(2, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SEE_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_see_permission%", shop.getSeePermission());
+        }}, "shops:edit:button;see_permission"));
+        // Permission to sell
+        setItem(3, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_sell_permission%", shop.getSellPermission());
+        }}, "shops:edit:button;sell_permission"));
+        // Permission to buy
+        setItem(4, 7, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_PERMISSION_LORE.getStringList(), new HashMap<String, Object>() {{
+            put("%shop_buy_permission%", shop.getBuyPermission());
+        }}, "shops:edit:button;buy_permission"));
 
         handleClick();
     }
@@ -204,10 +194,12 @@ public class GUIShopEdit extends Gui {
                             this.shop.setBuyPermission(chat.getMessage().trim());
                     }).setOnClose(() -> e.manager.showGUI(e.player, new GUIShopEdit(this.shop))).setOnCancel(() -> e.manager.showGUI(e.player, this));
                     break;
+                case "contents":
+                    e.gui.exit();
+                    e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, true));
+                    break;
             }
             draw();
         });
     }
-
-    //&c&kkkk&r &7Purchase Armor Here &r&c&kkkk
 }

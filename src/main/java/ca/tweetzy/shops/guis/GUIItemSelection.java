@@ -163,7 +163,7 @@ public class GUIItemSelection extends Gui {
 
         switch (button) {
             case "close":
-                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop));
+                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false));
                 break;
             case "add_to_cart":
                 if (this.shop.isSellOnly()) return;
