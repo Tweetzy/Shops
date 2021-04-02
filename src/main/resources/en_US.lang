@@ -1,5 +1,6 @@
 general:
     prefix: "&8[&eShops&8]"
+    reloaded: "&aShops has been reloaded (%value%ms)"
     percentage_change:
         sell_percentage: "&ePlease enter sell discount percentage (ex. 24.50):"
         buy_percentage: "&ePlease enter buy discount percentage (ex. 24.50):"
@@ -11,6 +12,8 @@ general:
     enter_new_display_name: "&ePlease enter the new display name:"
     change_description: "&ePlease enter the new description:"
     change_icon: "&eClick any item in your inventory to set the icon."
+    change_sell_price: "&ePlease enter the new sell price:"
+    change_buy_price: "&ePlease enter the new buy price:"
     not_boolean_value: "&cNot a valid true/false response!"
     not_double_value: "&cNot a valid number!"
     nothing_in_hand: "&cYou're not holding an item!"
