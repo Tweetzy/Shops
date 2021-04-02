@@ -27,10 +27,10 @@ public class CommandSet extends AbstractCommand {
             "public",
             "sellonly",
             "buyonly",
-            "selldiscount",
+            "sellbonus",
             "buydiscount",
             "tax",
-            "useselldiscount",
+            "usesellbonus",
             "usebuydiscount",
             "usetax",
             "useseepermission",
@@ -100,10 +100,10 @@ public class CommandSet extends AbstractCommand {
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_buy_only").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "useselldiscount":
+                case "usesellbonus":
                     if (isValidBooleanOption(player, args[2])) {
                         shop.setUseSellDiscount(Boolean.parseBoolean(args[2]));
-                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_sell_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_sell_bonus").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
                 case "usebuydiscount":
@@ -136,10 +136,10 @@ public class CommandSet extends AbstractCommand {
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_buy_permission").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
-                case "selldiscount":
+                case "sellbonus":
                     if (isValidPercentage(player, args[2])) {
                         shop.setSellDiscount(Double.parseDouble(args[2]));
-                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_discount").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
+                        Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_bonus").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
                 case "buydiscount":
@@ -199,7 +199,7 @@ public class CommandSet extends AbstractCommand {
         if (args.length == 3) {
             switch (args[1].toLowerCase()) {
                 case "public":
-                case "useselldiscount":
+                case "usesellbonus":
                 case "usebuydiscount":
                 case "usetax":
                 case "useseepermission":

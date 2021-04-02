@@ -45,7 +45,7 @@ public class GUICart extends Gui {
     private void draw() {
         reset();
 
-        pages = (int) Math.max(1, Math.ceil(this.shopItems.size() / (double) 21));
+        pages = (int) Math.max(1, Math.ceil(this.shopItems.size() / (double) 27));
         setItems(IntStream.range(27, 54).toArray(), getDefaultItem());
         setPrevPage(4, 2, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
         setButton(5, 0, new TItemBuilder(Objects.requireNonNull(Settings.GUI_CLOSE_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_CLOSE_BTN_NAME.getString()).setLore(Settings.GUI_CLOSE_BTN_LORE.getStringList()).toItemStack(), e -> e.manager.showGUI(e.player, new GUIShops(e.player)));
@@ -56,13 +56,14 @@ public class GUICart extends Gui {
         double cartSubTotal = this.shopItems.stream().mapToDouble(item -> item.getQuantity() * item.getBuyPrice()).sum();
         AtomicDouble discounts = new AtomicDouble(0.0);
         double preTax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
-        double totalTax = (cartSubTotal - discounts.get()) * preTax / 100;
-        double cartTotal = (cartSubTotal - discounts.get()) + totalTax;
+        double totalTax = cartSubTotal * (preTax / 100);
 
         HashMap<String, Double> individualDiscounts = new HashMap<>();
         this.shopItems.stream().filter(cartItem -> Shops.getInstance().getShopManager().getShop(cartItem.getShopId()).isUseBuyDiscount()).forEach(cartItem -> individualDiscounts.put(cartItem.getShopId(), Shops.getInstance().getShopManager().getShop(cartItem.getShopId()).getBuyDiscount()));
         individualDiscounts.keySet().forEach(shops -> discounts.getAndAdd(this.shopItems.stream().filter(cartItem -> cartItem.getShopId().equalsIgnoreCase(shops)).mapToDouble(cartItem -> (cartItem.getBuyPrice() * cartItem.getQuantity()) * (individualDiscounts.get(shops) / 100)).sum()));
 
+        // calculate the total after adding up the discounts
+        double cartTotal = (cartSubTotal - discounts.get()) + totalTax;
 
         if (Settings.GUI_SHOP_CART_FILL_BG.getBoolean()) {
             IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, getDefaultItem()));
@@ -102,7 +103,7 @@ public class GUICart extends Gui {
         });
 
         int slot = 0;
-        List<CartItem> data = this.shopItems.stream().skip((page - 1) * 21L).limit(21).collect(Collectors.toList());
+        List<CartItem> data = this.shopItems.stream().skip((page - 1) * 27L).limit(27).collect(Collectors.toList());
         for (CartItem item : data) {
             ItemStack parsed = ShopAPI.getInstance().deserializeItem(item.getItem());
             setButton(slot++, parsed, ClickType.RIGHT, e -> {

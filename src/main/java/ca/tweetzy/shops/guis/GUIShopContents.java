@@ -100,6 +100,7 @@ public class GUIShopContents extends Gui {
                     }
 
                     if (e.clickType == ClickType.RIGHT) {
+                        if (this.shop.isRequiresPermissionToBuy() && !this.player.hasPermission(this.shop.getBuyPermission())) return;
                         if (this.shop.isSellOnly()) return;
                         if (item.isSellOnly()) return;
 
