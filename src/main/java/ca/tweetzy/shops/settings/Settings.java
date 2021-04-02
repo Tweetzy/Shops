@@ -75,7 +75,6 @@ public class Settings {
    =========== SHOPS EDIT GUI OPTIONS ===========
     */
     public static final ConfigSetting GUI_SHOP_EDIT_TITLE = new ConfigSetting(config, "guis.shop edit.title", "&eEditing %shop_id% Shop", "The name of the inventory", "Valid Placeholders", "%shop_id%");
-    public static final ConfigSetting GUI_SHOP_EDIT_USE_DEFAULT_SLOTS = new ConfigSetting(config, "guis.shop edit.use default slots", true, "Should the icons/buttons be placed in their default slot? Set to false if you want to adjust it yourself");
     public static final ConfigSetting GUI_SHOP_EDIT_FILL_BG = new ConfigSetting(config, "guis.shop edit.fill background", true, "Should the empty slots of the gui be filled?");
     public static final ConfigSetting GUI_SHOP_EDIT_BG_ITEM = new ConfigSetting(config, "guis.shop edit.background item", XMaterial.BLACK_STAINED_GLASS_PANE.name(), "The item that will be used to fill");
 
@@ -239,6 +238,18 @@ public class Settings {
             "&7Buy Price&f: &a$%shop_item_buy_price%",
             "&7Base Quantity&f: &a%shop_item_quantity%"
     ), "Valid Placeholders", "%shop_item_sell_price%", "%shop_item_buy_price%", "%shop_item_quantity%");
+
+    public static final ConfigSetting GUI_SHOP_CONTENTS_ITEM_LORE_EDIT = new ConfigSetting(config, "guis.shop contents.item lore editing", Arrays.asList(
+            "&7Left-click to edit the buy price",
+            "&7Right-click to edit the sell price",
+            "&7Shift Left-click to toggle buy only",
+            "&7Shift Right-click to toggle sell only",
+            "",
+            "&7Sell Price&f: &a$%shop_item_sell_price%",
+            "&7Buy Price&f: &a$%shop_item_buy_price%",
+            "&7Sell Only&f: &a%shop_item_sell_only%",
+            "&7Buy Only&f: &a%shop_item_buy_only%"
+    ), "Valid Placeholders", "%shop_item_sell_price%", "%shop_item_buy_price%", "%shop_item_sell_only%", "%shop_item_buy_only%");
 
     public static final ConfigSetting GUI_SHOP_CONTENTS_CART_ITEM = new ConfigSetting(config, "guis.shop contents.cart item", XMaterial.CHEST.name());
     public static final ConfigSetting GUI_SHOP_CONTENTS_CART_NAME = new ConfigSetting(config, "guis.shop contents.cart name", "&eView Cart");
