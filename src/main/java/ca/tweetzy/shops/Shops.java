@@ -12,6 +12,7 @@ import ca.tweetzy.core.database.DatabaseConnector;
 import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.utils.Metrics;
+import ca.tweetzy.shops.api.UpdateChecker;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
@@ -68,6 +69,9 @@ public class Shops extends TweetyPlugin {
 
     @Getter
     private DataManager dataManager;
+
+    @Getter
+    private UpdateChecker.UpdateStatus updateStatus;
 
     protected Metrics metrics;
 
@@ -131,6 +135,9 @@ public class Shops extends TweetyPlugin {
                 new CommandSettings(),
                 new CommandReload()
         );
+
+        // Perform the update check
+        getServer().getScheduler().runTaskLaterAsynchronously(this, () -> this.updateStatus = new UpdateChecker(this, 75600, getConsole()).check().getStatus(), 1L);
 
         // Metrics, don't ask them if they want it enabled since bStats has it's on system
         this.metrics = new Metrics(this, (int) PluginID.SHOPS.getbStatsID());

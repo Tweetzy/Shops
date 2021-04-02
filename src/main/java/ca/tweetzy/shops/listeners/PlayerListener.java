@@ -1,15 +1,18 @@
 package ca.tweetzy.shops.listeners;
 
 import ca.tweetzy.core.gui.GuiHolder;
+import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.guis.GUIShopEdit;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * The current file has been created by Kiran Hart
@@ -39,5 +42,21 @@ public class PlayerListener implements Listener {
             Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId())));
             Shops.getInstance().getOutOfGuiAccess().remove(player.getUniqueId());
         }
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> {
+            if (e.getPlayer().isOp()) {
+                switch (Shops.getInstance().getUpdateStatus()) {
+                    case UNRELEASED_VERSION:
+                        Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dYou're running an unreleased version of Shops &f(&c%s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
+                        break;
+                    case UPDATE_AVAILABLE:
+                        Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dThere is a new version of Shops available &f(current: %s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
+                        break;
+                }
+            }
+        }, 1L);
     }
 }
