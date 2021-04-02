@@ -124,15 +124,15 @@ public class Settings {
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.name", "&cShop isn't Buy Only");
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE = new ConfigSetting(config, "guis.shop edit.items.toggle buy only.off.lore", Collections.singletonList("&7Click to enable buy only mode"));
 
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM = new ConfigSetting(config, "guis.shop edit.items.sell discount.item", XMaterial.SUNFLOWER.name());
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME = new ConfigSetting(config, "guis.shop edit.items.sell discount.name", "&eSell Discount");
-    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE = new ConfigSetting(config, "guis.shop edit.items.sell discount.lore", Arrays.asList(
-            "&7Current Discount&f: &a%shop_sell_discount%%",
-            "&7Status&f: &e%shop_sell_discount_enable%",
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM = new ConfigSetting(config, "guis.shop edit.items.sell bonus.item", XMaterial.SUNFLOWER.name());
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME = new ConfigSetting(config, "guis.shop edit.items.sell bonus.name", "&eSell Bonus");
+    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE = new ConfigSetting(config, "guis.shop edit.items.sell bonus.lore", Arrays.asList(
+            "&7Current Bonus&f: &a%shop_sell_bonus%%",
+            "&7Status&f: &e%shop_sell_bonus_enable%",
             "",
             "&7Left-Click to adjust percentage",
             "&7Right-Click to toggle it on/off"
-    ), "Valid Placeholders", "%shop_sell_discount%", "%shop_sell_discount_enable%");
+    ), "Valid Placeholders", "%shop_sell_bonus%", "%shop_sell_bonus_enable%");
 
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_ITEM = new ConfigSetting(config, "guis.shop edit.items.buy discount.item", XMaterial.SUNFLOWER.name());
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_NAME = new ConfigSetting(config, "guis.shop edit.items.buy discount.name", "&eBuy Discount");
@@ -144,15 +144,6 @@ public class Settings {
             "&7Right-Click to toggle it on/off"
     ), "Valid Placeholders", "%shop_buy_discount%", "%shop_buy_discount_enable%");
 
-//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_ITEM = new ConfigSetting(config, "guis.shop edit.items.tax.item", XMaterial.SUNFLOWER.name());
-//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_NAME = new ConfigSetting(config, "guis.shop edit.items.tax.name", "&eShop Tax");
-//    public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TAX_LORE = new ConfigSetting(config, "guis.shop edit.items.tax.lore", Arrays.asList(
-//            "&7Current Tax&f: &a%shop_tax%%",
-//            "&7Status&f: &e%shop_tax_enable%",
-//            "",
-//            "&7Left-Click to adjust tax",
-//            "&7Right-Click to toggle it on/off"
-//    ), "Valid Placeholders", "%shop_tax%", "%shop_tax_enable%");
 
     // Permission to see toggle
     public static final ConfigSetting GUI_SHOP_EDIT_ITEMS_TOGGLE_PERM_TO_SEE_ON_ITEM = new ConfigSetting(config, "guis.shop edit.items.toggle permission to see.on.item", XMaterial.LIME_WOOL.name());
