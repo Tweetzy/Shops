@@ -61,8 +61,8 @@ public class GUIShopEdit extends Gui {
         setItem(4, 1, ConfigurationItemHelper.build(this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_ITEM.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;buy_only"));
         // Sell Discount
         setItem(2, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
-            put("%shop_sell_discount%", shop.getSellDiscount());
-            put("%shop_sell_discount_enable%", shop.isUseSellDiscount());
+            put("%shop_sell_bonus%", shop.getSellDiscount());
+            put("%shop_sell_bonus_enable%", shop.isUseSellDiscount());
         }}, "shops:edit:button;sell_discount"));
         // Buy Discount
         setItem(3, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_BUY_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
@@ -133,7 +133,7 @@ public class GUIShopEdit extends Gui {
                 case "buy_only":
                     this.shop.setBuyOnly(!this.shop.isBuyOnly());
                     break;
-                case "sell_discount":
+                case "sell_bonus":
                     if (e.clickType == ClickType.RIGHT)
                         this.shop.setUseSellDiscount(!this.shop.isUseSellDiscount());
                     if (e.clickType == ClickType.LEFT) {
