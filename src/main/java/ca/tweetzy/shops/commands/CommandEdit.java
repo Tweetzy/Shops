@@ -24,6 +24,8 @@ public class CommandEdit extends AbstractCommand {
 
     @Override
     protected ReturnType runCommand(CommandSender sender, String... args) {
+        if (args.length != 1) return ReturnType.SYNTAX_ERROR;
+
         Player player = (Player) sender;
         Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
         if (shop == null) {
