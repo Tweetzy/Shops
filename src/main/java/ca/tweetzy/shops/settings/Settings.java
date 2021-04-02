@@ -279,6 +279,11 @@ public class Settings {
             "&7Total&f: &a$%shop_cart_total%"
     ));
 
+    public static final ConfigSetting GUI_SHOP_CART_ITEM_LORE = new ConfigSetting(config, "guis.cart.items.item lore", Arrays.asList(
+            "&7Quantity&f: &ax%shop_item_quantity%",
+            "&7Price&f: &a$%shop_item_price%"
+    ));
+
     /*
     =========== SHOP ITEM SELECT OPTIONS ===========
      */

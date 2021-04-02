@@ -106,7 +106,7 @@ public class GUICart extends Gui {
         List<CartItem> data = this.shopItems.stream().skip((page - 1) * 27L).limit(27).collect(Collectors.toList());
         for (CartItem item : data) {
             ItemStack parsed = ShopAPI.getInstance().deserializeItem(item.getItem());
-            setButton(slot++, parsed, ClickType.RIGHT, e -> {
+            setButton(slot++, new TItemBuilder(parsed).setLore(Settings.GUI_SHOP_CART_ITEM_LORE.getStringList().stream().map(line -> line.replace("%shop_item_price%", String.format("%,.2f", item.getBuyPrice())).replace("%shop_item_quantity%", String.valueOf(item.getQuantity()))).collect(Collectors.toList())).toItemStack(), ClickType.RIGHT, e -> {
                 Shops.getInstance().getPlayerCart().get(this.player.getUniqueId()).remove(item);
                 e.manager.showGUI(this.player, new GUICart(this.player));
             });
