@@ -1,11 +1,14 @@
 package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
+import ca.tweetzy.core.input.ChatPrompt;
+import ca.tweetzy.core.utils.NumberUtils;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
+import ca.tweetzy.shops.managers.StorageManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
@@ -14,7 +17,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -29,11 +35,13 @@ public class GUIShopContents extends Gui {
     final Shop shop;
     final List<ShopItem> shopItems;
     final Player player;
+    final boolean isEdit;
 
-    public GUIShopContents(Player player, Shop shop) {
+    public GUIShopContents(Player player, Shop shop, boolean isEdit) {
         this.player = player;
         this.shop = shop;
         this.shopItems = this.shop.getShopItems();
+        this.isEdit = isEdit;
         setTitle(TextUtils.formatText(Settings.GUI_SHOP_CONTENTS_TITLE.getString().replace("%shop_display_name%", this.shop.getDisplayName()).replace("%shop_id%", this.shop.getId())));
         setDefaultItem(Settings.GUI_SHOP_CONTENTS_BG_ITEM.getMaterial().parseItem());
         setAcceptsItems(false);
@@ -46,6 +54,13 @@ public class GUIShopContents extends Gui {
         if (this.shopItems.size() >= 46) setRows(6);
 
         draw();
+
+        setOnClose(close -> {
+            if (this.isEdit) {
+                StorageManager.getInstance().updateShop(this.player, this.shop);
+                close.manager.showGUI(this.player, new GUIShopEdit(this.shop));
+            }
+        });
     }
 
     private void draw() {
@@ -71,28 +86,63 @@ public class GUIShopContents extends Gui {
         List<ShopItem> data = this.shopItems.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
         for (ShopItem item : data) {
             ItemStack parsed = ShopAPI.getInstance().deserializeItem(item.getItem());
-            setButton(slot++, ConfigurationItemHelper.build(parsed, Settings.GUI_SHOP_CONTENTS_ITEM_NAME.getString(), Settings.GUI_SHOP_CONTENTS_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
+            setButton(slot++, ConfigurationItemHelper.build(parsed, Settings.GUI_SHOP_CONTENTS_ITEM_NAME.getString(), this.isEdit ? Settings.GUI_SHOP_CONTENTS_ITEM_LORE_EDIT.getStringList() : Settings.GUI_SHOP_CONTENTS_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
                 put("%shop_item_name%", item.getName());
-                put("%shop_item_sell_price%", item.isBuyOnly() ? "&cN/A" : String.format("%,.2f", item.getSellPrice()));
-                put("%shop_item_buy_price%", item.isSellOnly() ? "&cN/A" : String.format("%,.2f", item.getBuyPrice()));
+                put("%shop_item_sell_price%", isEdit ? String.format("%,.2f", item.getSellPrice()) : item.isBuyOnly() ? "&c N/A" : String.format("%,.2f", item.getSellPrice()));
+                put("%shop_item_buy_price%", isEdit ? String.format("%,.2f", item.getBuyPrice()) : item.isSellOnly() ? "&c N/A" : String.format("%,.2f", item.getBuyPrice()));
+                put("%shop_item_sell_only%", item.isSellOnly());
+                put("%shop_item_buy_only%", item.isBuyOnly());
                 put("%shop_item_quantity%", parsed.getAmount());
             }}), e -> {
-                if (e.clickType == ClickType.LEFT) {
-                    e.manager.showGUI(e.player, new GUIItemSelection(item));
-                }
-
-                if (e.clickType == ClickType.RIGHT) {
-                    if (this.shop.isSellOnly()) return;
-                    if (item.isSellOnly()) return;
-
-                    if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
-                        Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
-                    } else {
-                        Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
-                            add(new CartItem(item, 1));
-                        }});
+                if (!isEdit) {
+                    if (e.clickType == ClickType.LEFT) {
+                        e.manager.showGUI(e.player, new GUIItemSelection(item));
                     }
-                    draw();
+
+                    if (e.clickType == ClickType.RIGHT) {
+                        if (this.shop.isSellOnly()) return;
+                        if (item.isSellOnly()) return;
+
+                        if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
+                            Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
+                        } else {
+                            Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
+                                add(new CartItem(item, 1));
+                            }});
+                        }
+                        draw();
+                    }
+                } else {
+                    if (e.clickType == ClickType.SHIFT_LEFT) {
+                        item.setBuyOnly(!item.isBuyOnly());
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                    }
+
+                    if (e.clickType == ClickType.SHIFT_RIGHT) {
+                        item.setSellOnly(!item.isSellOnly());
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                    }
+
+                    if (e.clickType == ClickType.MIDDLE) {
+                        this.shop.getShopItems().remove(item);
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                    }
+
+                    if (e.clickType == ClickType.LEFT) {
+                        e.gui.exit();
+                        ChatPrompt.showPrompt(Shops.getInstance(), this.player, TextUtils.formatText(Shops.getInstance().getLocale().getMessage("general.change_buy_price").getMessage()), chat -> {
+                            if (NumberUtils.isDouble(chat.getMessage().trim()))
+                                item.setBuyPrice(Double.parseDouble(chat.getMessage().trim()));
+                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true))).setOnCancel(() -> e.manager.showGUI(this.player, this));
+                    }
+
+                    if (e.clickType == ClickType.RIGHT) {
+                        e.gui.exit();
+                        ChatPrompt.showPrompt(Shops.getInstance(), this.player, TextUtils.formatText(Shops.getInstance().getLocale().getMessage("general.change_sell_price").getMessage()), chat -> {
+                            if (NumberUtils.isDouble(chat.getMessage().trim()))
+                                item.setSellPrice(Double.parseDouble(chat.getMessage().trim()));
+                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true))).setOnCancel(() -> e.manager.showGUI(this.player, this));
+                    }
                 }
             });
         }
