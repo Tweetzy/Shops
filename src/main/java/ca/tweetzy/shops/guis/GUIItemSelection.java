@@ -101,7 +101,7 @@ public class GUIItemSelection extends Gui {
         double subTotal = this.shopItem.getBuyPrice() * this.quantity;
         double preTax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
         double discounts = this.shop.isUseBuyDiscount() ? subTotal * (this.shop.getBuyDiscount() / 100) : 0.0D;
-        double totalTax = (subTotal - discounts) * preTax / 100;
+        double totalTax = subTotal * (preTax / 100);
         this.cartTotal = (subTotal - discounts) + totalTax;
 
         return ConfigurationItemHelper.build(Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_ITEM.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_NAME.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE.getStringList(), 1, new HashMap<String, Object>() {{
@@ -197,6 +197,11 @@ public class GUIItemSelection extends Gui {
             case "sell_buy":
                 switch (e.clickType) {
                     case LEFT:
+                        if (this.shop.isRequiresPermissionToBuy() && !e.player.hasPermission(this.shop.getBuyPermission())) {
+                            Shops.getInstance().getLocale().getMessage("general.permission_required.buy").sendPrefixedMessage(e.player);
+                            return;
+                        }
+
                         if (this.shop.isSellOnly()) return;
                         if (this.shopItem.isSellOnly()) return;
 
@@ -212,6 +217,11 @@ public class GUIItemSelection extends Gui {
                         }
                         break;
                     case RIGHT:
+                        if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
+                            Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
+                            return;
+                        }
+
                         if (this.shop.isBuyOnly()) return;
                         if (this.shopItem.isBuyOnly()) return;
                         break;
