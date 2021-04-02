@@ -2,7 +2,7 @@ general:
     prefix: "&8[&eShops&8]"
     reloaded: "&aShops has been reloaded (%value%ms)"
     percentage_change:
-        sell_percentage: "&ePlease enter sell discount percentage (ex. 24.50):"
+        sell_percentage: "&ePlease enter sell bonus percentage (ex. 24.50):"
         buy_percentage: "&ePlease enter buy discount percentage (ex. 24.50):"
         tax: "&ePlease enter the tax percentage (ex. 24.50):"
     permission_change:
@@ -19,19 +19,22 @@ general:
     nothing_in_hand: "&cYou're not holding an item!"
     not_enough_money: "&cYou do not have enough money!"
     money_remove: "&c- $%value%"
+    permission_required:
+        sell: "&cYou need permission to sell in this shop!"
+        buy: "&cYou need permission to buy in this shop!"
 
 set_command:
     invalid_set_option: "&cThat is not a valid shop setting!"
     changed_shop_visibility: "&aSet the shop visibility to &2%value%"
     changed_shop_sell_only: "&aSet the shop sell only mode to &2%value%"
     changed_shop_buy_only: "&aSet the shop buy only mode to &2%value%"
-    changed_shop_use_sell_discount: "&aSet the shop to use a sell discount to &2%value%"
+    changed_shop_use_sell_bonus: "&aSet the shop to use a sell bonus to &2%value%"
     changed_shop_use_buy_discount: "&aSet the shop to use a buy discount to &2%value%"
     changed_shop_use_see_permission: "&aSet the shop to require see perm to &2%value%"
     changed_shop_use_buy_permission: "&aSet the shop to require buy perm to &2%value%"
     changed_shop_use_sell_permission: "&aSet the shop to require sell perm to &2%value%"
     changed_shop_use_tax: "&aSet the shop tax to &2%value%%"
-    changed_shop_sell_discount: "&aSet the shop sell discount to &2%value%%"
+    changed_shop_sell_bonus: "&aSet the shop sell bonus to &2%value%%"
     changed_shop_buy_discount: "&aSet the shop buy discount to &2%value%%"
     changed_shop_tax: "&aSet the shop tax to &2%value%%"
     changed_shop_see_permission: "&aSet the shop see permission to &2%value%"
