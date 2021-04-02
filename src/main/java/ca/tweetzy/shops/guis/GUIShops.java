@@ -11,6 +11,7 @@ import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,12 +30,14 @@ import java.util.stream.IntStream;
  */
 public class GUIShops extends Gui {
 
+    final Player player;
     List<Shop> shops;
     List<CustomGUIItemHolder> customItems;
     int clicksToEdit = 0;
     boolean editing = false;
 
-    public GUIShops() {
+    public GUIShops(Player player) {
+        this.player = player;
         setTitle(TextUtils.formatText(Settings.GUI_SHOPS_TITLE.getString()));
         setDefaultItem(Settings.GUI_SHOPS_BG_ITEM.getMaterial().parseItem());
         setAcceptsItems(false);
@@ -89,7 +92,11 @@ public class GUIShops extends Gui {
         long perPage = getRows() < 6 ? (getRows() * 9L) : 45L;
         List<Shop> data = this.shops.stream().skip((page - 1) * perPage).limit(perPage).collect(Collectors.toList());
         for (Shop shop : data) {
-            setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop)));
+            if (shop.isRequiresPermissionToSee() && this.player.hasPermission(shop.getSeePermission())) {
+                setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false)));
+            } else {
+                setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false)));
+            }
         }
     }
 
@@ -138,13 +145,13 @@ public class GUIShops extends Gui {
                     Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
                 }
 
-                close.manager.showGUI(close.player, new GUIShops());
+                close.manager.showGUI(close.player, new GUIShops(close.player));
             }
         });
     }
 
     private ItemStack getShopIcon(Shop shop) {
-        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), new HashMap<String, Object>() {{
+        ItemStack stack = ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOPS_ITEM_NAME.getString(), Settings.GUI_SHOPS_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
             put("%shop_display_name%", shop.getDisplayName());
             put("%shop_description%", shop.getDescription());
             put("%shop_is_sell_only%", shop.isSellOnly());

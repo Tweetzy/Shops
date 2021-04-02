@@ -127,7 +127,9 @@ public class Shops extends TweetyPlugin {
                 new CommandSet(),
                 new CommandAddItem(),
                 new CommandList(),
-                new CommandSettings()
+                new CommandCart(),
+                new CommandSettings(),
+                new CommandReload()
         );
 
         // Metrics, don't ask them if they want it enabled since bStats has it's on system

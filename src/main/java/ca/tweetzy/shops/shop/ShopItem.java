@@ -60,7 +60,7 @@ public class ShopItem implements Serializable {
     public String getName() {
         ItemStack stack = ShopAPI.getInstance().deserializeItem(this.item);
         if (stack == null) return "Invalid Item";
-        if (!stack.hasItemMeta()) return TextUtils.formatText("&7" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
-        return stack.getItemMeta().hasDisplayName() ? ChatColor.stripColor(stack.getItemMeta().getDisplayName()) : TextUtils.formatText("&7" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
+        if (!stack.hasItemMeta()) return TextUtils.formatText("&f" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
+        return stack.getItemMeta().hasDisplayName() ? ChatColor.stripColor(stack.getItemMeta().getDisplayName()) : TextUtils.formatText("&f" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
     }
 }
