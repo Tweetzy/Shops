@@ -6,6 +6,7 @@ import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
+import ca.tweetzy.shops.api.events.ShopBuyEvent;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
@@ -89,6 +90,9 @@ public class GUICart extends Gui {
                 Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
                 return;
             }
+
+            ShopBuyEvent shopBuyEvent = new ShopBuyEvent(this.player, this.shopItems);
+            if (shopBuyEvent.isCancelled()) return;
 
             Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
             Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", cartTotal)).sendPrefixedMessage(this.player);
