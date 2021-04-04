@@ -39,7 +39,7 @@ public class Shop implements Serializable {
     private boolean requiresPermissionToSell;
     private boolean requiresPermissionToBuy;
 
-    private double sellDiscount;
+    private double sellBonus;
     private double buyDiscount;
     private double tax;
 
@@ -62,7 +62,7 @@ public class Shop implements Serializable {
         this.requiresPermissionToSee = false;
         this.requiresPermissionToSell = false;
         this.requiresPermissionToBuy = false;
-        this.sellDiscount = 0.0D;
+        this.sellBonus = 0.0D;
         this.buyDiscount = 0.0D;
         this.tax = 0.0D;
         this.seePermission = "shops.see." + id.toLowerCase();

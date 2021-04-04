@@ -90,10 +90,10 @@ public class UpdateChecker {
                     plugin.getLocale().newMessage(TextUtils.formatText("&aIs running the latest version!")).sendPrefixedMessage(sender);
                     break;
                 case UPDATE_AVAILABLE:
-                    plugin.getLocale().newMessage(TextUtils.formatText("&dA new update is available for Shops")).sendPrefixedMessage(sender);
+                    plugin.getLocale().newMessage(TextUtils.formatText(String.format("&dA new update is available for %s", plugin.getDescription().getName()))).sendPrefixedMessage(sender);
                     break;
                 case UNRELEASED_VERSION:
-                    plugin.getLocale().newMessage(TextUtils.formatText(String.format("&dYou're running an unreleased version of Shops &f(&c%s&f)", plugin.getDescription().getVersion()))).sendPrefixedMessage(sender);
+                    plugin.getLocale().newMessage(TextUtils.formatText(String.format("&dYou're running an unreleased version of %s &f(&c%s&f)", plugin.getDescription().getName(), plugin.getDescription().getVersion()))).sendPrefixedMessage(sender);
                     break;
                 case UNKNOWN:
                     plugin.getLocale().newMessage(TextUtils.formatText("&cUnknown version is in use")).sendPrefixedMessage(sender);
