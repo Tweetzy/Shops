@@ -7,6 +7,8 @@ import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.nms.NBTEditor;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
+import ca.tweetzy.shops.api.events.ShopBuyEvent;
+import ca.tweetzy.shops.api.events.ShopSellEvent;
 import ca.tweetzy.shops.custom.CustomGUIItem;
 import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
@@ -204,6 +206,9 @@ public class GUIItemSelection extends Gui {
                         if (this.shop.isSellOnly()) return;
                         if (this.shopItem.isSellOnly()) return;
 
+                        ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
+                        if (shopBuyEvent.isCancelled()) return;
+
                         if (!Shops.getInstance().getEconomy().has(e.player, this.cartTotal)) {
                             Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
                             return;
@@ -229,6 +234,9 @@ public class GUIItemSelection extends Gui {
 
                         double preTotalSell = this.shopItem.getSellPrice() * itemCount;
                         double sellBonus = this.shop.isUseSellDiscount() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+
+                        ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, itemCount);
+                        if (shopSellEvent.isCancelled()) return;
 
                         ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, itemCount);
                         Shops.getInstance().getEconomy().depositPlayer(e.player, (preTotalSell + sellBonus));
