@@ -61,7 +61,7 @@ public class GUIShopEdit extends Gui {
         setItem(4, 1, ConfigurationItemHelper.build(this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_ITEM.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_ITEM.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_NAME.getString() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_NAME.getString(), this.shop.isBuyOnly() ? Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_ON_LORE.getStringList() : Settings.GUI_SHOP_EDIT_ITEMS_TOGGLE_BUY_ONLY_OFF_LORE.getStringList(), null, "shops:edit:button;buy_only"));
         // Sell Discount
         setItem(2, 2, ConfigurationItemHelper.build(Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_ITEM.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_SELL_DISCOUNT_LORE.getStringList(), new HashMap<String, Object>() {{
-            put("%shop_sell_bonus%", shop.getSellDiscount());
+            put("%shop_sell_bonus%", shop.getSellBonus());
             put("%shop_sell_bonus_enable%", shop.isUseSellDiscount());
         }}, "shops:edit:button;sell_discount"));
         // Buy Discount
@@ -140,7 +140,7 @@ public class GUIShopEdit extends Gui {
                         e.gui.exit();
                         ChatPrompt.showPrompt(Shops.getInstance(), e.player, Shops.getInstance().getLocale().getMessage("general.percentage_change.sell_percentage").getMessage(), chat -> {
                             if (NumberUtils.isDouble(chat.getMessage().trim()))
-                                this.shop.setSellDiscount(Double.parseDouble(chat.getMessage().trim()));
+                                this.shop.setSellBonus(Double.parseDouble(chat.getMessage().trim()));
                         }).setOnClose(() -> e.manager.showGUI(e.player, new GUIShopEdit(this.shop))).setOnCancel(() -> e.manager.showGUI(e.player, this));
                     }
                     break;
