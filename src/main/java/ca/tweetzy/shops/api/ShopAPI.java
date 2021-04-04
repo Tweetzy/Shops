@@ -34,46 +34,82 @@ public class ShopAPI {
         return instance;
     }
 
+    /**
+     * Check if a shop exists on file
+     *
+     * @param shopId is the shop name used when creating the shop
+     * @return true if the shop can be found on file
+     */
     public boolean exists(String shopId) {
         return Shops.getInstance().getData().contains("shops." + shopId.toLowerCase());
     }
 
+    /**
+     * Used to create a shop on the flat file
+     *
+     * @param shop is the shop object
+     */
     public void createShop(Shop shop) {
         Shops.getInstance().getData().set("shops." + shop.getId().toLowerCase() + ".data", convertToBase64(shop));
         Shops.getInstance().getData().save();
     }
 
+    /**
+     * Used to remove an existing shop
+     *
+     * @param shopId is the id of the shop being removed
+     */
     public void removeShop(String shopId) {
         Shops.getInstance().getData().set("shops." + shopId.toLowerCase(), null);
         Shops.getInstance().getData().save();
     }
 
+    /**
+     * Used to save custom gui items
+     *
+     * @param holder is the holder object
+     */
     public void saveCustomGuiItems(CustomGUIItemHolder holder) {
         Shops.getInstance().getData().set("custom gui items." + holder.getGuiName().toLowerCase() + ".data", convertToBase64(holder));
         Shops.getInstance().getData().save();
     }
 
+    /**
+     * Used to get the item the player is currently holding in their main hand
+     *
+     * @param player is the player you're trying to get the held item
+     * @return the item stack the player is currently holding
+     */
     public ItemStack getHeldItem(Player player) {
         return ServerVersion.isServerVersionAbove(ServerVersion.V1_8) ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInHand();
     }
 
-    /**
-     * Used to convert a number into a readable format (commas, suffix)
-     *
-     * @param original is the original number being converted
-     * @return the user friendly number
-     */
-    public String getFormattedNumber(double original) {
-        int power;
-        String suffix = " KMBTQ";
-        String formatted = "";
+    public int getItemCountInPlayerInventory(Player player, ItemStack stack) {
+        int total = 0;
+        for (ItemStack item : player.getInventory().getContents()) {
+            if (item == null || !item.isSimilar(stack)) continue;
+            total += item.getAmount();
+        }
+        return total;
+    }
 
-        NumberFormat formatter = new DecimalFormat("#,###.#");
-        power = (int) StrictMath.log10(original);
-        original = original / (Math.pow(10, (power / 3) * 3));
-        formatted = formatter.format(original);
-        formatted = formatted + suffix.charAt(power / 3);
-        return formatted.length() > 4 ? formatted.replaceAll("\\.[0-9]+", "") : formatted;
+    public void removeSpecificItemQuantityFromPlayer(Player player, ItemStack stack, int amount) {
+        if (amount <= 0) return;
+        for (int i = 0; i < player.getInventory().getSize(); i++) {
+            ItemStack item = player.getInventory().getItem(i);
+            if (item == null) continue;
+            if (!item.isSimilar(stack)) continue;
+
+            int updatedQty = item.getAmount() - amount;
+            if (updatedQty > 0) {
+                item.setAmount(updatedQty);
+                break;
+            } else {
+                player.getInventory().clear(i);
+                amount -= updatedQty;
+                if (amount == 0) break;
+            }
+        }
     }
 
     /**

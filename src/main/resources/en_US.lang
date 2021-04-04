@@ -19,6 +19,7 @@ general:
     nothing_in_hand: "&cYou're not holding an item!"
     not_enough_money: "&cYou do not have enough money!"
     money_remove: "&c- $%value%"
+    money_add: "&a+ $%value%"
     permission_required:
         sell: "&cYou need permission to sell in this shop!"
         buy: "&cYou need permission to buy in this shop!"
