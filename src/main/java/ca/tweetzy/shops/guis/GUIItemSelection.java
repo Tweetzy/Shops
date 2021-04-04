@@ -14,7 +14,6 @@ import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import ca.tweetzy.shops.shop.ShopItem;
-import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -224,6 +223,16 @@ public class GUIItemSelection extends Gui {
 
                         if (this.shop.isBuyOnly()) return;
                         if (this.shopItem.isBuyOnly()) return;
+
+                        int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
+                        if (itemCount == 0) return;
+
+                        double preTotalSell = this.shopItem.getSellPrice() * itemCount;
+                        double sellBonus = this.shop.isUseSellDiscount() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+
+                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, itemCount);
+                        Shops.getInstance().getEconomy().depositPlayer(e.player, (preTotalSell + sellBonus));
+                        Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
                         break;
                 }
                 break;
