@@ -138,7 +138,7 @@ public class CommandSet extends AbstractCommand {
                     break;
                 case "sellbonus":
                     if (isValidPercentage(player, args[2])) {
-                        shop.setSellDiscount(Double.parseDouble(args[2]));
+                        shop.setSellBonus(Double.parseDouble(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_sell_bonus").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
