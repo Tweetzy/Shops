@@ -33,7 +33,7 @@ import java.util.stream.IntStream;
  */
 public class GUIItemSelection extends Gui {
 
-    List<CustomGUIItemHolder> customItems;
+    final List<CustomGUIItemHolder> customItems;
     final ShopItem shopItem;
     final Shop shop;
     final ItemStack deserializedItem;
