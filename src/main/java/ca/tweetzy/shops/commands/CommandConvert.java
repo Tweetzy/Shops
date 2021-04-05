@@ -97,16 +97,16 @@ public class CommandConvert extends AbstractCommand {
 
     @Override
     public String getPermissionNode() {
-        return null;
+        return "shops.cmd.convert";
     }
 
     @Override
     public String getSyntax() {
-        return null;
+        return "convert [confirm]";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "Used to convert from pre 2.0.0+";
     }
 }

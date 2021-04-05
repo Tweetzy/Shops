@@ -6,7 +6,6 @@ import ca.tweetzy.shops.api.ShopAPI;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang.WordUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;

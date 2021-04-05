@@ -197,9 +197,8 @@ public class DiscordWebhook {
             return fields;
         }
 
-        public EmbedObject setTitle(String title) {
+        public void setTitle(String title) {
             this.title = title;
-            return this;
         }
 
         public EmbedObject setDescription(String description) {
@@ -212,9 +211,8 @@ public class DiscordWebhook {
             return this;
         }
 
-        public EmbedObject setColor(Color color) {
+        public void setColor(Color color) {
             this.color = color;
-            return this;
         }
 
         public EmbedObject setFooter(String text, String icon) {
@@ -237,12 +235,11 @@ public class DiscordWebhook {
             return this;
         }
 
-        public EmbedObject addField(String name, String value, boolean inline) {
+        public void addField(String name, String value, boolean inline) {
             this.fields.add(new Field(name, value, inline));
-            return this;
         }
 
-        private class Footer {
+        private static class Footer {
             private final String text;
             private final String iconUrl;
 
@@ -260,7 +257,7 @@ public class DiscordWebhook {
             }
         }
 
-        private class Thumbnail {
+        private static class Thumbnail {
             private final String url;
 
             private Thumbnail(String url) {
@@ -272,7 +269,7 @@ public class DiscordWebhook {
             }
         }
 
-        private class Image {
+        private static class Image {
             private final String url;
 
             private Image(String url) {
@@ -284,7 +281,7 @@ public class DiscordWebhook {
             }
         }
 
-        private class Author {
+        private static class Author {
             private final String name;
             private final String url;
             private final String iconUrl;
@@ -308,7 +305,7 @@ public class DiscordWebhook {
             }
         }
 
-        private class Field {
+        private static class Field {
             private final String name;
             private final String value;
             private final boolean inline;
@@ -333,7 +330,7 @@ public class DiscordWebhook {
         }
     }
 
-    private class JSONObject {
+    private static class JSONObject {
 
         private final HashMap<String, Object> map = new HashMap<>();
 
