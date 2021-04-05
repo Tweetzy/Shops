@@ -1,11 +1,15 @@
 package ca.tweetzy.shops.managers;
 
 import ca.tweetzy.core.commands.AbstractCommand;
+import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
@@ -25,6 +29,24 @@ public class StorageManager {
             instance = new StorageManager();
         }
         return instance;
+    }
+
+    public void convertShops(CommandSender sender, List<Shop> shops) {
+        if (Settings.DATABASE_USE.getBoolean()) {
+            Shops.getInstance().getDataManager().createShops(shops, failure -> {
+                if (failure) {
+                    Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&cSomething went wrong trying to convert the shops")).sendPrefixedMessage(sender);
+                } else {
+                    Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&aUploaded the converted shops to the database")).sendPrefixedMessage(sender);
+                    Shops.getInstance().getShopManager().loadShops(true, true);
+                }
+            });
+        } else {
+            for (Shop shop : shops) {
+                ShopAPI.getInstance().createShop(shop);
+            }
+            Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&aUploaded the converted shops to the database")).sendPrefixedMessage(sender);
+        }
     }
 
     public AbstractCommand.ReturnType createShop(Player player, Shop shop) {
