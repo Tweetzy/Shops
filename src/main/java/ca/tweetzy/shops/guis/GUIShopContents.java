@@ -47,11 +47,10 @@ public class GUIShopContents extends Gui {
         setAcceptsItems(false);
 
         if (this.shopItems.size() >= 1 && this.shopItems.size() <= 9) setRows(2);
-        if (this.shopItems.size() >= 10 && this.shopItems.size() <= 18) setRows(2);
-        if (this.shopItems.size() >= 19 && this.shopItems.size() <= 27) setRows(3);
-        if (this.shopItems.size() >= 28 && this.shopItems.size() <= 36) setRows(4);
-        if (this.shopItems.size() >= 37 && this.shopItems.size() <= 45) setRows(5);
-        if (this.shopItems.size() >= 46) setRows(6);
+        if (this.shopItems.size() >= 10 && this.shopItems.size() <= 18) setRows(3);
+        if (this.shopItems.size() >= 19 && this.shopItems.size() <= 27) setRows(4);
+        if (this.shopItems.size() >= 28 && this.shopItems.size() <= 36) setRows(5);
+        if (this.shopItems.size() >= 37) setRows(6);
 
         draw();
 
@@ -59,6 +58,8 @@ public class GUIShopContents extends Gui {
             if (this.isEdit) {
                 StorageManager.getInstance().updateShop(this.player, this.shop);
                 close.manager.showGUI(this.player, new GUIShopEdit(this.shop));
+            } else {
+                close.manager.showGUI(this.player, new GUIShops(this.player));
             }
         });
     }
