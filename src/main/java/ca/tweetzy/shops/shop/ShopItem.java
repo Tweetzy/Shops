@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The current file has been created by Kiran Hart
@@ -59,8 +60,7 @@ public class ShopItem implements Serializable {
 
     public String getName() {
         ItemStack stack = ShopAPI.getInstance().deserializeItem(this.item);
-        if (stack == null) return "Invalid Item";
-        if (!stack.hasItemMeta()) return TextUtils.formatText("&f" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
-        return stack.getItemMeta().hasDisplayName() ? ChatColor.stripColor(stack.getItemMeta().getDisplayName()) : TextUtils.formatText("&f" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
+        Objects.requireNonNull(stack, "Item stack cannot be null when getting name");
+        return stack.getItemMeta().hasDisplayName() ? stack.getItemMeta().getDisplayName() : TextUtils.formatText("&f" + WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")));
     }
 }
