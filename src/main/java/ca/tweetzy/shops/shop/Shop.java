@@ -20,6 +20,8 @@ import java.util.ArrayList;
 @Setter
 public class Shop implements Serializable {
 
+    static final long serialVersionUID = 1L;
+
     private String id;
     private String displayName;
     private String description;
