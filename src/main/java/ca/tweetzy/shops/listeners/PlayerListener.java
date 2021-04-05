@@ -5,6 +5,8 @@ import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.guis.GUIShopEdit;
+import ca.tweetzy.shops.managers.StorageManager;
+import ca.tweetzy.shops.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,6 +30,7 @@ public class PlayerListener implements Listener {
         if (e.getItem() != null) {
             Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getItem()));
             Shops.getInstance().getGuiManager().showGUI(e.getPlayer(), new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId())));
+            StorageManager.getInstance().updateShop(e.getPlayer(), Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()));
             Shops.getInstance().getOutOfGuiAccess().remove(e.getPlayer().getUniqueId());
         }
     }
@@ -40,7 +43,9 @@ public class PlayerListener implements Listener {
 
             Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getCurrentItem()));
             Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId())));
+            StorageManager.getInstance().updateShop(player, Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()));
             Shops.getInstance().getOutOfGuiAccess().remove(player.getUniqueId());
+            Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
         }
     }
 
