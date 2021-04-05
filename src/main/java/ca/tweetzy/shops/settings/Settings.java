@@ -34,6 +34,41 @@ public class Settings {
     public static final ConfigSetting DATABASE_USE_SSL = new ConfigSetting(config, "database.use ssl", true, "Should the database connection use ssl?");
 
     /*
+    =========== DISCORD OPTIONS ===========
+     */
+    public static final ConfigSetting DISCORD_USE = new ConfigSetting(config, "discord.enabled", true, "Should the discord messages be enabled?");
+    public static final ConfigSetting DISCORD_ALERT_ON_SELL = new ConfigSetting(config, "discord.alert on item sell", true, "Should a message be sent to the discord server when a user sells an item?");
+    public static final ConfigSetting DISCORD_ALERT_ON_BUY = new ConfigSetting(config, "discord.alert on item buy", true, "Should a message be sent to the discord server when a user buys an item?");
+    public static final ConfigSetting DISCORD_WEBHOOKS = new ConfigSetting(config, "discord.webhooks", Collections.singletonList("https://discord.com/api/webhooks/828398321407361054/IecxENcYA58qdJX4zzxfJIPsDS364raMtzA6_CPZ7hEp93Ou1LBp32gQ8nEkxHM1O8mR"), "A list of webhook urls (channels) you want a message sent to");
+    public static final ConfigSetting DISCORD_MSG_USERNAME = new ConfigSetting(config, "discord.user.username", "Shops", "The name of the user who will send the message");
+    public static final ConfigSetting DISCORD_MSG_PFP = new ConfigSetting(config, "discord.user.avatar picture", "https://cdn.kiranhart.com/spigot/shops/icon.png", "The avatar image of the discord user");
+    public static final ConfigSetting DISCORD_MSG_USE_RANDOM_COLOUR = new ConfigSetting(config, "discord.msg.use random colour", true, "colour of the message bar");
+    public static final ConfigSetting DISCORD_MSG_DEFAULT_COLOUR = new ConfigSetting(config, "discord.msg.default colour", "137-100-100", "The color of the embed, it needs to be in hsb format.", "Separate the numbers with a -");
+    public static final ConfigSetting DISCORD_MSG_SELL_TITLE = new ConfigSetting(config, "discord.msg.item sold title", "Item Sold", "The title of the message when a user sells an item.");
+    public static final ConfigSetting DISCORD_MSG_BUY_TITLE = new ConfigSetting(config, "discord.msg.item bought title", "Item Bought", "The title of the message when a user buys an item");
+    public static final ConfigSetting DISCORD_MSG_BUY_CART_TITLE = new ConfigSetting(config, "discord.msg.item bought from cart title", "Item(s) Bought", "The title of th message when a user buys items from the cart");
+
+    public static final ConfigSetting DISCORD_MSG_FIELD_PLAYER_NAME = new ConfigSetting(config, "discord.msg.player.name", "Player");
+    public static final ConfigSetting DISCORD_MSG_FIELD_PLAYER_VALUE = new ConfigSetting(config, "discord.msg.player.value", "%player%");
+    public static final ConfigSetting DISCORD_MSG_FIELD_PLAYER_INLINE = new ConfigSetting(config, "discord.msg.player.inline", true);
+
+    public static final ConfigSetting DISCORD_MSG_FIELD_QTY_NAME = new ConfigSetting(config, "discord.msg.qty.name", "Quantity");
+    public static final ConfigSetting DISCORD_MSG_FIELD_QTY_VALUE = new ConfigSetting(config, "discord.msg.qty.value", "%quantity%");
+    public static final ConfigSetting DISCORD_MSG_FIELD_QTY_INLINE = new ConfigSetting(config, "discord.msg.qty.inline", true);
+
+    public static final ConfigSetting DISCORD_MSG_FIELD_PRICE_NAME = new ConfigSetting(config, "discord.msg.price.name", "Price");
+    public static final ConfigSetting DISCORD_MSG_FIELD_PRICE_VALUE = new ConfigSetting(config, "discord.msg.price.value", "$%price%");
+    public static final ConfigSetting DISCORD_MSG_FIELD_PRICE_INLINE = new ConfigSetting(config, "discord.msg.price.inline", true);
+
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEM_NAME = new ConfigSetting(config, "discord.msg.item.name", "Purchased Item");
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEM_VALUE = new ConfigSetting(config, "discord.msg.item.value", "%item_name%");
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEM_INLINE = new ConfigSetting(config, "discord.msg.item.inline", true);
+
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEMS_NAME = new ConfigSetting(config, "discord.msg.cart items.name", "Purchased Items");
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEMS_VALUE = new ConfigSetting(config, "discord.msg.cart items.value", "%purchased_items%");
+    public static final ConfigSetting DISCORD_MSG_FIELD_ITEMS_INLINE = new ConfigSetting(config, "discord.msg.cart items.inline", true);
+
+    /*
    =========== GLOBAL BUTTONS FOR GUIS ===========
     */
     public static final ConfigSetting GUI_BACK_BTN_ITEM = new ConfigSetting(config, "guis.global items.back button.item", "ARROW", "Settings for the back button");

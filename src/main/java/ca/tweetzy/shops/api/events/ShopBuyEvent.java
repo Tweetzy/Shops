@@ -5,9 +5,6 @@ import ca.tweetzy.shops.shop.ShopItem;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 
 import java.util.List;
 
@@ -20,34 +17,21 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ShopBuyEvent extends Event implements Listener {
+public class ShopBuyEvent extends ShopEvent {
 
-    private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
-
-    private Player buyer;
-    private ShopItem shopItem;
     private List<CartItem> cartItems;
-
-    private int quantity;
     private boolean fromCart;
 
-    public ShopBuyEvent(Player buyer, ShopItem shopItem, int quantity) {
-        this.buyer = buyer;
-        this.shopItem = shopItem;
-        this.quantity = quantity;
+    public ShopBuyEvent(Player player, List<CartItem> cartItems) {
+        super(player, cartItems.get(0), true, cartItems.get(0).getQuantity());
+        this.fromCart = true;
+        this.cartItems = cartItems;
+        this.quantity = cartItems.stream().mapToInt(CartItem::getQuantity).sum();
+    }
+
+    public ShopBuyEvent(Player player, ShopItem shopItem, int quantity) {
+        super(player, shopItem, true, quantity);
         this.fromCart = false;
         this.cartItems = null;
-    }
-
-    public ShopBuyEvent(Player buyer, List<CartItem> cartItems) {
-        this(buyer, null, 0);
-        this.cartItems = cartItems;
-        this.fromCart = true;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
     }
 }
