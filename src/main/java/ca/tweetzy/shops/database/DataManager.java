@@ -41,6 +41,25 @@ public class DataManager extends DataManagerAbstract {
         }));
     }
 
+    public void createShops(List<Shop> shops, Consumer<Boolean> result) {
+        this.async(() -> this.databaseConnector.connect(connection -> {
+            String createShop = "INSERT IGNORE INTO " + this.getTablePrefix() + "shops SET shop_id = ?, shop_data = ?";
+            PreparedStatement statement = connection.prepareStatement(createShop);
+            shops.forEach(shop -> {
+                try {
+                    statement.setString(1, shop.getId());
+                    statement.setString(2, ShopAPI.getInstance().convertToBase64(shop));
+                    statement.addBatch();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            int[] status = statement.executeBatch();
+            this.sync(() -> result.accept(status[0] == 0));
+        }));
+    }
+
     public void removeShop(String shopId, Consumer<Boolean> result) {
         this.async(() -> this.databaseConnector.connect(connection -> {
             String removeShop = "DELETE FROM " + this.getTablePrefix() + "shops WHERE shop_id = ?";

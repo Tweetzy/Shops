@@ -4,6 +4,7 @@ import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.shops.api.ShopAPI;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,5 +70,22 @@ public class Shop implements Serializable {
         this.sellPermission = "shops.sell." + id.toLowerCase();
         this.buyPermission = "shops.buy." + id.toLowerCase();
         this.shopItems = new ArrayList<>();
+    }
+
+    public Shop(String id, String displayName, ItemStack icon, boolean isPublic, boolean sellOnly, boolean buyOnly, boolean useBuyDiscount, double buyDiscount) {
+        this(id);
+        this.displayName = displayName;
+        this.displayIcon = ShopAPI.getInstance().serializeItemStack(icon);
+        this.isPublic = isPublic;
+        this.isSellOnly = sellOnly;
+        this.isBuyOnly = buyOnly;
+        this.useBuyDiscount = useBuyDiscount;
+        this.buyDiscount = buyDiscount;
+    }
+
+    // used to make the conversion attempt to prior 2.0.0 to 2.0.0
+    public Shop(String id, String displayName, ItemStack icon, boolean isPublic, boolean sellOnly, boolean buyOnly, boolean useBuyDiscount, double buyDiscount, ArrayList<ShopItem> shopItems) {
+        this(id, displayName, icon, isPublic, sellOnly, buyOnly, useBuyDiscount, buyDiscount);
+        this.shopItems = shopItems;
     }
 }
