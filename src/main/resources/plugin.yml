@@ -10,3 +10,53 @@ depend: [Vault]
 commands:
   shops:
     description: Main command for the shop plugin
+    aliases: [shop]
+    usage: /shops
+
+permissions:
+  shops.*:
+    shops.cmd: true
+    shops.cmd.additem: true
+    shops.cmd.cart: true
+    shops.cmd.convert: true
+    shops.cmd.create: true
+    shops.cmd.edit: true
+    shops.cmd.list: true
+    shops.cmd.reload: true
+    shops.cmd.remove: true
+    shops.cmd.set: true
+    shops.cmd.settings: true
+    shops.admin: true
+  shops.cmd:
+    description: Allows the user to view the public shops
+    default: op
+  shops.cmd.additem:
+    description: Allows the user to add an item to a shop
+    default: op
+  shops.cmd.cart:
+    description: Allows the user to open their cart
+    default: op
+  shops.cmd.convert:
+    description: Allows the user to run the conversion task
+    default: op
+  shops.cmd.create:
+    description: Allows the user to create a new shop
+    default: op
+  shops.cmd.edit:
+    description: Allows the user to edit a shop
+    default: op
+  shops.cmd.list:
+    description: Allows the user to list out all created shops.
+    default: op
+  shops.cmd.reload:
+    description: Allows the user to reload the plugin
+    default: op
+  shops.cmd.remove:
+    description: Allows the user to remove a shop
+    default: op
+  shops.cmd.set:
+    description: Allows the user to user to change options on a shop
+    default: op
+  shops.cmd.settings:
+    description: Allows the user to open the in game config editor
+    default: op
