@@ -16,6 +16,7 @@ import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import ca.tweetzy.shops.shop.ShopItem;
+import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -207,6 +208,7 @@ public class GUIItemSelection extends Gui {
                         if (this.shopItem.isSellOnly()) return;
 
                         ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
+                        Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
                         if (shopBuyEvent.isCancelled()) return;
 
                         if (!Shops.getInstance().getEconomy().has(e.player, this.cartTotal)) {
@@ -233,9 +235,10 @@ public class GUIItemSelection extends Gui {
                         if (itemCount == 0) return;
 
                         double preTotalSell = this.shopItem.getSellPrice() * itemCount;
-                        double sellBonus = this.shop.isUseSellDiscount() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+                        double sellBonus = this.shop.isUseSellBonus() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
 
                         ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, itemCount);
+                        Bukkit.getServer().getPluginManager().callEvent(shopSellEvent);
                         if (shopSellEvent.isCancelled()) return;
 
                         ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, itemCount);

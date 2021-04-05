@@ -31,7 +31,7 @@ public class Shop implements Serializable {
     private boolean isSellOnly;
     private boolean isBuyOnly;
 
-    private boolean useSellDiscount;
+    private boolean useSellBonus;
     private boolean useBuyDiscount;
     private boolean useTax;
 
@@ -56,7 +56,7 @@ public class Shop implements Serializable {
         this.displayIcon = ShopAPI.getInstance().serializeItemStack(XMaterial.GRASS_BLOCK.parseItem());
         this.page = 1;
         this.slot = 0;
-        this.useSellDiscount = false;
+        this.useSellBonus = false;
         this.useBuyDiscount = false;
         this.useTax = false;
         this.requiresPermissionToSee = false;

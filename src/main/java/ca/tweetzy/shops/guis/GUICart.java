@@ -11,6 +11,7 @@ import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import com.google.common.util.concurrent.AtomicDouble;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -92,6 +93,7 @@ public class GUICart extends Gui {
             }
 
             ShopBuyEvent shopBuyEvent = new ShopBuyEvent(this.player, this.shopItems);
+            Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
             if (shopBuyEvent.isCancelled()) return;
 
             Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);

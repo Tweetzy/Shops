@@ -102,7 +102,7 @@ public class CommandSet extends AbstractCommand {
                     break;
                 case "usesellbonus":
                     if (isValidBooleanOption(player, args[2])) {
-                        shop.setUseSellDiscount(Boolean.parseBoolean(args[2]));
+                        shop.setUseSellBonus(Boolean.parseBoolean(args[2]));
                         Shops.getInstance().getLocale().getMessage("set_command.changed_shop_use_sell_bonus").processPlaceholder("value", args[2]).sendPrefixedMessage(player);
                     }
                     break;
