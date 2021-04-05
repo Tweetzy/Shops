@@ -22,6 +22,8 @@ import java.util.Objects;
 @Setter
 public class ShopItem implements Serializable {
 
+    static final long serialVersionUID = 1L;
+
     private String shopId;
     private byte[] item;
 
@@ -33,6 +35,8 @@ public class ShopItem implements Serializable {
 
     private boolean isSellOnly;
     private boolean isBuyOnly;
+
+    private double buyDiscount;
 
     public ShopItem(String shopId, ItemStack item, double sellPrice, double buyPrice, boolean isSellOnly, boolean isBuyOnly) {
         this.shopId = shopId;

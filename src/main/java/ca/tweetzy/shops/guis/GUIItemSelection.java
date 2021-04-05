@@ -177,6 +177,7 @@ public class GUIItemSelection extends Gui {
                         add(new CartItem(shopItem, quantity));
                     }});
                 }
+                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false));
                 break;
             case "decr_one":
                 handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), false);

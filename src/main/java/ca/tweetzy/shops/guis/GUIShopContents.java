@@ -69,7 +69,7 @@ public class GUIShopContents extends Gui {
         pages = (int) Math.max(1, Math.ceil(this.shopItems.size() / (double) 45));
 
         if (Settings.GUI_SHOP_CONTENTS_FILL_BG.getBoolean()) {
-            IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, Settings.GUI_SHOP_CART_BAR_ITEM.getMaterial().parseItem()));
+            IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, Settings.GUI_SHOP_CONTENTS_BG_ITEM.getMaterial().parseItem()));
         }
 
         setPrevPage(getRows() - 1, 3, new TItemBuilder(Objects.requireNonNull(Settings.GUI_BACK_BTN_ITEM.getMaterial().parseMaterial())).setName(Settings.GUI_BACK_BTN_NAME.getString()).setLore(Settings.GUI_BACK_BTN_LORE.getStringList()).toItemStack());
