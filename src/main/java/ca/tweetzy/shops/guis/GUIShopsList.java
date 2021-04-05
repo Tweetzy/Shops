@@ -53,7 +53,11 @@ public class GUIShopsList extends Gui {
                 put("%shop_is_sell_only%", shop.isSellOnly());
                 put("%shop_is_buy_only%", shop.isBuyOnly());
                 put("%shop_item_count%", shop.getShopItems().size());
-            }}), e -> e.manager.showGUI(e.player, new GUIShopEdit(shop)));
+            }}), e ->  {
+                if (e.player.hasPermission("shops.admin")) {
+                    e.manager.showGUI(e.player, new GUIShopEdit(shop));
+                }
+            });
         }
     }
 }
