@@ -134,6 +134,7 @@ public class Shops extends TweetyPlugin {
                 new CommandAddItem(),
                 new CommandList(),
                 new CommandCart(),
+                new CommandOpen(),
                 new CommandSettings(),
                 new CommandReload(),
                 new CommandConvert()

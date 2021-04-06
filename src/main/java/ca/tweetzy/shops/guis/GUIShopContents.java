@@ -37,7 +37,7 @@ public class GUIShopContents extends Gui {
     final Player player;
     final boolean isEdit;
 
-    public GUIShopContents(Player player, Shop shop, boolean isEdit) {
+    public GUIShopContents(Player player, Shop shop, boolean isEdit, boolean fromOpenCommand) {
         this.player = player;
         this.shop = shop;
         this.shopItems = this.shop.getShopItems();
@@ -59,7 +59,8 @@ public class GUIShopContents extends Gui {
                 StorageManager.getInstance().updateShop(this.player, this.shop);
                 close.manager.showGUI(this.player, new GUIShopEdit(this.shop));
             } else {
-                close.manager.showGUI(this.player, new GUIShops(this.player));
+                if (!fromOpenCommand)
+                    close.manager.showGUI(this.player, new GUIShops(this.player));
             }
         });
     }
@@ -101,7 +102,8 @@ public class GUIShopContents extends Gui {
                     }
 
                     if (e.clickType == ClickType.RIGHT) {
-                        if (this.shop.isRequiresPermissionToBuy() && !this.player.hasPermission(this.shop.getBuyPermission())) return;
+                        if (this.shop.isRequiresPermissionToBuy() && !this.player.hasPermission(this.shop.getBuyPermission()))
+                            return;
                         if (this.shop.isSellOnly()) return;
                         if (item.isSellOnly()) return;
 
@@ -117,17 +119,17 @@ public class GUIShopContents extends Gui {
                 } else {
                     if (e.clickType == ClickType.SHIFT_LEFT) {
                         item.setBuyOnly(!item.isBuyOnly());
-                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true, false));
                     }
 
                     if (e.clickType == ClickType.SHIFT_RIGHT) {
                         item.setSellOnly(!item.isSellOnly());
-                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true, false));
                     }
 
                     if (e.clickType == ClickType.MIDDLE) {
                         this.shop.getShopItems().remove(item);
-                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true));
+                        e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true, false));
                     }
 
                     if (e.clickType == ClickType.LEFT) {
@@ -135,7 +137,7 @@ public class GUIShopContents extends Gui {
                         ChatPrompt.showPrompt(Shops.getInstance(), this.player, TextUtils.formatText(Shops.getInstance().getLocale().getMessage("general.change_buy_price").getMessage()), chat -> {
                             if (NumberUtils.isDouble(chat.getMessage().trim()))
                                 item.setBuyPrice(Double.parseDouble(chat.getMessage().trim()));
-                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true))).setOnCancel(() -> e.manager.showGUI(this.player, this));
+                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true, false))).setOnCancel(() -> e.manager.showGUI(this.player, this));
                     }
 
                     if (e.clickType == ClickType.RIGHT) {
@@ -143,7 +145,7 @@ public class GUIShopContents extends Gui {
                         ChatPrompt.showPrompt(Shops.getInstance(), this.player, TextUtils.formatText(Shops.getInstance().getLocale().getMessage("general.change_sell_price").getMessage()), chat -> {
                             if (NumberUtils.isDouble(chat.getMessage().trim()))
                                 item.setSellPrice(Double.parseDouble(chat.getMessage().trim()));
-                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true))).setOnCancel(() -> e.manager.showGUI(this.player, this));
+                        }).setOnClose(() -> e.manager.showGUI(this.player, new GUIShopContents(this.player, this.shop, true, false))).setOnCancel(() -> e.manager.showGUI(this.player, this));
                     }
                 }
             });

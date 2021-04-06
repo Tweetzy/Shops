@@ -94,9 +94,9 @@ public class GUIShops extends Gui {
         for (Shop shop : data) {
             if (shop.isPublic()) {
                 if (shop.isRequiresPermissionToSee() && this.player.hasPermission(shop.getSeePermission())) {
-                    setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false)));
+                    setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false, false)));
                 } else {
-                    setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false)));
+                    setButton(Settings.GUI_SHOPS_DYNAMIC.getBoolean() ? slot++ : Settings.GUI_SHOPS_AUTO_ARRANGE.getBoolean() ? slot++ : editing ? slot++ : shop.getSlot(), getShopIcon(shop), e -> e.manager.showGUI(e.player, new GUIShopContents(e.player, shop, false, false)));
                 }
             }
         }

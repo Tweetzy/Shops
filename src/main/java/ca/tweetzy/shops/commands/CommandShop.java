@@ -17,7 +17,7 @@ import java.util.List;
 public class CommandShop extends AbstractCommand {
 
     public CommandShop() {
-        super(CommandType.PLAYER_ONLY, "shops");
+        super(CommandType.CONSOLE_OK, "shops");
     }
 
     @Override
