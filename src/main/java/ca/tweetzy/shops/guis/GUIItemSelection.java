@@ -165,7 +165,7 @@ public class GUIItemSelection extends Gui {
 
         switch (button) {
             case "close":
-                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false));
+                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
                 break;
             case "add_to_cart":
                 if (this.shop.isSellOnly()) return;
@@ -177,7 +177,7 @@ public class GUIItemSelection extends Gui {
                         add(new CartItem(shopItem, quantity));
                     }});
                 }
-                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false));
+                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
                 break;
             case "decr_one":
                 handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), false);

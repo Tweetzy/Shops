@@ -123,7 +123,7 @@ public class GUIShopEdit extends Gui {
             put("%shop_item_count%", shop.getShopItems().size());
         }}), e -> {
             e.gui.exit();
-            e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, true));
+            e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, true, false));
         });
 
         // Toggle Require Perm to See
