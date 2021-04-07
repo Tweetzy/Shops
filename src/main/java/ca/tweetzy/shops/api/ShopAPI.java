@@ -8,6 +8,7 @@ import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,9 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 
 import java.awt.*;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -101,20 +104,20 @@ public class ShopAPI {
     }
 
     public void removeSpecificItemQuantityFromPlayer(Player player, ItemStack stack, int amount) {
-        if (amount <= 0) return;
-        for (int i = 0; i < player.getInventory().getSize(); i++) {
-            ItemStack item = player.getInventory().getItem(i);
+        int i = amount;
+        for (int j = 0; j < player.getInventory().getSize(); j++) {
+            ItemStack item = player.getInventory().getItem(j);
             if (item == null) continue;
             if (!item.isSimilar(stack)) continue;
 
-            int updatedQty = item.getAmount() - amount;
-            if (updatedQty > 0) {
-                item.setAmount(updatedQty);
-                break;
+            if (i >= item.getAmount()) {
+                player.getInventory().clear(j);
+                i -= item.getAmount();
+            } else if (i > 0) {
+                item.setAmount(item.getAmount() - i);
+                i = 0;
             } else {
-                player.getInventory().clear(i);
-                amount -= updatedQty;
-                if (amount == 0) break;
+                break;
             }
         }
     }
