@@ -234,15 +234,18 @@ public class GUIItemSelection extends Gui {
 
                         int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
                         if (itemCount == 0) return;
+                        if (itemCount < quantity)  {
+                            quantity = itemCount;
+                        }
 
-                        double preTotalSell = this.shopItem.getSellPrice() * itemCount;
+                        double preTotalSell = this.shopItem.getSellPrice() * quantity;
                         double sellBonus = this.shop.isUseSellBonus() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
 
-                        ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, itemCount);
+                        ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, quantity);
                         Bukkit.getServer().getPluginManager().callEvent(shopSellEvent);
                         if (shopSellEvent.isCancelled()) return;
 
-                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, itemCount);
+                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity);
                         Shops.getInstance().getEconomy().depositPlayer(e.player, (preTotalSell + sellBonus));
                         Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
                         break;
