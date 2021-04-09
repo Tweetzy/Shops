@@ -223,7 +223,7 @@ public class ShopAPI {
         String[] possibleColours = Settings.DISCORD_MSG_DEFAULT_COLOUR.getString().split("-");
         Color colour = Settings.DISCORD_MSG_USE_RANDOM_COLOUR.getBoolean()
                 ? Color.getHSBColor(ThreadLocalRandom.current().nextFloat() * 360F, ThreadLocalRandom.current().nextFloat() * 101F, ThreadLocalRandom.current().nextFloat() * 101F)
-                : Color.getHSBColor(Float.parseFloat(possibleColours[0]), Float.parseFloat(possibleColours[1]), Float.parseFloat(possibleColours[2]));
+                : Color.getHSBColor(Float.parseFloat(possibleColours[0]) / 360, Float.parseFloat(possibleColours[1]) / 100, Float.parseFloat(possibleColours[2]) / 100);
 
         DiscordWebhook.EmbedObject embedObject = new DiscordWebhook.EmbedObject();
         embedObject.setTitle(sellEvent != null ? Settings.DISCORD_MSG_SELL_TITLE.getString() : buyEvent.isFromCart() ? Settings.DISCORD_MSG_BUY_CART_TITLE.getString() : Settings.DISCORD_MSG_BUY_TITLE.getString());
