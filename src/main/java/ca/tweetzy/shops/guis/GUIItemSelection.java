@@ -208,14 +208,14 @@ public class GUIItemSelection extends Gui {
                         if (this.shop.isSellOnly()) return;
                         if (this.shopItem.isSellOnly()) return;
 
-                        ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
-                        Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
-                        if (shopBuyEvent.isCancelled()) return;
-
                         if (!Shops.getInstance().getEconomy().has(e.player, this.cartTotal)) {
                             Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
                             return;
                         }
+
+                        ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
+                        Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
+                        if (shopBuyEvent.isCancelled()) return;
 
                         Shops.getInstance().getEconomy().withdrawPlayer(e.player, cartTotal);
                         Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", this.cartTotal)).sendPrefixedMessage(e.player);
