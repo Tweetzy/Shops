@@ -300,7 +300,10 @@ public class Settings {
 
     public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_ITEM = new ConfigSetting(config, "guis.cart.items.confirm.item", XMaterial.LIME_STAINED_GLASS_PANE.name());
     public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_NAME = new ConfigSetting(config, "guis.cart.items.confirm.name", "&aConfirm Purchase");
-    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_LORE = new ConfigSetting(config, "guis.cart.items.confirm.lore", Collections.singletonList("&7Click to make purchase"));
+    public static final ConfigSetting GUI_SHOP_CART_ITEMS_CONFIRM_LORE = new ConfigSetting(config, "guis.cart.items.confirm.lore", Arrays.asList(
+            "&7Left-Click to make purchase",
+            "&7Right-Click to sell contents"
+    ));
 
     public static final ConfigSetting GUI_SHOP_CART_ITEMS_INFO_ITEM = new ConfigSetting(config, "guis.cart.items.info.item", XMaterial.PAPER.name());
     public static final ConfigSetting GUI_SHOP_CART_ITEMS_INFO_NAME = new ConfigSetting(config, "guis.cart.items.info.name", "&eCart Information");

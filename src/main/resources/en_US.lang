@@ -18,6 +18,7 @@ general:
     not_double_value: "&cNot a valid number!"
     nothing_in_hand: "&cYou're not holding an item!"
     not_enough_money: "&cYou do not have enough money!"
+    buy_only_excluded: "&cSome buy only items were excluded from your sell"
     money_remove: "&c- $%value%"
     money_add: "&a+ $%value%"
     permission_required:
