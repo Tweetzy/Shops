@@ -10,6 +10,7 @@ import ca.tweetzy.shops.api.events.ShopBuyEvent;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
+import ca.tweetzy.shops.shop.Shop;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class GUICart extends Gui {
         this.player = player;
         this.shopItems = Shops.getInstance().getPlayerCart().containsKey(this.player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(this.player.getUniqueId()) : new ArrayList<>();
         setTitle(TextUtils.formatText(Settings.GUI_SHOP_CART_TITLE.getString()));
-        setDefaultItem(Settings.GUI_SHOP_CART_BG_ITEM.getMaterial().parseItem());
+        setDefaultItem(Settings.GUI_SHOP_CART_BAR_ITEM.getMaterial().parseItem());
         setAcceptsItems(false);
         setRows(6);
         draw();
@@ -87,24 +88,58 @@ public class GUICart extends Gui {
         setButton(4, 5, ConfigurationItemHelper.build(Settings.GUI_SHOP_CART_ITEMS_CONFIRM_ITEM.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_NAME.getString(), Settings.GUI_SHOP_CART_ITEMS_CONFIRM_LORE.getStringList(), null), e -> {
             if (this.shopItems.size() == 0) return;
 
-            if (!Shops.getInstance().getEconomy().has(this.player, cartTotal)) {
-                Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
-                return;
+            if (e.clickType == ClickType.LEFT) {
+                if (!Shops.getInstance().getEconomy().has(this.player, cartTotal)) {
+                    Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
+                    return;
+                }
+
+                ShopBuyEvent shopBuyEvent = new ShopBuyEvent(this.player, this.shopItems);
+                Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
+                if (shopBuyEvent.isCancelled()) return;
+
+                Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
+                Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", cartTotal)).sendPrefixedMessage(this.player);
+
+                this.shopItems.forEach(cartItem -> {
+                    for (int i = 0; i < cartItem.getQuantity(); i++)
+                        PlayerUtils.giveItem(this.player, ShopAPI.getInstance().deserializeItem(cartItem.getItem()));
+                });
+
+                Shops.getInstance().getPlayerCart().remove(this.player.getUniqueId());
+
+            } else {
+                // handle cart sell
+                boolean hasBuyOnlyItems = false;
+                double sellTotal = 0.0D;
+
+                for (CartItem cartItem : this.shopItems) {
+                    Shop shop = Shops.getInstance().getShopManager().getShop(cartItem.getShopId());
+                    if (shop == null) continue;
+                    if (cartItem.isBuyOnly()) {
+                        hasBuyOnlyItems = true;
+                        continue;
+                    }
+
+                    int quantity = cartItem.getQuantity();
+
+                    int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(this.player, ShopAPI.getInstance().deserializeItem(cartItem.getItem()));
+                    if (itemCount == 0) return;
+                    if (itemCount < quantity) {
+                        quantity = itemCount;
+                    }
+
+                    double preTotalSell = cartItem.getSellPrice() * quantity;
+                    sellTotal += preTotalSell + (shop.isUseSellBonus() ? preTotalSell * (shop.getSellBonus() / 100) : 0D);
+                    ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, ShopAPI.getInstance().deserializeItem(cartItem.getItem()), quantity);
+                }
+
+                Shops.getInstance().getPlayerCart().remove(this.player.getUniqueId());
+                Shops.getInstance().getEconomy().depositPlayer(e.player, sellTotal);
+                Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", String.format("%,.2f", sellTotal)).sendPrefixedMessage(e.player);
+                if (hasBuyOnlyItems) Shops.getInstance().getLocale().getMessage("general.buy_only_excluded").sendPrefixedMessage(e.player);
             }
 
-            ShopBuyEvent shopBuyEvent = new ShopBuyEvent(this.player, this.shopItems);
-            Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
-            if (shopBuyEvent.isCancelled()) return;
-
-            Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
-            Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", cartTotal)).sendPrefixedMessage(this.player);
-
-            this.shopItems.forEach(cartItem -> {
-                for (int i = 0; i < cartItem.getQuantity(); i++)
-                    PlayerUtils.giveItem(this.player, ShopAPI.getInstance().deserializeItem(cartItem.getItem()));
-            });
-
-            Shops.getInstance().getPlayerCart().remove(this.player.getUniqueId());
             e.gui.close();
         });
 
