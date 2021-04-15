@@ -1,6 +1,7 @@
 general:
     prefix: "&8[&eShops&8]"
     reloaded: "&aShops has been reloaded (%value%ms)"
+    cart_disabled: "&cThe cart has been disabled!"
     percentage_change:
         sell_percentage: "&ePlease enter sell bonus percentage (ex. 24.50):"
         buy_percentage: "&ePlease enter buy discount percentage (ex. 24.50):"

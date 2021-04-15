@@ -3,6 +3,7 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.core.commands.AbstractCommand;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.guis.GUICart;
+import ca.tweetzy.shops.settings.Settings;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,6 +23,10 @@ public class CommandCart extends AbstractCommand {
 
     @Override
     protected ReturnType runCommand(CommandSender sender, String... args) {
+        if (!Settings.USE_CART_SYSTEM.getBoolean()) {
+            Shops.getInstance().getLocale().getMessage("general.cart_disabled").sendPrefixedMessage(sender);
+            return ReturnType.FAILURE;
+        }
         Player player = (Player) sender;
         Shops.getInstance().getGuiManager().showGUI(player, new GUICart(player));
         return ReturnType.SUCCESS;
