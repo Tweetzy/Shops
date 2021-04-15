@@ -21,6 +21,7 @@ public class Settings {
     public static final ConfigSetting LANG = new ConfigSetting(config, "lang", "en_US", "Default language file");
     public static final ConfigSetting USE_TAX = new ConfigSetting(config, "tax.enabled", true, "Should tax be applied to the purchase?");
     public static final ConfigSetting TAX_AMOUNT = new ConfigSetting(config, "tax.amount", 13.0D, "Tax percentage as decimal");
+    public static final ConfigSetting USE_CART_SYSTEM = new ConfigSetting(config, "use cart system", true, "Should the cart system be used?");
 
     /*
     =========== DATABASE OPTIONS ===========

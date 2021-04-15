@@ -46,10 +46,14 @@ public class GUIShopContents extends Gui {
         setDefaultItem(Settings.GUI_SHOP_CONTENTS_BG_ITEM.getMaterial().parseItem());
         setAcceptsItems(false);
 
-        if (this.shopItems.size() >= 1 && this.shopItems.size() <= 9) setRows(2);
-        if (this.shopItems.size() >= 10 && this.shopItems.size() <= 18) setRows(3);
-        if (this.shopItems.size() >= 19 && this.shopItems.size() <= 27) setRows(4);
-        if (this.shopItems.size() >= 28 && this.shopItems.size() <= 36) setRows(5);
+        if (this.shopItems.size() >= 1 && this.shopItems.size() <= 9)
+            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 2 : 1);
+        if (this.shopItems.size() >= 10 && this.shopItems.size() <= 18)
+            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 3 : 2);
+        if (this.shopItems.size() >= 19 && this.shopItems.size() <= 27)
+            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 4 : 3);
+        if (this.shopItems.size() >= 28 && this.shopItems.size() <= 36)
+            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 5 : 6);
         if (this.shopItems.size() >= 37) setRows(6);
 
         draw();
@@ -79,10 +83,12 @@ public class GUIShopContents extends Gui {
         setOnPage(e -> draw());
 
         // cart button
-        setButton(getRows() - 1, 8, ConfigurationItemHelper.build(Settings.GUI_SHOP_CONTENTS_CART_ITEM.getString(), Settings.GUI_SHOP_CONTENTS_CART_NAME.getString(), Settings.GUI_SHOP_CONTENTS_CART_LORE.getStringList(), new HashMap<String, Object>() {{
-            put("%shop_cart_item_count%", Shops.getInstance().getPlayerCart().containsKey(player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(player.getUniqueId()).size() : 0);
-            put("%shop_cart_total%", Shops.getInstance().getPlayerCart().containsKey(player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(player.getUniqueId()).stream().mapToDouble(ShopItem::getBuyPrice).sum() : 0D);
-        }}), e -> e.manager.showGUI(this.player, new GUICart(this.player)));
+        if (Settings.USE_CART_SYSTEM.getBoolean()) {
+            setButton(getRows() - 1, 8, ConfigurationItemHelper.build(Settings.GUI_SHOP_CONTENTS_CART_ITEM.getString(), Settings.GUI_SHOP_CONTENTS_CART_NAME.getString(), Settings.GUI_SHOP_CONTENTS_CART_LORE.getStringList(), new HashMap<String, Object>() {{
+                put("%shop_cart_item_count%", Shops.getInstance().getPlayerCart().containsKey(player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(player.getUniqueId()).size() : 0);
+                put("%shop_cart_total%", Shops.getInstance().getPlayerCart().containsKey(player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(player.getUniqueId()).stream().mapToDouble(ShopItem::getBuyPrice).sum() : 0D);
+            }}), e -> e.manager.showGUI(this.player, new GUICart(this.player)));
+        }
 
         int slot = 0;
         List<ShopItem> data = this.shopItems.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
@@ -102,19 +108,21 @@ public class GUIShopContents extends Gui {
                     }
 
                     if (e.clickType == ClickType.RIGHT) {
-                        if (this.shop.isRequiresPermissionToBuy() && !this.player.hasPermission(this.shop.getBuyPermission()))
-                            return;
-                        if (this.shop.isSellOnly()) return;
-                        if (item.isSellOnly()) return;
+                        if (Settings.USE_CART_SYSTEM.getBoolean()) {
+                            if (this.shop.isRequiresPermissionToBuy() && !this.player.hasPermission(this.shop.getBuyPermission()))
+                                return;
+                            if (this.shop.isSellOnly()) return;
+                            if (item.isSellOnly()) return;
 
-                        if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
-                            Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
-                        } else {
-                            Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
-                                add(new CartItem(item, 1));
-                            }});
+                            if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
+                                Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(item, 1));
+                            } else {
+                                Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
+                                    add(new CartItem(item, 1));
+                                }});
+                            }
+                            draw();
                         }
-                        draw();
                     }
                 } else {
                     if (e.clickType == ClickType.SHIFT_LEFT) {

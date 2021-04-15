@@ -125,7 +125,9 @@ public class GUIItemSelection extends Gui {
 
     private void drawItems() {
         setButton(5, 0, ConfigurationItemHelper.build(Settings.GUI_CLOSE_BTN_ITEM.getString(), Settings.GUI_CLOSE_BTN_NAME.getString(), Settings.GUI_CLOSE_BTN_LORE.getStringList(), 1, null, "shops:edit:button;close"), this::handleCustomLayoutActions);
-        setButton(5, 8, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_LORE.getStringList(), 1, null, "shops:edit:button;add_to_cart"), this::handleCustomLayoutActions);
+        if (Settings.USE_CART_SYSTEM.getBoolean()) {
+            setButton(5, 8, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_LORE.getStringList(), 1, null, "shops:edit:button;add_to_cart"), this::handleCustomLayoutActions);
+        }
 
         setButton(2, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), 1), new HashMap<String, Object>() {{
             put("%decr_one_amount%", Settings.GUI_ITEM_SELECT_DECR_ONE.getInt());
@@ -168,6 +170,10 @@ public class GUIItemSelection extends Gui {
                 e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
                 break;
             case "add_to_cart":
+                if (!Settings.USE_CART_SYSTEM.getBoolean()) {
+                    Shops.getInstance().getLocale().getMessage("general.cart_disabled").sendPrefixedMessage(e.player);
+                    return;
+                }
                 if (this.shop.isSellOnly()) return;
                 if (this.shopItem.isSellOnly()) return;
                 if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
@@ -234,7 +240,7 @@ public class GUIItemSelection extends Gui {
 
                         int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
                         if (itemCount == 0) return;
-                        if (itemCount < quantity)  {
+                        if (itemCount < quantity) {
                             quantity = itemCount;
                         }
 
