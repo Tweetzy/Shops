@@ -36,12 +36,12 @@ public class CommandShop extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "/shops";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.shop").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Open the shop selection menu";
+        return Shops.getInstance().getLocale().getMessage("commands.description.shop").getMessage();
     }
 
     @Override

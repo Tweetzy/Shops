@@ -46,11 +46,11 @@ public class CommandRemove extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "remove <name>";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.remove").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to remove an existing shop";
+        return Shops.getInstance().getLocale().getMessage("commands.description.remove").getMessage();
     }
 }

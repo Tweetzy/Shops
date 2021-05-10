@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.core.commands.AbstractCommand;
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.managers.StorageManager;
 import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.command.CommandSender;
@@ -36,14 +37,13 @@ public class CommandCreate extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "create <name>";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.create").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to create a new shop";
+        return Shops.getInstance().getLocale().getMessage("commands.description.create").getMessage();
     }
-
     @Override
     protected List<String> onTab(CommandSender sender, String... args) {
         return null;

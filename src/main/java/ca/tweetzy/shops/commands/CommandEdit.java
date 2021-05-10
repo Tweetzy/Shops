@@ -51,11 +51,11 @@ public class CommandEdit extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "edit <shop>";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.edit").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to edit a shop settings.";
+        return Shops.getInstance().getLocale().getMessage("commands.description.edit").getMessage();
     }
 }

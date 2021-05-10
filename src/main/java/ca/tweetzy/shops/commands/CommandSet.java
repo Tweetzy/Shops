@@ -220,12 +220,12 @@ public class CommandSet extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "set <shop> <option> [value]";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.set").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to set a specific shop setting.";
+        return Shops.getInstance().getLocale().getMessage("commands.description.set").getMessage();
     }
 
     private boolean isValidBooleanOption(Player player, String arg) {
