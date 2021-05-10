@@ -33,12 +33,12 @@ public class CommandReload extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "reload";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.reload").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to reload the plugin files";
+        return Shops.getInstance().getLocale().getMessage("commands.description.reload").getMessage();
     }
 
     @Override

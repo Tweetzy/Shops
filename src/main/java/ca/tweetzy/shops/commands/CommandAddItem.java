@@ -79,11 +79,11 @@ public class CommandAddItem extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "additem <shop> <sellPrice> <buyprice> [sellOnly] [buyOnly]";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.additem").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to add an item to a shop";
+        return Shops.getInstance().getLocale().getMessage("commands.description.additem").getMessage();
     }
 }

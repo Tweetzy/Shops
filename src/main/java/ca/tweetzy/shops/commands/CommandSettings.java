@@ -34,12 +34,12 @@ public class CommandSettings extends AbstractCommand{
 
     @Override
     public String getSyntax() {
-        return "settings";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.settings").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to open the settings menu.";
+        return Shops.getInstance().getLocale().getMessage("commands.description.settings").getMessage();
     }
 
     @Override

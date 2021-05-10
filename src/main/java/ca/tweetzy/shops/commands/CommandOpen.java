@@ -74,11 +74,11 @@ public class CommandOpen extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "open <shop>";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.open").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to open a specific shop";
+        return Shops.getInstance().getLocale().getMessage("commands.description.open").getMessage();
     }
 }

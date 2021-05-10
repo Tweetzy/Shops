@@ -102,11 +102,11 @@ public class CommandConvert extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "convert [confirm]";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.convert").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Used to convert from pre 2.0.0+";
+        return Shops.getInstance().getLocale().getMessage("commands.description.convert").getMessage();
     }
 }

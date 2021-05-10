@@ -22,6 +22,7 @@ public class Settings {
     public static final ConfigSetting USE_TAX = new ConfigSetting(config, "tax.enabled", true, "Should tax be applied to the purchase?");
     public static final ConfigSetting TAX_AMOUNT = new ConfigSetting(config, "tax.amount", 13.0D, "Tax percentage as decimal");
     public static final ConfigSetting USE_CART_SYSTEM = new ConfigSetting(config, "use cart system", true, "Should the cart system be used?");
+    public static final ConfigSetting ONLY_ALLOW_BASE_ITEM_SALE = new ConfigSetting(config, "misc.only allow sale of base items", false, "Enabling this will prevent players from selling", "items that have custom names, lore, enchants", "or data. Unless you know what your", "doing this should stay off.");
 
     /*
     =========== DATABASE OPTIONS ===========

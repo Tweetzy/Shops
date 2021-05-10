@@ -39,12 +39,12 @@ public class CommandCart extends AbstractCommand {
 
     @Override
     public String getSyntax() {
-        return "cart";
+        return Shops.getInstance().getLocale().getMessage("commands.syntax.cart").getMessage();
     }
 
     @Override
     public String getDescription() {
-        return "Open your cart";
+        return Shops.getInstance().getLocale().getMessage("commands.description.cart").getMessage();
     }
 
     @Override
