@@ -6,7 +6,6 @@ import ca.tweetzy.core.commands.CommandManager;
 import ca.tweetzy.core.compatibility.ServerVersion;
 import ca.tweetzy.core.compatibility.XMaterial;
 import ca.tweetzy.core.configuration.Config;
-import ca.tweetzy.core.core.PluginID;
 import ca.tweetzy.core.database.DataMigrationManager;
 import ca.tweetzy.core.database.DatabaseConnector;
 import ca.tweetzy.core.database.MySQLConnector;
@@ -83,7 +82,7 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onPluginEnable() {
-        TweetyCore.registerPlugin(this, (int) PluginID.SHOPS.getTweetzyID(), XMaterial.DIAMOND.name());
+        TweetyCore.registerPlugin(this, 2, XMaterial.DIAMOND.name());
 
         // Stop the plugin if the server version is not 1.8 or higher
         if (ServerVersion.isServerVersionAtOrBelow(ServerVersion.V1_7)) {
@@ -144,7 +143,7 @@ public class Shops extends TweetyPlugin {
         getServer().getScheduler().runTaskLaterAsynchronously(this, () -> this.updateStatus = new UpdateChecker(this, 75600, getConsole()).check().getStatus(), 1L);
 
         // Metrics, don't ask them if they want it enabled since bStats has it's on system
-        this.metrics = new Metrics(this, (int) PluginID.SHOPS.getbStatsID());
+        this.metrics = new Metrics(this, 6807);
     }
 
     @Override
