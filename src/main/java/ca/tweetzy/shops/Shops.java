@@ -108,6 +108,10 @@ public class Shops extends TweetyPlugin {
 
         // Load the data file
         this.data.load();
+        if (!this.data.isSet("shop data version")) {
+            this.data.set("shop data version", 2.0);
+            this.data.save();
+        }
 
         // Setup the database if enabled
         if (Settings.DATABASE_USE.getBoolean()) {
