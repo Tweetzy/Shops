@@ -18,6 +18,7 @@ import ca.tweetzy.shops.database.migrations._1_InitialMigration;
 import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.listeners.ShopListeners;
 import ca.tweetzy.shops.managers.ShopManager;
+import ca.tweetzy.shops.settings.LocaleSettings;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
@@ -100,7 +101,8 @@ public class Shops extends TweetyPlugin {
         Settings.setup();
 
         // Setup the locale
-        setLocale(Settings.LANG.getString(), false);
+        setLocale(Settings.LANG.getString());
+        LocaleSettings.setup();
 
         // Listeners
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -157,7 +159,9 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onConfigReload() {
-        this.locale.reloadMessages();
+        Settings.setup();
+        setLocale(Settings.LANG.getString());
+        LocaleSettings.setup();
         this.shopManager.loadShops(true, Settings.DATABASE_USE.getBoolean());
         this.shopManager.loadCustomGuiItems(true, Settings.DATABASE_USE.getBoolean());
     }
