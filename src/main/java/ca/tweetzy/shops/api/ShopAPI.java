@@ -234,11 +234,11 @@ public class ShopAPI {
         embedObject.addField(Settings.DISCORD_MSG_FIELD_PRICE_NAME.getString(), Settings.DISCORD_MSG_FIELD_PRICE_VALUE.getString().replace("%price%", String.format("%,.2f", price)), Settings.DISCORD_MSG_FIELD_PRICE_INLINE.getBoolean());
 
         if (sellEvent != null) {
-            embedObject.addField(Settings.DISCORD_MSG_FIELD_ITEM_NAME.getString(), Settings.DISCORD_MSG_FIELD_ITEM_VALUE.getString().replace("%item_name%", itemName), Settings.DISCORD_MSG_FIELD_ITEM_INLINE.getBoolean());
+            embedObject.addField(Settings.DISCORD_MSG_FIELD_ITEM_NAME.getString(), Settings.DISCORD_MSG_FIELD_ITEM_VALUE.getString().replace("%item_name%", itemName).replace("%quantity%", String.valueOf(quantity)), Settings.DISCORD_MSG_FIELD_ITEM_INLINE.getBoolean());
         }
 
         if (buyEvent != null) {
-            embedObject.addField(buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_NAME.getString() : Settings.DISCORD_MSG_FIELD_ITEM_NAME.getString(), buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_VALUE.getString().replace("%purchased_items%", itemName) : Settings.DISCORD_MSG_FIELD_ITEM_VALUE.getString().replace("%item_name%", itemName), buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_INLINE.getBoolean() : Settings.DISCORD_MSG_FIELD_ITEM_INLINE.getBoolean());
+            embedObject.addField(buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_NAME.getString() : Settings.DISCORD_MSG_FIELD_ITEM_NAME.getString(), buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_VALUE.getString().replace("%purchased_items%", itemName).replace("%quantity%", String.valueOf(quantity)) : Settings.DISCORD_MSG_FIELD_ITEM_VALUE.getString().replace("%item_name%", itemName).replace("%quantity%", String.valueOf(quantity)), buyEvent.isFromCart() ? Settings.DISCORD_MSG_FIELD_ITEMS_INLINE.getBoolean() : Settings.DISCORD_MSG_FIELD_ITEM_INLINE.getBoolean());
         }
 
         hook.addEmbed(embedObject);
