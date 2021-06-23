@@ -214,7 +214,7 @@ public class GUIItemSelection extends Gui {
                         if (this.shop.isSellOnly()) return;
                         if (this.shopItem.isSellOnly()) return;
 
-                        if (!Shops.getInstance().getEconomy().has(e.player, this.cartTotal)) {
+                        if (!Shops.getInstance().getEconomyManager().has(e.player, this.cartTotal)) {
                             Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
                             return;
                         }
@@ -223,7 +223,7 @@ public class GUIItemSelection extends Gui {
                         Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
                         if (shopBuyEvent.isCancelled()) return;
 
-                        Shops.getInstance().getEconomy().withdrawPlayer(e.player, cartTotal);
+                        Shops.getInstance().getEconomyManager().withdrawPlayer(e.player, cartTotal);
                         Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", this.cartTotal)).sendPrefixedMessage(e.player);
                         for (int i = 0; i < this.quantity; i++) {
                             PlayerUtils.giveItem(e.player, this.deserializedItem);
@@ -252,7 +252,7 @@ public class GUIItemSelection extends Gui {
                         if (shopSellEvent.isCancelled()) return;
 
                         ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity);
-                        Shops.getInstance().getEconomy().depositPlayer(e.player, (preTotalSell + sellBonus));
+                        Shops.getInstance().getEconomyManager().depositPlayer(e.player, (preTotalSell + sellBonus));
                         Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
                         break;
                 }

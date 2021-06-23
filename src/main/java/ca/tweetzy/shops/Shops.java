@@ -15,6 +15,7 @@ import ca.tweetzy.shops.api.UpdateChecker;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
+import ca.tweetzy.shops.economy.EconomyManager;
 import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.listeners.ShopListeners;
 import ca.tweetzy.shops.managers.ShopManager;
@@ -63,6 +64,9 @@ public class Shops extends TweetyPlugin {
     private ShopManager shopManager;
 
     @Getter
+    private EconomyManager economyManager;
+
+    @Getter
     private Economy economy;
 
     @Getter
@@ -103,6 +107,8 @@ public class Shops extends TweetyPlugin {
         // Setup the locale
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
+
+        this.economyManager = new EconomyManager();
 
         // Listeners
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -162,6 +168,7 @@ public class Shops extends TweetyPlugin {
         Settings.setup();
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
+        this.economyManager = new EconomyManager();
         this.shopManager.loadShops(true, Settings.DATABASE_USE.getBoolean());
         this.shopManager.loadCustomGuiItems(true, Settings.DATABASE_USE.getBoolean());
     }

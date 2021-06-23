@@ -89,7 +89,7 @@ public class GUICart extends Gui {
             if (this.shopItems.size() == 0) return;
 
             if (e.clickType == ClickType.LEFT) {
-                if (!Shops.getInstance().getEconomy().has(this.player, cartTotal)) {
+                if (!Shops.getInstance().getEconomyManager().has(this.player, cartTotal)) {
                     Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(this.player);
                     return;
                 }
@@ -98,7 +98,7 @@ public class GUICart extends Gui {
                 Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
                 if (shopBuyEvent.isCancelled()) return;
 
-                Shops.getInstance().getEconomy().withdrawPlayer(this.player, cartTotal);
+                Shops.getInstance().getEconomyManager().withdrawPlayer(this.player, cartTotal);
                 Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", cartTotal)).sendPrefixedMessage(this.player);
 
                 this.shopItems.forEach(cartItem -> {
@@ -135,7 +135,7 @@ public class GUICart extends Gui {
                 }
 
                 Shops.getInstance().getPlayerCart().remove(this.player.getUniqueId());
-                Shops.getInstance().getEconomy().depositPlayer(e.player, sellTotal);
+                Shops.getInstance().getEconomyManager().depositPlayer(e.player, sellTotal);
                 Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", String.format("%,.2f", sellTotal)).sendPrefixedMessage(e.player);
                 if (hasBuyOnlyItems) Shops.getInstance().getLocale().getMessage("general.buy_only_excluded").sendPrefixedMessage(e.player);
             }
