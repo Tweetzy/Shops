@@ -24,8 +24,6 @@ import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import lombok.Getter;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,9 +65,6 @@ public class Shops extends TweetyPlugin {
     private EconomyManager economyManager;
 
     @Getter
-    private Economy economy;
-
-    @Getter
     private DatabaseConnector databaseConnector;
 
     @Getter
@@ -95,12 +90,6 @@ public class Shops extends TweetyPlugin {
             return;
         }
 
-        // Vault check
-        if (getServer().getPluginManager().isPluginEnabled("Vault")) {
-            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-            if (rsp != null) this.economy = rsp.getProvider();
-        }
-
         // Setup the settings file
         Settings.setup();
 
@@ -108,7 +97,7 @@ public class Shops extends TweetyPlugin {
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
 
-        this.economyManager = new EconomyManager();
+        this.economyManager = new EconomyManager(this);
 
         // Listeners
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -168,7 +157,7 @@ public class Shops extends TweetyPlugin {
         Settings.setup();
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
-        this.economyManager = new EconomyManager();
+        this.economyManager = new EconomyManager(this);
         this.shopManager.loadShops(true, Settings.DATABASE_USE.getBoolean());
         this.shopManager.loadCustomGuiItems(true, Settings.DATABASE_USE.getBoolean());
     }

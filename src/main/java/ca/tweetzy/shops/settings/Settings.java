@@ -24,7 +24,7 @@ public class Settings {
     public static final ConfigSetting USE_CART_SYSTEM = new ConfigSetting(config, "use cart system", true, "Should the cart system be used?");
     public static final ConfigSetting ONLY_ALLOW_BASE_ITEM_SALE = new ConfigSetting(config, "misc.only allow sale of base items", false, "Enabling this will prevent players from selling", "items that have custom names, lore, enchants", "or data. Unless you know what your", "doing this should stay off.");
 
-    public static final ConfigSetting ECONOMY_PROVIDER = new ConfigSetting(config, "economy provider", "Vault", "Valid Economies: ", "Vault (default)", "RevEnchants");
+    public static final ConfigSetting ECONOMY_PROVIDER = new ConfigSetting(config, "economy provider", "Vault", "Valid Economies: ", "Vault (default)", "PlayerPoints", "RevEnchants");
 
     /*
     =========== DATABASE OPTIONS ===========

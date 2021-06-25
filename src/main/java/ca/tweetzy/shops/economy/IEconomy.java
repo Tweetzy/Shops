@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.economy;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -8,13 +9,17 @@ import org.bukkit.entity.Player;
  * Time Created: 10:13 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public interface Economy {
+public interface IEconomy {
 
-    boolean has(Player player, double amount);
+    String getHookName();
 
-    void withdraw(Player player, double amount);
-
-    void deposit(Player player, double amount);
+    boolean isEnabled();
 
     double getBalance(Player player);
+
+    boolean has(Player player, double cost);
+
+    void withdraw(Player player, double cost);
+
+    void deposit(Player player, double cost);
 }
