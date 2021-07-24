@@ -10,12 +10,12 @@ import ca.tweetzy.core.database.DataMigrationManager;
 import ca.tweetzy.core.database.DatabaseConnector;
 import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
+import ca.tweetzy.core.hooks.EconomyManager;
 import ca.tweetzy.core.utils.Metrics;
 import ca.tweetzy.shops.api.UpdateChecker;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
-import ca.tweetzy.shops.economy.EconomyManager;
 import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.listeners.ShopListeners;
 import ca.tweetzy.shops.managers.ShopManager;
@@ -62,9 +62,6 @@ public class Shops extends TweetyPlugin {
     private ShopManager shopManager;
 
     @Getter
-    private EconomyManager economyManager;
-
-    @Getter
     private DatabaseConnector databaseConnector;
 
     @Getter
@@ -90,6 +87,9 @@ public class Shops extends TweetyPlugin {
             return;
         }
 
+        // Load Economy
+        EconomyManager.load();
+
         // Setup the settings file
         Settings.setup();
 
@@ -97,7 +97,13 @@ public class Shops extends TweetyPlugin {
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
 
-        this.economyManager = new EconomyManager(this);
+        // Setup Economy
+        EconomyManager.getManager().setPreferredHook(Settings.ECONOMY_PLUGIN.getString());
+        if (!EconomyManager.getManager().isEnabled()) {
+            getLogger().severe("Could not find a valid economy provider for shops");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         // Listeners
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
@@ -154,10 +160,11 @@ public class Shops extends TweetyPlugin {
 
     @Override
     public void onConfigReload() {
+        EconomyManager.load();
         Settings.setup();
         setLocale(Settings.LANG.getString());
         LocaleSettings.setup();
-        this.economyManager = new EconomyManager(this);
+        EconomyManager.getManager().setPreferredHook(Settings.ECONOMY_PLUGIN.getString());
         this.shopManager.loadShops(true, Settings.DATABASE_USE.getBoolean());
         this.shopManager.loadCustomGuiItems(true, Settings.DATABASE_USE.getBoolean());
     }

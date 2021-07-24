@@ -5,8 +5,7 @@ main: ca.tweetzy.shops.Shops
 description: Ever wanted to setup categorized shops, this plugin is for you
 website: https://tweetzy.ca/
 authors: [Kiran Hart]
-depend: [Vault]
-softdepend: [RevEnchants]
+softdepend: [Vault, PlayerPoints, Reserve]
 
 commands:
   shops:

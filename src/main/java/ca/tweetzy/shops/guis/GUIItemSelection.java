@@ -2,6 +2,7 @@ package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
 import ca.tweetzy.core.gui.events.GuiClickEvent;
+import ca.tweetzy.core.hooks.EconomyManager;
 import ca.tweetzy.core.utils.PlayerUtils;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.nms.NBTEditor;
@@ -214,7 +215,7 @@ public class GUIItemSelection extends Gui {
                         if (this.shop.isSellOnly()) return;
                         if (this.shopItem.isSellOnly()) return;
 
-                        if (!Shops.getInstance().getEconomyManager().has(e.player, this.cartTotal)) {
+                        if (!EconomyManager.hasBalance(e.player, this.cartTotal)) {
                             Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
                             return;
                         }
@@ -223,7 +224,7 @@ public class GUIItemSelection extends Gui {
                         Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
                         if (shopBuyEvent.isCancelled()) return;
 
-                        Shops.getInstance().getEconomyManager().withdrawPlayer(e.player, cartTotal);
+                        EconomyManager.withdrawBalance(e.player, cartTotal);
                         Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", this.cartTotal)).sendPrefixedMessage(e.player);
                         for (int i = 0; i < this.quantity; i++) {
                             PlayerUtils.giveItem(e.player, this.deserializedItem);
@@ -252,7 +253,7 @@ public class GUIItemSelection extends Gui {
                         if (shopSellEvent.isCancelled()) return;
 
                         ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity);
-                        Shops.getInstance().getEconomyManager().depositPlayer(e.player, (preTotalSell + sellBonus));
+                        EconomyManager.deposit(e.player, (preTotalSell + sellBonus));
                         Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
                         break;
                 }
