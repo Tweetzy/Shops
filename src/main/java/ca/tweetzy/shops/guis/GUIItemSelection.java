@@ -230,6 +230,30 @@ public class GUIItemSelection extends Gui {
                             PlayerUtils.giveItem(e.player, this.deserializedItem);
                         }
                         break;
+                    case MIDDLE:
+                        if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
+                            Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
+                            return;
+                        }
+
+                        if (this.shop.isBuyOnly()) return;
+                        if (this.shopItem.isBuyOnly()) return;
+
+                        int allItems = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
+                        if (allItems == 0) return;
+
+                        double allPreTotalSell = this.shopItem.getSellPrice() / this.deserializedItem.getAmount() * allItems;
+                        double allSellBonus = this.shop.isUseSellBonus() ? allPreTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+
+                        ShopSellEvent allShopSellEvent = new ShopSellEvent(e.player, this.shopItem, allItems);
+                        Bukkit.getServer().getPluginManager().callEvent(allShopSellEvent);
+                        if (allShopSellEvent.isCancelled()) return;
+
+                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, allItems);
+                        EconomyManager.deposit(e.player, (allPreTotalSell + allSellBonus));
+                        Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (allPreTotalSell + allSellBonus)).sendPrefixedMessage(e.player);
+
+                        break;
                     case RIGHT:
                         if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
                             Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
@@ -252,7 +276,7 @@ public class GUIItemSelection extends Gui {
                         Bukkit.getServer().getPluginManager().callEvent(shopSellEvent);
                         if (shopSellEvent.isCancelled()) return;
 
-                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity);
+                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity * this.deserializedItem.getAmount());
                         EconomyManager.deposit(e.player, (preTotalSell + sellBonus));
                         Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
                         break;

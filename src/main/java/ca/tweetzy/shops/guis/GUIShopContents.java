@@ -1,18 +1,21 @@
 package ca.tweetzy.shops.guis;
 
 import ca.tweetzy.core.gui.Gui;
+import ca.tweetzy.core.hooks.EconomyManager;
 import ca.tweetzy.core.input.ChatPrompt;
 import ca.tweetzy.core.utils.NumberUtils;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.core.utils.items.TItemBuilder;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopAPI;
+import ca.tweetzy.shops.api.events.ShopSellEvent;
 import ca.tweetzy.shops.helpers.ConfigurationItemHelper;
 import ca.tweetzy.shops.managers.StorageManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
 import ca.tweetzy.shops.shop.ShopItem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -89,6 +92,41 @@ public class GUIShopContents extends Gui {
                 put("%shop_cart_total%", Shops.getInstance().getPlayerCart().containsKey(player.getUniqueId()) ? Shops.getInstance().getPlayerCart().get(player.getUniqueId()).stream().mapToDouble(ShopItem::getBuyPrice).sum() : 0D);
             }}), e -> e.manager.showGUI(this.player, new GUICart(this.player)));
         }
+
+        // sell inventory
+        setButton(getRows() - 1, 0, ConfigurationItemHelper.build(Settings.GUI_SHOP_CONTENTS_SELL_ALL_ITEM.getString(), Settings.GUI_SHOP_CONTENTS_SELL_ALL_NAME.getString(), Settings.GUI_SHOP_CONTENTS_SELL_ALL_LORE.getStringList(), null), e -> {
+            // calc
+            if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
+                Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
+                return;
+            }
+
+            if (this.shop.isBuyOnly()) return;
+
+            double totalSellPrice = 0D;
+
+            for (ShopItem shopItem : this.shopItems) {
+                if (shopItem.isBuyOnly()) continue;
+
+                ItemStack deserializedItem = ShopAPI.getInstance().deserializeItem(shopItem.getItem());
+
+                int allItems = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, deserializedItem);
+                if (allItems == 0) continue;
+
+                double allPreTotalSell = shopItem.getSellPrice() / deserializedItem.getAmount() * allItems;
+                double allSellBonus = this.shop.isUseSellBonus() ? allPreTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+
+                ShopSellEvent allShopSellEvent = new ShopSellEvent(e.player, shopItem, allItems);
+                Bukkit.getServer().getPluginManager().callEvent(allShopSellEvent);
+                if (allShopSellEvent.isCancelled()) return;
+
+                ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, deserializedItem, allItems);
+                totalSellPrice += (allPreTotalSell + allSellBonus);
+            }
+
+            EconomyManager.deposit(e.player, totalSellPrice);
+            Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", totalSellPrice).sendPrefixedMessage(e.player);
+        });
 
         int slot = 0;
         List<ShopItem> data = this.shopItems.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());

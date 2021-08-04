@@ -24,7 +24,6 @@ public class Settings {
     public static final ConfigSetting USE_TAX = new ConfigSetting(config, "tax.enabled", true, "Should tax be applied to the purchase?");
     public static final ConfigSetting TAX_AMOUNT = new ConfigSetting(config, "tax.amount", 13.0D, "Tax percentage as decimal");
     public static final ConfigSetting USE_CART_SYSTEM = new ConfigSetting(config, "use cart system", true, "Should the cart system be used?");
-    public static final ConfigSetting ONLY_ALLOW_BASE_ITEM_SALE = new ConfigSetting(config, "misc.only allow sale of base items", false, "Enabling this will prevent players from selling", "items that have custom names, lore, enchants", "or data. Unless you know what your", "doing this should stay off.");
 
     public static final ConfigSetting ECONOMY_PLUGIN = new ConfigSetting(config, "economy provider", EconomyManager.getEconomy() == null ? "Vault" : EconomyManager.getEconomy().getName(),
             "Which economy should auction house use?",
@@ -294,6 +293,12 @@ public class Settings {
             "&7Cart Total&f: &a$%shop_cart_total%"
     ), "Valid Placeholders", "%shop_cart_item_count%", "%shop_cart_total%");
 
+    public static final ConfigSetting GUI_SHOP_CONTENTS_SELL_ALL_ITEM = new ConfigSetting(config, "guis.shop contents.sell all item", XMaterial.GOLD_NUGGET.name());
+    public static final ConfigSetting GUI_SHOP_CONTENTS_SELL_ALL_NAME = new ConfigSetting(config, "guis.shop contents.sell all name", "&eSell Inventory");
+    public static final ConfigSetting GUI_SHOP_CONTENTS_SELL_ALL_LORE = new ConfigSetting(config, "guis.shop contents.sell all lore", Collections.singletonList(
+            "&7Click to sell your entire inventory."
+    ));
+
     /*
    =========== SHOP CONTENTS OPTIONS ===========
      */
@@ -371,6 +376,7 @@ public class Settings {
     public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_SELL_BUY_NAME = new ConfigSetting(config, "guis.item select.items.sell and buy.name", "&ePurchase / Sell");
     public static final ConfigSetting GUI_ITEM_SELECT_ITEMS_SELL_BUY_LORE = new ConfigSetting(config, "guis.item select.items.sell and buy.lore", Arrays.asList(
             "&7Left-click to purchase item(s)",
+            "&7Middle-Click to sell all item(s)",
             "&7Right-click to sell item(s)"
     ));
 

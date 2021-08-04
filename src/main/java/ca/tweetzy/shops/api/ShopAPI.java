@@ -193,6 +193,7 @@ public class ShopAPI {
         return object;
     }
 
+
     public void sendDiscordMessage(String webhook, ShopSellEvent sellEvent, ShopBuyEvent buyEvent) {
         Objects.requireNonNull(webhook, "Webhook cannot be null when sending discord message");
 
