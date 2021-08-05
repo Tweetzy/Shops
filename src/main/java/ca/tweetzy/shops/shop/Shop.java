@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 @Getter
 @Setter
-public class Shop implements Serializable, Cloneable {
+public class Shop implements Serializable {
 
     static final long serialVersionUID = 1L;
 
@@ -89,15 +89,5 @@ public class Shop implements Serializable, Cloneable {
     public Shop(String id, String displayName, ItemStack icon, boolean isPublic, boolean sellOnly, boolean buyOnly, boolean useBuyDiscount, double buyDiscount, ArrayList<ShopItem> shopItems) {
         this(id, displayName, icon, isPublic, sellOnly, buyOnly, useBuyDiscount, buyDiscount);
         this.shopItems = shopItems;
-    }
-
-    @Override
-    public Shop clone() {
-        try {
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return (Shop) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
     }
 }
