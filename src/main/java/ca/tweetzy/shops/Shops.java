@@ -23,6 +23,9 @@ import ca.tweetzy.shops.settings.LocaleSettings;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.CartItem;
 import ca.tweetzy.shops.shop.Shop;
+import co.aikar.taskchain.BukkitTaskChainFactory;
+import co.aikar.taskchain.TaskChain;
+import co.aikar.taskchain.TaskChainFactory;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -39,6 +42,8 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 public class Shops extends TweetyPlugin {
+
+    private static TaskChainFactory taskChainFactory;
 
     @Getter
     private static Shops instance;
@@ -86,6 +91,8 @@ public class Shops extends TweetyPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+        taskChainFactory = BukkitTaskChainFactory.create(this);
 
         // Load Economy
         EconomyManager.load();
@@ -143,7 +150,8 @@ public class Shops extends TweetyPlugin {
                 new CommandOpen(),
                 new CommandSettings(),
                 new CommandReload(),
-                new CommandConvert()
+                new CommandConvert(),
+                new CommandChangeId()
         );
 
         // Perform the update check
@@ -156,6 +164,10 @@ public class Shops extends TweetyPlugin {
     @Override
     public void onPluginDisable() {
         instance = null;
+    }
+
+    public static <T> TaskChain<T> newChain() {
+        return taskChainFactory.newChain();
     }
 
     @Override

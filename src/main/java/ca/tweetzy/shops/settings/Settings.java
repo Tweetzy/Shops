@@ -363,6 +363,8 @@ public class Settings {
     public static final ConfigSetting GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE = new ConfigSetting(config, "guis.item select.items.info.lore", Arrays.asList(
             "&7Stack Quantity&f: &e%item_stack_quantity%",
             "&7Quantity&f: &e%item_quantity%",
+            "&7Total Items&f: &e%total_items%",
+            "",
             "&7Base Price&f: &e%item_price%",
             "",
             "&7Sub-Total&f: &a$%item_sub_total%",

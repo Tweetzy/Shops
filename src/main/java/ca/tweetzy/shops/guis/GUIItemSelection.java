@@ -110,6 +110,7 @@ public class GUIItemSelection extends Gui {
         return ConfigurationItemHelper.build(Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_ITEM.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_NAME.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE.getStringList(), 1, new HashMap<String, Object>() {{
             put("%item_stack_quantity%", deserializedItem.getAmount());
             put("%item_quantity%", quantity);
+            put("%total_items%", quantity * deserializedItem.getAmount());
             put("%item_price%", String.format("%,.2f", shopItem.getBuyPrice()));
             put("%item_tax%", preTax);
             put("%item_sub_total%", String.format("%,.2f", subTotal));
@@ -288,13 +289,13 @@ public class GUIItemSelection extends Gui {
     private void handleQuantityButtons(GuiClickEvent e, int amount, boolean add) {
         switch (e.clickType) {
             case LEFT:
-                quantity = add ? quantity + amount : Math.max(1, quantity - amount);
+                quantity = add ? quantity == 1 && amount == 64 ? quantity + amount - 1 : quantity + amount : Math.max(1, quantity - amount);
                 draw();
                 break;
             case SHIFT_LEFT:
             case SHIFT_RIGHT:
                 if (Settings.GUI_ITEM_SELECT_ALLOW_SHIFT_CLICK_STACK.getBoolean()) {
-                    quantity = add ? quantity + 64 : Math.max(1, quantity - 64);
+                    quantity = add ? quantity == 1 ? quantity + 63 : quantity + 64 : Math.max(1, quantity - 64);
                     draw();
                 }
                 break;

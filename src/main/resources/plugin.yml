@@ -27,6 +27,7 @@ permissions:
     shops.cmd.set: true
     shops.cmd.settings: true
     shops.cmd.open: true
+    shops.cmd.changeid: true
     shops.admin: true
   shops.cmd:
     description: Allows the user to view the public shops
@@ -60,6 +61,9 @@ permissions:
     default: op
   shops.cmd.settings:
     description: Allows the user to open the in game config editor
+    default: op
+  shops.cmd.changeid:
+    description: Allows the user to change a shop's id
     default: op
   shops.cmd.open:
     description: Allows the user to open a specific shop directly.

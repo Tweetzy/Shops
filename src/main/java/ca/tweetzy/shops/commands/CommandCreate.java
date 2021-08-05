@@ -44,6 +44,7 @@ public class CommandCreate extends AbstractCommand {
     public String getDescription() {
         return Shops.getInstance().getLocale().getMessage("commands.description.create").getMessage();
     }
+
     @Override
     protected List<String> onTab(CommandSender sender, String... args) {
         return null;
