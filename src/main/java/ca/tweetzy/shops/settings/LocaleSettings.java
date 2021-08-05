@@ -83,6 +83,7 @@ public class LocaleSettings {
         languageNodes.put("commands.syntax.set", "set <shop> <option> [value]");
         languageNodes.put("commands.syntax.settings", "settings");
         languageNodes.put("commands.syntax.shop", "/shops");
+        languageNodes.put("commands.syntax.changeid", "changeid <shopId> <newId>");
 
         languageNodes.put("commands.description.additem", "Used to add an item to a shop");
         languageNodes.put("commands.description.cart", "Open your cart");
@@ -96,6 +97,7 @@ public class LocaleSettings {
         languageNodes.put("commands.description.set", "Used to set a specific shop setting.");
         languageNodes.put("commands.description.settings", "Used to open the settings menu.");
         languageNodes.put("commands.description.shop", "Open the shop selection menu");
+        languageNodes.put("commands.description.changeid", "Used to change a shop id");
 
     }
 
