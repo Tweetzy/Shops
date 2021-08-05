@@ -41,8 +41,26 @@ public class CommandChangeId extends AbstractCommand {
             return ReturnType.FAILURE;
         }
 
-        Shop newShop = originalShop.clone();
-        newShop.setId(newShopId);
+        Shop newShop = new Shop(newShopId);
+        newShop.setDisplayName(originalShop.getDisplayName());
+        newShop.setDescription(originalShop.getDescription());
+        newShop.setDisplayIcon(originalShop.getDisplayIcon());
+        newShop.setPage(originalShop.getPage());
+        newShop.setSlot(originalShop.getSlot());
+
+        newShop.setUseSellBonus(originalShop.isUseSellBonus());
+        newShop.setUseBuyDiscount(originalShop.isUseBuyDiscount());
+        newShop.setUseTax(originalShop.isUseTax());
+        newShop.setRequiresPermissionToSee(originalShop.isRequiresPermissionToSee());
+        newShop.setRequiresPermissionToBuy(originalShop.isRequiresPermissionToBuy());
+        newShop.setRequiresPermissionToSell(originalShop.isRequiresPermissionToSell());
+        newShop.setSellBonus(originalShop.getSellBonus());
+        newShop.setBuyDiscount(originalShop.getBuyDiscount());
+        newShop.setTax(originalShop.getTax());
+        newShop.setSeePermission(originalShop.getSeePermission());
+        newShop.setSellPermission(originalShop.getSellPermission());
+        newShop.setBuyPermission(originalShop.getBuyPermission());
+        newShop.setShopItems(originalShop.getShopItems());
 
         Shops.getInstance().getGuiManager().closeAll();
         Shops.newChain().asyncFirst(() -> {
