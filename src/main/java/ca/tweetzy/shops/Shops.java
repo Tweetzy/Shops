@@ -16,6 +16,7 @@ import ca.tweetzy.shops.api.UpdateChecker;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
+import ca.tweetzy.shops.database.migrations._2_DataSizeMigration;
 import ca.tweetzy.shops.listeners.PlayerListener;
 import ca.tweetzy.shops.listeners.ShopListeners;
 import ca.tweetzy.shops.managers.ShopManager;
@@ -127,7 +128,7 @@ public class Shops extends TweetyPlugin {
         if (Settings.DATABASE_USE.getBoolean()) {
             this.databaseConnector = new MySQLConnector(this, Settings.DATABASE_HOST.getString(), Settings.DATABASE_PORT.getInt(), Settings.DATABASE_NAME.getString(), Settings.DATABASE_USERNAME.getString(), Settings.DATABASE_PASSWORD.getString(), Settings.DATABASE_USE_SSL.getBoolean());
             this.dataManager = new DataManager(this.databaseConnector, this);
-            DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager, new _1_InitialMigration());
+            DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager, new _1_InitialMigration(), new _2_DataSizeMigration());
             dataMigrationManager.runMigrations();
         }
 
@@ -151,7 +152,8 @@ public class Shops extends TweetyPlugin {
                 new CommandSettings(),
                 new CommandReload(),
                 new CommandConvert(),
-                new CommandChangeId()
+                new CommandChangeId(),
+                new CommandUpload()
         );
 
         // Perform the update check

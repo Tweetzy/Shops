@@ -50,13 +50,13 @@ public class GUIShopContents extends Gui {
         setAcceptsItems(false);
 
         if (this.shopItems.size() >= 1 && this.shopItems.size() <= 9)
-            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 2 : 1);
+            setRows(2);
         if (this.shopItems.size() >= 10 && this.shopItems.size() <= 18)
-            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 3 : 2);
+            setRows(3);
         if (this.shopItems.size() >= 19 && this.shopItems.size() <= 27)
-            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 4 : 3);
+            setRows(4);
         if (this.shopItems.size() >= 28 && this.shopItems.size() <= 36)
-            setRows(Settings.USE_CART_SYSTEM.getBoolean() ? 5 : 6);
+            setRows(5);
         if (this.shopItems.size() >= 37) setRows(6);
 
         draw();
