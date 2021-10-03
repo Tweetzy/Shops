@@ -19,27 +19,27 @@ import org.bukkit.event.HandlerList;
 @Setter
 public class ShopEvent extends Event implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
-    protected boolean cancelled;
+	private static final HandlerList handlers = new HandlerList();
+	protected boolean cancelled;
 
-    protected Player player;
-    protected ShopItem shopItem;
-    protected boolean isBuy;
-    protected int quantity;
+	protected Player player;
+	protected ShopItem shopItem;
+	protected boolean isBuy;
+	protected int quantity;
 
-    public ShopEvent(Player player, ShopItem shopItem, boolean isBuy, int quantity) {
-        this.player = player;
-        this.shopItem = shopItem;
-        this.isBuy = isBuy;
-        this.quantity = quantity;
-    }
+	public ShopEvent(Player player, ShopItem shopItem, boolean isBuy, int quantity) {
+		this.player = player;
+		this.shopItem = shopItem;
+		this.isBuy = isBuy;
+		this.quantity = quantity;
+	}
 
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
-    }
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

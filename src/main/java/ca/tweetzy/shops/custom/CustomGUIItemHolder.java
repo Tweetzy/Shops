@@ -13,13 +13,13 @@ import java.util.ArrayList;
  */
 public class CustomGUIItemHolder implements Serializable {
 
-    @Getter
-    private final String guiName;
-    @Getter
-    private final ArrayList<CustomGUIItem> items;
+	@Getter
+	private final String guiName;
+	@Getter
+	private final ArrayList<CustomGUIItem> items;
 
-    public CustomGUIItemHolder(String guiName) {
-        this.guiName = guiName;
-        this.items = new ArrayList<>();
-    }
+	public CustomGUIItemHolder(String guiName) {
+		this.guiName = guiName;
+		this.items = new ArrayList<>();
+	}
 }

@@ -11,11 +11,11 @@ import lombok.Getter;
  */
 public class CartItem extends ShopItem {
 
-    @Getter
-    private final int quantity;
+	@Getter
+	private final int quantity;
 
-    public CartItem(ShopItem shopItem, int quantity) {
-        super(shopItem.getShopId(), ShopAPI.getInstance().deserializeItem(shopItem.getItem()), shopItem.getSellPrice(), shopItem.getBuyPrice(), shopItem.isSellOnly(), shopItem.isBuyOnly());
-        this.quantity = quantity;
-    }
+	public CartItem(ShopItem shopItem, int quantity) {
+		super(shopItem.getShopId(), ShopAPI.getInstance().deserializeItem(shopItem.getItem()), shopItem.getSellPrice(), shopItem.getBuyPrice(), shopItem.isSellOnly(), shopItem.isBuyOnly());
+		this.quantity = quantity;
+	}
 }

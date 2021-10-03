@@ -3,7 +3,6 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.core.commands.AbstractCommand;
 import ca.tweetzy.core.utils.TextUtils;
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopAPI;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
 import org.bukkit.command.CommandSender;
@@ -53,7 +52,7 @@ public final class CommandUpload extends AbstractCommand {
 
 	@Override
 	public String getPermissionNode() {
-		return null;
+		return "shops.cmd.upload";
 	}
 
 	@Override

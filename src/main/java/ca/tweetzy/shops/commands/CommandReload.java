@@ -14,35 +14,35 @@ import java.util.List;
  */
 public class CommandReload extends AbstractCommand {
 
-    public CommandReload() {
-        super(CommandType.CONSOLE_OK, "reload");
-    }
+	public CommandReload() {
+		super(CommandType.CONSOLE_OK, "reload");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        long start = System.currentTimeMillis();
-        Shops.getInstance().reloadConfig();
-        Shops.getInstance().getLocale().getMessage("general.reloaded").processPlaceholder("value", System.currentTimeMillis() - start).sendPrefixedMessage(sender);
-        return ReturnType.SUCCESS;
-    }
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		long start = System.currentTimeMillis();
+		Shops.getInstance().reloadConfig();
+		Shops.getInstance().getLocale().getMessage("general.reloaded").processPlaceholder("value", System.currentTimeMillis() - start).sendPrefixedMessage(sender);
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.reload";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.reload";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.reload").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.reload").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.reload").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.reload").getMessage();
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		return null;
+	}
 }

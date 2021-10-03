@@ -18,39 +18,39 @@ import java.util.stream.Collectors;
  */
 public class CommandRemove extends AbstractCommand {
 
-    public CommandRemove() {
-        super(CommandType.PLAYER_ONLY, "remove");
-    }
+	public CommandRemove() {
+		super(CommandType.PLAYER_ONLY, "remove");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length != 1) return ReturnType.SYNTAX_ERROR;
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		if (args.length != 1) return ReturnType.SYNTAX_ERROR;
 
-        Player player = (Player) sender;
-        String shopId = args[0].toLowerCase();
-        return StorageManager.getInstance().removeShop(player, shopId);
-    }
+		Player player = (Player) sender;
+		String shopId = args[0].toLowerCase();
+		return StorageManager.getInstance().removeShop(player, shopId);
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        if (args.length == 1) {
-            return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
-        }
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		if (args.length == 1) {
+			return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
+		}
+		return null;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.remove";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.remove";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.remove").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.remove").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.remove").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.remove").getMessage();
+	}
 }

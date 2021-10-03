@@ -21,64 +21,64 @@ import java.util.stream.Collectors;
  */
 public class CommandOpen extends AbstractCommand {
 
-    public CommandOpen() {
-        super(CommandType.CONSOLE_OK, "open");
-    }
+	public CommandOpen() {
+		super(CommandType.CONSOLE_OK, "open");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length < 1) return ReturnType.SYNTAX_ERROR;
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		if (args.length < 1) return ReturnType.SYNTAX_ERROR;
 
-        if (args.length == 1 && sender instanceof Player) {
-            Player player = (Player) sender;
-            Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
-            if (shop == null) {
-                Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(player);
-                return ReturnType.FAILURE;
-            }
-            Shops.getInstance().getGuiManager().showGUI(player, new GUIShopContents(player, shop, false, true));
-        }
+		if (args.length == 1 && sender instanceof Player) {
+			Player player = (Player) sender;
+			Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
+			if (shop == null) {
+				Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(player);
+				return ReturnType.FAILURE;
+			}
+			Shops.getInstance().getGuiManager().showGUI(player, new GUIShopContents(player, shop, false, true));
+		}
 
-        if (args.length == 2 && !(sender instanceof Player)) {
-            Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
-            if (shop == null) {
-                Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(sender);
-                return ReturnType.FAILURE;
-            }
+		if (args.length == 2 && !(sender instanceof Player)) {
+			Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
+			if (shop == null) {
+				Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(sender);
+				return ReturnType.FAILURE;
+			}
 
-            Player target = PlayerUtils.findPlayer(args[1]);
-            if (target == null) {
-                Shops.getInstance().getLocale().newMessage(TextUtils.formatText(String.format("&cCould not find the player: &e%s", args[1]))).sendPrefixedMessage(sender);
-                return ReturnType.FAILURE;
-            }
+			Player target = PlayerUtils.findPlayer(args[1]);
+			if (target == null) {
+				Shops.getInstance().getLocale().newMessage(TextUtils.formatText(String.format("&cCould not find the player: &e%s", args[1]))).sendPrefixedMessage(sender);
+				return ReturnType.FAILURE;
+			}
 
-            Shops.getInstance().getGuiManager().showGUI(target, new GUIShopContents(target, shop, false, true));
-        }
+			Shops.getInstance().getGuiManager().showGUI(target, new GUIShopContents(target, shop, false, true));
+		}
 
-        return ReturnType.SUCCESS;
-    }
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        if (args.length == 1)
-            return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
-        if (args.length == 2 && !(sender instanceof Player))
-            return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		if (args.length == 1)
+			return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
+		if (args.length == 2 && !(sender instanceof Player))
+			return Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList());
+		return null;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.open";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.open";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.open").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.open").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.open").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.open").getMessage();
+	}
 }

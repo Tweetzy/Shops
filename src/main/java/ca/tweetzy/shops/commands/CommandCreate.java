@@ -17,36 +17,36 @@ import java.util.List;
  */
 public class CommandCreate extends AbstractCommand {
 
-    public CommandCreate() {
-        super(CommandType.PLAYER_ONLY, "create");
-    }
+	public CommandCreate() {
+		super(CommandType.PLAYER_ONLY, "create");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length != 1) return ReturnType.SYNTAX_ERROR;
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		if (args.length != 1) return ReturnType.SYNTAX_ERROR;
 
-        Player player = (Player) sender;
-        String shopId = args[0].toLowerCase();
-        return StorageManager.getInstance().createShop(player, new Shop(shopId));
-    }
+		Player player = (Player) sender;
+		String shopId = args[0].toLowerCase();
+		return StorageManager.getInstance().createShop(player, new Shop(shopId));
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.create";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.create";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.create").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.create").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.create").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.create").getMessage();
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		return null;
+	}
 }

@@ -18,12 +18,12 @@ import java.io.Serializable;
 @Setter
 public class CustomGUIItem implements Serializable {
 
-    private int slot;
-    private byte[] item;
+	private int slot;
+	private byte[] item;
 
-    public CustomGUIItem(int slot, ItemStack stack) {
-        this.slot = slot;
-        this.item = ShopAPI.getInstance().serializeItemStack(stack);
-    }
+	public CustomGUIItem(int slot, ItemStack stack) {
+		this.slot = slot;
+		this.item = ShopAPI.getInstance().serializeItemStack(stack);
+	}
 
 }

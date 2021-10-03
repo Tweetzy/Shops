@@ -14,36 +14,36 @@ import java.util.List;
  * Time Created: 9:26 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class CommandSettings extends AbstractCommand{
+public class CommandSettings extends AbstractCommand {
 
-    public CommandSettings() {
-        super(CommandType.PLAYER_ONLY, "settings");
-    }
+	public CommandSettings() {
+		super(CommandType.PLAYER_ONLY, "settings");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        Player player = (Player) sender;
-        Shops.getInstance().getGuiManager().showGUI(player, new PluginConfigGui(Shops.getInstance(), Shops.getInstance().getLocale().getMessage("general.prefix").getMessage()));
-        return ReturnType.SUCCESS;
-    }
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		Player player = (Player) sender;
+		Shops.getInstance().getGuiManager().showGUI(player, new PluginConfigGui(Shops.getInstance(), Shops.getInstance().getLocale().getMessage("general.prefix").getMessage()));
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.settings";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.settings";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.settings").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.settings").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.settings").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.settings").getMessage();
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		return null;
+	}
 }

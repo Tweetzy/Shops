@@ -16,36 +16,36 @@ import java.util.List;
  */
 public class CommandShop extends AbstractCommand {
 
-    public CommandShop() {
-        super(CommandType.CONSOLE_OK, "shops");
-    }
+	public CommandShop() {
+		super(CommandType.CONSOLE_OK, "shops");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-            Shops.getInstance().getGuiManager().showGUI(player, new GUIShops(player));
-        }
-        return ReturnType.SUCCESS;
-    }
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
+			Shops.getInstance().getGuiManager().showGUI(player, new GUIShops(player));
+		}
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.shop").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.shop").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.shop").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.shop").getMessage();
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		return null;
+	}
 }

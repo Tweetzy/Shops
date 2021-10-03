@@ -34,309 +34,309 @@ import java.util.stream.IntStream;
  */
 public class GUIItemSelection extends Gui {
 
-    final List<CustomGUIItemHolder> customItems;
-    final ShopItem shopItem;
-    final Shop shop;
-    final ItemStack deserializedItem;
+	final List<CustomGUIItemHolder> customItems;
+	final ShopItem shopItem;
+	final Shop shop;
+	final ItemStack deserializedItem;
 
-    int quantity = 1;
-    double cartTotal = 0;
+	int quantity = 1;
+	double cartTotal = 0;
 
-    int clicksToEdit = 0;
-    boolean editing = false;
+	int clicksToEdit = 0;
+	boolean editing = false;
 
-    public GUIItemSelection(ShopItem shopItem) {
-        this.shopItem = shopItem;
-        this.shop = Shops.getInstance().getShopManager().getShop(this.shopItem.getShopId());
-        this.deserializedItem = ShopAPI.getInstance().deserializeItem(this.shopItem.getItem());
-        this.customItems = Shops.getInstance().getShopManager().getCustomGuiItems();
+	public GUIItemSelection(ShopItem shopItem) {
+		this.shopItem = shopItem;
+		this.shop = Shops.getInstance().getShopManager().getShop(this.shopItem.getShopId());
+		this.deserializedItem = ShopAPI.getInstance().deserializeItem(this.shopItem.getItem());
+		this.customItems = Shops.getInstance().getShopManager().getCustomGuiItems();
 
-        setTitle(TextUtils.formatText(Settings.GUI_ITEM_SELECT_TITLE.getString()));
-        setRows(6);
-        setDefaultItem(Settings.GUI_ITEM_SELECT_BG_ITEM.getMaterial().parseItem());
-        setAcceptsItems(false);
-        setAllowDrops(false);
-        draw();
-    }
+		setTitle(TextUtils.formatText(Settings.GUI_ITEM_SELECT_TITLE.getString()));
+		setRows(6);
+		setDefaultItem(Settings.GUI_ITEM_SELECT_BG_ITEM.getMaterial().parseItem());
+		setAcceptsItems(false);
+		setAllowDrops(false);
+		draw();
+	}
 
-    private void draw() {
-        reset();
-        handleEdit();
+	private void draw() {
+		reset();
+		handleEdit();
 
-        if (this.customItems.stream().noneMatch(holders -> holders.getGuiName().equalsIgnoreCase("itemselection"))) {
-            this.customItems.add(new CustomGUIItemHolder("itemselection"));
-        }
+		if (this.customItems.stream().noneMatch(holders -> holders.getGuiName().equalsIgnoreCase("itemselection"))) {
+			this.customItems.add(new CustomGUIItemHolder("itemselection"));
+		}
 
-        if (editing) {
-            drawItems();
-            return;
-        }
+		if (editing) {
+			drawItems();
+			return;
+		}
 
-        if (Settings.GUI_ITEM_SELECT_FILL_BG.getBoolean()) {
-            IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, getDefaultItem()));
-        }
+		if (Settings.GUI_ITEM_SELECT_FILL_BG.getBoolean()) {
+			IntStream.range(0, getRows() * 9).forEach(i -> setItem(i, getDefaultItem()));
+		}
 
-        if (!Settings.GUI_ITEM_SELECT_USE_DEFAULT_SLOTS.getBoolean() && this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get().getItems().size() != 0) {
-            this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get().getItems().forEach(customGUIItem -> {
-                ItemStack stack = ShopAPI.getInstance().deserializeItem(customGUIItem.getItem());
-                if (!NBTEditor.contains(stack, "shops:edit:button")) {
-                    setItem(customGUIItem.getSlot(), ShopAPI.getInstance().deserializeItem(customGUIItem.getItem()));
-                } else {
-                    switch (NBTEditor.getString(stack, "shops:edit:button")) {
-                        case "item_info":
-                            setItem(customGUIItem.getSlot(), infoItem());
-                            break;
-                        case "select_item":
-                            setItem(customGUIItem.getSlot(), itemToSelect());
-                            break;
-                        default:
-                            setButton(customGUIItem.getSlot(), ShopAPI.getInstance().deserializeItem(customGUIItem.getItem()), this::handleCustomLayoutActions);
-                            break;
-                    }
-                }
-            });
-        } else {
-            drawItems();
-        }
-    }
+		if (!Settings.GUI_ITEM_SELECT_USE_DEFAULT_SLOTS.getBoolean() && this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get().getItems().size() != 0) {
+			this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get().getItems().forEach(customGUIItem -> {
+				ItemStack stack = ShopAPI.getInstance().deserializeItem(customGUIItem.getItem());
+				if (!NBTEditor.contains(stack, "shops:edit:button")) {
+					setItem(customGUIItem.getSlot(), ShopAPI.getInstance().deserializeItem(customGUIItem.getItem()));
+				} else {
+					switch (NBTEditor.getString(stack, "shops:edit:button")) {
+						case "item_info":
+							setItem(customGUIItem.getSlot(), infoItem());
+							break;
+						case "select_item":
+							setItem(customGUIItem.getSlot(), itemToSelect());
+							break;
+						default:
+							setButton(customGUIItem.getSlot(), ShopAPI.getInstance().deserializeItem(customGUIItem.getItem()), this::handleCustomLayoutActions);
+							break;
+					}
+				}
+			});
+		} else {
+			drawItems();
+		}
+	}
 
-    private ItemStack infoItem() {
-        double subTotal = this.shopItem.getBuyPrice() * this.quantity;
-        double preTax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
-        double discounts = this.shop.isUseBuyDiscount() ? subTotal * (this.shop.getBuyDiscount() / 100) : 0.0D;
-        double totalTax = subTotal * (preTax / 100);
-        this.cartTotal = (subTotal - discounts) + totalTax;
+	private ItemStack infoItem() {
+		double subTotal = this.shopItem.getBuyPrice() * this.quantity;
+		double preTax = Settings.USE_TAX.getBoolean() ? Settings.TAX_AMOUNT.getDouble() : 0.0D;
+		double discounts = this.shop.isUseBuyDiscount() ? subTotal * (this.shop.getBuyDiscount() / 100) : 0.0D;
+		double totalTax = subTotal * (preTax / 100);
+		this.cartTotal = (subTotal - discounts) + totalTax;
 
-        return ConfigurationItemHelper.build(Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_ITEM.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_NAME.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE.getStringList(), 1, new HashMap<String, Object>() {{
-            put("%item_stack_quantity%", deserializedItem.getAmount());
-            put("%item_quantity%", quantity);
-            put("%total_items%", quantity * deserializedItem.getAmount());
-            put("%item_price%", String.format("%,.2f", shopItem.getBuyPrice()));
-            put("%item_tax%", preTax);
-            put("%item_sub_total%", String.format("%,.2f", subTotal));
-            put("%item_discounts%", String.format("%,.2f", discounts));
-            put("%item_total%", String.format("%,.2f", cartTotal));
-        }}, "shops:edit:button;item_info");
-    }
+		return ConfigurationItemHelper.build(Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_ITEM.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_NAME.getString(), Settings.GUI_SHOP_ITEM_SELECT_ITEMS_INFO_LORE.getStringList(), 1, new HashMap<String, Object>() {{
+			put("%item_stack_quantity%", deserializedItem.getAmount());
+			put("%item_quantity%", quantity);
+			put("%total_items%", quantity * deserializedItem.getAmount());
+			put("%item_price%", String.format("%,.2f", shopItem.getBuyPrice()));
+			put("%item_tax%", preTax);
+			put("%item_sub_total%", String.format("%,.2f", subTotal));
+			put("%item_discounts%", String.format("%,.2f", discounts));
+			put("%item_total%", String.format("%,.2f", cartTotal));
+		}}, "shops:edit:button;item_info");
+	}
 
-    private ItemStack itemToSelect() {
-        ItemStack stack = this.deserializedItem.clone();
-        stack = NBTEditor.set(stack, "select_item", "shops:edit:button");
-        return stack;
-    }
+	private ItemStack itemToSelect() {
+		ItemStack stack = this.deserializedItem.clone();
+		stack = NBTEditor.set(stack, "select_item", "shops:edit:button");
+		return stack;
+	}
 
-    private void drawItems() {
-        setButton(5, 0, ConfigurationItemHelper.build(Settings.GUI_CLOSE_BTN_ITEM.getString(), Settings.GUI_CLOSE_BTN_NAME.getString(), Settings.GUI_CLOSE_BTN_LORE.getStringList(), 1, null, "shops:edit:button;close"), this::handleCustomLayoutActions);
-        if (Settings.USE_CART_SYSTEM.getBoolean()) {
-            setButton(5, 8, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_LORE.getStringList(), 1, null, "shops:edit:button;add_to_cart"), this::handleCustomLayoutActions);
-        }
+	private void drawItems() {
+		setButton(5, 0, ConfigurationItemHelper.build(Settings.GUI_CLOSE_BTN_ITEM.getString(), Settings.GUI_CLOSE_BTN_NAME.getString(), Settings.GUI_CLOSE_BTN_LORE.getStringList(), 1, null, "shops:edit:button;close"), this::handleCustomLayoutActions);
+		if (Settings.USE_CART_SYSTEM.getBoolean()) {
+			setButton(5, 8, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_ADD_TO_CART_LORE.getStringList(), 1, null, "shops:edit:button;add_to_cart"), this::handleCustomLayoutActions);
+		}
 
-        setButton(2, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), 1), new HashMap<String, Object>() {{
-            put("%decr_one_amount%", Settings.GUI_ITEM_SELECT_DECR_ONE.getInt());
-        }}, "shops:edit:button;decr_one"), this::handleCustomLayoutActions);
+		setButton(2, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_ONE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), 1), new HashMap<String, Object>() {{
+			put("%decr_one_amount%", Settings.GUI_ITEM_SELECT_DECR_ONE.getInt());
+		}}, "shops:edit:button;decr_one"), this::handleCustomLayoutActions);
 
-        setButton(3, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_TWO.getInt(), 1), new HashMap<String, Object>() {{
-            put("%decr_two_amount%", Settings.GUI_ITEM_SELECT_DECR_TWO.getInt());
-        }}, "shops:edit:button;decr_two"), this::handleCustomLayoutActions);
+		setButton(3, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_TWO_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_TWO.getInt(), 1), new HashMap<String, Object>() {{
+			put("%decr_two_amount%", Settings.GUI_ITEM_SELECT_DECR_TWO.getInt());
+		}}, "shops:edit:button;decr_two"), this::handleCustomLayoutActions);
 
-        setButton(4, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_THREE.getInt(), 1), new HashMap<String, Object>() {{
-            put("%decr_three_amount%", Settings.GUI_ITEM_SELECT_DECR_THREE.getInt());
-        }}, "shops:edit:button;decr_three"), this::handleCustomLayoutActions);
+		setButton(4, 2, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_DECR_THREE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_DECR_THREE.getInt(), 1), new HashMap<String, Object>() {{
+			put("%decr_three_amount%", Settings.GUI_ITEM_SELECT_DECR_THREE.getInt());
+		}}, "shops:edit:button;decr_three"), this::handleCustomLayoutActions);
 
-        setButton(2, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_ONE.getInt(), 1), new HashMap<String, Object>() {{
-            put("%inc_one_amount%", Settings.GUI_ITEM_SELECT_INC_ONE.getInt());
-        }}, "shops:edit:button;inc_one"), this::handleCustomLayoutActions);
+		setButton(2, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_ONE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_ONE.getInt(), 1), new HashMap<String, Object>() {{
+			put("%inc_one_amount%", Settings.GUI_ITEM_SELECT_INC_ONE.getInt());
+		}}, "shops:edit:button;inc_one"), this::handleCustomLayoutActions);
 
-        setButton(3, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_TWO.getInt(), 1), new HashMap<String, Object>() {{
-            put("%inc_two_amount%", Settings.GUI_ITEM_SELECT_INC_TWO.getInt());
-        }}, "shops:edit:button;inc_two"), this::handleCustomLayoutActions);
+		setButton(3, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_TWO_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_TWO.getInt(), 1), new HashMap<String, Object>() {{
+			put("%inc_two_amount%", Settings.GUI_ITEM_SELECT_INC_TWO.getInt());
+		}}, "shops:edit:button;inc_two"), this::handleCustomLayoutActions);
 
-        setButton(4, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_THREE.getInt(), 1), new HashMap<String, Object>() {{
-            put("%inc_three_amount%", Settings.GUI_ITEM_SELECT_INC_THREE.getInt());
-        }}, "shops:edit:button;inc_three"), this::handleCustomLayoutActions);
+		setButton(4, 6, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_INC_THREE_LORE.getStringList(), Math.min(Settings.GUI_ITEM_SELECT_INC_THREE.getInt(), 1), new HashMap<String, Object>() {{
+			put("%inc_three_amount%", Settings.GUI_ITEM_SELECT_INC_THREE.getInt());
+		}}, "shops:edit:button;inc_three"), this::handleCustomLayoutActions);
 
-        setButton(4, 4, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_LORE.getStringList(), 1, null, "shops:edit:button;sell_buy"), this::handleCustomLayoutActions);
+		setButton(4, 4, ConfigurationItemHelper.build(Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_ITEM.getString(), Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_NAME.getString(), Settings.GUI_ITEM_SELECT_ITEMS_SELL_BUY_LORE.getStringList(), 1, null, "shops:edit:button;sell_buy"), this::handleCustomLayoutActions);
 
-        setItem(1, 4, itemToSelect());
-        setItem(3, 4, infoItem());
-    }
+		setItem(1, 4, itemToSelect());
+		setItem(3, 4, infoItem());
+	}
 
-    private void handleCustomLayoutActions(GuiClickEvent e) {
-        ItemStack item = e.clickedItem;
-        if (this.editing) return;
-        if (!NBTEditor.contains(item, "shops:edit:button")) return;
-        String button = NBTEditor.getString(item, "shops:edit:button");
+	private void handleCustomLayoutActions(GuiClickEvent e) {
+		ItemStack item = e.clickedItem;
+		if (this.editing) return;
+		if (!NBTEditor.contains(item, "shops:edit:button")) return;
+		String button = NBTEditor.getString(item, "shops:edit:button");
 
-        switch (button) {
-            case "close":
-                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
-                break;
-            case "add_to_cart":
-                if (!Settings.USE_CART_SYSTEM.getBoolean()) {
-                    Shops.getInstance().getLocale().getMessage("general.cart_disabled").sendPrefixedMessage(e.player);
-                    return;
-                }
-                if (this.shop.isSellOnly()) return;
-                if (this.shopItem.isSellOnly()) return;
-                if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
-                    Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(this.shopItem, this.quantity));
-                } else {
-                    Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
-                        add(new CartItem(shopItem, quantity));
-                    }});
-                }
-                e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
-                break;
-            case "decr_one":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), false);
-                break;
-            case "decr_two":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_TWO.getInt(), false);
-                break;
-            case "decr_three":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_THREE.getInt(), false);
-                break;
-            case "inc_one":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_ONE.getInt(), true);
-                break;
-            case "inc_two":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_TWO.getInt(), true);
-                break;
-            case "inc_three":
-                handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_THREE.getInt(), true);
-                break;
-            case "sell_buy":
-                switch (e.clickType) {
-                    case LEFT:
-                        if (this.shop.isRequiresPermissionToBuy() && !e.player.hasPermission(this.shop.getBuyPermission())) {
-                            Shops.getInstance().getLocale().getMessage("general.permission_required.buy").sendPrefixedMessage(e.player);
-                            return;
-                        }
+		switch (button) {
+			case "close":
+				e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
+				break;
+			case "add_to_cart":
+				if (!Settings.USE_CART_SYSTEM.getBoolean()) {
+					Shops.getInstance().getLocale().getMessage("general.cart_disabled").sendPrefixedMessage(e.player);
+					return;
+				}
+				if (this.shop.isSellOnly()) return;
+				if (this.shopItem.isSellOnly()) return;
+				if (Shops.getInstance().getPlayerCart().containsKey(e.player.getUniqueId())) {
+					Shops.getInstance().getPlayerCart().get(e.player.getUniqueId()).add(new CartItem(this.shopItem, this.quantity));
+				} else {
+					Shops.getInstance().getPlayerCart().putIfAbsent(e.player.getUniqueId(), new ArrayList<CartItem>() {{
+						add(new CartItem(shopItem, quantity));
+					}});
+				}
+				e.manager.showGUI(e.player, new GUIShopContents(e.player, this.shop, false, false));
+				break;
+			case "decr_one":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_ONE.getInt(), false);
+				break;
+			case "decr_two":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_TWO.getInt(), false);
+				break;
+			case "decr_three":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_DECR_THREE.getInt(), false);
+				break;
+			case "inc_one":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_ONE.getInt(), true);
+				break;
+			case "inc_two":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_TWO.getInt(), true);
+				break;
+			case "inc_three":
+				handleQuantityButtons(e, Settings.GUI_ITEM_SELECT_INC_THREE.getInt(), true);
+				break;
+			case "sell_buy":
+				switch (e.clickType) {
+					case LEFT:
+						if (this.shop.isRequiresPermissionToBuy() && !e.player.hasPermission(this.shop.getBuyPermission())) {
+							Shops.getInstance().getLocale().getMessage("general.permission_required.buy").sendPrefixedMessage(e.player);
+							return;
+						}
 
-                        if (this.shop.isSellOnly()) return;
-                        if (this.shopItem.isSellOnly()) return;
+						if (this.shop.isSellOnly()) return;
+						if (this.shopItem.isSellOnly()) return;
 
-                        if (!EconomyManager.hasBalance(e.player, this.cartTotal)) {
-                            Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
-                            return;
-                        }
+						if (!EconomyManager.hasBalance(e.player, this.cartTotal)) {
+							Shops.getInstance().getLocale().getMessage("general.not_enough_money").sendPrefixedMessage(e.player);
+							return;
+						}
 
-                        ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
-                        Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
-                        if (shopBuyEvent.isCancelled()) return;
+						ShopBuyEvent shopBuyEvent = new ShopBuyEvent(e.player, this.shopItem, this.quantity);
+						Bukkit.getServer().getPluginManager().callEvent(shopBuyEvent);
+						if (shopBuyEvent.isCancelled()) return;
 
-                        EconomyManager.withdrawBalance(e.player, cartTotal);
-                        Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", this.cartTotal)).sendPrefixedMessage(e.player);
-                        for (int i = 0; i < this.quantity; i++) {
-                            PlayerUtils.giveItem(e.player, this.deserializedItem);
-                        }
-                        break;
-                    case MIDDLE:
-                        if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
-                            Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
-                            return;
-                        }
+						EconomyManager.withdrawBalance(e.player, cartTotal);
+						Shops.getInstance().getLocale().getMessage("general.money_remove").processPlaceholder("value", String.format("%,.2f", this.cartTotal)).sendPrefixedMessage(e.player);
+						for (int i = 0; i < this.quantity; i++) {
+							PlayerUtils.giveItem(e.player, this.deserializedItem);
+						}
+						break;
+					case MIDDLE:
+						if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
+							Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
+							return;
+						}
 
-                        if (this.shop.isBuyOnly()) return;
-                        if (this.shopItem.isBuyOnly()) return;
+						if (this.shop.isBuyOnly()) return;
+						if (this.shopItem.isBuyOnly()) return;
 
-                        int allItems = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
-                        if (allItems == 0) return;
+						int allItems = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
+						if (allItems == 0) return;
 
-                        double allPreTotalSell = this.shopItem.getSellPrice() / this.deserializedItem.getAmount() * allItems;
-                        double allSellBonus = this.shop.isUseSellBonus() ? allPreTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+						double allPreTotalSell = this.shopItem.getSellPrice() / this.deserializedItem.getAmount() * allItems;
+						double allSellBonus = this.shop.isUseSellBonus() ? allPreTotalSell * (this.shop.getSellBonus() / 100) : 0D;
 
-                        ShopSellEvent allShopSellEvent = new ShopSellEvent(e.player, this.shopItem, allItems);
-                        Bukkit.getServer().getPluginManager().callEvent(allShopSellEvent);
-                        if (allShopSellEvent.isCancelled()) return;
+						ShopSellEvent allShopSellEvent = new ShopSellEvent(e.player, this.shopItem, allItems);
+						Bukkit.getServer().getPluginManager().callEvent(allShopSellEvent);
+						if (allShopSellEvent.isCancelled()) return;
 
-                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, allItems);
-                        EconomyManager.deposit(e.player, (allPreTotalSell + allSellBonus));
-                        Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (allPreTotalSell + allSellBonus)).sendPrefixedMessage(e.player);
+						ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, allItems);
+						EconomyManager.deposit(e.player, (allPreTotalSell + allSellBonus));
+						Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (allPreTotalSell + allSellBonus)).sendPrefixedMessage(e.player);
 
-                        break;
-                    case RIGHT:
-                        if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
-                            Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
-                            return;
-                        }
+						break;
+					case RIGHT:
+						if (this.shop.isRequiresPermissionToSell() && !e.player.hasPermission(this.shop.getSellPermission())) {
+							Shops.getInstance().getLocale().getMessage("general.permission_required.sell").sendPrefixedMessage(e.player);
+							return;
+						}
 
-                        if (this.shop.isBuyOnly()) return;
-                        if (this.shopItem.isBuyOnly()) return;
+						if (this.shop.isBuyOnly()) return;
+						if (this.shopItem.isBuyOnly()) return;
 
-                        int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
-                        if (itemCount == 0) return;
-                        if (itemCount < quantity) {
-                            quantity = itemCount;
-                        }
+						int itemCount = ShopAPI.getInstance().getItemCountInPlayerInventory(e.player, this.deserializedItem);
+						if (itemCount == 0) return;
+						if (itemCount < quantity) {
+							quantity = itemCount;
+						}
 
-                        double preTotalSell = this.shopItem.getSellPrice() * quantity;
-                        double sellBonus = this.shop.isUseSellBonus() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
+						double preTotalSell = this.shopItem.getSellPrice() * quantity;
+						double sellBonus = this.shop.isUseSellBonus() ? preTotalSell * (this.shop.getSellBonus() / 100) : 0D;
 
-                        ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, quantity);
-                        Bukkit.getServer().getPluginManager().callEvent(shopSellEvent);
-                        if (shopSellEvent.isCancelled()) return;
+						ShopSellEvent shopSellEvent = new ShopSellEvent(e.player, this.shopItem, quantity);
+						Bukkit.getServer().getPluginManager().callEvent(shopSellEvent);
+						if (shopSellEvent.isCancelled()) return;
 
-                        ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity * this.deserializedItem.getAmount());
-                        EconomyManager.deposit(e.player, (preTotalSell + sellBonus));
-                        Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
-                        break;
-                }
-                break;
-        }
-    }
+						ShopAPI.getInstance().removeSpecificItemQuantityFromPlayer(e.player, this.deserializedItem, quantity * this.deserializedItem.getAmount());
+						EconomyManager.deposit(e.player, (preTotalSell + sellBonus));
+						Shops.getInstance().getLocale().getMessage("general.money_add").processPlaceholder("value", (preTotalSell + sellBonus)).sendPrefixedMessage(e.player);
+						break;
+				}
+				break;
+		}
+	}
 
-    private void handleQuantityButtons(GuiClickEvent e, int amount, boolean add) {
-        switch (e.clickType) {
-            case LEFT:
-                quantity = add ? quantity == 1 && amount == 64 ? quantity + amount - 1 : quantity + amount : Math.max(1, quantity - amount);
-                draw();
-                break;
-            case SHIFT_LEFT:
-            case SHIFT_RIGHT:
-                if (Settings.GUI_ITEM_SELECT_ALLOW_SHIFT_CLICK_STACK.getBoolean()) {
-                    quantity = add ? quantity == 1 ? quantity + 63 : quantity + 64 : Math.max(1, quantity - 64);
-                    draw();
-                }
-                break;
-        }
-    }
+	private void handleQuantityButtons(GuiClickEvent e, int amount, boolean add) {
+		switch (e.clickType) {
+			case LEFT:
+				quantity = add ? quantity == 1 && amount == 64 ? quantity + amount - 1 : quantity + amount : Math.max(1, quantity - amount);
+				draw();
+				break;
+			case SHIFT_LEFT:
+			case SHIFT_RIGHT:
+				if (Settings.GUI_ITEM_SELECT_ALLOW_SHIFT_CLICK_STACK.getBoolean()) {
+					quantity = add ? quantity == 1 ? quantity + 63 : quantity + 64 : Math.max(1, quantity - 64);
+					draw();
+				}
+				break;
+		}
+	}
 
-    private void handleEdit() {
-        setPrivateDefaultAction(e -> {
-            if (e.clickType == ClickType.SHIFT_RIGHT && e.player.hasPermission("shops.admin")) this.clicksToEdit++;
-            if (this.clicksToEdit >= 3 && e.player.hasPermission("shops.admin")) {
-                this.clicksToEdit = 0;
-                this.editing = true;
-                setUnlockedRange(0, 9 * getRows());
-                setAcceptsItems(true);
-                draw();
-                Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&aYou're now editing this inventory!")).sendPrefixedMessage(e.player);
-            }
-        });
+	private void handleEdit() {
+		setPrivateDefaultAction(e -> {
+			if (e.clickType == ClickType.SHIFT_RIGHT && e.player.hasPermission("shops.admin")) this.clicksToEdit++;
+			if (this.clicksToEdit >= 3 && e.player.hasPermission("shops.admin")) {
+				this.clicksToEdit = 0;
+				this.editing = true;
+				setUnlockedRange(0, 9 * getRows());
+				setAcceptsItems(true);
+				draw();
+				Shops.getInstance().getLocale().newMessage(TextUtils.formatText("&aYou're now editing this inventory!")).sendPrefixedMessage(e.player);
+			}
+		});
 
-        setOnClose(close -> {
-            if (this.editing) {
-                for (int i = 0; i < inventory.getSize(); i++) {
-                    ItemStack slotItem = getItem(i);
-                    if (slotItem != null) {
-                        this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().orElse(null).getItems().add(new CustomGUIItem(i, slotItem));
-                    }
-                }
+		setOnClose(close -> {
+			if (this.editing) {
+				for (int i = 0; i < inventory.getSize(); i++) {
+					ItemStack slotItem = getItem(i);
+					if (slotItem != null) {
+						this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().orElse(null).getItems().add(new CustomGUIItem(i, slotItem));
+					}
+				}
 
-                if (Settings.DATABASE_USE.getBoolean()) {
-                    Shops.getInstance().getDataManager().updateCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get());
-                    Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_selection").sendPrefixedMessage(close.player);
-                } else {
-                    ShopAPI.getInstance().saveCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get());
-                    Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_selection").sendPrefixedMessage(close.player);
-                    Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
-                }
+				if (Settings.DATABASE_USE.getBoolean()) {
+					Shops.getInstance().getDataManager().updateCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get());
+					Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_selection").sendPrefixedMessage(close.player);
+				} else {
+					ShopAPI.getInstance().saveCustomGuiItems(this.customItems.stream().filter(holders -> holders.getGuiName().equalsIgnoreCase("itemselection")).findFirst().get());
+					Shops.getInstance().getLocale().getMessage("shop.saved_inventory_edit_for_selection").sendPrefixedMessage(close.player);
+					Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
+				}
 
-                this.editing = false;
-                close.manager.showGUI(close.player, new GUIItemSelection(this.shopItem));
-            }
-        });
-    }
+				this.editing = false;
+				close.manager.showGUI(close.player, new GUIItemSelection(this.shopItem));
+			}
+		});
+	}
 
 }

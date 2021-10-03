@@ -18,44 +18,44 @@ import java.util.stream.Collectors;
  */
 public class CommandEdit extends AbstractCommand {
 
-    public CommandEdit() {
-        super(CommandType.PLAYER_ONLY, "edit");
-    }
+	public CommandEdit() {
+		super(CommandType.PLAYER_ONLY, "edit");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        if (args.length != 1) return ReturnType.SYNTAX_ERROR;
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		if (args.length != 1) return ReturnType.SYNTAX_ERROR;
 
-        Player player = (Player) sender;
-        Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
-        if (shop == null) {
-            Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(player);
-            return ReturnType.FAILURE;
-        }
+		Player player = (Player) sender;
+		Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
+		if (shop == null) {
+			Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(player);
+			return ReturnType.FAILURE;
+		}
 
-        Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(shop));
-        return ReturnType.SUCCESS;
-    }
+		Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(shop));
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        if (args.length == 1)
-            return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		if (args.length == 1)
+			return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
+		return null;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.edit";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.edit";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.edit").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.edit").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.edit").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.edit").getMessage();
+	}
 }

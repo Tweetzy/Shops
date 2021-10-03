@@ -24,44 +24,44 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerListener implements Listener {
 
-    @EventHandler
-    public void onPlayerClick(PlayerInteractEvent e) {
-        if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getPlayer().getUniqueId())) return;
-        if (e.getItem() != null) {
-            Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getItem()));
-            Shops.getInstance().getGuiManager().showGUI(e.getPlayer(), new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId())));
-            StorageManager.getInstance().updateShop(e.getPlayer(), Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()));
-            Shops.getInstance().getOutOfGuiAccess().remove(e.getPlayer().getUniqueId());
-        }
-    }
+	@EventHandler
+	public void onPlayerClick(PlayerInteractEvent e) {
+		if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getPlayer().getUniqueId())) return;
+		if (e.getItem() != null) {
+			Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getItem()));
+			Shops.getInstance().getGuiManager().showGUI(e.getPlayer(), new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId())));
+			StorageManager.getInstance().updateShop(e.getPlayer(), Shops.getInstance().getOutOfGuiAccess().get(e.getPlayer().getUniqueId()));
+			Shops.getInstance().getOutOfGuiAccess().remove(e.getPlayer().getUniqueId());
+		}
+	}
 
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getWhoClicked().getUniqueId())) return;
-        if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR && !(e.getClickedInventory().getHolder() instanceof GuiHolder)) {
-            Player player = (Player) e.getWhoClicked();
+	@EventHandler
+	public void onInventoryClick(InventoryClickEvent e) {
+		if (!Shops.getInstance().getOutOfGuiAccess().containsKey(e.getWhoClicked().getUniqueId())) return;
+		if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR && !(e.getClickedInventory().getHolder() instanceof GuiHolder)) {
+			Player player = (Player) e.getWhoClicked();
 
-            Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getCurrentItem()));
-            Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId())));
-            StorageManager.getInstance().updateShop(player, Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()));
-            Shops.getInstance().getOutOfGuiAccess().remove(player.getUniqueId());
-            Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
-        }
-    }
+			Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()).setDisplayIcon(ShopAPI.getInstance().serializeItemStack(e.getCurrentItem()));
+			Shops.getInstance().getGuiManager().showGUI(player, new GUIShopEdit(Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId())));
+			StorageManager.getInstance().updateShop(player, Shops.getInstance().getOutOfGuiAccess().get(player.getUniqueId()));
+			Shops.getInstance().getOutOfGuiAccess().remove(player.getUniqueId());
+			Shops.getInstance().getShopManager().loadShops(true, Settings.DATABASE_USE.getBoolean());
+		}
+	}
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> {
-            if (e.getPlayer().isOp()) {
-                switch (Shops.getInstance().getUpdateStatus()) {
-                    case UNRELEASED_VERSION:
-                        Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dYou're running an unreleased version of Shops &f(&c%s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
-                        break;
-                    case UPDATE_AVAILABLE:
-                        Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dThere is a new version of Shops available &f(current: %s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
-                        break;
-                }
-            }
-        }, 1L);
-    }
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent e) {
+		Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> {
+			if (e.getPlayer().isOp()) {
+				switch (Shops.getInstance().getUpdateStatus()) {
+					case UNRELEASED_VERSION:
+						Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dYou're running an unreleased version of Shops &f(&c%s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
+						break;
+					case UPDATE_AVAILABLE:
+						Shops.getInstance().getLocale().getMessage(TextUtils.formatText(String.format("&dThere is a new version of Shops available &f(current: %s&f)", Shops.getInstance().getDescription().getVersion()))).sendPrefixedMessage(e.getPlayer());
+						break;
+				}
+			}
+		}, 1L);
+	}
 }

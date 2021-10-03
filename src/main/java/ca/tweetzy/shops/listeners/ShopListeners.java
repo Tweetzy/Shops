@@ -17,17 +17,17 @@ import org.bukkit.event.Listener;
  */
 public class ShopListeners implements Listener {
 
-    @EventHandler
-    public void onShopItemPurchase(ShopBuyEvent e) {
-        if (Settings.DISCORD_USE.getBoolean() && Settings.DISCORD_ALERT_ON_BUY.getBoolean() && !e.isCancelled()) {
-            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> Settings.DISCORD_WEBHOOKS.getStringList().forEach(hook -> ShopAPI.getInstance().sendDiscordMessage(hook, null, e)), 1L);
-        }
-    }
+	@EventHandler
+	public void onShopItemPurchase(ShopBuyEvent e) {
+		if (Settings.DISCORD_USE.getBoolean() && Settings.DISCORD_ALERT_ON_BUY.getBoolean() && !e.isCancelled()) {
+			Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> Settings.DISCORD_WEBHOOKS.getStringList().forEach(hook -> ShopAPI.getInstance().sendDiscordMessage(hook, null, e)), 1L);
+		}
+	}
 
-    @EventHandler
-    public void onShopItemSell(ShopSellEvent e) {
-        if (Settings.DISCORD_USE.getBoolean() && Settings.DISCORD_ALERT_ON_SELL.getBoolean() && !e.isCancelled()) {
-            Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> Settings.DISCORD_WEBHOOKS.getStringList().forEach(hook -> ShopAPI.getInstance().sendDiscordMessage(hook, e, null)), 1L);
-        }
-    }
+	@EventHandler
+	public void onShopItemSell(ShopSellEvent e) {
+		if (Settings.DISCORD_USE.getBoolean() && Settings.DISCORD_ALERT_ON_SELL.getBoolean() && !e.isCancelled()) {
+			Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(Shops.getInstance(), () -> Settings.DISCORD_WEBHOOKS.getStringList().forEach(hook -> ShopAPI.getInstance().sendDiscordMessage(hook, e, null)), 1L);
+		}
+	}
 }

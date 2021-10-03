@@ -16,34 +16,34 @@ import java.util.List;
  */
 public class CommandList extends AbstractCommand {
 
-    public CommandList() {
-        super(CommandType.PLAYER_ONLY, "list");
-    }
+	public CommandList() {
+		super(CommandType.PLAYER_ONLY, "list");
+	}
 
-    @Override
-    protected ReturnType runCommand(CommandSender sender, String... args) {
-        Player player = (Player) sender;
-        Shops.getInstance().getGuiManager().showGUI(player, new GUIShopsList());
-        return ReturnType.SUCCESS;
-    }
+	@Override
+	protected ReturnType runCommand(CommandSender sender, String... args) {
+		Player player = (Player) sender;
+		Shops.getInstance().getGuiManager().showGUI(player, new GUIShopsList());
+		return ReturnType.SUCCESS;
+	}
 
-    @Override
-    public String getPermissionNode() {
-        return "shops.cmd.list";
-    }
+	@Override
+	public String getPermissionNode() {
+		return "shops.cmd.list";
+	}
 
-    @Override
-    public String getSyntax() {
-        return Shops.getInstance().getLocale().getMessage("commands.syntax.list").getMessage();
-    }
+	@Override
+	public String getSyntax() {
+		return Shops.getInstance().getLocale().getMessage("commands.syntax.list").getMessage();
+	}
 
-    @Override
-    public String getDescription() {
-        return Shops.getInstance().getLocale().getMessage("commands.description.list").getMessage();
-    }
+	@Override
+	public String getDescription() {
+		return Shops.getInstance().getLocale().getMessage("commands.description.list").getMessage();
+	}
 
-    @Override
-    protected List<String> onTab(CommandSender sender, String... args) {
-        return null;
-    }
+	@Override
+	protected List<String> onTab(CommandSender sender, String... args) {
+		return null;
+	}
 }

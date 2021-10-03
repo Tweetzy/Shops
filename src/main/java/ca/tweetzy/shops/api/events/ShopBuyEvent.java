@@ -19,19 +19,19 @@ import java.util.List;
 @Setter
 public class ShopBuyEvent extends ShopEvent {
 
-    private List<CartItem> cartItems;
-    private boolean fromCart;
+	private List<CartItem> cartItems;
+	private boolean fromCart;
 
-    public ShopBuyEvent(Player player, List<CartItem> cartItems) {
-        super(player, cartItems.get(0), true, cartItems.get(0).getQuantity());
-        this.fromCart = true;
-        this.cartItems = cartItems;
-        this.quantity = cartItems.stream().mapToInt(CartItem::getQuantity).sum();
-    }
+	public ShopBuyEvent(Player player, List<CartItem> cartItems) {
+		super(player, cartItems.get(0), true, cartItems.get(0).getQuantity());
+		this.fromCart = true;
+		this.cartItems = cartItems;
+		this.quantity = cartItems.stream().mapToInt(CartItem::getQuantity).sum();
+	}
 
-    public ShopBuyEvent(Player player, ShopItem shopItem, int quantity) {
-        super(player, shopItem, true, quantity);
-        this.fromCart = false;
-        this.cartItems = null;
-    }
+	public ShopBuyEvent(Player player, ShopItem shopItem, int quantity) {
+		super(player, shopItem, true, quantity);
+		this.fromCart = false;
+		this.cartItems = null;
+	}
 }

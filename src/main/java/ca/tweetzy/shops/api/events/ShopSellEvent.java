@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 public class ShopSellEvent extends ShopEvent {
 
-    public ShopSellEvent(Player player, ShopItem shopItem, int quantity) {
-        super(player, shopItem, false, quantity);
-    }
+	public ShopSellEvent(Player player, ShopItem shopItem, int quantity) {
+		super(player, shopItem, false, quantity);
+	}
 }
