@@ -11,7 +11,10 @@ import ca.tweetzy.core.database.DatabaseConnector;
 import ca.tweetzy.core.database.MySQLConnector;
 import ca.tweetzy.core.gui.GuiManager;
 import ca.tweetzy.core.hooks.EconomyManager;
+import ca.tweetzy.core.hooks.PluginHook;
+import ca.tweetzy.core.hooks.economies.Economy;
 import ca.tweetzy.core.utils.Metrics;
+import ca.tweetzy.shops.api.UltraEconomyHook;
 import ca.tweetzy.shops.api.UpdateChecker;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
@@ -78,6 +81,8 @@ public class Shops extends TweetyPlugin {
 
 	protected Metrics metrics;
 
+	private PluginHook ultraEconomyHook;
+
 	@Override
 	public void onPluginLoad() {
 		instance = this;
@@ -95,18 +100,26 @@ public class Shops extends TweetyPlugin {
 
 		taskChainFactory = BukkitTaskChainFactory.create(this);
 
-		// Load Economy
-		EconomyManager.load();
-
 		// Setup the settings file
 		Settings.setup();
+
+		this.ultraEconomyHook = PluginHook.addHook(Economy.class, "UltraEconomy", UltraEconomyHook.class);
+
+		// Load Economy
+		EconomyManager.load();
 
 		// Setup the locale
 		setLocale(Settings.LANG.getString());
 		LocaleSettings.setup();
 
 		// Setup Economy
-		EconomyManager.getManager().setPreferredHook(Settings.ECONOMY_PLUGIN.getString());
+		final String ECO_PLUGIN =Settings.ECONOMY_PLUGIN.getString();
+		if (ECO_PLUGIN.startsWith("UltraEconomy")) {
+			EconomyManager.getManager().setPreferredHook(this.ultraEconomyHook);
+		} else {
+			EconomyManager.getManager().setPreferredHook(ECO_PLUGIN);
+		}
+
 		if (!EconomyManager.getManager().isEnabled()) {
 			getLogger().severe("Could not find a valid economy provider for shops");
 			getServer().getPluginManager().disablePlugin(this);
