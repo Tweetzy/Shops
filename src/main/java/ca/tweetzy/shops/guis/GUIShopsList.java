@@ -46,7 +46,7 @@ public class GUIShopsList extends Gui {
 		int slot = 0;
 		List<Shop> data = this.shops.stream().skip((page - 1) * 45L).limit(45).collect(Collectors.toList());
 		for (Shop shop : data) {
-			setButton(slot++, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOP_LIST_ITEM_NAME.getString(), Settings.GUI_SHOP_LIST_ITEM_LORE.getStringList(), 1, new HashMap<String, Object>() {{
+			setButton(slot++, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(shop.getDisplayIcon()), Settings.GUI_SHOP_LIST_ITEM_NAME.getString(), Settings.GUI_SHOP_LIST_ITEM_LORE.getStringList(), 1, true, new HashMap<String, Object>() {{
 				put("%shop_id%", shop.getId());
 				put("%shop_display_name%", shop.getDisplayName());
 				put("%shop_is_public%", shop.isPublic());

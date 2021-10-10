@@ -102,7 +102,7 @@ public class GUIShopEdit extends Gui {
 		});
 
 		// Display Icon
-		setButton(1, 4, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(this.shop.getDisplayIcon()), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE.getStringList(), 1, null), e -> {
+		setButton(1, 4, ConfigurationItemHelper.build(ShopAPI.getInstance().deserializeItem(this.shop.getDisplayIcon()), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_NAME.getString(), Settings.GUI_SHOP_EDIT_ITEMS_DISPLAY_ICON_LORE.getStringList(), 1, true, null), e -> {
 			Shops.getInstance().getOutOfGuiAccess().put(e.player.getUniqueId(), this.shop);
 			Shops.getInstance().getLocale().getMessage("general.change_icon").sendPrefixedMessage(e.player);
 			e.gui.exit();
