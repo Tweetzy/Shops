@@ -113,7 +113,7 @@ public class Shops extends TweetyPlugin {
 		LocaleSettings.setup();
 
 		// Setup Economy
-		final String ECO_PLUGIN =Settings.ECONOMY_PLUGIN.getString();
+		final String ECO_PLUGIN = Settings.ECONOMY_PLUGIN.getString();
 		if (ECO_PLUGIN.startsWith("UltraEconomy")) {
 			EconomyManager.getManager().setPreferredHook(this.ultraEconomyHook);
 		} else {
@@ -167,7 +167,7 @@ public class Shops extends TweetyPlugin {
 				new CommandConvert(),
 				new CommandChangeId(),
 				new CommandUpload(),
-                new CommandSellAll()
+				new CommandSellAll()
 		);
 
 		// Perform the update check

@@ -7,6 +7,7 @@ import ca.tweetzy.shops.api.events.ShopSellEvent;
 import ca.tweetzy.shops.custom.CustomGUIItemHolder;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.shop.Shop;
+import ca.tweetzy.shops.shop.ShopItem;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,7 +17,9 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -190,6 +193,44 @@ public class ShopAPI {
 		return object;
 	}
 
+	/**
+	 * Return a list of all the shop items from each shop
+	 *
+	 * @return the list of all known {@link ShopItem}s
+	 */
+	public ArrayList<ShopItem> getShopItems() {
+		final ArrayList<ShopItem> items = new ArrayList<>();
+		Shops.getInstance().getShopManager().getShops().forEach(shop -> items.addAll(shop.getShopItems()));
+		return items;
+	}
+
+	/**
+	 * Gets the per for each known shop item
+	 *
+	 * @return a {@link ItemStack} to {@link Double} mapping of prices
+	 */
+	public HashMap<ItemStack, Double> getShopItemPrices() {
+		final HashMap<ItemStack, Double> prices = new HashMap<>();
+		getShopItems().forEach(shopItem -> {
+			if (shopItem.isBuyOnly()) return;
+
+			final ItemStack item = deserializeItem(shopItem.getItem());
+			if (!prices.containsKey(item)) {
+				prices.put(item, shopItem.getSellPrice());
+			}
+		});
+		return prices;
+	}
+
+	/**
+	 * Returns the sell price of a
+	 *
+	 * @param itemStack is the {@link ItemStack}
+	 * @return the price or 0
+	 */
+	public double getItemPrice(ItemStack itemStack) {
+		return getShopItemPrices().getOrDefault(itemStack, 0D);
+	}
 
 	public void sendDiscordMessage(String webhook, ShopSellEvent sellEvent, ShopBuyEvent buyEvent) {
 		Objects.requireNonNull(webhook, "Webhook cannot be null when sending discord message");
@@ -251,4 +292,5 @@ public class ShopAPI {
 	private String getDiscordFriendlyMessage(ItemStack stack) {
 		return stack.hasItemMeta() ? stack.getItemMeta().hasDisplayName() ? ChatColor.stripColor(stack.getItemMeta().getDisplayName()) : WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " ")) : WordUtils.capitalize(stack.getType().name().toLowerCase().replace("_", " "));
 	}
+
 }
