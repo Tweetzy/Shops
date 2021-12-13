@@ -6,7 +6,7 @@
 
     <groupId>ca.tweetzy</groupId>
     <artifactId>shops</artifactId>
-    <version>2.17.0</version>
+    <version>2.17.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -99,6 +99,30 @@
                                     <shadedPattern>${project.groupId}.shops.core</shadedPattern>
                                 </relocation>
                             </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-files-on-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <!--                            <outputDirectory>C:\Dev\Minecraft\1.8\plugins</outputDirectory>-->
+                            <outputDirectory>C:\Dev\Minecraft\latest\plugins</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>C:\Users\Kiran\Documents\Development\Minecraft\Active\Shops\target</directory>
+                                    <include>Shops-${project.version}.jar</include>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
