@@ -167,7 +167,8 @@ public class Shops extends TweetyPlugin {
 				new CommandConvert(),
 				new CommandChangeId(),
 				new CommandUpload(),
-				new CommandSellAll()
+				new CommandSellAll(),
+				new CommandExport()
 		);
 
 		// Perform the update check

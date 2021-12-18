@@ -85,7 +85,8 @@ public class StorageManager {
 				}
 			});
 		} else {
-			if (!ShopAPI.getInstance().exists(shopId)) {
+			Shop shop = Shops.getInstance().getShopManager().getShop(shopId);
+			if (shop == null) {
 				Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", shopId).sendPrefixedMessage(player);
 				return AbstractCommand.ReturnType.FAILURE;
 			}
