@@ -77,6 +77,20 @@ public interface IShop {
 	void setCurrency(@NonNull final ICurrency currency);
 
 	/**
+	 * Get the shop display options
+	 *
+	 * @return the {@link IShopDisplay}
+	 */
+	@NonNull IShopDisplay getDisplay();
+
+	/**
+	 * Get the shop settings
+	 *
+	 * @return the {@link IShopSettings}
+	 */
+	@NonNull IShopSettings getSettings();
+
+	/**
 	 * Get the items the shop contains
 	 *
 	 * @return a list of the shop {@link IShopItem}
