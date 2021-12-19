@@ -8,6 +8,6 @@ package ca.tweetzy.shops.api.enums;
  */
 public enum ShopItemType {
 
-	UNLIMITED,
-	LIMITED
+	COMMAND,
+	ITEM
 }
