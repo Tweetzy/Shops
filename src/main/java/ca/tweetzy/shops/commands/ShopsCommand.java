@@ -15,10 +15,10 @@ import org.bukkit.ChatColor;
  */
 @AutoRegister
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class PluginTemplateCommand extends SimpleCommandGroup {
+public final class ShopsCommand extends SimpleCommandGroup {
 
 	@Getter
-	private final static PluginTemplateCommand instance = new PluginTemplateCommand();
+	private final static ShopsCommand instance = new ShopsCommand();
 
 	@Override
 	protected void registerSubcommands() {

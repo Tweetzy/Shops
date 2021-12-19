@@ -11,6 +11,6 @@ import ca.tweetzy.tweety.command.SimpleSubCommand;
 public abstract class AbstractSubCommand extends SimpleSubCommand {
 
 	public AbstractSubCommand(String sublabel) {
-		super(PluginTemplateCommand.getInstance(), sublabel);
+		super(ShopsCommand.getInstance(), sublabel);
 	}
 }

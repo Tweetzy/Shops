@@ -6,7 +6,7 @@ Timestamp_Format: "dd.MM.yyyy HH:mm:ss"
 # -------------------------------------------------------------------------------------------------
 # * THE FIRST ALIAS IS THE MAIN LABEL, PLEASE DO NOT REMOVE IT. *
 # -------------------------------------------------------------------------------------------------
-Command_Aliases: [plugincommand]
+Command_Aliases: [shops]
 
 # -------------------------------------------------------------------------------------------------
 # What language should we use for messages? If it exists, the language file will be copied
@@ -17,7 +17,7 @@ Locale: en
 # -------------------------------------------------------------------------------------------------
 # The prefix used in front of most chat or console messages
 # -------------------------------------------------------------------------------------------------
-Prefix: "&8[&ePluginTemplate&8]"
+Prefix: "&8[&eShops&8]"
 
 # -------------------------------------------------------------------------------------------------
 # We log a console message if an operation takes over the time below (milliseconds).
