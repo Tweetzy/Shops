@@ -2,6 +2,7 @@ package ca.tweetzy.shops.api.interfaces;
 
 import lombok.NonNull;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 /**
  * The current file has been created by Kiran Hart
@@ -36,25 +37,25 @@ public interface ICurrency {
 	/**
 	 * Withdraws money from a player's balance
 	 *
-	 * @param player is the {@link OfflinePlayer}
+	 * @param player is the {@link Player}
 	 * @param amount is the amount being withdrawn
 	 */
-	void withdraw(@NonNull final OfflinePlayer player, final double amount);
+	void withdraw(@NonNull final Player player, final double amount);
 
 	/**
 	 * Deposit money into a player's balance
 	 *
-	 * @param player is the {@link OfflinePlayer}
+	 * @param player is the {@link Player}
 	 * @param amount is the amount being deposited
 	 */
-	void deposit(@NonNull final OfflinePlayer player, final double amount);
+	void deposit(@NonNull final Player player, final double amount);
 
 	/**
 	 * Checks if a player has the amount specified
 	 *
-	 * @param player is the {@link OfflinePlayer}
+	 * @param player is the {@link Player}
 	 * @param amount is the amount being checked for
 	 * @return true if they have enough
 	 */
-	boolean has(@NonNull final OfflinePlayer player, final double amount);
+	boolean has(@NonNull final Player player, final double amount);
 }
