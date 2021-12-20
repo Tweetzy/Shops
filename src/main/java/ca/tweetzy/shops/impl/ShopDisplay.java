@@ -2,8 +2,10 @@ package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.interfaces.IShopDisplay;
+import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
+import ca.tweetzy.tweety.model.ConfigSerializable;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -15,7 +17,7 @@ import lombok.NonNull;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 @AllArgsConstructor
-public final class ShopDisplay implements IShopDisplay {
+public final class ShopDisplay implements IShopDisplay, ConfigSerializable {
 
 	private ShopLayout shopLayout;
 	private CompMaterial backgroundItem;
@@ -72,5 +74,28 @@ public final class ShopDisplay implements IShopDisplay {
 	@Override
 	public void setMenuPage(int page) {
 		this.menuPage = page;
+	}
+
+	@Override
+	public SerializedMap serialize() {
+		return SerializedMap.ofArray(
+				"layout", this.shopLayout,
+				"background", this.backgroundItem,
+				"item slots", this.shopItemSlots,
+				"decoration items", this.decorationItems,
+				"menu slot", this.menuSlot,
+				"menu page", this.menuPage
+		);
+	}
+
+	public static ShopDisplay deserialize(SerializedMap map) {
+		return new ShopDisplay(
+				map.get("layout", ShopLayout.class),
+				map.getMaterial("background"),
+				new StrictList<>(map.getList("item slots", Integer.class)),
+				new StrictMap<>(map.getMap("decoration items", Integer.class, CompMaterial.class)),
+				map.getInteger("menu slot"),
+				map.getInteger("menu page")
+		);
 	}
 }
