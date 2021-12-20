@@ -40,7 +40,7 @@ public interface IShopDisplay {
 	 *
 	 * @param material is the new {@link CompMaterial}
 	 */
-	@NonNull CompMaterial setBackgroundItem(@NonNull final CompMaterial material);
+	void setBackgroundItem(@NonNull final CompMaterial material);
 
 	/**
 	 * A list of slots that will be filled with {@link IShopItem}s
