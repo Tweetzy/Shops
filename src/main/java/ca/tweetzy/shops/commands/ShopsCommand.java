@@ -22,7 +22,7 @@ public final class ShopsCommand extends SimpleCommandGroup {
 
 	@Override
 	protected void registerSubcommands() {
-
+		registerSubcommand(new CommandCreate());
 	}
 
 	@Override
