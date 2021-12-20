@@ -1,5 +1,6 @@
 package ca.tweetzy.shops;
 
+import ca.tweetzy.shops.model.ShopManager;
 import ca.tweetzy.tweety.MinecraftVersion;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.SimplePlugin;
@@ -12,6 +13,8 @@ import ca.tweetzy.tweety.plugin.SimplePlugin;
  */
 public final class Shops extends SimplePlugin {
 
+	private final ShopManager shopManager = new ShopManager();
+
 	@Override
 	protected void onPluginStart() {
 
@@ -19,6 +22,10 @@ public final class Shops extends SimplePlugin {
 
 	public static Shops getInstance() {
 		return (Shops) SimplePlugin.getInstance();
+	}
+
+	public static ShopManager getShopManager() {
+		return ((Shops) SimplePlugin.getInstance()).shopManager;
 	}
 
 	@Override
