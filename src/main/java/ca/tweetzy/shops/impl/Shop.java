@@ -1,7 +1,11 @@
 package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.api.interfaces.*;
-import ca.tweetzy.shops.api.interfaces.smart.ISmartItem;
+import ca.tweetzy.shops.api.interfaces.shop.IShop;
+import ca.tweetzy.shops.api.interfaces.shop.IShopDisplay;
+import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
+import ca.tweetzy.shops.api.interfaces.shop.IShopSettings;
+import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl;
 
-import ca.tweetzy.shops.api.interfaces.smart.ISmartItem;
+import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
 import ca.tweetzy.tweety.remain.CompMaterial;
