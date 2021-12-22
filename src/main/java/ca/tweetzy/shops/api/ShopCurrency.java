@@ -1,7 +1,6 @@
-package ca.tweetzy.shops.api.interfaces;
+package ca.tweetzy.shops.api;
 
 import lombok.NonNull;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 /**
@@ -10,21 +9,21 @@ import org.bukkit.entity.Player;
  * Time Created: 1:42 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public interface ICurrency {
+public abstract class ShopCurrency {
 
 	/**
 	 * Is the currency enabled
 	 *
 	 * @return true if enabled
 	 */
-	boolean isEnabled();
+	public abstract boolean isEnabled();
 
 	/**
 	 * Get the name of the currency plugin
 	 *
 	 * @return the owning plugin name
 	 */
-	@NonNull String getPluginName();
+	public abstract @NonNull String getPluginName();
 
 	/**
 	 * If the plugin supports multiple currency types
@@ -32,7 +31,7 @@ public interface ICurrency {
 	 *
 	 * @return the currency name
 	 */
-	String getName();
+	public abstract String getName();
 
 	/**
 	 * Withdraws money from a player's balance
@@ -40,7 +39,7 @@ public interface ICurrency {
 	 * @param player is the {@link Player}
 	 * @param amount is the amount being withdrawn
 	 */
-	boolean withdraw(@NonNull final Player player, final double amount);
+	public abstract boolean withdraw(@NonNull final Player player, final double amount);
 
 	/**
 	 * Deposit money into a player's balance
@@ -48,7 +47,7 @@ public interface ICurrency {
 	 * @param player is the {@link Player}
 	 * @param amount is the amount being deposited
 	 */
-	boolean deposit(@NonNull final Player player, final double amount);
+	public abstract boolean deposit(@NonNull final Player player, final double amount);
 
 	/**
 	 * Checks if a player has the amount specified
@@ -57,5 +56,5 @@ public interface ICurrency {
 	 * @param amount is the amount being checked for
 	 * @return true if they have enough
 	 */
-	boolean has(@NonNull final Player player, final double amount);
+	public abstract boolean has(@NonNull final Player player, final double amount);
 }
