@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl.currency;
 
-import ca.tweetzy.shops.api.interfaces.ICurrency;
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.tweety.Common;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 @AllArgsConstructor
-public final class UltraEconomyCurrency implements ICurrency {
+public final class UltraEconomyCurrency extends ShopCurrency {
 
 	private final String currencyName;
 
@@ -69,4 +69,5 @@ public final class UltraEconomyCurrency implements ICurrency {
 		final Account account = UltraEconomy.getAPI().getAccounts().uuid(player.getUniqueId()).orElse(null);
 		return account != null && account.getBalance(currency).getOnBank() >= amount;
 	}
+
 }

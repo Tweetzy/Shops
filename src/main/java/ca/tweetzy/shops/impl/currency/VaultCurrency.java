@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl.currency;
 
-import ca.tweetzy.shops.api.interfaces.ICurrency;
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.tweety.model.HookManager;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
  * Time Created: 9:00 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class VaultCurrency implements ICurrency {
+public final class VaultCurrency extends ShopCurrency {
 
 	@Override
 	public boolean isEnabled() {
