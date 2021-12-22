@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.api;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.interfaces.ICurrency;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
 import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
@@ -33,7 +32,7 @@ public final class ShopsAPI {
 	/**
 	 * Used to create a new shop and save it to the file
 	 *
-	 * @param id is the id of the new shop
+	 * @param id   is the id of the new shop
 	 * @param desc is the desc of the new shop
 	 */
 	public void createShop(@NonNull final String id, @NonNull final String desc) {
@@ -43,9 +42,9 @@ public final class ShopsAPI {
 	/**
 	 * Add a new currency to the currency list
 	 *
-	 * @param currency is the new {@link ICurrency}
+	 * @param currency is the new {@link ShopCurrency}
 	 */
-	public void addCurrency(@NonNull final ICurrency currency) {
+	public void addCurrency(@NonNull final ShopCurrency currency) {
 		CURRENCY_MANAGER.addCurrency(currency);
 	}
 
@@ -53,20 +52,20 @@ public final class ShopsAPI {
 	 * Used to get a currency by its plugin name
 	 *
 	 * @param plugin is the owning plugin
-	 * @return the {@link ICurrency}
+	 * @return the {@link ShopCurrency}
 	 */
-	public ICurrency getCurrency(@NonNull final String plugin) {
+	public ShopCurrency getCurrency(@NonNull final String plugin) {
 		return CURRENCY_MANAGER.getCurrency(plugin);
 	}
 
 	/**
 	 * Get the currency based on its owning plugin && actual name
 	 *
-	 * @param plugin is the owning plugin
+	 * @param plugin       is the owning plugin
 	 * @param currencyName is the name of the currency
-	 * @return the {@link ICurrency}
+	 * @return the {@link ShopCurrency}
 	 */
-	public ICurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+	public ShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
 		return CURRENCY_MANAGER.getCurrency(plugin, currencyName);
 	}
 }
