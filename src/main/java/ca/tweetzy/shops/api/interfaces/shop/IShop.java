@@ -1,6 +1,7 @@
-package ca.tweetzy.shops.api.interfaces;
+package ca.tweetzy.shops.api.interfaces.shop;
 
-import ca.tweetzy.shops.api.interfaces.smart.ISmartItem;
+import ca.tweetzy.shops.api.interfaces.ICurrency;
+import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import lombok.NonNull;
 
 import java.util.List;

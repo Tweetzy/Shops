@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.api.interfaces;
+package ca.tweetzy.shops.api.interfaces.shop;
 
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;

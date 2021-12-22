@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.api.interfaces.smart;
+package ca.tweetzy.shops.api.interfaces;
 
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
