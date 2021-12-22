@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Time Created: 2:24 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class ShopManager {
+public class ShopManager extends Manager {
 
 	private final StrictMap<String, Shop> shops = new StrictMap<>();
 
@@ -51,5 +51,10 @@ public class ShopManager {
 
 		this.addShop(shop);
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
+	}
+
+	@Override
+	public void load() {
+		ShopsData.getInstance().getShops().forEach(this::addShop);
 	}
 }
