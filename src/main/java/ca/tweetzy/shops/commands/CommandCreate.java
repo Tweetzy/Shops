@@ -3,8 +3,6 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.model.input.TitleInput;
 import ca.tweetzy.shops.settings.Localization;
-import ca.tweetzy.shops.settings.ShopsData;
-import ca.tweetzy.tweety.Common;
 import org.bukkit.entity.Player;
 
 /**
