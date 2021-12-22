@@ -1,7 +1,9 @@
 package ca.tweetzy.shops.api.interfaces.shop;
 
-import ca.tweetzy.shops.api.interfaces.ICurrency;
-import ca.tweetzy.shops.api.interfaces.ISmartItem;
+import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.impl.ShopDisplay;
+import ca.tweetzy.shops.impl.ShopSettings;
+import ca.tweetzy.shops.impl.SmartItem;
 import lombok.NonNull;
 
 import java.util.List;
@@ -24,16 +26,16 @@ public interface IShop {
 	/**
 	 * Get the shop icon
 	 *
-	 * @return the {@link ISmartItem}
+	 * @return the {@link SmartItem}
 	 */
-	@NonNull ISmartItem getIcon();
+	@NonNull SmartItem getIcon();
 
 	/**
 	 * Set the shop icon
 	 *
-	 * @param icon is the new {@link ISmartItem}
+	 * @param icon is the new {@link SmartItem}
 	 */
-	void setIcon(@NonNull final ISmartItem icon);
+	void setIcon(@NonNull final SmartItem icon);
 
 	/**
 	 * Get the display name of the shop
@@ -66,30 +68,30 @@ public interface IShop {
 	/**
 	 * Get the currency that is used for the shop
 	 *
-	 * @return the used {@link ICurrency}
+	 * @return the used {@link ShopCurrency}
 	 */
-	@NonNull ICurrency getCurrency();
+	@NonNull ShopCurrency getCurrency();
 
 	/**
 	 * Set the currency for the shop
 	 *
-	 * @param currency is the new {@link ICurrency}
+	 * @param currency is the new {@link ShopCurrency}
 	 */
-	void setCurrency(@NonNull final ICurrency currency);
+	void setCurrency(@NonNull final ShopCurrency currency);
 
 	/**
 	 * Get the shop display options
 	 *
-	 * @return the {@link IShopDisplay}
+	 * @return the {@link ShopDisplay}
 	 */
-	@NonNull IShopDisplay getDisplay();
+	@NonNull ShopDisplay getDisplay();
 
 	/**
 	 * Get the shop settings
 	 *
-	 * @return the {@link IShopSettings}
+	 * @return the {@link ShopSettings}
 	 */
-	@NonNull IShopSettings getSettings();
+	@NonNull ShopSettings getSettings();
 
 	/**
 	 * Get the items the shop contains
