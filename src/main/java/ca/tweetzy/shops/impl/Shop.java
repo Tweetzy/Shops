@@ -1,12 +1,9 @@
 package ca.tweetzy.shops.impl;
 
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
-import ca.tweetzy.shops.api.interfaces.*;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
-import ca.tweetzy.shops.api.interfaces.shop.IShopDisplay;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
-import ca.tweetzy.shops.api.interfaces.shop.IShopSettings;
-import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
 import ca.tweetzy.tweety.model.Tuple;
@@ -25,12 +22,12 @@ import java.util.List;
 public final class Shop implements IShop, ConfigSerializable {
 
 	private final String id;
-	private ISmartItem icon;
+	private SmartItem icon;
 	private String displayName;
 	private String description;
-	private ICurrency currency;
-	private IShopDisplay display;
-	private IShopSettings settings;
+	private ShopCurrency currency;
+	private ShopDisplay display;
+	private ShopSettings settings;
 	private List<IShopItem> items;
 
 	@Override
@@ -39,12 +36,12 @@ public final class Shop implements IShop, ConfigSerializable {
 	}
 
 	@Override
-	public @NonNull ISmartItem getIcon() {
+	public @NonNull SmartItem getIcon() {
 		return this.icon;
 	}
 
 	@Override
-	public void setIcon(@NonNull ISmartItem icon) {
+	public void setIcon(@NonNull SmartItem icon) {
 		this.icon = icon;
 	}
 
@@ -69,22 +66,22 @@ public final class Shop implements IShop, ConfigSerializable {
 	}
 
 	@Override
-	public @NonNull ICurrency getCurrency() {
+	public @NonNull ShopCurrency getCurrency() {
 		return this.currency;
 	}
 
 	@Override
-	public void setCurrency(@NonNull ICurrency currency) {
+	public void setCurrency(@NonNull ShopCurrency currency) {
 		this.currency = currency;
 	}
 
 	@Override
-	public @NonNull IShopDisplay getDisplay() {
+	public @NonNull ShopDisplay getDisplay() {
 		return this.display;
 	}
 
 	@Override
-	public @NonNull IShopSettings getSettings() {
+	public @NonNull ShopSettings getSettings() {
 		return this.settings;
 	}
 
@@ -112,12 +109,12 @@ public final class Shop implements IShop, ConfigSerializable {
 
 		return new Shop(
 				map.getString("id"),
-				map.get("icon", ISmartItem.class),
+				map.get("icon", SmartItem.class),
 				map.getString("display name"),
 				map.getString("description"),
 				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? ShopsAPI.getCurrency(currencyValues.getKey(), currencyValues.getValue()) : ShopsAPI.getCurrency(currencyValues.getKey()),
-				map.get("display", IShopDisplay.class),
-				map.get("settings", IShopSettings.class),
+				map.get("display", ShopDisplay.class),
+				map.get("settings", ShopSettings.class),
 				map.getList("items", IShopItem.class)
 		);
 	}
