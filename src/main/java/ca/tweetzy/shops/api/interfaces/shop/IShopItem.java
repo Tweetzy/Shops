@@ -5,6 +5,8 @@ import ca.tweetzy.shops.api.enums.ShopItemType;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 19 2021
@@ -19,6 +21,14 @@ public interface IShopItem {
 	 * @return the {@link ItemStack} being sold
 	 */
 	@NonNull ItemStack getItem();
+
+	/**
+	 * A list of commands that will be executed
+	 * when the user purchases this item
+	 *
+	 * @return a list of commands to be executed
+	 */
+	List<String> getCommands();
 
 	/**
 	 * Get the purchase price of the item
