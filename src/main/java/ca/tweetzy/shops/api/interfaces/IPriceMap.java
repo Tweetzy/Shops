@@ -3,8 +3,6 @@ package ca.tweetzy.shops.api.interfaces;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.UUID;
-
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 21 2021
