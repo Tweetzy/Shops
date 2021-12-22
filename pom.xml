@@ -41,6 +41,12 @@
             <artifactId>Tweety</artifactId>
             <version>${tweety.version}</version>
         </dependency>
+        <dependency>
+            <groupId>me.TechsCode</groupId>
+            <artifactId>UltraEconomy</artifactId>
+            <version>1.4.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${jarName}</finalName>
