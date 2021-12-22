@@ -3,7 +3,6 @@ package ca.tweetzy.shops;
 import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
 import ca.tweetzy.tweety.MinecraftVersion;
-import ca.tweetzy.tweety.bungee.BungeeListener;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.SimplePlugin;
 
@@ -22,6 +21,7 @@ public final class Shops extends SimplePlugin {
 	protected void onPluginStart() {
 
 		this.currencyManager.load();
+		this.shopManager.load();
 	}
 
 	public static Shops getInstance() {
