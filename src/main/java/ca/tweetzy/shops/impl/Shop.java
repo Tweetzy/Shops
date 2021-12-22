@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.impl;
 
+import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.interfaces.*;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
 import ca.tweetzy.shops.api.interfaces.shop.IShopDisplay;
@@ -8,6 +9,7 @@ import ca.tweetzy.shops.api.interfaces.shop.IShopSettings;
 import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
+import ca.tweetzy.tweety.model.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -98,7 +100,7 @@ public final class Shop implements IShop, ConfigSerializable {
 				"icon", this.icon,
 				"display name", this.displayName,
 				"description", this.description,
-				"currency", this.currency,
+				"currency", new Tuple<>(this.currency.getPluginName(), this.currency.getName()),
 				"display", this.display,
 				"settings", this.settings,
 				"items", this.items
@@ -106,12 +108,14 @@ public final class Shop implements IShop, ConfigSerializable {
 	}
 
 	public static Shop deserialize(SerializedMap map) {
+		final Tuple<String, String> currencyValues = map.getTuple("currency", String.class, String.class);
+
 		return new Shop(
 				map.getString("id"),
 				map.get("icon", ISmartItem.class),
 				map.getString("display name"),
 				map.getString("description"),
-				map.get("currency", ICurrency.class),
+				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? ShopsAPI.getCurrency(currencyValues.getKey(), currencyValues.getValue()) : ShopsAPI.getCurrency(currencyValues.getKey()),
 				map.get("display", IShopDisplay.class),
 				map.get("settings", IShopSettings.class),
 				map.getList("items", IShopItem.class)
