@@ -19,6 +19,14 @@ public class CurrencyManager {
 		this.currencies.add(currency);
 	}
 
+	public ICurrency getCurrency(@NonNull final String plugin) {
+		return this.currencies.getSource().stream().filter(currency -> currency.getPluginName().equalsIgnoreCase(plugin)).findFirst().orElse(null);
+	}
+
+	public ICurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+		return this.currencies.getSource().stream().filter(currency -> currency.getPluginName().equalsIgnoreCase(plugin) && currency.getName().equals(currencyName)).findFirst().orElse(null);
+	}
+
 	public void load() {
 		this.currencies.add(new VaultCurrency());
 
