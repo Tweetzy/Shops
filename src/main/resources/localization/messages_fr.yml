@@ -1,0 +1,19 @@
+Shop Creation:
+  Enter ID:
+    Title: "&eShop Creation &7(&f1&7/&f2&7)"
+    Subtitle: "&7Enter an ID for the Shop"
+  Enter Description:
+    Title: "&eShop Creation &7(&f2&7/&f2&7)"
+    Subtitle: "&7Enter a description for the Shop"
+
+Success:
+  Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
+
+Error:
+  Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
+  Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
+
+# -------------------------------------------------------------------------------------------------
+# Do not change this value, otherwise it will corrupt your plugin installation!
+# -------------------------------------------------------------------------------------------------
+Version: 1
