@@ -40,7 +40,7 @@ public interface ICurrency {
 	 * @param player is the {@link Player}
 	 * @param amount is the amount being withdrawn
 	 */
-	void withdraw(@NonNull final Player player, final double amount);
+	boolean withdraw(@NonNull final Player player, final double amount);
 
 	/**
 	 * Deposit money into a player's balance
@@ -48,7 +48,7 @@ public interface ICurrency {
 	 * @param player is the {@link Player}
 	 * @param amount is the amount being deposited
 	 */
-	void deposit(@NonNull final Player player, final double amount);
+	boolean deposit(@NonNull final Player player, final double amount);
 
 	/**
 	 * Checks if a player has the amount specified

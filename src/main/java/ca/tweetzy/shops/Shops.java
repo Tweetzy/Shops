@@ -1,7 +1,9 @@
 package ca.tweetzy.shops;
 
+import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
 import ca.tweetzy.tweety.MinecraftVersion;
+import ca.tweetzy.tweety.bungee.BungeeListener;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.SimplePlugin;
 
@@ -14,10 +16,12 @@ import ca.tweetzy.tweety.plugin.SimplePlugin;
 public final class Shops extends SimplePlugin {
 
 	private final ShopManager shopManager = new ShopManager();
+	private final CurrencyManager currencyManager = new CurrencyManager();
 
 	@Override
 	protected void onPluginStart() {
 
+		this.currencyManager.load();
 	}
 
 	public static Shops getInstance() {
@@ -26,6 +30,10 @@ public final class Shops extends SimplePlugin {
 
 	public static ShopManager getShopManager() {
 		return ((Shops) SimplePlugin.getInstance()).shopManager;
+	}
+
+	public static CurrencyManager getCurrencyManager() {
+		return ((Shops) SimplePlugin.getInstance()).currencyManager;
 	}
 
 	@Override

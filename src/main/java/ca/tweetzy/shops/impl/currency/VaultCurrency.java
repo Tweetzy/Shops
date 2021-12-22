@@ -29,13 +29,23 @@ public final class VaultCurrency implements ICurrency {
 	}
 
 	@Override
-	public void withdraw(@NonNull Player player, double amount) {
-		HookManager.withdraw(player, amount);
+	public boolean withdraw(@NonNull Player player, double amount) {
+		try {
+			HookManager.withdraw(player, amount);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public void deposit(@NonNull Player player, double amount) {
-		HookManager.deposit(player, amount);
+	public boolean deposit(@NonNull Player player, double amount) {
+		try {
+			HookManager.deposit(player, amount);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
