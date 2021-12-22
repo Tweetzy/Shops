@@ -3,6 +3,8 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.model.input.TitleInput;
 import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.ShopsData;
+import ca.tweetzy.tweety.Common;
 import org.bukkit.entity.Player;
 
 /**
@@ -37,8 +39,8 @@ public final class CommandCreate extends AbstractSubCommand {
 						@Override
 						public boolean onResult(String desc) {
 							if (desc.length() <= 3) return false;
-
-
+							ShopsAPI.createShop(possibleID, desc);
+							tell(Localization.Success.SHOP_CREATED.replace("{shop_id}", possibleID));
 							return true;
 						}
 					};
