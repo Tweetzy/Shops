@@ -32,10 +32,12 @@ public final class Localization extends SimpleLocalization {
 	public static final class Success {
 
 		public static String SHOP_CREATED;
+		public static String SHOP_DELETED;
 
 		private static void init() {
 			pathPrefix("Success");
 			SHOP_CREATED = getString("Shop Created");
+			SHOP_DELETED = getString("Shop Deleted");
 		}
 	}
 
