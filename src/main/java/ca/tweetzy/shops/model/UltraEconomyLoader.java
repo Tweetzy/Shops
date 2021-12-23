@@ -17,6 +17,9 @@ public final class UltraEconomyLoader {
 
 	public void loadCurrencyList() {
 		if (Common.doesPluginExist("UltraEconomy"))
-			UltraEconomy.getAPI().getCurrencies().forEach(currency -> ShopsAPI.addCurrency(new UltraEconomyCurrency(currency.getNameCommandUsage())));
+			UltraEconomy.getAPI().getCurrencies().forEach(currency -> {
+				Common.log("&eFetched &b" + currency.getNameCommandUsage() + "&e currency from &bUltraEconomy");
+				ShopsAPI.addCurrency(new UltraEconomyCurrency(currency.getNameCommandUsage()));
+			});
 	}
 }
