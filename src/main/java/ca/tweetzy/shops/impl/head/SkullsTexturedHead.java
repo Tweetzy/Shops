@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.impl.head;
 
 import ca.tweetzy.shops.api.AbstractTextureHead;
-import ca.tweetzy.skulls.Skulls;
 import ca.tweetzy.skulls.api.SkullsAPI;
 import ca.tweetzy.skulls.impl.Skull;
 import ca.tweetzy.tweety.Common;
@@ -18,7 +17,7 @@ public final class SkullsTexturedHead extends AbstractTextureHead {
 
 	@Override
 	public boolean enabled() {
-		return Common.doesPluginExist("Skulls") && !Skulls.getSkullManager().isLoading();
+		return Common.doesPluginExist("Skulls");
 	}
 
 	@Override
