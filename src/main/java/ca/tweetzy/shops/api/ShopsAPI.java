@@ -127,4 +127,13 @@ public final class ShopsAPI {
 	public List<String> getShopIds() {
 		return SHOP_MANAGER.getShopIds();
 	}
+
+	/**
+	 * Used to get all loaded currencies
+	 *
+	 * @return a list of {@link AbstractShopCurrency}s
+	 */
+	public StrictList<AbstractShopCurrency> getCurrencies() {
+		return CURRENCY_MANAGER.getCurrencies();
+	}
 }
