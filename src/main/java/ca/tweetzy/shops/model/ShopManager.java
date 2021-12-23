@@ -38,6 +38,12 @@ public class ShopManager extends Manager {
 		this.shops.removeWeak(id);
 	}
 
+	public void deleteShop(@NonNull final String id) {
+		this.removeShop(id);
+		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
+
+	}
+
 	public Shop getShop(@NonNull final String id) {
 		return this.shops.getOrDefault(id, null);
 	}
