@@ -10,6 +10,12 @@ import ca.tweetzy.tweety.settings.SimpleSettings;
  */
 public final class Settings extends SimpleSettings {
 
+	public static String PREFIX;
+
+	private static void init() {
+		pathPrefix(null);
+		PREFIX = getString("Prefix");
+	}
 
 	@Override
 	protected int getConfigVersion() {
