@@ -2,6 +2,9 @@ package ca.tweetzy.shops;
 
 import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
+import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.tweety.Common;
+import ca.tweetzy.tweety.Messenger;
 import ca.tweetzy.tweety.MinecraftVersion;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.SimplePlugin;
@@ -19,6 +22,7 @@ public final class Shops extends SimplePlugin {
 
 	@Override
 	protected void onPluginStart() {
+		normalizePrefix();
 
 		this.currencyManager.load();
 		this.shopManager.load();
@@ -50,4 +54,19 @@ public final class Shops extends SimplePlugin {
 	public SpigotUpdater getUpdateCheck() {
 		return super.getUpdateCheck();
 	}
+
+
+	private void normalizePrefix() {
+		Common.ADD_TELL_PREFIX = true;
+		Common.ADD_LOG_PREFIX = true;
+		Common.setTellPrefix(Settings.PREFIX);
+		Common.setLogPrefix(Settings.PREFIX);
+		Messenger.setInfoPrefix(Settings.PREFIX + " ");
+		Messenger.setAnnouncePrefix(Settings.PREFIX + " ");
+		Messenger.setErrorPrefix(Settings.PREFIX + " ");
+		Messenger.setQuestionPrefix(Settings.PREFIX + " ");
+		Messenger.setSuccessPrefix(Settings.PREFIX + " ");
+		Messenger.setWarnPrefix(Settings.PREFIX + " ");
+	}
+
 }
