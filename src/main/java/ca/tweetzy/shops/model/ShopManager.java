@@ -14,6 +14,7 @@ import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
@@ -51,6 +52,14 @@ public class ShopManager extends Manager {
 
 		this.addShop(shop);
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
+	}
+
+	public StrictList<Shop> getShops() {
+		return new StrictList<>(this.shops.values());
+	}
+
+	public List<String> getShopIds() {
+		return new ArrayList<>(this.shops.keySet());
 	}
 
 	@Override

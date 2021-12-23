@@ -9,6 +9,8 @@ import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 19 2021
@@ -78,5 +80,14 @@ public final class ShopsAPI {
 	 */
 	public StrictList<Shop> getShops() {
 		return SHOP_MANAGER.getShops();
+	}
+
+	/**
+	 * Used to get a list of all shop ids
+	 *
+	 * @return a list of shop ids
+	 */
+	public List<String> getShopIds() {
+		return SHOP_MANAGER.getShopIds();
 	}
 }
