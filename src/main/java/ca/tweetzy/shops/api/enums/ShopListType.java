@@ -8,5 +8,6 @@ package ca.tweetzy.shops.api.enums;
  */
 public enum ShopListType {
 
-	EDIT
+	EDIT,
+	DELETE
 }
