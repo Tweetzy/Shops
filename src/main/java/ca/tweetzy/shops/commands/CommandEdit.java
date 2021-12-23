@@ -3,6 +3,7 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuShopEdit;
 import ca.tweetzy.shops.menu.MenuShopList;
 import ca.tweetzy.shops.settings.Localization;
@@ -29,6 +30,7 @@ public final class CommandEdit extends AbstractSubCommand {
 		checkConsole();
 
 		final Player player = getPlayer();
+
 
 		if (args.length == 1) {
 			final Shop shop = ShopsAPI.getShop(args[0]);
