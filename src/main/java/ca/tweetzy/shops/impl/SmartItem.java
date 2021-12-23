@@ -4,7 +4,6 @@ import ca.tweetzy.shops.api.interfaces.ISmartItem;
 import ca.tweetzy.shops.model.TextureResolver;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
-import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;

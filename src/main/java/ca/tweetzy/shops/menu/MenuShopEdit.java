@@ -81,7 +81,7 @@ public final class MenuShopEdit extends Menu {
 			return this.itemsButton.getItem();
 		if (slot == 9 * 3 + 6)
 			return this.currencyButton.getItem();
-		if (slot == 9  * 2 + 7)
+		if (slot == 9 * 2 + 7)
 			return this.settingsButton.getItem();
 		if (slot == this.getSize() - 9)
 			return this.backButton.getItem();
