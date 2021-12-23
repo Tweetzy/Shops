@@ -34,6 +34,34 @@ public final class ShopsAPI {
 	}
 
 	/**
+	 * Get a {@link Shop} by its id
+	 *
+	 * @param id is the id of the shop
+	 * @return the {@link Shop} or null if not found
+	 */
+	public Shop getShop(@NonNull final String id) {
+		return SHOP_MANAGER.getShop(id);
+	}
+
+	/**
+	 * Used to add a {@link Shop} to the storage list
+	 *
+	 * @param shop is the {@link Shop} being added
+	 */
+	public void addShop(@NonNull final Shop shop) {
+		SHOP_MANAGER.addShop(shop);
+	}
+
+	/**
+	 * Used to remove a {@link Shop} from the storage list
+	 *
+	 * @param id is the id of the shop being removed
+	 */
+	public void removeShop(@NonNull final String id) {
+		SHOP_MANAGER.removeShop(id);
+	}
+
+	/**
 	 * Used to create a new shop and save it to the file
 	 *
 	 * @param id   is the id of the new shop

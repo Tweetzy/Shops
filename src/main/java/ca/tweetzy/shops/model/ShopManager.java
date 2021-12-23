@@ -38,6 +38,18 @@ public class ShopManager extends Manager {
 		this.shops.removeWeak(id);
 	}
 
+	public Shop getShop(@NonNull final String id) {
+		return this.shops.getOrDefault(id, null);
+	}
+
+	public StrictList<Shop> getShops() {
+		return new StrictList<>(this.shops.values());
+	}
+
+	public List<String> getShopIds() {
+		return new ArrayList<>(this.shops.keySet());
+	}
+
 	public void createShop(@NonNull final String id, @NonNull final String desc) {
 		final Shop shop = new Shop(
 				id,
@@ -52,14 +64,6 @@ public class ShopManager extends Manager {
 
 		this.addShop(shop);
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
-	}
-
-	public StrictList<Shop> getShops() {
-		return new StrictList<>(this.shops.values());
-	}
-
-	public List<String> getShopIds() {
-		return new ArrayList<>(this.shops.keySet());
 	}
 
 	@Override
