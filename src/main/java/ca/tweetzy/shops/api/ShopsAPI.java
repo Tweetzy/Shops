@@ -2,8 +2,10 @@ package ca.tweetzy.shops.api;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
+import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
+import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -42,9 +44,9 @@ public final class ShopsAPI {
 	/**
 	 * Add a new currency to the currency list
 	 *
-	 * @param currency is the new {@link ShopCurrency}
+	 * @param currency is the new {@link AbstractShopCurrency}
 	 */
-	public void addCurrency(@NonNull final ShopCurrency currency) {
+	public void addCurrency(@NonNull final AbstractShopCurrency currency) {
 		CURRENCY_MANAGER.addCurrency(currency);
 	}
 
@@ -52,9 +54,9 @@ public final class ShopsAPI {
 	 * Used to get a currency by its plugin name
 	 *
 	 * @param plugin is the owning plugin
-	 * @return the {@link ShopCurrency}
+	 * @return the {@link AbstractShopCurrency}
 	 */
-	public ShopCurrency getCurrency(@NonNull final String plugin) {
+	public AbstractShopCurrency getCurrency(@NonNull final String plugin) {
 		return CURRENCY_MANAGER.getCurrency(plugin);
 	}
 
@@ -63,9 +65,18 @@ public final class ShopsAPI {
 	 *
 	 * @param plugin       is the owning plugin
 	 * @param currencyName is the name of the currency
-	 * @return the {@link ShopCurrency}
+	 * @return the {@link AbstractShopCurrency}
 	 */
-	public ShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+	public AbstractShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
 		return CURRENCY_MANAGER.getCurrency(plugin, currencyName);
+	}
+
+	/**
+	 * Used to get all loaded shops
+	 *
+	 * @return a list of {@link Shop}s
+	 */
+	public StrictList<Shop> getShops() {
+		return SHOP_MANAGER.getShops();
 	}
 }
