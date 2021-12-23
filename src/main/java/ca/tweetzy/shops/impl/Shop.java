@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl;
 
-import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.api.AbstractShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
@@ -25,7 +25,7 @@ public final class Shop implements IShop, ConfigSerializable {
 	private SmartItem icon;
 	private String displayName;
 	private String description;
-	private ShopCurrency currency;
+	private AbstractShopCurrency currency;
 	private ShopDisplay display;
 	private ShopSettings settings;
 	private List<IShopItem> items;
@@ -66,12 +66,12 @@ public final class Shop implements IShop, ConfigSerializable {
 	}
 
 	@Override
-	public @NonNull ShopCurrency getCurrency() {
+	public @NonNull AbstractShopCurrency getCurrency() {
 		return this.currency;
 	}
 
 	@Override
-	public void setCurrency(@NonNull ShopCurrency currency) {
+	public void setCurrency(@NonNull AbstractShopCurrency currency) {
 		this.currency = currency;
 	}
 
