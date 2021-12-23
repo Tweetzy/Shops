@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.api.interfaces.ISmartItem;
+import ca.tweetzy.shops.model.TextureResolver;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
 import ca.tweetzy.tweety.remain.CompMaterial;
@@ -26,7 +27,7 @@ public class SmartItem implements ISmartItem, ConfigSerializable {
 
 	@Override
 	public @NonNull ItemStack get() {
-		return CompMaterial.AIR.toItem();
+		return TextureResolver.resolve(this.texture);
 	}
 
 	@Override
