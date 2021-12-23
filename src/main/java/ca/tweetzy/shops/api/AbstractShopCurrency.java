@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
  * Time Created: 1:42 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public abstract class ShopCurrency {
+public abstract class AbstractShopCurrency {
 
 	/**
 	 * Is the currency enabled
