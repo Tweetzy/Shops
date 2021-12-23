@@ -3,6 +3,7 @@ package ca.tweetzy.shops.model;
 import ca.tweetzy.shops.api.AbstractShopCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
 import ca.tweetzy.tweety.collection.StrictList;
+import lombok.Getter;
 import lombok.NonNull;
 
 /**
@@ -13,6 +14,7 @@ import lombok.NonNull;
  */
 public class CurrencyManager extends Manager {
 
+	@Getter
 	private final StrictList<AbstractShopCurrency> currencies = new StrictList<>();
 
 	public void addCurrency(@NonNull final AbstractShopCurrency currency) {
