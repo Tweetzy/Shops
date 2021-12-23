@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.model.input.TitleInput;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
@@ -33,7 +34,7 @@ public final class MenuShopEdit extends Menu {
 		setTitle("&e" + shop.getId() + " &8> &eEdit");
 		setSize(9 * 6);
 
-		this.iconButton = new ButtonMenu(this, ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
+		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
 		this.nameButton = Button.makeSimple(ItemCreator
 				.of(CompMaterial.NAME_TAG)
 				.name("&EDisplay Name")
@@ -42,6 +43,7 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDisplayName(string);
+				ShopsData.getInstance().save();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}
@@ -55,13 +57,14 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDescription(string);
+				ShopsData.getInstance().save();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}
 		});
 
 		this.itemsButton = new ButtonMenu(this, ItemCreator.of(CompMaterial.CHEST).name("&eItems").lore("&eClick &7to edit items"));
-		this.currencyButton = new ButtonMenu(this, ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
+		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
 		this.settingsButton = new ButtonMenu(this, ItemCreator.of(CompMaterial.REPEATER).name("&eSettings").lore("&eClick &7to view more settings"));
 		this.backButton = new ButtonMenu(new MenuShopList(ShopListType.EDIT), ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"));
 	}
