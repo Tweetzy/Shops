@@ -8,6 +8,7 @@ Shop Creation:
 
 Success:
   Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
+  Shop Deleted: "&aDeleted shop with id&f: &b{shop_id}"
 
 Error:
   Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
