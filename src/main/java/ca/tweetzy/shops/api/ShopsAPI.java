@@ -62,6 +62,15 @@ public final class ShopsAPI {
 	}
 
 	/**
+	 * Used to completely delete a shop from file
+	 *
+	 * @param id is the id of the shop
+	 */
+	public void deleteShop(@NonNull final String id) {
+		SHOP_MANAGER.deleteShop(id);
+	}
+
+	/**
 	 * Used to create a new shop and save it to the file
 	 *
 	 * @param id   is the id of the new shop
