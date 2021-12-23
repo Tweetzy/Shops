@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl.currency;
 
-import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.api.AbstractShopCurrency;
 import ca.tweetzy.tweety.Common;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 @AllArgsConstructor
-public final class UltraEconomyCurrency extends ShopCurrency {
+public final class UltraEconomyCurrency extends AbstractShopCurrency {
 
 	private final String currencyName;
 
