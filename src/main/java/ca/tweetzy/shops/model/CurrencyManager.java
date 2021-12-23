@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.model;
 
-import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.api.AbstractShopCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
@@ -13,17 +13,17 @@ import lombok.NonNull;
  */
 public class CurrencyManager extends Manager {
 
-	private final StrictList<ShopCurrency> currencies = new StrictList<>();
+	private final StrictList<AbstractShopCurrency> currencies = new StrictList<>();
 
-	public void addCurrency(@NonNull final ShopCurrency currency) {
+	public void addCurrency(@NonNull final AbstractShopCurrency currency) {
 		this.currencies.add(currency);
 	}
 
-	public ShopCurrency getCurrency(@NonNull final String plugin) {
+	public AbstractShopCurrency getCurrency(@NonNull final String plugin) {
 		return this.currencies.getSource().stream().filter(currency -> currency.getPluginName().equalsIgnoreCase(plugin)).findFirst().orElse(null);
 	}
 
-	public ShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+	public AbstractShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
 		return this.currencies.getSource().stream().filter(currency -> currency.getPluginName().equalsIgnoreCase(plugin) && currency.getName().equals(currencyName)).findFirst().orElse(null);
 	}
 
