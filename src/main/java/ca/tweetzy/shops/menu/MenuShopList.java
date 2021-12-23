@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
@@ -24,14 +25,15 @@ public final class MenuShopList extends MenuPagged<Shop> {
 	public MenuShopList(@NonNull final ShopListType shopListType) {
 		super(ShopsAPI.getShops());
 		this.shopListType = shopListType;
+		setTitle("&eSelect Shop");
 	}
-
 
 	@Override
 	protected ItemStack convertToItemStack(Shop shop) {
 		return ItemCreator
 				.of(shop.getIcon().get())
 				.name(shop.getDisplayName())
+				.lore(this.shopListType == ShopListType.EDIT ? "&eClick &7to edit shop" : "&7Press &e1 &7to delete shop")
 				.make();
 	}
 
@@ -39,6 +41,12 @@ public final class MenuShopList extends MenuPagged<Shop> {
 	protected void onPageClick(Player player, Shop shop, ClickType clickType) {
 		if (this.shopListType == ShopListType.EDIT)
 			new MenuShopEdit(shop).displayTo(player);
+
+		if (this.shopListType == ShopListType.DELETE && clickType == ClickType.NUMBER_KEY) {
+			ShopsAPI.deleteShop(shop.getId());
+			tell(Localization.Success.SHOP_DELETED.replace("{shop_id}", shop.getId()));
+			newInstance().displayTo(player);
+		}
 	}
 
 	@Override
