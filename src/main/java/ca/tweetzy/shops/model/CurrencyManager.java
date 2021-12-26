@@ -6,13 +6,15 @@ import ca.tweetzy.tweety.collection.StrictList;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.function.Consumer;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 19 2021
  * Time Created: 2:24 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class CurrencyManager extends Manager {
+public class CurrencyManager extends Manager<StrictList<AbstractShopCurrency>> {
 
 	@Getter
 	private final StrictList<AbstractShopCurrency> currencies = new StrictList<>();
@@ -30,9 +32,10 @@ public class CurrencyManager extends Manager {
 	}
 
 	@Override
-	public void load() {
+	public void load(Consumer<StrictList<AbstractShopCurrency>> data) {
 		this.currencies.add(new VaultCurrency());
-
 		UltraEconomyLoader.loadCurrencyList();
+		if (data != null)
+			data.accept(this.currencies);
 	}
 }

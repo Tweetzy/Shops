@@ -14,7 +14,9 @@ import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * The current file has been created by Kiran Hart
@@ -22,7 +24,7 @@ import java.util.List;
  * Time Created: 2:24 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class ShopManager extends Manager {
+public class ShopManager extends Manager<Collection<Shop>> {
 
 	private final StrictMap<String, Shop> shops = new StrictMap<>();
 
@@ -64,7 +66,7 @@ public class ShopManager extends Manager {
 				desc,
 				ShopsAPI.getCurrency("Vault"),
 				new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(), new StrictMap<>(), -1, -1),
-				new ShopSettings(false, ShopState.BUY_AND_SELL, false, false, false),
+				new ShopSettings(false, ShopState.BUY_AND_SELL, true, id, false, false, false, "shops.see." + id, "shops.buy." + id, "shops.sell." + id),
 				new ArrayList<>()
 		);
 
@@ -72,8 +74,10 @@ public class ShopManager extends Manager {
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
 	}
 
+
 	@Override
-	public void load() {
+	public void load(Consumer<Collection<Shop>> data) {
 		ShopsData.getInstance().getShops().forEach(this::addShop);
+		data.accept(this.shops.values());
 	}
 }
