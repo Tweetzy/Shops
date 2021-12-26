@@ -25,6 +25,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>techscode</id>
+            <url>https://repo.techscode.com/repository/maven-releases/</url>
+        </repository>
     </repositories>
 
     <!-- UNCOMMENT ONLY IF YOUR java.version IS SET TO JAVA 16 OR HIGHER. -->
@@ -54,9 +58,8 @@
         </dependency>
         <dependency>
             <groupId>me.TechsCode</groupId>
-            <artifactId>UltraEconomy</artifactId>
-            <version>1.4.1</version>
-            <scope>provided</scope>
+            <artifactId>UltraEconomyAPI</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     <build>
