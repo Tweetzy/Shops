@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.model;
 
 import ca.tweetzy.shops.api.AbstractShopCurrency;
+import ca.tweetzy.shops.impl.currency.PlayerPointsCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.Getter;
@@ -34,6 +35,8 @@ public class CurrencyManager extends Manager<StrictList<AbstractShopCurrency>> {
 	@Override
 	public void load(Consumer<StrictList<AbstractShopCurrency>> data) {
 		this.currencies.add(new VaultCurrency());
+		this.currencies.add(new PlayerPointsCurrency());
+
 		UltraEconomyLoader.loadCurrencyList();
 		if (data != null)
 			data.accept(this.currencies);

@@ -29,6 +29,10 @@
             <id>techscode</id>
             <url>https://repo.techscode.com/repository/maven-releases/</url>
         </repository>
+        <repository>
+            <id>rosewood-repo</id>
+            <url>https://repo.rosewooddev.io/repository/public/</url>
+        </repository>
     </repositories>
 
     <!-- UNCOMMENT ONLY IF YOUR java.version IS SET TO JAVA 16 OR HIGHER. -->
@@ -60,6 +64,12 @@
             <groupId>me.TechsCode</groupId>
             <artifactId>UltraEconomyAPI</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.black_ixx</groupId>
+            <artifactId>playerpoints</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
