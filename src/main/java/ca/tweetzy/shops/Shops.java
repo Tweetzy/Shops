@@ -1,5 +1,6 @@
 package ca.tweetzy.shops;
 
+import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.model.CurrencyManager;
 import ca.tweetzy.shops.model.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
@@ -24,8 +25,15 @@ public final class Shops extends SimplePlugin {
 	protected void onPluginStart() {
 		normalizePrefix();
 
-		this.currencyManager.load();
-		this.shopManager.load();
+		this.currencyManager.load(null);
+
+		this.shopManager.load(loaded -> loaded.forEach(shop -> {
+			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
+				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
+		}));
+
+//		getServer().getMessenger().registerOutgoingPluginChannel(this, "ShopsDataTransfer");
+
 	}
 
 	public static Shops getInstance() {
