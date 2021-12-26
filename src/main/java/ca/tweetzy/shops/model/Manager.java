@@ -1,6 +1,5 @@
 package ca.tweetzy.shops.model;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 
 /**
@@ -9,7 +8,7 @@ import java.util.function.Consumer;
  * Time Created: 11:38 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public abstract class Manager <T> {
+public abstract class Manager<T> {
 
 	public abstract void load(Consumer<T> data);
 }
