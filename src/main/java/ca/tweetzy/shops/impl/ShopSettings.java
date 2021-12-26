@@ -18,9 +18,14 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 
 	private boolean isPublic;
 	private ShopState state;
+	private boolean useOpenCommand;
+	private String openCommand;
 	private boolean requirePermissionToSee;
 	private boolean requirePermissionToSell;
 	private boolean requirePermissionToBuy;
+	private String seePermission;
+	private String buyPermission;
+	private String sellPermission;
 
 	@Override
 	public boolean isPublic() {
@@ -40,6 +45,26 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 	@Override
 	public void setShopState(@NonNull ShopState state) {
 		this.state = state;
+	}
+
+	@Override
+	public boolean isUseOpenCommand() {
+		return this.useOpenCommand;
+	}
+
+	@Override
+	public void setUseOpenCommand(boolean useOpenCommand) {
+		this.useOpenCommand = useOpenCommand;
+	}
+
+	@Override
+	public @NonNull String getOpenCommand() {
+		return this.openCommand;
+	}
+
+	@Override
+	public void setOpenCommand(@NonNull String command) {
+		this.openCommand = command;
 	}
 
 	@Override
@@ -73,13 +98,48 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 	}
 
 	@Override
+	public @NonNull String getSeePermission() {
+		return this.seePermission;
+	}
+
+	@Override
+	public @NonNull String getBuyPermission() {
+		return this.buyPermission;
+	}
+
+	@Override
+	public @NonNull String getSellPermission() {
+		return this.sellPermission;
+	}
+
+	@Override
+	public void setSeePermission(@NonNull String permission) {
+		this.seePermission = permission;
+	}
+
+	@Override
+	public void setBuyPermission(@NonNull String permission) {
+		this.buyPermission = permission;
+	}
+
+	@Override
+	public void setSellPermission(@NonNull String permission) {
+		this.sellPermission = permission;
+	}
+
+	@Override
 	public SerializedMap serialize() {
 		return SerializedMap.ofArray(
 				"public", this.isPublic,
 				"state", this.state,
+				"use open command", this.useOpenCommand,
+				"open command", this.openCommand,
 				"requires see permission", this.requirePermissionToSee,
 				"requires sell permission", this.requirePermissionToSell,
-				"requires buy permission", this.requirePermissionToBuy
+				"requires buy permission", this.requirePermissionToBuy,
+				"see permission", this.seePermission,
+				"buy permission", this.buyPermission,
+				"sell permission", this.sellPermission
 		);
 	}
 
@@ -87,9 +147,14 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 		return new ShopSettings(
 				map.getBoolean("public"),
 				map.get("state", ShopState.class),
+				map.getBoolean("use open command"),
+				map.getString("open command"),
 				map.getBoolean("requires see permission"),
 				map.getBoolean("requires sell permission"),
-				map.getBoolean("requires buy permission")
+				map.getBoolean("requires buy permission"),
+				map.getString("see permission"),
+				map.getString("buy permission"),
+				map.getString("sell permission")
 		);
 	}
 }

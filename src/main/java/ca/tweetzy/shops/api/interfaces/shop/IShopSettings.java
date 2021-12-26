@@ -40,6 +40,35 @@ public interface IShopSettings {
 	void setShopState(@NonNull final ShopState state);
 
 	/**
+	 * Should the custom shop command be enabled
+	 *
+	 * @return true enabled
+	 */
+	boolean isUseOpenCommand();
+
+	/**
+	 * Set whether the custom open command is used
+	 *
+	 * @param use is the new value
+	 */
+	void setUseOpenCommand(final boolean use);
+
+	/**
+	 * The custom command that will let the user
+	 * directly open this particular shop
+	 *
+	 * @return the open command
+	 */
+	@NonNull String getOpenCommand();
+
+	/**
+	 * Set the new open command for the shop
+	 *
+	 * @param command is the new command
+	 */
+	void setOpenCommand(@NonNull final String command);
+
+	/**
 	 * Does the shop require a permission to be seen
 	 *
 	 * @return true if the player needs a perm to see the shop
@@ -81,5 +110,46 @@ public interface IShopSettings {
 	 */
 	void setRequirePermissionToBuy(final boolean requirePermissionToBuy);
 
+	/**
+	 * Get permission required to see the shop
+	 *
+	 * @return the see permission
+	 */
+	@NonNull String getSeePermission();
+
+	/**
+	 * Get permission required to buy from the shop
+	 *
+	 * @return the buy permission
+	 */
+	@NonNull String getBuyPermission();
+
+	/**
+	 * Get permission required to sell to the shop
+	 *
+	 * @return the sell permission
+	 */
+	@NonNull String getSellPermission();
+
+	/**
+	 * Set the see permission of the shop
+	 *
+	 * @param permission is the new permission
+	 */
+	void setSeePermission(@NonNull final String permission);
+
+	/**
+	 * Set the buy permission of the shop
+	 *
+	 * @param permission is the new permission
+	 */
+	void setBuyPermission(@NonNull final String permission);
+
+	/**
+	 * Set the sell permission of the shop
+	 *
+	 * @param permission is the new permission
+	 */
+	void setSellPermission(@NonNull final String permission);
 
 }
