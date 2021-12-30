@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.api;
+package ca.tweetzy.shops.api.econ;
 
 /**
  * The current file has been created by Kiran Hart

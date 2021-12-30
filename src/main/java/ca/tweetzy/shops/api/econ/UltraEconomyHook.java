@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.api;
+package ca.tweetzy.shops.api.econ;
 
 import ca.tweetzy.core.hooks.economies.Economy;
 import ca.tweetzy.shops.settings.Settings;

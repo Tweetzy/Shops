@@ -14,8 +14,9 @@ import ca.tweetzy.core.hooks.EconomyManager;
 import ca.tweetzy.core.hooks.PluginHook;
 import ca.tweetzy.core.hooks.economies.Economy;
 import ca.tweetzy.core.utils.Metrics;
-import ca.tweetzy.shops.api.UltraEconomyHook;
 import ca.tweetzy.shops.api.UpdateChecker;
+import ca.tweetzy.shops.api.econ.EconomyPlusHook;
+import ca.tweetzy.shops.api.econ.UltraEconomyHook;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
@@ -82,6 +83,7 @@ public class Shops extends TweetyPlugin {
 	protected Metrics metrics;
 
 	private PluginHook ultraEconomyHook;
+	private PluginHook economyPlusHook;
 
 	@Override
 	public void onPluginLoad() {
@@ -104,6 +106,7 @@ public class Shops extends TweetyPlugin {
 		Settings.setup();
 
 		this.ultraEconomyHook = PluginHook.addHook(Economy.class, "UltraEconomy", UltraEconomyHook.class);
+		this.economyPlusHook = PluginHook.addHook(Economy.class, "EconomyPlus", EconomyPlusHook.class);
 
 		// Load Economy
 		EconomyManager.load();
