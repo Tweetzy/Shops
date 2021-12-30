@@ -2,8 +2,8 @@ package ca.tweetzy.shops.menu;
 
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.model.input.TitleInput;
 import ca.tweetzy.shops.settings.ShopsData;
+import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
@@ -65,7 +65,7 @@ public final class MenuShopEdit extends Menu {
 
 		this.itemsButton = new ButtonMenu(this, ItemCreator.of(CompMaterial.CHEST).name("&eItems").lore("&eClick &7to edit items"));
 		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
-		this.settingsButton = new ButtonMenu(this, ItemCreator.of(CompMaterial.REPEATER).name("&eSettings").lore("&eClick &7to view more settings"));
+		this.settingsButton = new ButtonMenu(new MenuShopSettings(this.shop), ItemCreator.of(CompMaterial.REPEATER).name("&eSettings").lore("&eClick &7to view more settings"));
 		this.backButton = new ButtonMenu(new MenuShopList(ShopListType.EDIT), ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"));
 	}
 
