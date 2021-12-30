@@ -26,6 +26,10 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
             <id>techscode</id>
             <url>https://repo.techscode.com/repository/maven-releases/</url>
         </repository>
