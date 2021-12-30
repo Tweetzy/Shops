@@ -55,7 +55,7 @@ public final class Shops extends TweetyPlugin {
 
 	@Override
 	public int getMetricsPluginId() {
-		return 1;
+		return 6807;
 	}
 
 	@Override
