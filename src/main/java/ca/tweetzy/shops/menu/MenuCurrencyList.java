@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.menu;
 
-import ca.tweetzy.shops.api.AbstractShopCurrency;
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.settings.ShopsData;
@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
  * Time Created: 11:15 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class MenuCurrencyList extends MenuPagged<AbstractShopCurrency> {
+public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 
 	private final Shop shop;
 	private final Button backButton;
@@ -33,7 +33,7 @@ public final class MenuCurrencyList extends MenuPagged<AbstractShopCurrency> {
 	}
 
 	@Override
-	protected ItemStack convertToItemStack(AbstractShopCurrency currency) {
+	protected ItemStack convertToItemStack(ShopCurrency currency) {
 		return ItemCreator
 				.of(CompMaterial.GOLD_INGOT)
 				.name("&e" + currency.getName())
@@ -55,7 +55,7 @@ public final class MenuCurrencyList extends MenuPagged<AbstractShopCurrency> {
 	}
 
 	@Override
-	protected void onPageClick(Player player, AbstractShopCurrency currency, ClickType clickType) {
+	protected void onPageClick(Player player, ShopCurrency currency, ClickType clickType) {
 		shop.setCurrency(currency);
 		ShopsData.getInstance().save();
 		new MenuShopEdit(this.shop).displayTo(player);

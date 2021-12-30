@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.impl.head;
 
-import ca.tweetzy.shops.api.AbstractTextureHead;
+import ca.tweetzy.shops.api.TextureHead;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
  * Time Created: 9:50 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class HeadDatabaseTexturedHead extends AbstractTextureHead {
+public final class HeadDatabaseTexturedHead extends TextureHead {
 
 	@Override
 	public boolean enabled() {

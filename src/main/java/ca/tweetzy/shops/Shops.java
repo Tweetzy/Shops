@@ -8,7 +8,7 @@ import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.Messenger;
 import ca.tweetzy.tweety.MinecraftVersion;
 import ca.tweetzy.tweety.model.SpigotUpdater;
-import ca.tweetzy.tweety.plugin.SimplePlugin;
+import ca.tweetzy.tweety.plugin.TweetyPlugin;
 
 /**
  * The current file has been created by Kiran Hart
@@ -16,7 +16,7 @@ import ca.tweetzy.tweety.plugin.SimplePlugin;
  * Time Created: 12:43 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class Shops extends SimplePlugin {
+public final class Shops extends TweetyPlugin {
 
 	private final ShopManager shopManager = new ShopManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
@@ -37,15 +37,15 @@ public final class Shops extends SimplePlugin {
 	}
 
 	public static Shops getInstance() {
-		return (Shops) SimplePlugin.getInstance();
+		return (Shops) TweetyPlugin.getInstance();
 	}
 
 	public static ShopManager getShopManager() {
-		return ((Shops) SimplePlugin.getInstance()).shopManager;
+		return ((Shops) TweetyPlugin.getInstance()).shopManager;
 	}
 
 	public static CurrencyManager getCurrencyManager() {
-		return ((Shops) SimplePlugin.getInstance()).currencyManager;
+		return ((Shops) TweetyPlugin.getInstance()).currencyManager;
 	}
 
 	@Override

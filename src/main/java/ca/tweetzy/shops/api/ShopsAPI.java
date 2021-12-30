@@ -83,9 +83,9 @@ public final class ShopsAPI {
 	/**
 	 * Add a new currency to the currency list
 	 *
-	 * @param currency is the new {@link AbstractShopCurrency}
+	 * @param currency is the new {@link ShopCurrency}
 	 */
-	public void addCurrency(@NonNull final AbstractShopCurrency currency) {
+	public void addCurrency(@NonNull final ShopCurrency currency) {
 		CURRENCY_MANAGER.addCurrency(currency);
 	}
 
@@ -93,9 +93,9 @@ public final class ShopsAPI {
 	 * Used to get a currency by its plugin name
 	 *
 	 * @param plugin is the owning plugin
-	 * @return the {@link AbstractShopCurrency}
+	 * @return the {@link ShopCurrency}
 	 */
-	public AbstractShopCurrency getCurrency(@NonNull final String plugin) {
+	public ShopCurrency getCurrency(@NonNull final String plugin) {
 		return CURRENCY_MANAGER.getCurrency(plugin);
 	}
 
@@ -104,9 +104,9 @@ public final class ShopsAPI {
 	 *
 	 * @param plugin       is the owning plugin
 	 * @param currencyName is the name of the currency
-	 * @return the {@link AbstractShopCurrency}
+	 * @return the {@link ShopCurrency}
 	 */
-	public AbstractShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+	public ShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
 		return CURRENCY_MANAGER.getCurrency(plugin, currencyName);
 	}
 
@@ -131,9 +131,9 @@ public final class ShopsAPI {
 	/**
 	 * Used to get all loaded currencies
 	 *
-	 * @return a list of {@link AbstractShopCurrency}s
+	 * @return a list of {@link ShopCurrency}s
 	 */
-	public StrictList<AbstractShopCurrency> getCurrencies() {
+	public StrictList<ShopCurrency> getCurrencies() {
 		return CURRENCY_MANAGER.getCurrencies();
 	}
 }

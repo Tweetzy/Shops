@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
  * Time Created: 9:35 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public abstract class AbstractTextureHead {
+public abstract class TextureHead {
 
 	public abstract boolean enabled();
 

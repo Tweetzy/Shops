@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.api.interfaces.shop;
 
-import ca.tweetzy.shops.api.AbstractShopCurrency;
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.impl.ShopDisplay;
 import ca.tweetzy.shops.impl.ShopSettings;
 import ca.tweetzy.shops.impl.SmartItem;
@@ -68,16 +68,16 @@ public interface IShop {
 	/**
 	 * Get the currency that is used for the shop
 	 *
-	 * @return the used {@link AbstractShopCurrency}
+	 * @return the used {@link ShopCurrency}
 	 */
-	@NonNull AbstractShopCurrency getCurrency();
+	@NonNull ShopCurrency getCurrency();
 
 	/**
 	 * Set the currency for the shop
 	 *
-	 * @param currency is the new {@link AbstractShopCurrency}
+	 * @param currency is the new {@link ShopCurrency}
 	 */
-	void setCurrency(@NonNull final AbstractShopCurrency currency);
+	void setCurrency(@NonNull final ShopCurrency currency);
 
 	/**
 	 * Get the shop display options
