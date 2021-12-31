@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
