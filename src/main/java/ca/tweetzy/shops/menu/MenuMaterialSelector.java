@@ -1,7 +1,10 @@
 package ca.tweetzy.shops.menu;
 
+import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.menu.settings.MenuShopDisplaySettings;
+import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.model.InventorySafeMaterials;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
@@ -23,11 +26,13 @@ import org.bukkit.inventory.ItemStack;
 public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 
 	private final Shop shop;
+	private final MaterialSelectMode selectMode;
 
-	public MenuMaterialSelector(@NonNull final Shop shop) {
+	public MenuMaterialSelector(@NonNull final Shop shop, @NonNull final MaterialSelectMode selectMode) {
 		super(InventorySafeMaterials.get());
 		setTitle("&d&lSelect Icon");
 		this.shop = shop;
+		this.selectMode = selectMode;
 	}
 
 	@Override
@@ -37,13 +42,21 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 
 	@Override
 	protected void onPageClick(Player player, CompMaterial compMaterial, ClickType clickType) {
-		this.shop.setIcon(new SmartItem(compMaterial.name()));
+		if (this.selectMode == MaterialSelectMode.SHOP_ICON)
+			this.shop.setIcon(new SmartItem(compMaterial.name()));
+		else
+			this.shop.getDisplay().setBackgroundItem(compMaterial);
+
 		ShopsData.getInstance().save();
-		new MenuShopEdit(this.shop).displayTo(player);
+
+		if (this.selectMode == MaterialSelectMode.SHOP_ICON)
+			new MenuShopEdit(this.shop).displayTo(player);
+		else
+			new MenuShopDisplaySettings(this.shop).displayTo(player);
 	}
 
 	@Override
 	public Menu newInstance() {
-		return new MenuMaterialSelector(this.shop);
+		return new MenuMaterialSelector(this.shop, this.selectMode);
 	}
 }
