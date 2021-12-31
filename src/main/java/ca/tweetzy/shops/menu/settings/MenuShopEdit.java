@@ -1,7 +1,11 @@
-package ca.tweetzy.shops.menu;
+package ca.tweetzy.shops.menu.settings;
 
+import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.menu.MenuCurrencyList;
+import ca.tweetzy.shops.menu.MenuMaterialSelector;
+import ca.tweetzy.shops.menu.MenuShopList;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
@@ -34,7 +38,7 @@ public final class MenuShopEdit extends Menu {
 		setTitle("&e" + shop.getId() + " &8> &eEdit");
 		setSize(9 * 6);
 
-		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
+		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_ICON), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
 		this.nameButton = Button.makeSimple(ItemCreator
 				.of(CompMaterial.NAME_TAG)
 				.name("&EDisplay Name")

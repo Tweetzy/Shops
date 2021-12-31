@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.menu;
+package ca.tweetzy.shops.menu.settings;
 
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.impl.Shop;
@@ -6,6 +6,7 @@ import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
+import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
@@ -32,6 +33,7 @@ public final class MenuShopSettings extends Menu {
 	private final Button seePermissionButton;
 	private final Button sellPermissionButton;
 	private final Button buyPermissionButton;
+	private final Button displaySettingsButton;
 
 	private final Button backButton;
 
@@ -203,6 +205,7 @@ public final class MenuShopSettings extends Menu {
 			}
 		};
 
+		this.displaySettingsButton = new ButtonMenu(new MenuShopDisplaySettings(this.shop), ItemCreator.of(CompMaterial.COMPARATOR).name("&eDisplay Settings").lore("", "&eClick &7to edit display settings"));
 		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuShopEdit(this.shop).displayTo(player));
 	}
 
@@ -225,6 +228,10 @@ public final class MenuShopSettings extends Menu {
 
 		if (slot == 32)
 			return this.buyPermissionButton.getItem();
+
+
+		if (slot == 34)
+			return this.displaySettingsButton.getItem();
 
 		if (slot == this.getSize() - 9)
 			return this.backButton.getItem();
