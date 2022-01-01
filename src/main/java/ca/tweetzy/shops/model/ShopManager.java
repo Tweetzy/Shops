@@ -29,7 +29,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 	private final StrictMap<String, Shop> shops = new StrictMap<>();
 
 	public boolean doesShopExists(@NonNull final String shopId) {
-		return this.shops.containsKey(shopId);
+		return this.shops.containsKey(shopId.toLowerCase());
 	}
 
 	public void addShop(@NonNull final Shop shop) {
@@ -37,17 +37,17 @@ public class ShopManager extends Manager<Collection<Shop>> {
 	}
 
 	public void removeShop(@NonNull final String id) {
-		this.shops.removeWeak(id);
+		this.shops.removeWeak(id.toLowerCase());
 	}
 
 	public void deleteShop(@NonNull final String id) {
-		this.removeShop(id);
+		this.removeShop(id.toLowerCase());
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
 
 	}
 
 	public Shop getShop(@NonNull final String id) {
-		return this.shops.getOrDefault(id, null);
+		return this.shops.getOrDefault(id.toLowerCase(), null);
 	}
 
 	public StrictList<Shop> getShops() {
@@ -60,7 +60,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 
 	public void createShop(@NonNull final String id, @NonNull final String desc) {
 		final Shop shop = new Shop(
-				id,
+				id.toLowerCase(),
 				new SmartItem(CompMaterial.CHEST.name()),
 				id,
 				desc,

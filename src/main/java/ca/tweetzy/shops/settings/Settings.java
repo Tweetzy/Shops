@@ -12,9 +12,13 @@ public final class Settings extends SimpleSettings {
 
 	public static String PREFIX;
 
+	public static Boolean DYNAMIC_FILL_MAIN_MENU;
+
 	private static void init() {
 		pathPrefix(null);
 		PREFIX = getString("Prefix");
+
+		DYNAMIC_FILL_MAIN_MENU = getBoolean("Dynamic Fill Main Menu");
 	}
 
 	@Override

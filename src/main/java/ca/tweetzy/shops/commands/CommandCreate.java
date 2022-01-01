@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.shops.api.ShopsAPI;
+import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import org.bukkit.entity.Player;
@@ -39,6 +40,7 @@ public final class CommandCreate extends AbstractSubCommand {
 							if (desc.length() <= 3) return false;
 							ShopsAPI.createShop(possibleID, desc);
 							tell(Localization.Success.SHOP_CREATED.replace("{shop_id}", possibleID));
+							new MenuShopEdit(ShopsAPI.getShop(possibleID)).displayTo(player);
 							return true;
 						}
 					};

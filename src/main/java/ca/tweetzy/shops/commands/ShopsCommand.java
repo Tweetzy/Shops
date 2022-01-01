@@ -1,11 +1,15 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.shops.menu.main.MenuDynamicMain;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.annotation.AutoRegister;
 import ca.tweetzy.tweety.command.SimpleCommandGroup;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * The current file has been created by Kiran Hart
@@ -21,6 +25,15 @@ public final class ShopsCommand extends SimpleCommandGroup {
 	private final static ShopsCommand instance = new ShopsCommand();
 
 	@Override
+	protected void zeroArgActions(CommandSender sender) {
+		if (!(sender instanceof Player)) return;
+		final Player player = (Player) sender;
+
+		if (Settings.DYNAMIC_FILL_MAIN_MENU)
+			new MenuDynamicMain().displayTo(player);
+	}
+
+	@Override
 	protected void registerSubcommands() {
 		registerSubcommand(new CommandCreate());
 		registerSubcommand(new CommandDelete());
@@ -30,6 +43,11 @@ public final class ShopsCommand extends SimpleCommandGroup {
 	@Override
 	protected String getHeaderPrefix() {
 		return "" + ChatColor.YELLOW + ChatColor.BOLD;
+	}
+
+	@Override
+	protected boolean useZeroArgAction() {
+		return true;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.api.interfaces.shop;
 
+import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import lombok.NonNull;
@@ -85,4 +86,18 @@ public interface IShopItem {
 	 * @param shopItemQuantityType is the new {@link ShopItemQuantityType}
 	 */
 	void setQuantityType(@NonNull final ShopItemQuantityType shopItemQuantityType);
+
+	/**
+	 * Get the currency that is used for the  item
+	 *
+	 * @return the used {@link ShopCurrency}
+	 */
+	@NonNull ShopCurrency getCurrency();
+
+	/**
+	 * Set the currency for the item
+	 *
+	 * @param currency is the new {@link ShopCurrency}
+	 */
+	void setCurrency(@NonNull final ShopCurrency currency);
 }
