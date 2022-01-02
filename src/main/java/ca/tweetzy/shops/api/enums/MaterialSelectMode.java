@@ -9,5 +9,6 @@ package ca.tweetzy.shops.api.enums;
 public enum MaterialSelectMode {
 
 	SHOP_ICON,
-	SHOP_BACKGROUND
+	SHOP_BACKGROUND,
+	ADD_TO_SHOP
 }

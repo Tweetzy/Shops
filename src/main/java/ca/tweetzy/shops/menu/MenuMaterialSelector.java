@@ -30,7 +30,7 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 
 	public MenuMaterialSelector(@NonNull final Shop shop, @NonNull final MaterialSelectMode selectMode) {
 		super(InventorySafeMaterials.get());
-		setTitle("&d&lSelect Icon");
+		setTitle(selectMode == MaterialSelectMode.ADD_TO_SHOP ? "&d&lSelect Material" : "&d&lSelect Icon");
 		this.shop = shop;
 		this.selectMode = selectMode;
 	}
@@ -53,6 +53,8 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 			new MenuShopEdit(this.shop).displayTo(player);
 		else
 			new MenuShopDisplaySettings(this.shop).displayTo(player);
+
+
 	}
 
 	@Override
