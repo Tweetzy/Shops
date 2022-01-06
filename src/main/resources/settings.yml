@@ -1,3 +1,10 @@
+Menus:
+  Main:
+    Background Item: BLACK_STAINED_GLASS_PANE
+
+
+
+
 # Should the main shop menu fill shop items dynamically?
 # Set this to false, if you want to manually place each shop into its slot
 Dynamic Fill Main Menu: true

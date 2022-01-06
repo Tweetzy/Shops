@@ -21,6 +21,19 @@ public final class Settings extends SimpleSettings {
 		DYNAMIC_FILL_MAIN_MENU = getBoolean("Dynamic Fill Main Menu");
 	}
 
+	public static final class Menus {
+
+		public static final class Main {
+
+			public static String BACKGROUND_ITEM;
+
+			private static void init() {
+				pathPrefix("Menus.Main");
+				BACKGROUND_ITEM = getString("Background Item");
+			}
+		}
+	}
+
 	@Override
 	protected int getConfigVersion() {
 		return 1;
