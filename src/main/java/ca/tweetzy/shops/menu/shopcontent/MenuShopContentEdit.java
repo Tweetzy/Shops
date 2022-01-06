@@ -2,6 +2,7 @@ package ca.tweetzy.shops.menu.shopcontent;
 
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
@@ -36,7 +37,8 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 		this.addItemButton = new Button() {
 			@Override
 			public void onClickedInMenu(Player player, Menu menu, ClickType click) {
-
+				if (click == ClickType.LEFT)
+					new MenuAddShopItem(MenuShopContentEdit.this.shop, new ShopItem()).displayTo(player);
 			}
 
 			@Override

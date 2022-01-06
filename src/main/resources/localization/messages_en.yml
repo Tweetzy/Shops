@@ -1,3 +1,6 @@
+Menus:
+  Main:
+    Title: "&eShops"
 
 
 Shop Creation:
@@ -15,6 +18,7 @@ Success:
 Error:
   Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
   Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
+  Not A Number: "&4{value}&c is not a valid number"
 
 # -------------------------------------------------------------------------------------------------
 # Do not change this value, otherwise it will corrupt your plugin installation!

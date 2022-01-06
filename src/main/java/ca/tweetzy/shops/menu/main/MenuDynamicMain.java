@@ -4,6 +4,9 @@ import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.shopcontent.MenuDynamicShop;
+import ca.tweetzy.shops.model.TextureResolver;
+import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import org.bukkit.entity.Player;
@@ -20,6 +23,7 @@ public final class MenuDynamicMain extends MenuPagged<Shop> {
 
 	public MenuDynamicMain() {
 		super(ShopsAPI.getShops());
+		setTitle(Localization.Menus.Main.TITLE);
 	}
 
 	@Override
@@ -29,6 +33,11 @@ public final class MenuDynamicMain extends MenuPagged<Shop> {
 				.name(shop.getDisplayName())
 				.lore(shop.getDescription())
 				.make();
+	}
+
+	@Override
+	protected ItemStack backgroundItem() {
+		return ItemCreator.of(TextureResolver.resolve(Settings.Menus.Main.BACKGROUND_ITEM)).name(" ").make();
 	}
 
 	@Override
