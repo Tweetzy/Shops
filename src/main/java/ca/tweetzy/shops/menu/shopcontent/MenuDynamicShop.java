@@ -39,7 +39,7 @@ public final class MenuDynamicShop extends MenuPagged<IShopItem> implements ISho
 		if (this.shop.getDisplay().getDecorationItems().containsKey(slot))
 			return ItemCreator.of(this.shop.getDisplay().getDecorationItems().get(slot)).name(" ").make();
 
-		return this.getItemAt(slot);
+		return super.getItemAt(slot);
 	}
 
 	@Override
