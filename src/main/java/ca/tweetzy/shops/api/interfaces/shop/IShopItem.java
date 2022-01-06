@@ -3,6 +3,8 @@ package ca.tweetzy.shops.api.interfaces.shop;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
+import ca.tweetzy.shops.api.enums.TimePeriod;
+import ca.tweetzy.shops.impl.RefillTime;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
@@ -60,6 +62,34 @@ public interface IShopItem {
 	void setSellPrice(final double price);
 
 	/**
+	 * Can this particular item be bought
+	 *
+	 * @return true if it can be bought
+	 */
+	boolean canBeBought();
+
+	/**
+	 * Set whether the item can be bought
+	 *
+	 * @param value is the new value
+	 */
+	void setCanBeBought(final boolean value);
+
+	/**
+	 * Can this particular item be sold
+	 *
+	 * @return true if this item can be sold
+	 */
+	boolean canBeSold();
+
+	/**
+	 * Set whether the item can be sold
+	 *
+	 * @param value is the new value
+	 */
+	void setCanBeSold(final boolean value);
+
+	/**
 	 * Get the type of shop item
 	 *
 	 * @return the {@link ShopItemType}
@@ -100,4 +130,12 @@ public interface IShopItem {
 	 * @param currency is the new {@link ShopCurrency}
 	 */
 	void setCurrency(@NonNull final ShopCurrency currency);
+
+	/**
+	 * A list of refill times for this item
+	 *
+	 * @return a {@link List<RefillTime>}
+	 */
+	@NonNull List<RefillTime> getRefillTimes();
+	
 }
