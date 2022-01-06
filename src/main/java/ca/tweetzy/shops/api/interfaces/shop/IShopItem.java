@@ -3,7 +3,6 @@ package ca.tweetzy.shops.api.interfaces.shop;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
-import ca.tweetzy.shops.api.enums.TimePeriod;
 import ca.tweetzy.shops.impl.RefillTime;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
@@ -137,5 +136,5 @@ public interface IShopItem {
 	 * @return a {@link List<RefillTime>}
 	 */
 	@NonNull List<RefillTime> getRefillTimes();
-	
+
 }

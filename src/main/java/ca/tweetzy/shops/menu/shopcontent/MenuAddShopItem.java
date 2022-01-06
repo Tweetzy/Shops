@@ -2,13 +2,10 @@ package ca.tweetzy.shops.menu.shopcontent;
 
 import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.api.enums.ShopItemType;
-import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
-import ca.tweetzy.shops.menu.settings.MenuShopSettings;
 import ca.tweetzy.shops.settings.Localization;
-import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
