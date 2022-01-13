@@ -25,12 +25,26 @@ public interface IShopItem {
 	@NonNull ItemStack getItem();
 
 	/**
+	 * Set the shop item
+	 *
+	 * @param item is the new item
+	 */
+	void setItem(final ItemStack item);
+
+	/**
 	 * A list of commands that will be executed
 	 * when the user purchases this item
 	 *
 	 * @return a list of commands to be executed
 	 */
 	List<String> getCommands();
+
+	/**
+	 * Get the description of the shop item
+	 *
+	 * @return the item description if any
+	 */
+	List<String> getDescription();
 
 	/**
 	 * Get the purchase price of the item
@@ -59,6 +73,20 @@ public interface IShopItem {
 	 * @param price is the new sell price
 	 */
 	void setSellPrice(final double price);
+
+	/**
+	 * The amount of the item that is given per increase
+	 *
+	 * @return the purchase quantity
+	 */
+	int getPurchaseQuantity();
+
+	/**
+	 * Set the purchase quantity of the item
+	 *
+	 * @param qty is the new quantity
+	 */
+	void setPurchaseQuantity(final int qty);
 
 	/**
 	 * Can this particular item be bought

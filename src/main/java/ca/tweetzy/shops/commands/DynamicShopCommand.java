@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.tweety.command.SimpleCommand;
@@ -23,7 +24,7 @@ public class DynamicShopCommand extends SimpleCommand {
 		checkConsole();
 
 		final Player player = getPlayer();
-		final Shop shop = ShopsAPI.getShop(getLabel());
+		final Shop shop = Shops.getShopManager().getShop(getLabel());
 
 		if (shop == null) return;
 		if (!shop.getSettings().isPublic()) return;

@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.impl;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,19 +27,21 @@ import java.util.List;
 @AllArgsConstructor
 public final class ShopItem implements IShopItem, ConfigSerializable {
 
-	private final ItemStack item;
+	private ItemStack item;
 	private ShopItemType type;
 	private ShopItemQuantityType quantityType;
+	private List<String> description;
 	private ShopCurrency currency;
 	private double buyPrice;
 	private double sellPrice;
+	private int purchaseQty;
 	private boolean canBeBought;
 	private boolean canBeSold;
 	private final List<String> commands;
 	private final List<RefillTime> refillTimes;
 
 	public ShopItem() {
-		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, ShopsAPI.getCurrency("Vault"), 1.0D, 0.50D, true, true, Collections.emptyList(), Collections.emptyList());
+		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, Collections.emptyList(), Shops.getCurrencyManager().getCurrency("Vault"), 1.0D, 0.50D, 1, true, true, Collections.emptyList(), Collections.emptyList());
 	}
 
 	@Override
@@ -46,8 +50,18 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	}
 
 	@Override
+	public void setItem(ItemStack item) {
+		this.item = item;
+	}
+
+	@Override
 	public List<String> getCommands() {
 		return this.commands;
+	}
+
+	@Override
+	public List<String> getDescription() {
+		return this.description;
 	}
 
 	@Override
@@ -68,6 +82,16 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	@Override
 	public void setSellPrice(double price) {
 		this.sellPrice = price;
+	}
+
+	@Override
+	public int getPurchaseQuantity() {
+		return this.purchaseQty;
+	}
+
+	@Override
+	public void setPurchaseQuantity(int qty) {
+		this.purchaseQty = qty;
 	}
 
 	@Override
@@ -131,9 +155,11 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				"item", this.item,
 				"type", this.type,
 				"quantity type", this.quantityType,
+				"description", this.description,
 				"currency", new Tuple<>(this.currency.getPluginName(), this.currency.getName()),
 				"buy price", this.buyPrice,
 				"sell price", this.sellPrice,
+				"purchase quantity", this.purchaseQty,
 				"can be bought", this.canBeBought,
 				"can be sold", this.canBeSold,
 				"commands", this.commands,
@@ -149,9 +175,11 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				map.getItem("item"),
 				map.get("type", ShopItemType.class),
 				map.get("quantity type", ShopItemQuantityType.class),
-				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? ShopsAPI.getCurrency(currencyValues.getKey(), currencyValues.getValue()) : ShopsAPI.getCurrency(currencyValues.getKey()),
+				new ArrayList<>(map.getStringList("description")),
+				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? Shops.getCurrencyManager().getCurrency(currencyValues.getKey(), currencyValues.getValue()) : Shops.getCurrencyManager().getCurrency(currencyValues.getKey()),
 				map.getDouble("buy price"),
 				map.getDouble("sell price"),
+				map.getInteger("purchase quantity"),
 				map.getBoolean("can be bought"),
 				map.getBoolean("can be sold"),
 				map.getStringList("commands"),

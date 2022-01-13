@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
@@ -32,7 +33,7 @@ public final class CommandEdit extends AbstractSubCommand {
 
 
 		if (args.length == 1) {
-			final Shop shop = ShopsAPI.getShop(args[0]);
+			final Shop shop = Shops.getShopManager().getShop(args[0]);
 			if (shop == null) {
 				returnTell(Localization.Error.INVALID_SHOP_ID.replace("{shop_id}", args[0]));
 			}
@@ -47,7 +48,7 @@ public final class CommandEdit extends AbstractSubCommand {
 	@Override
 	protected List<String> tabComplete() {
 		if (args.length == 1)
-			return TabUtil.complete(args[0], ShopsAPI.getShopIds());
+			return TabUtil.complete(args[0], Shops.getShopManager().getShopIds());
 		return NO_COMPLETE;
 	}
 }

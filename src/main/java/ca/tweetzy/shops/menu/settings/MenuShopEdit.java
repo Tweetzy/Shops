@@ -39,7 +39,7 @@ public final class MenuShopEdit extends Menu {
 		setTitle("&e" + shop.getId() + " &8> &eEdit");
 		setSize(9 * 6);
 
-		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_ICON), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
+		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_ICON, null), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
 		this.nameButton = Button.makeSimple(ItemCreator
 				.of(CompMaterial.NAME_TAG)
 				.name("&EDisplay Name")
@@ -69,7 +69,7 @@ public final class MenuShopEdit extends Menu {
 		});
 
 		this.itemsButton = new ButtonMenu(new MenuShopContentEdit(this.shop), ItemCreator.of(CompMaterial.CHEST).name("&eItems").lore("&eClick &7to edit items"));
-		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
+		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, null), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
 		this.settingsButton = new ButtonMenu(new MenuShopSettings(this.shop), ItemCreator.of(CompMaterial.REPEATER).name("&eSettings").lore("&eClick &7to view more settings"));
 		this.backButton = new ButtonMenu(new MenuShopList(ShopListType.EDIT), ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"));
 	}

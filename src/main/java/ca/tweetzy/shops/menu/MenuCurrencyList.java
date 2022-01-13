@@ -1,9 +1,12 @@
 package ca.tweetzy.shops.menu;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
+import ca.tweetzy.shops.menu.shopcontent.MenuAddShopItem;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
@@ -24,13 +27,21 @@ import org.bukkit.inventory.ItemStack;
 public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 
 	private final Shop shop;
+	private final ShopItem shopItem;
 	private final Button backButton;
 
-	public MenuCurrencyList(@NonNull final Shop shop) {
-		super(ShopsAPI.getCurrencies());
+	public MenuCurrencyList(@NonNull final Shop shop, final ShopItem shopItem) {
+		super(Shops.getCurrencyManager().getCurrencies());
 		setTitle("&e" + shop.getId() + " &8> &eSelect Currency");
 		this.shop = shop;
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuShopEdit(this.shop).displayTo(player));
+		this.shopItem = shopItem;
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> {
+			if (shopItem == null)
+				new MenuShopEdit(this.shop).displayTo(player);
+			else
+				new MenuAddShopItem(this.shop, this.shopItem).displayTo(player);
+
+		});
 	}
 
 	@Override
@@ -57,13 +68,18 @@ public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 
 	@Override
 	protected void onPageClick(Player player, ShopCurrency currency, ClickType clickType) {
-		shop.setCurrency(currency);
-		ShopsData.getInstance().save();
-		new MenuShopEdit(this.shop).displayTo(player);
+		if (this.shopItem == null) {
+			this.shop.setCurrency(currency);
+			ShopsData.getInstance().save();
+			new MenuShopEdit(this.shop).displayTo(player);
+		} else {
+			this.shopItem.setCurrency(currency);
+			new MenuAddShopItem(this.shop, this.shopItem).displayTo(player);
+		}
 	}
 
 	@Override
 	public Menu newInstance() {
-		return new MenuCurrencyList(this.shop);
+		return new MenuCurrencyList(this.shop, this.shopItem);
 	}
 }

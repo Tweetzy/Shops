@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.impl;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
@@ -112,7 +113,7 @@ public final class Shop implements IShop, ConfigSerializable {
 				map.get("icon", SmartItem.class),
 				map.getString("display name"),
 				map.getString("description"),
-				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? ShopsAPI.getCurrency(currencyValues.getKey(), currencyValues.getValue()) : ShopsAPI.getCurrency(currencyValues.getKey()),
+				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? Shops.getCurrencyManager().getCurrency(currencyValues.getKey(), currencyValues.getValue()) : Shops.getCurrencyManager().getCurrency(currencyValues.getKey()),
 				map.get("display", ShopDisplay.class),
 				map.get("settings", ShopSettings.class),
 				map.getList("items", IShopItem.class)

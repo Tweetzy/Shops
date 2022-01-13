@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
@@ -29,7 +30,7 @@ public final class CommandCreate extends AbstractSubCommand {
 			new TitleInput(player, Localization.ShopCreation.ENTER_ID_TITLE, Localization.ShopCreation.ENTER_ID_SUBTITLE) {
 				@Override
 				public boolean onResult(String possibleID) {
-					if (ShopsAPI.doesShopExists(possibleID)) {
+					if (Shops.getShopManager().doesShopExists(possibleID)) {
 						tell(Localization.Error.SHOP_ID_TAKEN.replace("{shop_id}", possibleID));
 						return false;
 					}
@@ -38,9 +39,9 @@ public final class CommandCreate extends AbstractSubCommand {
 						@Override
 						public boolean onResult(String desc) {
 							if (desc.length() <= 3) return false;
-							ShopsAPI.createShop(possibleID, desc);
+							Shops.getShopManager().createShop(possibleID, desc);
 							tell(Localization.Success.SHOP_CREATED.replace("{shop_id}", possibleID));
-							new MenuShopEdit(ShopsAPI.getShop(possibleID)).displayTo(player);
+							new MenuShopEdit(Shops.getShopManager().getShop(possibleID)).displayTo(player);
 							return true;
 						}
 					};

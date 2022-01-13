@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.menu;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
@@ -24,7 +25,7 @@ public final class MenuShopList extends MenuPagged<Shop> {
 	private final ShopListType shopListType;
 
 	public MenuShopList(@NonNull final ShopListType shopListType) {
-		super(ShopsAPI.getShops());
+		super(Shops.getShopManager().getShops());
 		this.shopListType = shopListType;
 		setTitle("&eSelect Shop");
 	}
@@ -44,7 +45,7 @@ public final class MenuShopList extends MenuPagged<Shop> {
 			new MenuShopEdit(shop).displayTo(player);
 
 		if (this.shopListType == ShopListType.DELETE && clickType == ClickType.NUMBER_KEY) {
-			ShopsAPI.deleteShop(shop.getId());
+			Shops.getShopManager().deleteShop(shop.getId());
 			tell(Localization.Success.SHOP_DELETED.replace("{shop_id}", shop.getId()));
 			newInstance().displayTo(player);
 		}

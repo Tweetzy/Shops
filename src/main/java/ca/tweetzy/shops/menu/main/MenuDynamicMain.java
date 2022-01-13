@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.menu.main;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
@@ -22,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 public final class MenuDynamicMain extends MenuPagged<Shop> {
 
 	public MenuDynamicMain() {
-		super(ShopsAPI.getShops());
+		super(Shops.getShopManager().getShops());
 		setTitle(Localization.Menus.Main.TITLE);
 	}
 

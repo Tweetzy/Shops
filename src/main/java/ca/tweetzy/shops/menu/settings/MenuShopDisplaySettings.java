@@ -67,7 +67,7 @@ public final class MenuShopDisplaySettings extends Menu {
 			}
 		};
 
-		this.backgroundButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_BACKGROUND), ItemCreator.of(shop.getDisplay().getBackgroundItem()).name("&eBackground Item").glow(true).lore("", "&7Current&f: &e" + ItemUtil.bountifyCapitalized(shop.getDisplay().getBackgroundItem()), "", "&eClick &7to edit background item"));
+		this.backgroundButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_BACKGROUND, null), ItemCreator.of(shop.getDisplay().getBackgroundItem()).name("&eBackground Item").glow(true).lore("", "&7Current&f: &e" + ItemUtil.bountifyCapitalized(shop.getDisplay().getBackgroundItem()), "", "&eClick &7to edit background item"));
 
 		this.shopItemSlotsButton = new ButtonMenu(new MenuShopFillEdit(this.shop), ItemCreator
 				.of(CompMaterial.WRITABLE_BOOK)

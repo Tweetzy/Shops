@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.model;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
@@ -64,7 +65,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 				new SmartItem(CompMaterial.CHEST.name()),
 				id,
 				desc,
-				ShopsAPI.getCurrency("Vault"),
+				Shops.getCurrencyManager().getCurrency("Vault"),
 				new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(), new StrictMap<>(), -1, -1),
 				new ShopSettings(false, ShopState.BUY_AND_SELL, true, id, false, false, false, "shops.see." + id, "shops.buy." + id, "shops.sell." + id),
 				new ArrayList<>()

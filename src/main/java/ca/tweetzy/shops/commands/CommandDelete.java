@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
@@ -27,12 +28,12 @@ public final class CommandDelete extends AbstractSubCommand {
 		final Player player = getPlayer();
 
 		if (args.length == 1) {
-			final Shop shop = ShopsAPI.getShop(args[0]);
+			final Shop shop = Shops.getShopManager().getShop(args[0]);
 			if (shop == null) {
 				returnTell(Localization.Error.INVALID_SHOP_ID.replace("{shop_id}", args[0]));
 			}
 
-			ShopsAPI.deleteShop(shop.getId());
+			Shops.getShopManager().deleteShop(shop.getId());
 			returnTell(Localization.Success.SHOP_DELETED.replace("{shop_id}", args[0]));
 		}
 

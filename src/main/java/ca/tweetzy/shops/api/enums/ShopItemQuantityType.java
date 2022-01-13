@@ -10,4 +10,14 @@ public enum ShopItemQuantityType {
 
 	LIMITED,
 	UNLIMITED;
+
+	private static final ShopItemQuantityType[] states = values();
+
+	public ShopItemQuantityType previous() {
+		return states[(ordinal() - 1 + states.length) % states.length];
+	}
+
+	public ShopItemQuantityType next() {
+		return states[(this.ordinal() + 1) % states.length];
+	}
 }
