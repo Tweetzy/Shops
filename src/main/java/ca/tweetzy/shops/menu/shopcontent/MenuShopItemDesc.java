@@ -22,28 +22,28 @@ import java.util.List;
  * Time Created: 7:27 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class MenuShopItemCommands extends MenuPagged<String> {
+public final class MenuShopItemDesc extends MenuPagged<String> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
 
-	private final Button addCommandButton;
+	private final Button addLineButton;
 	private final Button backButton;
 
-	public MenuShopItemCommands(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
-		super(shopItem.getCommands());
+	public MenuShopItemDesc(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
+		super(shopItem.getDescription());
 		this.shop = shop;
 		this.shopItem = shopItem;
-		setTitle("&e" + shop.getId() + " &8> &eItem Commands");
+		setTitle("&e" + shop.getId() + " &8> &eItem Desc");
 
-		this.addCommandButton = Button.makeSimple(ItemCreator.of(CompMaterial.SLIME_BALL, "&E&lAdd Command", "", "&eClick &7to add a new command"), player -> new TitleInput(player, "&eShop Item Edit", "&7Enter new command") {
+		this.addLineButton = Button.makeSimple(ItemCreator.of(CompMaterial.SLIME_BALL, "&E&lAdd Line", "", "&eClick &7to add a new lore line"), player -> new TitleInput(player, "&eShop Item Edit", "&7Enter new desc line") {
 
 			@Override
 			public boolean onResult(String line) {
 				if (line == null || line.length() < 1)
 					return false;
 
-				MenuShopItemCommands.this.shopItem.getCommands().add(line);
+				MenuShopItemDesc.this.shopItem.getDescription().add(line);
 				newInstance().displayTo(player);
 				return true;
 			}
@@ -55,7 +55,7 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 	@Override
 	public ItemStack getItemAt(int slot) {
 		if (slot == getBottomCenterSlot())
-			return this.addCommandButton.getItem();
+			return this.addLineButton.getItem();
 		if (slot == getSize() - 9)
 			return this.backButton.getItem();
 
@@ -64,17 +64,17 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 
 	@Override
 	protected List<Button> getButtonsToAutoRegister() {
-		return Arrays.asList(this.addCommandButton, this.backButton);
+		return Arrays.asList(this.addLineButton, this.backButton);
 	}
 
 	@Override
-	protected ItemStack convertToItemStack(String cmd) {
-		return ItemCreator.of(CompMaterial.PAPER).name(cmd).lore("&dPress Drop &7to delete command").make();
+	protected ItemStack convertToItemStack(String line) {
+		return ItemCreator.of(CompMaterial.PAPER).name(line).lore("&dPress Drop &7to delete line").make();
 	}
 
 	@Override
 	protected void onPageClick(Player player, String s, ClickType clickType) {
-		this.shopItem.getCommands().remove(s);
+		this.shopItem.getDescription().remove(s);
 		newInstance().displayTo(player);
 	}
 
@@ -85,6 +85,6 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuShopItemCommands(this.shop, this.shopItem);
+		return new MenuShopItemDesc(this.shop, this.shopItem);
 	}
 }

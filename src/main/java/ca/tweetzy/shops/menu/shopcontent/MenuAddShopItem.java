@@ -15,12 +15,15 @@ import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
+import ca.tweetzy.tweety.menu.model.MenuClickLocation;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +49,54 @@ public final class MenuAddShopItem extends Menu {
 	private final Button refillButton;
 	private final Button stockButton;
 	private final Button commandsButton;
+	private final Button descriptionButton;
+
+	private boolean selectingFromInventory;
 
 	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
 		this.shop = shop;
 		this.shopItem = shopItem;
+		this.selectingFromInventory = false;
 		setTitle("&e" + shop.getId() + " &8> &eAdd Item");
 		setSize(9 * 6);
 
-		this.materialSelectorButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.ADD_TO_SHOP, this.shopItem), ItemCreator
-				.of(this.shopItem.getItem())
-				.name("&e" + ItemUtil.bountifyCapitalized(this.shopItem.getItem().getType()))
-				.lore("", "&eClick &7to change material"));
+		this.materialSelectorButton = new Button() {
+			@Override
+			public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
+				if (clickType == ClickType.LEFT) {
+					if (!MenuAddShopItem.this.selectingFromInventory)
+						new MenuMaterialSelector(MenuAddShopItem.this.shop, MaterialSelectMode.ADD_TO_SHOP, MenuAddShopItem.this.shopItem).displayTo(player);
+					else {
+						if (player.getItemOnCursor().getType() == CompMaterial.AIR.toMaterial()) return;
+						MenuAddShopItem.this.shopItem.setItem(player.getItemOnCursor());
+						restartMenu();
+					}
+				}
 
+				if (clickType == ClickType.RIGHT) {
+					MenuAddShopItem.this.selectingFromInventory = true;
+					restartMenu();
+				}
+			}
+
+			@Override
+			public ItemStack getItem() {
+
+				final List<String> lore = new ArrayList<>();
+				lore.add("");
+				if (MenuAddShopItem.this.selectingFromInventory) {
+					lore.add("&eDrag on drop item here to set it");
+				} else {
+					lore.add("&eLeft Click &7to open material picker");
+					lore.add("&eRight Click &7to select from your inventory");
+				}
+
+				return ItemCreator
+						.of(MenuAddShopItem.this.shopItem.getItem())
+						.name("&e" + ItemUtil.bountifyCapitalized(MenuAddShopItem.this.shopItem.getItem().getType()))
+						.lore(lore).make();
+			}
+		};
 
 		this.buyPriceButton = new Button() {
 			@Override
@@ -243,6 +282,15 @@ public final class MenuAddShopItem extends Menu {
 		};
 
 		this.commandsButton = new ButtonMenu(new MenuShopItemCommands(this.shop, this.shopItem), ItemCreator.of(CompMaterial.WRITABLE_BOOK, "&eCommands").lore("", "&eClick &7to edit commands"));
+
+		final List<String> itemDesc = new ArrayList<>();
+		itemDesc.add("");
+		itemDesc.add("&7Current&f: ");
+		itemDesc.addAll(shopItem.getDescription());
+		itemDesc.add("");
+		itemDesc.add("&eClick &7to adjust description");
+
+		this.descriptionButton = new ButtonMenu(new MenuShopItemDesc(this.shop, this.shopItem), ItemCreator.of(CompMaterial.PAPER).name("&EDescription").lore(itemDesc));
 	}
 
 	@Override
@@ -261,6 +309,9 @@ public final class MenuAddShopItem extends Menu {
 
 		if (slot == 25)
 			return this.quantityTypeButton.getItem();
+
+		if (slot == 28)
+			return this.descriptionButton.getItem();
 
 		if (slot == 31)
 			return ItemCreator.of(CompMaterial.NETHER_STAR).name("&eItem Overview")
@@ -289,6 +340,18 @@ public final class MenuAddShopItem extends Menu {
 			return this.commandsButton.getItem();
 
 		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
+	}
+
+	@Override
+	protected boolean isActionAllowed(MenuClickLocation location, int slot, @Nullable ItemStack clicked, @Nullable ItemStack cursor) {
+		return location == MenuClickLocation.PLAYER_INVENTORY;
+	}
+
+	@Override
+	protected void onMenuClick(Player player, int slot, InventoryAction action, ClickType click, ItemStack cursor, ItemStack clicked, boolean cancelled) {
+		if (this.selectingFromInventory)
+			if (cursor != null)
+				tell(ItemUtil.bountifyCapitalized(cursor.getType()));
 	}
 
 	private void reopen(@NonNull final Player player) {

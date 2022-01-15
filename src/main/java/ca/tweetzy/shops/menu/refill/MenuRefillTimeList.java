@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu.refill;
 import ca.tweetzy.shops.impl.RefillTime;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
+import ca.tweetzy.shops.menu.shopcontent.MenuAddShopItem;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentEdit;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
@@ -42,7 +43,7 @@ public final class MenuRefillTimeList extends MenuPagged<RefillTime> {
 		setTitle("&e" + shop.getId() + " &8> &eRefills");
 
 		this.addButton = new ButtonMenu(new MenuNewRefillTime(this.shop, this.shopItem, new RefillTime()), ItemCreator.of(CompMaterial.SLIME_BALL, "&a&lAdd Refill Time", "", "&eClick &7to add new refill time"));
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuShopContentEdit(this.shop).displayTo(player));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem).displayTo(player));
 	}
 
 	@Override
