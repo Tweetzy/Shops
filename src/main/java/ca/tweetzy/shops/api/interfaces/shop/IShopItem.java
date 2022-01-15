@@ -89,6 +89,20 @@ public interface IShopItem {
 	void setPurchaseQuantity(final int qty);
 
 	/**
+	 * Get the stock qty of the item
+	 *
+	 * @return stock count
+	 */
+	int getStock();
+
+	/**
+	 * set the stock
+	 *
+	 * @param stock set the stock
+	 */
+	void setStock(final int stock);
+
+	/**
 	 * Can this particular item be bought
 	 *
 	 * @return true if it can be bought

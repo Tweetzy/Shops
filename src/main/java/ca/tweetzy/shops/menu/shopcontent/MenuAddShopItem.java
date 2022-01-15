@@ -7,6 +7,7 @@ import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
+import ca.tweetzy.shops.menu.refill.MenuRefillTimes;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.conversation.TitleInput;
@@ -42,6 +43,7 @@ public final class MenuAddShopItem extends Menu {
 	private final Button quantityTypeButton;
 	private final Button buyQuantityButton;
 	private final Button currencyButton;
+	private final Button refillButton;
 
 	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
 		this.shop = shop;
@@ -208,6 +210,7 @@ public final class MenuAddShopItem extends Menu {
 		});
 
 		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, this.shopItem), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shopItem.getCurrency().getPluginName() + "&7/&e" + shopItem.getCurrency().getName(), "", "&eClick &7to edit currency"));
+		this.refillButton = new ButtonMenu(new MenuRefillTimes(this.shop, this.shopItem), ItemCreator.of(CompMaterial.CLOCK, "&eRefill Times").lore("", "&eClick &7to edit refill times"));
 	}
 
 	@Override
@@ -243,6 +246,9 @@ public final class MenuAddShopItem extends Menu {
 
 		if (slot == 38)
 			return this.currencyButton.getItem();
+
+		if (slot == 43 && this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED)
+			return this.refillButton.getItem();
 
 		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
 	}

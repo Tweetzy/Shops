@@ -35,13 +35,14 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	private double buyPrice;
 	private double sellPrice;
 	private int purchaseQty;
+	private int stock;
 	private boolean canBeBought;
 	private boolean canBeSold;
 	private final List<String> commands;
 	private final List<RefillTime> refillTimes;
 
 	public ShopItem() {
-		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, Collections.emptyList(), Shops.getCurrencyManager().getCurrency("Vault"), 1.0D, 0.50D, 1, true, true, Collections.emptyList(), Collections.emptyList());
+		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, new ArrayList<>(), Shops.getCurrencyManager().getCurrency("Vault"), 1.0D, 0.50D, 1, 1000, true, true, new ArrayList<>(), new ArrayList<>());
 	}
 
 	@Override
@@ -92,6 +93,16 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	@Override
 	public void setPurchaseQuantity(int qty) {
 		this.purchaseQty = qty;
+	}
+
+	@Override
+	public int getStock() {
+		return this.stock;
+	}
+
+	@Override
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	@Override
@@ -163,7 +174,8 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				"can be bought", this.canBeBought,
 				"can be sold", this.canBeSold,
 				"commands", this.commands,
-				"refill times", this.refillTimes
+				"refill times", this.refillTimes,
+				"stock", this.stock
 		);
 	}
 
@@ -180,10 +192,11 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				map.getDouble("buy price"),
 				map.getDouble("sell price"),
 				map.getInteger("purchase quantity"),
+				map.getInteger("stock"),
 				map.getBoolean("can be bought"),
 				map.getBoolean("can be sold"),
 				map.getStringList("commands"),
-				map.getList("refill times", RefillTime.class)
+				new ArrayList<>(map.getList("refill times", RefillTime.class))
 		);
 	}
 }

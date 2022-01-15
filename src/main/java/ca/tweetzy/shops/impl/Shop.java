@@ -11,6 +11,7 @@ import ca.tweetzy.tweety.model.Tuple;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -116,7 +117,7 @@ public final class Shop implements IShop, ConfigSerializable {
 				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? Shops.getCurrencyManager().getCurrency(currencyValues.getKey(), currencyValues.getValue()) : Shops.getCurrencyManager().getCurrency(currencyValues.getKey()),
 				map.get("display", ShopDisplay.class),
 				map.get("settings", ShopSettings.class),
-				map.getList("items", IShopItem.class)
+				new ArrayList<>(map.getList("items", IShopItem.class))
 		);
 	}
 }

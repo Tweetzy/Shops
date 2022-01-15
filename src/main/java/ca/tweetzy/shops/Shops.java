@@ -9,6 +9,9 @@ import ca.tweetzy.tweety.Messenger;
 import ca.tweetzy.tweety.MinecraftVersion;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.TweetyPlugin;
+import ca.tweetzy.tweety.settings.YamlStaticConfig;
+
+import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart

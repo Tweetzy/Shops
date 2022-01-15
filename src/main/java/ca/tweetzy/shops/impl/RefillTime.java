@@ -7,6 +7,8 @@ import ca.tweetzy.tweety.model.ConfigSerializable;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+import java.time.DayOfWeek;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: January 05 2022
@@ -16,13 +18,33 @@ import lombok.NonNull;
 @AllArgsConstructor
 public final class RefillTime implements IRefillTime, ConfigSerializable {
 
-	private final int hour;
-	private final int minute;
-	private final TimePeriod timePeriod;
+	private DayOfWeek day;
+	private int hour;
+	private int minute;
+	private TimePeriod timePeriod;
+
+	public RefillTime() {
+		this(DayOfWeek.MONDAY, 12, 1, TimePeriod.AM);
+	}
+
+	@Override
+	public DayOfWeek getDay() {
+		return this.day;
+	}
+
+	@Override
+	public void setDay(@NonNull DayOfWeek day) {
+		this.day = day;
+	}
 
 	@Override
 	public int getHour() {
 		return this.hour;
+	}
+
+	@Override
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
 
 	@Override
@@ -31,16 +53,26 @@ public final class RefillTime implements IRefillTime, ConfigSerializable {
 	}
 
 	@Override
+	public void setMinute(int minute) {
+		this.minute = minute;
+	}
+
+	@Override
 	public @NonNull TimePeriod getTimePeriod() {
 		return this.timePeriod;
 	}
 
 	@Override
+	public void setTimePeriod(@NonNull TimePeriod period) {
+		this.timePeriod = period;
+	}
+
+	@Override
 	public SerializedMap serialize() {
-		return SerializedMap.ofArray("hour", this.hour, "minute", this.minute, "period", this.timePeriod);
+		return SerializedMap.ofArray("day", this.day, "hour", this.hour, "minute", this.minute, "period", this.timePeriod);
 	}
 
 	public static RefillTime deserialize(SerializedMap map) {
-		return new RefillTime(map.getInteger("hour"), map.getInteger("minute"), map.get("period", TimePeriod.class));
+		return new RefillTime(map.get("day", DayOfWeek.class), map.getInteger("hour"), map.getInteger("minute"), map.get("period", TimePeriod.class));
 	}
 }
