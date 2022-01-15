@@ -7,7 +7,7 @@ import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
-import ca.tweetzy.shops.menu.refill.MenuRefillTimes;
+import ca.tweetzy.shops.menu.refill.MenuRefillTimeList;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.conversation.TitleInput;
@@ -44,6 +44,8 @@ public final class MenuAddShopItem extends Menu {
 	private final Button buyQuantityButton;
 	private final Button currencyButton;
 	private final Button refillButton;
+	private final Button stockButton;
+	private final Button commandsButton;
 
 	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
 		this.shop = shop;
@@ -210,7 +212,37 @@ public final class MenuAddShopItem extends Menu {
 		});
 
 		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, this.shopItem), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shopItem.getCurrency().getPluginName() + "&7/&e" + shopItem.getCurrency().getName(), "", "&eClick &7to edit currency"));
-		this.refillButton = new ButtonMenu(new MenuRefillTimes(this.shop, this.shopItem), ItemCreator.of(CompMaterial.CLOCK, "&eRefill Times").lore("", "&eClick &7to edit refill times"));
+		this.refillButton = new ButtonMenu(new MenuRefillTimeList(this.shop, this.shopItem), ItemCreator.of(CompMaterial.CLOCK, "&eRefill Times").lore("", "&eClick &7to edit refill times"));
+
+		this.stockButton = new Button() {
+			@Override
+			public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
+				new TitleInput(player, "&eShop Item Edit", "&7Enter new stock amount") {
+
+					@Override
+					public boolean onResult(String string) {
+						if (!NumberUtils.isNumber(string)) {
+							tell(Localization.Error.NOT_A_NUMBER.replace("{value}", string));
+							return false;
+						}
+
+						MenuAddShopItem.this.shopItem.setStock(Integer.parseInt(string));
+						reopen(player);
+						return true;
+					}
+				};
+			}
+
+			@Override
+			public ItemStack getItem() {
+				return ItemCreator
+						.of(CompMaterial.SUNFLOWER)
+						.name("&eStock")
+						.lore("", "&7Current&f: &a" + MenuAddShopItem.this.shopItem.getStock(), "", "&eClick &7to change stock").make();
+			}
+		};
+
+		this.commandsButton = new ButtonMenu(new MenuShopItemCommands(this.shop, this.shopItem), ItemCreator.of(CompMaterial.WRITABLE_BOOK, "&eCommands").lore("", "&eClick &7to edit commands"));
 	}
 
 	@Override
@@ -249,6 +281,12 @@ public final class MenuAddShopItem extends Menu {
 
 		if (slot == 43 && this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED)
 			return this.refillButton.getItem();
+
+		if (slot == 34 && this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED)
+			return this.stockButton.getItem();
+
+		if (slot == 42 && (this.shopItem.getType() == ShopItemType.COMMAND || this.shopItem.getType() == ShopItemType.BOTH))
+			return this.commandsButton.getItem();
 
 		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
 	}

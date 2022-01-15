@@ -1,6 +1,5 @@
 package ca.tweetzy.shops.menu.refill;
 
-import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.impl.RefillTime;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
@@ -14,7 +13,6 @@ import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +27,7 @@ import java.util.List;
  * Time Created: 11:58 a.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class MenuRefillTimes extends MenuPagged<RefillTime> {
+public final class MenuRefillTimeList extends MenuPagged<RefillTime> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
@@ -37,7 +35,7 @@ public final class MenuRefillTimes extends MenuPagged<RefillTime> {
 	private final Button addButton;
 	private final Button backButton;
 
-	public MenuRefillTimes(@Nonnull final Shop shop, @NonNull final ShopItem shopItem) {
+	public MenuRefillTimeList(@Nonnull final Shop shop, @NonNull final ShopItem shopItem) {
 		super(shopItem.getRefillTimes());
 		this.shop = shop;
 		this.shopItem = shopItem;
@@ -93,6 +91,6 @@ public final class MenuRefillTimes extends MenuPagged<RefillTime> {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuRefillTimes(this.shop, this.shopItem);
+		return new MenuRefillTimeList(this.shop, this.shopItem);
 	}
 }

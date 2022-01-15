@@ -49,7 +49,7 @@ public final class MenuNewRefillTime extends Menu {
 		setTitle("&e" + shop.getId() + " &8> &eNew Refill");
 		setSize(9 * 5);
 
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuRefillTimes(this.shop, this.shopItem).displayTo(player));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuRefillTimeList(this.shop, this.shopItem).displayTo(player));
 
 		this.dayButton = new Button() {
 			@Override
@@ -145,7 +145,7 @@ public final class MenuNewRefillTime extends Menu {
 				.lore("", "&eRefills&f: &b" + ItemUtil.bountifyCapitalized(this.refillTime.getDay()) + " " + this.refillTime.getHour() + ":" + this.refillTime.getMinute() + " " + this.refillTime.getTimePeriod(), "", "&eClick &7to add refill time"), player -> {
 
 			this.shopItem.getRefillTimes().add(this.refillTime);
-			new MenuRefillTimes(this.shop, this.shopItem).displayTo(player);
+			new MenuRefillTimeList(this.shop, this.shopItem).displayTo(player);
 		});
 	}
 

@@ -2,6 +2,7 @@ package ca.tweetzy.shops.menu.settings;
 
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.menu.settings.display.MenuShopDisplaySettings;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;

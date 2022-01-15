@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.menu.settings;
+package ca.tweetzy.shops.menu.settings.display;
 
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.settings.ShopsData;

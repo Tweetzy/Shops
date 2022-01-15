@@ -1,9 +1,10 @@
-package ca.tweetzy.shops.menu.settings;
+package ca.tweetzy.shops.menu.settings.display;
 
 import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
+import ca.tweetzy.shops.menu.settings.MenuShopSettings;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.menu.Menu;
