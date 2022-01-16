@@ -9,6 +9,7 @@ import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
 import ca.tweetzy.shops.menu.refill.MenuRefillTimeList;
 import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
@@ -21,7 +22,6 @@ import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +51,8 @@ public final class MenuAddShopItem extends Menu {
 	private final Button commandsButton;
 	private final Button descriptionButton;
 
+	private final Button confirmButton;
+
 	private boolean selectingFromInventory;
 
 	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
@@ -67,9 +69,11 @@ public final class MenuAddShopItem extends Menu {
 					if (!MenuAddShopItem.this.selectingFromInventory)
 						new MenuMaterialSelector(MenuAddShopItem.this.shop, MaterialSelectMode.ADD_TO_SHOP, MenuAddShopItem.this.shopItem).displayTo(player);
 					else {
-						if (player.getItemOnCursor().getType() == CompMaterial.AIR.toMaterial()) return;
-						MenuAddShopItem.this.shopItem.setItem(player.getItemOnCursor());
-						restartMenu();
+						final ItemStack cursorItem = player.getItemOnCursor().clone();
+						if (cursorItem.getType() == CompMaterial.AIR.toMaterial()) return;
+
+						MenuAddShopItem.this.shopItem.setItem(cursorItem);
+						newInstance().displayTo(player);
 					}
 				}
 
@@ -92,7 +96,7 @@ public final class MenuAddShopItem extends Menu {
 				}
 
 				return ItemCreator
-						.of(MenuAddShopItem.this.shopItem.getItem())
+						.of(MenuAddShopItem.this.selectingFromInventory ? CompMaterial.HOPPER.toItem() : MenuAddShopItem.this.shopItem.getItem())
 						.name("&e" + ItemUtil.bountifyCapitalized(MenuAddShopItem.this.shopItem.getItem().getType()))
 						.lore(lore).make();
 			}
@@ -291,6 +295,12 @@ public final class MenuAddShopItem extends Menu {
 		itemDesc.add("&eClick &7to adjust description");
 
 		this.descriptionButton = new ButtonMenu(new MenuShopItemDesc(this.shop, this.shopItem), ItemCreator.of(CompMaterial.PAPER).name("&EDescription").lore(itemDesc));
+
+		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", "&eClick &7to add item to shop"), player -> {
+			this.shop.getShopItems().add(this.shopItem);
+			ShopsData.getInstance().save();
+			new MenuShopContentEdit(this.shop).displayTo(player);
+		});
 	}
 
 	@Override
@@ -339,19 +349,15 @@ public final class MenuAddShopItem extends Menu {
 		if (slot == 42 && (this.shopItem.getType() == ShopItemType.COMMAND || this.shopItem.getType() == ShopItemType.BOTH))
 			return this.commandsButton.getItem();
 
+		if (slot == 40)
+			return this.confirmButton.getItem();
+
 		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
 	}
 
 	@Override
 	protected boolean isActionAllowed(MenuClickLocation location, int slot, @Nullable ItemStack clicked, @Nullable ItemStack cursor) {
 		return location == MenuClickLocation.PLAYER_INVENTORY;
-	}
-
-	@Override
-	protected void onMenuClick(Player player, int slot, InventoryAction action, ClickType click, ItemStack cursor, ItemStack clicked, boolean cancelled) {
-		if (this.selectingFromInventory)
-			if (cursor != null)
-				tell(ItemUtil.bountifyCapitalized(cursor.getType()));
 	}
 
 	private void reopen(@NonNull final Player player) {

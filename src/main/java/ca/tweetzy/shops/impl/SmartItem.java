@@ -17,7 +17,17 @@ import org.bukkit.inventory.ItemStack;
 @AllArgsConstructor
 public class SmartItem implements ISmartItem, ConfigSerializable {
 
+	private final ItemStack base;
 	private final String texture;
+
+	public SmartItem(@NonNull final String texture) {
+		this(null, texture);
+	}
+
+	@Override
+	public ItemStack baseItem() {
+		return this.base;
+	}
 
 	@Override
 	public @NonNull String getTexture() {
@@ -26,15 +36,15 @@ public class SmartItem implements ISmartItem, ConfigSerializable {
 
 	@Override
 	public @NonNull ItemStack get() {
-		return TextureResolver.resolve(this.texture);
+		return this.base != null ? this.base : TextureResolver.resolve(this.texture);
 	}
 
 	@Override
 	public SerializedMap serialize() {
-		return SerializedMap.ofArray("Material", this.texture);
+		return SerializedMap.ofArray("Material", this.texture, "ItemStack", this.base);
 	}
 
 	public static SmartItem deserialize(SerializedMap map) {
-		return new SmartItem(map.getString("Material"));
+		return new SmartItem(map.getItem("ItemStack"), map.getString("Material"));
 	}
 }

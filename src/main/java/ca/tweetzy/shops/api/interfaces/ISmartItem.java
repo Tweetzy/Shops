@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface ISmartItem {
 
+	ItemStack baseItem();
+
 	/**
 	 * The head texture / minecraft material name
 	 *

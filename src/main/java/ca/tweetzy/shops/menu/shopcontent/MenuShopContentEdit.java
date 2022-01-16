@@ -4,6 +4,7 @@ import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.button.Button;
@@ -13,6 +14,9 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
@@ -61,13 +65,29 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 	}
 
 	@Override
-	protected ItemStack convertToItemStack(IShopItem item) {
+	protected ItemStack convertToItemStack(IShopItem shopItem) {
+		final List<String> lore = new ArrayList<>();
+
+		lore.add("");
+		if (shopItem.getDescription().isEmpty())
+			lore.add("&7Description&f: &cNone");
+		else {
+			lore.add("&7Description&f:");
+			lore.addAll(shopItem.getDescription());
+		}
+
 		return ItemCreator
-				.of(item.getItem())
-				.lore(
-						""
-				)
-				.make();
+				.of(shopItem.getItem())
+				.lore(lore)
+				.lore("")
+				.lore("&fx" + shopItem.getPurchaseQuantity() + " &ecosts &a$" + shopItem.getBuyPrice(),
+						"&fx1&e costs &a$" + shopItem.getBuyPrice() / shopItem.getPurchaseQuantity(),
+						"&fx" + shopItem.getPurchaseQuantity() + " &esells for &a$" + shopItem.getSellPrice(),
+						"&fx1&e sells for &a$" + shopItem.getSellPrice() / shopItem.getPurchaseQuantity(),
+						"",
+						"&eLeft Click &7to edit shop item",
+						"&ePress Drop &7to delete item"
+				).make();
 	}
 
 	@Override
@@ -86,6 +106,12 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 
 	@Override
 	protected void onPageClick(Player player, IShopItem item, ClickType click) {
+		if (click == ClickType.DROP) {
+			this.shop.getShopItems().remove(item);
+			ShopsData.getInstance().save();
+			newInstance().displayTo(player);
+			return;
+		}
 
 	}
 

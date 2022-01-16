@@ -2,11 +2,9 @@ package ca.tweetzy.shops.menu.shopcontent;
 
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.menu.IShopMenu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
-import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -18,20 +16,15 @@ import org.bukkit.inventory.ItemStack;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 
-public final class MenuDynamicShop extends MenuPagged<IShopItem> implements IShopMenu {
+public final class MenuShopList extends MenuPagged<IShopItem> {
 
 	private final Shop shop;
 
-	public MenuDynamicShop(Shop shop) {
+	public MenuShopList(Shop shop) {
 		super(null, shop.getDisplay().getShopItemSlots().getSource(), shop.getShopItems());
 		this.shop = shop;
 		setTitle(this.shop.getDisplayName());
 		setSize(9 * 6);
-	}
-
-	@Override
-	public @NonNull Shop getShop() {
-		return this.shop;
 	}
 
 	@Override
@@ -44,7 +37,10 @@ public final class MenuDynamicShop extends MenuPagged<IShopItem> implements ISho
 
 	@Override
 	protected ItemStack convertToItemStack(IShopItem item) {
-		return null;
+		return ItemCreator
+				.of(item.getItem())
+
+				.make();
 	}
 
 	@Override

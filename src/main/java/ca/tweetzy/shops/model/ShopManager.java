@@ -78,6 +78,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 
 	@Override
 	public void load(Consumer<Collection<Shop>> data) {
+		this.shops.clear();
 		ShopsData.getInstance().getShops().forEach(this::addShop);
 		data.accept(this.shops.values());
 	}
