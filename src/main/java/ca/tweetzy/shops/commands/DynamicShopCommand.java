@@ -3,6 +3,7 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.tweety.command.SimpleCommand;
 import org.bukkit.entity.Player;
 
@@ -30,6 +31,6 @@ public class DynamicShopCommand extends SimpleCommand {
 		if (!shop.getSettings().isPublic()) return;
 		if (shop.getSettings().isRequirePermissionToSee() && !player.hasPermission(shop.getSettings().getSeePermission())) return;
 
-
+		new MenuShopContentList(shop).displayTo(player);
 	}
 }
