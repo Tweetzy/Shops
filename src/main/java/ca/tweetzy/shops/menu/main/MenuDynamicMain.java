@@ -3,7 +3,7 @@ package ca.tweetzy.shops.menu.main;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.menu.shopcontent.MenuShopList;
+import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.TextureResolver;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
@@ -43,6 +43,6 @@ public final class MenuDynamicMain extends MenuPagged<Shop> {
 	@Override
 	protected void onPageClick(Player player, Shop shop, ClickType click) {
 		if (shop.getDisplay().getShopLayout() == ShopLayout.AUTOMATIC)
-			new MenuShopList(shop).displayTo(player);
+			new MenuShopContentList(shop).displayTo(player);
 	}
 }

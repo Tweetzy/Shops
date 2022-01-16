@@ -1,13 +1,11 @@
 package ca.tweetzy.shops.model;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopsAPI;
+import ca.tweetzy.shops.api.Inflector;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
-import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.impl.ShopDisplay;
-import ca.tweetzy.shops.impl.ShopSettings;
-import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
+import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
@@ -18,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * The current file has been created by Kiran Hart
@@ -75,6 +74,19 @@ public class ShopManager extends Manager<Collection<Shop>> {
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
 	}
 
+
+	public List<IShopItem> filterShopItems(@NonNull final Shop shop, @NonNull final String keyword) {
+		final List<IShopItem> originalShopItems = shop.getShopItems();
+		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).collect(Collectors.toList());
+	}
+
+	public boolean checkSearchCriteria(@NonNull final String phrase, @NonNull final IShopItem shopItem) {
+		return ItemInspect.match(phrase, ItemInspect.getItemName(shopItem.getItem())) ||
+				ItemInspect.match(phrase, Inflector.getInstance().pluralize(shopItem.getItem().getType().name())) ||
+				ItemInspect.match(phrase, Inflector.getInstance().singularize(shopItem.getItem().getType().name())) ||
+				ItemInspect.match(phrase, ItemInspect.getItemLore(shopItem.getItem())) ||
+				ItemInspect.match(phrase, ItemInspect.getItemEnchantments(shopItem.getItem()));
+	}
 
 	@Override
 	public void load(Consumer<Collection<Shop>> data) {

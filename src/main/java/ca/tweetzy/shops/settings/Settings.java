@@ -23,6 +23,18 @@ public final class Settings extends SimpleSettings {
 
 	public static final class Menus {
 
+		public static final class BackButton {
+
+			public static String MATERIAL;
+			public static Integer SLOT;
+
+			private static void init() {
+				pathPrefix("Menus.Back Button");
+				MATERIAL = getString("Material");
+				SLOT = getInteger("Slot");
+			}
+		}
+
 		public static final class Main {
 
 			public static String BACKGROUND_ITEM;
@@ -30,6 +42,18 @@ public final class Settings extends SimpleSettings {
 			private static void init() {
 				pathPrefix("Menus.Main");
 				BACKGROUND_ITEM = getString("Background Item");
+			}
+		}
+
+		public static final class ShopContent {
+
+			public static String SEARCH_BUTTON_MATERIAL;
+			public static Integer SEARCH_BUTTON_SLOT;
+
+			private static void init() {
+				pathPrefix("Menus.Shop Content");
+				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
+				SEARCH_BUTTON_SLOT = getInteger("Search Button.Slot");
 			}
 		}
 	}

@@ -1,7 +1,44 @@
 Menus:
+  Back Button:
+    Name: "&e&lBack"
+    Lore:
+      - "&BClick &7to go back"
+
   Main:
     Title: "&eShops"
 
+  Shop Content:
+    Shop Item Lores:
+      Out Of Stock: "&7Stock&f: &cOut of Stock"
+      In Stock: "&7Stock&f: &a{shop_item_stock}"
+      Refill In: "&7Restocks In&f: &a{refill_days}&f/&a{refill_hours}&f/&a{refill_minutes}&f/&a{refill_seconds}"
+      Buy: "&7Buy x{shop_item_qty}&f: &a{shop_item_buy_cost}"
+      Sell: "&7Sell x{shop_item_qty}&f: &a{shop_item_sell_cost}"
+      View: "&bClick &7to &ebuy&f/&esell &7this item"
+
+    Shop Item Lore Format:
+      Limited:
+        - "{item_lore}"
+        - "{item_description}"
+        - ""
+        - "{stock_status}"
+        - "{refills_in}" # only will shown if stock status is out of stock
+        - ""
+        - "{buy}" #if the item can be bought, it will be shown
+        - "{sell}" #if the item can be sold, it will be shown
+        - "{view}"
+      Unlimited:
+        - "{item_lore}"
+        - "{item_description}"
+        - ""
+        - "{buy}" #if the item can be bought, it will be shown
+        - "{sell}" #if the item can be sold, it will be shown
+        - "{view}"
+
+    Search Button:
+      Name: "&e&lSearch Items"
+      Lore:
+        - "&bClick &7to search items"
 
 Shop Creation:
   Enter ID:
@@ -19,6 +56,11 @@ Error:
   Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
   Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
   Not A Number: "&4{value}&c is not a valid number"
+
+Prompt:
+  Item Search:
+    Title: "&7Item Search"
+    Subtitle: "&fEnter keywords in chat"
 
 # -------------------------------------------------------------------------------------------------
 # Do not change this value, otherwise it will corrupt your plugin installation!

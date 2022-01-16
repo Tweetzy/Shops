@@ -1,8 +1,18 @@
+# If you use -2 it will be placed in the last slot in the menu
+# If you use -1 it will be placed in the bottom left corner
 Menus:
+  Back Button:
+    Slot: -1
+    Material: IRON_DOOR
+
   Main:
     Background Item: BLACK_STAINED_GLASS_PANE
 
+  Shop Content:
+    Search Button:
 
+      Slot: -2
+      Material: COMPASS
 
 
 # Should the main shop menu fill shop items dynamically?

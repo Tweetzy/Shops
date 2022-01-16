@@ -8,8 +8,11 @@ import ca.tweetzy.shops.model.ShopManager;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
+import org.bukkit.ChatColor;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The current file has been created by Kiran Hart

@@ -14,6 +14,7 @@ import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,18 +61,20 @@ public final class CommandImport extends AbstractSubCommand {
 			if (shopItemsSection != null) {
 				shopItemsSection.getKeys(false).forEach(node -> {
 					final ConfigurationSection shopItemSection = shopItemsSection.getConfigurationSection(node);
+					final ItemStack item = shopItemSection.getItemStack("item");
+
 					shopItems.add(new ShopItem(
-							shopItemSection.getItemStack("item"),
+							item,
 							ShopItemType.ITEM,
 							ShopItemQuantityType.UNLIMITED,
 							new ArrayList<>(),
 							Shops.getCurrencyManager().getCurrency("Vault"),
 							shopItemSection.getDouble("buy price"),
 							shopItemSection.getDouble("sell price"),
+							item.getAmount(),
 							1,
-							1,
-							false,
-							false,
+							true,
+							true,
 							new ArrayList<>(),
 							new ArrayList<>()
 					));
