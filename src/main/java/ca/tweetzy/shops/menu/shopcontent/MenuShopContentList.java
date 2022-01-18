@@ -85,16 +85,20 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 	protected ItemStack convertToItemStack(IShopItem item) {
 		final List<String> lore = item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLoreFormat.LIMITED : Localization.ShopContentMenu.ShopItemLoreFormat.UNLIMITED;
 
-		if (ItemInspect.getItemLore(item.getItem()).isEmpty())
-			lore.remove("{item_lore}");
-
 		if (item.getDescription().isEmpty())
 			lore.remove("{item_description}");
+		else {
+			int descIndex = lore.indexOf("{item_description}");
+			if (descIndex != -1) {
+				lore.remove("{item_description}");
+				lore.addAll(descIndex, item.getDescription());
+			}
+		}
 
-		if (!item.canBeBought() || item.getBuyPrice() == 0)
+		if (!item.canBeBought())
 			lore.remove("{buy}");
 
-		if (!item.canBeSold() || item.getSellPrice() == 0)
+		if (!item.canBeSold())
 			lore.remove("{sell}");
 
 		return ItemCreator

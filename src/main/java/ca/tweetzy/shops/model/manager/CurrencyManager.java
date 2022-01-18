@@ -1,8 +1,9 @@
-package ca.tweetzy.shops.model;
+package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.impl.currency.PlayerPointsCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
+import ca.tweetzy.shops.model.UltraEconomyLoader;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.Getter;

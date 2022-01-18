@@ -3,16 +3,13 @@ package ca.tweetzy.shops.api;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
 import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.model.CurrencyManager;
-import ca.tweetzy.shops.model.ShopManager;
+import ca.tweetzy.shops.model.manager.CurrencyManager;
+import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
-import org.bukkit.ChatColor;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The current file has been created by Kiran Hart

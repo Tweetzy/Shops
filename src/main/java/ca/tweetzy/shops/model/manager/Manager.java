@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.model;
+package ca.tweetzy.shops.model.manager;
 
 import java.util.function.Consumer;
 

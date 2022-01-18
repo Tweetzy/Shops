@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.model;
+package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.Inflector;
@@ -6,6 +6,7 @@ import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.*;
+import ca.tweetzy.shops.model.ItemInspect;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * The current file has been created by Kiran Hart
@@ -65,7 +67,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 				id,
 				desc,
 				Shops.getCurrencyManager().getCurrency("Vault"),
-				new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(), new StrictMap<>(), -1, -1),
+				new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(IntStream.rangeClosed(0, 44).boxed().collect(Collectors.toList())), new StrictMap<>(), -1, -1),
 				new ShopSettings(false, ShopState.BUY_AND_SELL, true, id, false, false, false, "shops.see." + id, "shops.buy." + id, "shops.sell." + id),
 				new ArrayList<>()
 		);

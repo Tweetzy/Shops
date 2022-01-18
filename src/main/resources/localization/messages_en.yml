@@ -18,7 +18,6 @@ Menus:
 
     Shop Item Lore Format:
       Limited:
-        - "{item_lore}"
         - "{item_description}"
         - ""
         - "{stock_status}"
@@ -28,7 +27,6 @@ Menus:
         - "{sell}" #if the item can be sold, it will be shown
         - "{view}"
       Unlimited:
-        - "{item_lore}"
         - "{item_description}"
         - ""
         - "{buy}" #if the item can be bought, it will be shown

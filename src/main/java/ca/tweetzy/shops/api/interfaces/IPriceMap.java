@@ -1,7 +1,7 @@
 package ca.tweetzy.shops.api.interfaces;
 
 import ca.tweetzy.shops.api.ShopCurrency;
-import lombok.NonNull;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface IPriceMap {
 
-	@NonNull ItemStack getItem();
+	ItemStack getItem();
 
 	double getBuyPrice();
 

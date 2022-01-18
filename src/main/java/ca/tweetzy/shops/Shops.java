@@ -1,8 +1,8 @@
 package ca.tweetzy.shops;
 
 import ca.tweetzy.shops.commands.DynamicShopCommand;
-import ca.tweetzy.shops.model.CurrencyManager;
-import ca.tweetzy.shops.model.ShopManager;
+import ca.tweetzy.shops.model.manager.CurrencyManager;
+import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.Messenger;
