@@ -2,6 +2,7 @@ package ca.tweetzy.shops;
 
 import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.model.manager.CurrencyManager;
+import ca.tweetzy.shops.model.manager.PriceMapManager;
 import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.Common;
@@ -20,20 +21,17 @@ public final class Shops extends TweetyPlugin {
 
 	private final ShopManager shopManager = new ShopManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
+	private final PriceMapManager priceMapManager = new PriceMapManager();
 
 	@Override
 	protected void onPluginStart() {
 		normalizePrefix();
 
 		this.currencyManager.load(null);
-
 		this.shopManager.load(loaded -> loaded.forEach(shop -> {
 			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
 				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
 		}));
-
-//		getServer().getMessenger().registerOutgoingPluginChannel(this, "ShopsDataTransfer");
-
 	}
 
 	@Override
@@ -54,6 +52,10 @@ public final class Shops extends TweetyPlugin {
 
 	public static CurrencyManager getCurrencyManager() {
 		return ((Shops) TweetyPlugin.getInstance()).currencyManager;
+	}
+
+	public static PriceMapManager getPriceMapManager() {
+		return ((Shops) TweetyPlugin.getInstance()).priceMapManager;
 	}
 
 	@Override

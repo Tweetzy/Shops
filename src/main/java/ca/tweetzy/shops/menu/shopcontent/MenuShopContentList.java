@@ -40,7 +40,8 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 		this.shop = shop;
 		setTitle(keyword != null ? this.shop.getDisplayName() + "&f: &7" + keyword : this.shop.getDisplayName());
 		setSize(9 * 6);
-		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").make());
+		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").clearLore().make());
+		setAsyncFill();
 
 		this.searchButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.ShopContent.SEARCH_BUTTON_MATERIAL).get())

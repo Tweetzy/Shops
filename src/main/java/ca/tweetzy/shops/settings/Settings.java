@@ -39,9 +39,15 @@ public final class Settings extends SimpleSettings {
 
 			public static String BACKGROUND_ITEM;
 
+			public static String SEARCH_BUTTON_MATERIAL;
+			public static Integer SEARCH_BUTTON_SLOT;
+
 			private static void init() {
 				pathPrefix("Menus.Main");
 				BACKGROUND_ITEM = getString("Background Item");
+
+				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
+				SEARCH_BUTTON_SLOT = getInteger("Search Button.Slot");
 			}
 		}
 

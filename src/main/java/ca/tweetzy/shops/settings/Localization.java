@@ -87,10 +87,15 @@ public final class Localization extends SimpleLocalization {
 
 			public static String TITLE;
 
+			public static String SEARCH_BUTTON_NAME;
+			public static List<String> SEARCH_BUTTON_LORE;
+
 			private static void init() {
 				pathPrefix("Menus.Main");
 
 				TITLE = getString("Title");
+				SEARCH_BUTTON_NAME = getString("Search Button.Name");
+				SEARCH_BUTTON_LORE = getStringList("Search Button.Lore");
 			}
 		}
 	}

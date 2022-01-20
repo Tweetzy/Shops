@@ -3,11 +3,14 @@ package ca.tweetzy.shops.menu.main;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.TextureResolver;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.MenuPagged;
+import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -21,9 +24,26 @@ import org.bukkit.inventory.ItemStack;
  */
 public final class MenuDynamicMain extends MenuPagged<Shop> {
 
+	private final Button searchButton;
+
 	public MenuDynamicMain() {
 		super(Shops.getShopManager().getShops());
 		setTitle(Localization.Menus.Main.TITLE);
+
+
+		this.searchButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.Main.SEARCH_BUTTON_MATERIAL).get())
+				.name(Localization.Menus.Main.SEARCH_BUTTON_NAME)
+				.lore(Localization.Menus.Main.SEARCH_BUTTON_LORE), player -> new TitleInput(player, Localization.Prompt.ITEM_SEARCH_TITLE, Localization.Prompt.ITEM_SEARCH_SUBTITLE) {
+
+			@Override
+			public boolean onResult(String string) {
+				if (string == null || string.length() < 3)
+					return false;
+
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -33,6 +53,14 @@ public final class MenuDynamicMain extends MenuPagged<Shop> {
 				.name(shop.getDisplayName())
 				.lore(shop.getDescription())
 				.make();
+	}
+
+	@Override
+	public ItemStack getItemAt(int slot) {
+		if ((Settings.Menus.Main.SEARCH_BUTTON_SLOT == -1 && slot == getSize() - 9) || (Settings.Menus.Main.SEARCH_BUTTON_SLOT == -2 && slot == getSize() - 1) || slot == Settings.Menus.Main.SEARCH_BUTTON_SLOT)
+			return this.searchButton.getItem();
+
+		return super.getItemAt(slot);
 	}
 
 	@Override

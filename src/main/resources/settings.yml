@@ -7,10 +7,12 @@ Menus:
 
   Main:
     Background Item: BLACK_STAINED_GLASS_PANE
+    Search Button:
+      Slot: -2
+      Material: COMPASS
 
   Shop Content:
     Search Button:
-
       Slot: -2
       Material: COMPASS
 

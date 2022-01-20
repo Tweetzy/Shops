@@ -13,6 +13,7 @@ import ca.tweetzy.tweety.FileUtil;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
+import ca.tweetzy.tweety.remain.Remain;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +66,7 @@ public final class CommandImport extends AbstractSubCommand {
 						final ConfigurationSection shopItemSection = shopItemsSection.getConfigurationSection(node);
 						final ItemStack item = shopItemSection.getItemStack("item");
 
-						shopItems.add(new ShopItem(
+						final ShopItem shopItem = new ShopItem(
 								item,
 								ShopItemType.ITEM,
 								ShopItemQuantityType.UNLIMITED,
@@ -79,7 +80,10 @@ public final class CommandImport extends AbstractSubCommand {
 								true,
 								new ArrayList<>(),
 								new ArrayList<>()
-						));
+						);
+
+						Shops.getPriceMapManager().addPriceMap(new PriceMap(item, shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+						shopItems.add(shopItem);
 					});
 				}
 
@@ -100,6 +104,11 @@ public final class CommandImport extends AbstractSubCommand {
 			});
 
 			ShopsData.getInstance().save(shops);
+			Shops.getShopManager().load(loaded -> loaded.forEach(shop -> {
+				if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
+					Remain.registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
+			}));
+
 			tell("&aImported a total of &2" + shops.size() + "&a shops");
 		});
 	}

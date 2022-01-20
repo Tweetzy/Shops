@@ -6,6 +6,10 @@ Menus:
 
   Main:
     Title: "&eShops"
+    Search Button:
+      Name: "&e&lSearch Items"
+      Lore:
+        - "&bClick &7to search items"
 
   Shop Content:
     Shop Item Lores:
