@@ -36,13 +36,14 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	private double sellPrice;
 	private int purchaseQty;
 	private int stock;
+	private int currentStock;
 	private boolean canBeBought;
 	private boolean canBeSold;
 	private final List<String> commands;
 	private final List<RefillTime> refillTimes;
 
 	public ShopItem() {
-		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, new ArrayList<>(), Shops.getCurrencyManager().getCurrency("Vault"), 1.0D, 0.50D, 1, 1000, true, true, new ArrayList<>(), new ArrayList<>());
+		this(CompMaterial.GRASS_BLOCK.toItem(), ShopItemType.ITEM, ShopItemQuantityType.UNLIMITED, new ArrayList<>(), Shops.getCurrencyManager().getCurrency("Vault"), 1.0D, 0.50D, 1, 1000, 1000, true, true, new ArrayList<>(), new ArrayList<>());
 	}
 
 	@Override
@@ -103,6 +104,16 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 	@Override
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	@Override
+	public int getCurrentStock() {
+		return this.currentStock;
+	}
+
+	@Override
+	public void setCurrentStock(int stock) {
+		this.currentStock = stock;
 	}
 
 	@Override
@@ -175,7 +186,8 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				"can be sold", this.canBeSold,
 				"commands", this.commands,
 				"refill times", this.refillTimes,
-				"stock", this.stock
+				"stock", this.stock,
+				"current stock", this.currentStock
 		);
 	}
 
@@ -193,6 +205,7 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				map.getDouble("sell price"),
 				map.getInteger("purchase quantity"),
 				map.getInteger("stock"),
+				map.getInteger("current stock"),
 				map.getBoolean("can be bought"),
 				map.getBoolean("can be sold"),
 				map.getStringList("commands"),

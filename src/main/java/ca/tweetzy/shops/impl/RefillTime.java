@@ -7,7 +7,10 @@ import ca.tweetzy.tweety.model.ConfigSerializable;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
+import java.sql.Time;
+import java.text.DateFormat;
 import java.time.DayOfWeek;
+import java.util.Date;
 
 /**
  * The current file has been created by Kiran Hart
@@ -65,6 +68,11 @@ public final class RefillTime implements IRefillTime, ConfigSerializable {
 	@Override
 	public void setTimePeriod(@NonNull TimePeriod period) {
 		this.timePeriod = period;
+	}
+
+
+	public Date getDate() {
+		return null;
 	}
 
 	@Override

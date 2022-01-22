@@ -105,7 +105,7 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 		return ItemCreator
 				.of(item.getItem())
 				.lore(Replacer.replaceArray(lore,
-						"stock_status", item.getStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK,
+						"stock_status", item.getStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK.replace("{shop_item_stock}", String.valueOf(item.getStock())),
 						"buy", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.BUY, item),
 						"sell", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.SELL, item),
 						"view", Localization.ShopContentMenu.ShopItemLores.VIEW

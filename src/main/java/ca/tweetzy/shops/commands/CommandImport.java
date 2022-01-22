@@ -103,7 +103,9 @@ public final class CommandImport extends AbstractSubCommand {
 				tell("&aImported shop&f: &2" + shopId);
 			});
 
-			ShopsData.getInstance().save(shops);
+			ShopsData.getInstance().getShops().addAll(shops);
+			ShopsData.getInstance().saveAll();
+
 			Shops.getShopManager().load(loaded -> loaded.forEach(shop -> {
 				if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
 					Remain.registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));

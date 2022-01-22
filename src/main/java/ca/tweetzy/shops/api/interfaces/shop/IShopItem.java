@@ -102,6 +102,10 @@ public interface IShopItem {
 	 */
 	void setStock(final int stock);
 
+	int getCurrentStock();
+
+	void setCurrentStock(final int stock);
+
 	/**
 	 * Can this particular item be bought
 	 *

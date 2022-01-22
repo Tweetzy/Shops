@@ -5,6 +5,7 @@ import ca.tweetzy.shops.model.manager.CurrencyManager;
 import ca.tweetzy.shops.model.manager.PriceMapManager;
 import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.task.ShopsTask;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.Messenger;
 import ca.tweetzy.tweety.MinecraftVersion;
@@ -23,6 +24,8 @@ public final class Shops extends TweetyPlugin {
 	private final CurrencyManager currencyManager = new CurrencyManager();
 	private final PriceMapManager priceMapManager = new PriceMapManager();
 
+	private ShopsTask shopsTask;
+
 	@Override
 	protected void onPluginStart() {
 		normalizePrefix();
@@ -35,11 +38,22 @@ public final class Shops extends TweetyPlugin {
 	}
 
 	@Override
+	protected void onReloadablesStart() {
+		this.shopsTask = new ShopsTask();
+	}
+
+	@Override
 	protected void onPluginReload() {
 		this.shopManager.load(loaded -> loaded.forEach(shop -> {
 			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
 				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
 		}));
+	}
+
+	@Override
+	protected void onPluginStop() {
+		if (this.shopsTask != null)
+			this.shopsTask.cancel();
 	}
 
 	public static Shops getInstance() {

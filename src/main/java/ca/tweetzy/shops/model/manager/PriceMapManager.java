@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.impl.PriceMap;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.Getter;
 import lombok.NonNull;
@@ -23,6 +24,8 @@ public final class PriceMapManager extends Manager<StrictList<PriceMap>> {
 
 	public void addPriceMap(@NonNull final PriceMap map) {
 		this.knownPrices.addIfNotExist(map);
+		if (!ShopsData.getInstance().getPriceMappings().contains(map))
+			ShopsData.getInstance().getPriceMappings().add(map);
 	}
 
 	public PriceMap getPriceMap(@NonNull final ItemStack itemStack) {

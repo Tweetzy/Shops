@@ -2,6 +2,7 @@ package ca.tweetzy.shops.settings;
 
 import ca.tweetzy.shops.impl.PriceMap;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.settings.YamlConfig;
 import lombok.Getter;
@@ -37,6 +38,10 @@ public final class ShopsData extends YamlConfig {
 	@Override
 	protected SerializedMap serialize() {
 		return SerializedMap.ofArray("Shops", this.shops, "Price Mappings", this.priceMappings);
+	}
+
+	public void saveAll() {
+		Common.runAsync(this::save);
 	}
 
 	public void save(@NonNull final List<Shop> shops) {
