@@ -10,6 +10,7 @@ import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.FileUtil;
+import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
@@ -83,7 +84,7 @@ public final class CommandImport extends AbstractSubCommand {
 								new ArrayList<>()
 						);
 
-						Shops.getPriceMapManager().addPriceMap(new PriceMap(item, shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+						Shops.getPriceMapManager().addPriceMap(new PriceMap(item.clone(), shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
 						shopItems.add(shopItem);
 					});
 				}

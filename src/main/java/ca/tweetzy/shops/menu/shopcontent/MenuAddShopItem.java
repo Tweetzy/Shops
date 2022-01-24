@@ -1,8 +1,10 @@
 package ca.tweetzy.shops.menu.shopcontent;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
+import ca.tweetzy.shops.impl.PriceMap;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.MenuCurrencyList;
@@ -298,7 +300,8 @@ public final class MenuAddShopItem extends Menu {
 
 		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", "&eClick &7to add item to shop"), player -> {
 			this.shop.getShopItems().add(this.shopItem);
-			ShopsData.getInstance().save();
+			Shops.getPriceMapManager().addPriceMap(new PriceMap(this.shopItem.getItem().clone(), this.shopItem.getBuyPrice(), this.shopItem.getSellPrice(), this.shopItem.getCurrency()));
+			ShopsData.getInstance().saveAll();
 			new MenuShopContentEdit(this.shop).displayTo(player);
 		});
 	}

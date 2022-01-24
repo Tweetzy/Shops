@@ -32,7 +32,6 @@ public final class MenuMain extends MenuPagged<Shop> {
 	private Map<Integer, Shop> manualShopSpots = null;
 	private List<Button> manualShopButtons = null;
 
-
 	private final Button searchButton;
 
 	public MenuMain() {
