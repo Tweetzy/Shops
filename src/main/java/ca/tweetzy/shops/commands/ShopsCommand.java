@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.commands;
 
-import ca.tweetzy.shops.menu.main.MenuDynamicMain;
-import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.menu.main.MenuMain;
 import ca.tweetzy.tweety.annotation.AutoRegister;
 import ca.tweetzy.tweety.command.SimpleCommandGroup;
 import lombok.AccessLevel;
@@ -29,8 +28,8 @@ public final class ShopsCommand extends SimpleCommandGroup {
 		if (!(sender instanceof Player)) return;
 		final Player player = (Player) sender;
 
-		if (Settings.DYNAMIC_FILL_MAIN_MENU)
-			new MenuDynamicMain().displayTo(player);
+		new MenuMain().displayTo(player);
+
 	}
 
 	@Override

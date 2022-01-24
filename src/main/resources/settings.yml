@@ -21,6 +21,14 @@ Menus:
 # Set this to false, if you want to manually place each shop into its slot
 Dynamic Fill Main Menu: true
 
+# How often should the shop task run? By, default its one second (20 ticks = 1sec)
+# It's one second because of refill times, unless you setup shop refill times in a way
+# in which they can't be skipped over, then go ahead and change it.
+
+# If you aren't using any refills (meaning all shops have unlimited items)
+# You can set this to -1 which disables the task entirely
+Shop Tick Task Speed: 20
+
 # -------------------------------------------------------------------------------------------------
 # The format used in the {timestamp} placeholder (google "Java timestamp format" for options).
 # -------------------------------------------------------------------------------------------------

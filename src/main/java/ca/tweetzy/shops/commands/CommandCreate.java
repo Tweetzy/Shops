@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.conversation.TitleInput;

@@ -2,7 +2,6 @@ package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
-import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
@@ -12,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +31,10 @@ public final class Shop implements IShop, ConfigSerializable {
 	private ShopDisplay display;
 	private ShopSettings settings;
 	private List<IShopItem> items;
+
+	public static Shop empty() {
+		return new Shop("shops-plugin-empty-placeholder", new SmartItem(""), "", "", Shops.getCurrencyManager().getCurrency("Vault"), ShopDisplay.empty(), ShopSettings.empty(), Collections.emptyList());
+	}
 
 	@Override
 	public @NonNull String getId() {

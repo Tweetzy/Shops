@@ -39,7 +39,8 @@ public final class Shops extends TweetyPlugin {
 
 	@Override
 	protected void onReloadablesStart() {
-		this.shopsTask = new ShopsTask();
+		if (Settings.SHOP_TICK_TASK_SPEED != -1)
+			this.shopsTask = new ShopsTask();
 	}
 
 	@Override

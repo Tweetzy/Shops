@@ -27,6 +27,10 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 	private String buyPermission;
 	private String sellPermission;
 
+	public static ShopSettings empty() {
+		return new ShopSettings(false, ShopState.BUY_AND_SELL, false, "", false, false, false, "", "", "");
+	}
+
 	@Override
 	public boolean isPublic() {
 		return this.isPublic;

@@ -76,6 +76,7 @@ public final class CommandImport extends AbstractSubCommand {
 								shopItemSection.getDouble("sell price"),
 								item.getAmount(),
 								1,
+								1,
 								true,
 								true,
 								new ArrayList<>(),

@@ -5,7 +5,10 @@ import ca.tweetzy.shops.api.Inflector;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
-import ca.tweetzy.shops.impl.*;
+import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopDisplay;
+import ca.tweetzy.shops.impl.ShopSettings;
+import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.model.ItemInspect;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.collection.StrictList;
@@ -13,11 +16,8 @@ import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -48,7 +48,21 @@ public class ShopManager extends Manager<Collection<Shop>> {
 	public void deleteShop(@NonNull final String id) {
 		this.removeShop(id.toLowerCase());
 		ShopsData.getInstance().save(new ArrayList<>(this.shops.values()));
+	}
 
+	public List<Shop> getEmptyPopulated() {
+		final List<Shop> dynShops = new ArrayList<>(this.shops.values());
+		if (dynShops.size() < getHighestDisplayPage() * (9 * 5)) {
+			int difference = (getHighestDisplayPage() * (9 * 5)) - dynShops.size();
+			for (int i = 0; i < difference; i++)
+				dynShops.add(Shop.empty());
+		}
+
+		return dynShops;
+	}
+
+	public int getHighestDisplayPage() {
+		return this.shops.values().stream().mapToInt(shop -> shop.getDisplay().getMenuPage()).max().orElse(1);
 	}
 
 	public Shop getShop(@NonNull final String id) {

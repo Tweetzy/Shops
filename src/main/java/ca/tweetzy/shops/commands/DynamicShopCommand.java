@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.tweety.command.SimpleCommand;

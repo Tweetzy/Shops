@@ -7,8 +7,6 @@ import ca.tweetzy.tweety.model.ConfigSerializable;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.time.DayOfWeek;
 import java.util.Date;
 

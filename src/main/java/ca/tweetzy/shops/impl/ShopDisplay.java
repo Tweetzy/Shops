@@ -28,6 +28,10 @@ public final class ShopDisplay implements IShopDisplay, ConfigSerializable {
 	private int menuSlot;
 	private int menuPage;
 
+	public static ShopDisplay empty() {
+		return new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(), new StrictMap<>(), -1, -1);
+	}
+
 	@Override
 	public @NonNull ShopLayout getShopLayout() {
 		return this.shopLayout;

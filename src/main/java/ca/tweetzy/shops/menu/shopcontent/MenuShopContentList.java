@@ -5,8 +5,7 @@ import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.SmartItem;
-import ca.tweetzy.shops.menu.main.MenuDynamicMain;
-import ca.tweetzy.shops.model.ItemInspect;
+import ca.tweetzy.shops.menu.main.MenuMain;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.conversation.TitleInput;
@@ -61,7 +60,7 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
-				.lore(Localization.Menus.BackButton.LORE), player -> new MenuDynamicMain().displayTo(player));
+				.lore(Localization.Menus.BackButton.LORE), player -> new MenuMain().displayTo(player));
 	}
 
 	public MenuShopContentList(@NonNull final Shop shop) {

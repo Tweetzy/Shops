@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.api.interfaces;
 
 import ca.tweetzy.shops.api.ShopCurrency;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**

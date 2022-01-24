@@ -2,7 +2,6 @@ package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
-import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
@@ -15,7 +14,6 @@ import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -205,7 +203,7 @@ public final class ShopItem implements IShopItem, ConfigSerializable {
 				map.getDouble("sell price"),
 				map.getInteger("purchase quantity"),
 				map.getInteger("stock"),
-				map.getInteger("current stock"),
+				map.getInteger("current stock", map.getInteger("stock")),
 				map.getBoolean("can be bought"),
 				map.getBoolean("can be sold"),
 				map.getStringList("commands"),

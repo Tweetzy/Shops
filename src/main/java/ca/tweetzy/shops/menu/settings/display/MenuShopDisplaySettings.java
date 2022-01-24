@@ -5,14 +5,17 @@ import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
 import ca.tweetzy.shops.menu.settings.MenuShopSettings;
+import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
+import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -34,6 +37,8 @@ public final class MenuShopDisplaySettings extends Menu {
 	private final Button backgroundButton;
 	private final Button shopItemSlotsButton;
 	private final Button decorationItemsButton;
+	private final Button slotButton;
+	private final Button pageButton;
 
 	private final Button backButton;
 
@@ -80,6 +85,44 @@ public final class MenuShopDisplaySettings extends Menu {
 				.name("&eDecoration Slots")
 				.lore("", "&eClick &7to edit decoration slots"));
 
+		this.slotButton = Button.makeSimple(ItemCreator.of(CompMaterial.CLOCK, "&eMenu Slot", "", "&7Current&f: &e" + shop.getDisplay().getMenuSlot(), "", "&eClick &7to change slot"), player -> new TitleInput(player, "&eShop Edit", "&7Enter new menu slot") {
+			@Override
+			public boolean onResult(String string) {
+				if (!NumberUtils.isNumber(string)) {
+					tell(Localization.Error.NOT_A_NUMBER.replace("{value}", string));
+				}
+
+				int number = Integer.parseInt(string);
+
+				if (number < 0)
+					number = 0;
+				if (number > 53)
+					number = 53;
+
+				MenuShopDisplaySettings.this.shop.getDisplay().setMenuSlot(number);
+				saveAndReopen(player);
+				return true;
+			}
+		});
+
+		this.pageButton = Button.makeSimple(ItemCreator.of(CompMaterial.CLOCK, "&eMenu Page", "", "&7Current&f: &e" + shop.getDisplay().getMenuPage(), "", "&eClick &7to change page"), player -> new TitleInput(player, "&eShop Edit", "&7Enter new menu page") {
+			@Override
+			public boolean onResult(String string) {
+				if (!NumberUtils.isNumber(string)) {
+					tell(Localization.Error.NOT_A_NUMBER.replace("{value}", string));
+				}
+
+				int number = Integer.parseInt(string);
+
+				if (number < 1)
+					number = 1;
+
+				MenuShopDisplaySettings.this.shop.getDisplay().setMenuPage(number);
+				saveAndReopen(player);
+				return true;
+			}
+		});
+
 		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuShopSettings(this.shop).displayTo(player));
 	}
 
@@ -96,6 +139,12 @@ public final class MenuShopDisplaySettings extends Menu {
 
 		if (slot == 28)
 			return this.decorationItemsButton.getItem();
+
+		if (slot == 31 && this.shop.getDisplay().getShopLayout() == ShopLayout.MANUAL)
+			return this.pageButton.getItem();
+
+		if (slot == 34 && this.shop.getDisplay().getShopLayout() == ShopLayout.MANUAL)
+			return this.slotButton.getItem();
 
 		if (slot == getSize() - 9)
 			return this.backButton.getItem();

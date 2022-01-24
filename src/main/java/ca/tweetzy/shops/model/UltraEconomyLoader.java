@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.model;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.currency.UltraEconomyCurrency;
 import ca.tweetzy.tweety.Common;
 import lombok.experimental.UtilityClass;

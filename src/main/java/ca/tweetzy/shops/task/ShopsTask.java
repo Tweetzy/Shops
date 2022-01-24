@@ -3,13 +3,10 @@ package ca.tweetzy.shops.task;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.TimePeriod;
-import ca.tweetzy.tweety.Common;
+import ca.tweetzy.shops.settings.Settings;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * The current file has been created by Kiran Hart
@@ -20,7 +17,7 @@ import java.util.Date;
 public final class ShopsTask extends BukkitRunnable {
 
 	public ShopsTask() {
-		runTaskTimerAsynchronously(Shops.getInstance(), 0, 20);
+		runTaskTimerAsynchronously(Shops.getInstance(), 0, Settings.SHOP_TICK_TASK_SPEED);
 	}
 
 	@Override
@@ -39,7 +36,6 @@ public final class ShopsTask extends BukkitRunnable {
 				if (dateTime.getMinute() != refillTime.getMinute()) return;
 
 				shopItem.setCurrentStock(shopItem.getStock());
-				// todo refill
 			});
 		}));
 	}
