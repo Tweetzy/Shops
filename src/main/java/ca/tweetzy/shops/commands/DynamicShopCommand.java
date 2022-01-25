@@ -30,6 +30,6 @@ public class DynamicShopCommand extends SimpleCommand {
 		if (!shop.getSettings().isPublic()) return;
 		if (shop.getSettings().isRequirePermissionToSee() && !player.hasPermission(shop.getSettings().getSeePermission())) return;
 
-		new MenuShopContentList(shop).displayTo(player);
+		new MenuShopContentList(shop, null).displayTo(player);
 	}
 }

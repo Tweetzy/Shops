@@ -10,6 +10,10 @@ Menus:
       Name: "&e&lSearch Items"
       Lore:
         - "&bClick &7to search items"
+    Cart Button:
+      Name: "&e&lView Cart"
+      Lore:
+        - "&bClick &7to view cart"
 
   Shop Content:
     Shop Item Lores:
@@ -41,6 +45,10 @@ Menus:
       Name: "&e&lSearch Items"
       Lore:
         - "&bClick &7to search items"
+    Cart Button:
+      Name: "&e&lView Cart"
+      Lore:
+        - "&bClick &7to view cart"
 
 Shop Creation:
   Enter ID:

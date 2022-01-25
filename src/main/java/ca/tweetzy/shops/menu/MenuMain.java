@@ -47,7 +47,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 					if (shop.getDisplay().getMenuPage() != -1 && shop.getDisplay().getMenuSlot() != -1) {
 						this.manualShopSpots.put(shop.getDisplay().getMenuSlot(), shop);
 
-						this.manualShopButtons.add(Button.makeSimple(ItemCreator.of(convertToItemStack(shop)), player -> new MenuShopContentList(shop).displayTo(player)));
+						this.manualShopButtons.add(Button.makeSimple(ItemCreator.of(convertToItemStack(shop)), player -> new MenuShopContentList(shop, null).displayTo(player)));
 					}
 				}
 			});
@@ -88,7 +88,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 	@Override
 	protected void onPageClick(Player player, Shop shop, ClickType click) {
 		if (shop.getId().equalsIgnoreCase("shops-plugin-empty-placeholder")) return;
-		new MenuShopContentList(shop).displayTo(player);
+		new MenuShopContentList(shop, null).displayTo(player);
 	}
 
 	@Override

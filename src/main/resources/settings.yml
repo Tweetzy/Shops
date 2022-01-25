@@ -1,5 +1,6 @@
 # If you use -2 it will be placed in the last slot in the menu
 # If you use -1 it will be placed in the bottom left corner
+# Slot values are from 0 to 53 (google Minecraft Chest Numbers to view them)
 Menus:
   Back Button:
     Slot: -1
@@ -11,12 +12,16 @@ Menus:
       Slot: -2
       Material: COMPASS
     Cart Button:
-      Slot:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
 
   Shop Content:
     Search Button:
       Slot: -2
       Material: COMPASS
+    Cart Button:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
 
 
 # Should the main shop menu fill shop items dynamically?

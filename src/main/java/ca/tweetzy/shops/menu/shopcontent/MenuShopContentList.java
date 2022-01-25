@@ -10,6 +10,7 @@ import ca.tweetzy.shops.menu.MenuMain;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.conversation.TitleInput;
+import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
@@ -32,14 +33,16 @@ import java.util.List;
 public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	private final Shop shop;
+	private final String keyword;
 	private final Button searchButton;
+	private final Button cartButton;
 	private final Button backButton;
 
 	public MenuShopContentList(@NonNull final Shop shop, final String keyword) {
 		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems());
 		this.shop = shop;
+		this.keyword = keyword;
 		setTitle(keyword != null ? this.shop.getDisplayName() + "&f: &7" + keyword : this.shop.getDisplayName());
-		setSize(9 * 6);
 		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").clearLore().make());
 		setAsyncFill();
 
@@ -58,14 +61,15 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 			}
 		});
 
+		this.cartButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.ShopContent.CART_BUTTON_MATERIAL).get())
+				.name(Localization.ShopContentMenu.CART_BUTTON_NAME)
+				.lore(Localization.ShopContentMenu.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
+
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
 				.lore(Localization.Menus.BackButton.LORE), player -> new MenuMain().displayTo(player));
-	}
-
-	public MenuShopContentList(@NonNull final Shop shop) {
-		this(shop, null);
 	}
 
 	@Override
@@ -78,6 +82,9 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 		if ((Settings.Menus.ShopContent.SEARCH_BUTTON_SLOT == -1 && slot == getSize() - 9) || (Settings.Menus.ShopContent.SEARCH_BUTTON_SLOT == -2 && slot == getSize() - 1) || slot == Settings.Menus.ShopContent.SEARCH_BUTTON_SLOT)
 			return this.searchButton.getItem();
+
+		if (slot == getSize() - 9 + Settings.Menus.ShopContent.CART_BUTTON_SLOT)
+			return this.cartButton.getItem();
 
 		return super.getItemAt(slot);
 	}
@@ -128,5 +135,10 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 				.replace("{shop_item_qty}", String.valueOf(shopItem.getPurchaseQuantity()))
 				.replace("{shop_item_buy_cost}", String.valueOf(shopItem.getBuyPrice()))
 				.replace("{shop_item_sell_cost}", String.valueOf(shopItem.getSellPrice()));
+	}
+
+	@Override
+	public Menu newInstance() {
+		return new MenuShopContentList(this.shop, this.keyword);
 	}
 }
