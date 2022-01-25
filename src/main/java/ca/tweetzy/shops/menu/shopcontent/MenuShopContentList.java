@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,23 +92,23 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	@Override
 	protected ItemStack convertToItemStack(ShopItem item) {
-		final List<String> lore = item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLoreFormat.LIMITED : Localization.ShopContentMenu.ShopItemLoreFormat.UNLIMITED;
-
-		if (item.getDescription().isEmpty())
-			lore.remove("{item_description}");
-		else {
-			int descIndex = lore.indexOf("{item_description}");
-			if (descIndex != -1) {
-				lore.remove("{item_description}");
-				lore.addAll(descIndex, item.getDescription());
-			}
-		}
+		final List<String> lore = new ArrayList<>(item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLoreFormat.LIMITED : Localization.ShopContentMenu.ShopItemLoreFormat.UNLIMITED);
 
 		if (!item.canBeBought())
 			lore.remove("{buy}");
 
 		if (!item.canBeSold())
 			lore.remove("{sell}");
+
+		if (item.getDescription().isEmpty()) {
+			lore.remove("{item_description}");
+		} else {
+			int descIndex = lore.indexOf("{item_description}");
+			if (descIndex != -1) {
+				lore.remove("{item_description}");
+				lore.addAll(descIndex, item.getDescription());
+			}
+		}
 
 		return ItemCreator
 				.of(item.getItem())

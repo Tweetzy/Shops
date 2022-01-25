@@ -8,6 +8,7 @@ import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.model.PlayerHand;
 import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -73,6 +74,7 @@ public final class CommandAddItem extends AbstractSubCommand {
 
 			shop.getShopItems().add(shopItem);
 			Shops.getPriceMapManager().addPriceMap(new PriceMap(hand.clone(), shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+			ShopsData.getInstance().saveAll();
 		}
 	}
 }
