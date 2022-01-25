@@ -81,6 +81,7 @@ public final class MenuAddShopItem extends Menu {
 						if (cursorItem.getType() == CompMaterial.AIR.toMaterial()) return;
 
 						MenuAddShopItem.this.shopItem.setItem(cursorItem);
+						MenuAddShopItem.this.shopItem.setPurchaseQuantity(cursorItem.getAmount());
 						newInstance().displayTo(player);
 					}
 				}

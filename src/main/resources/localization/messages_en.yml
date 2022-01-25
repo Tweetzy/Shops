@@ -66,6 +66,7 @@ Error:
   Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
   Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
   Not A Number: "&4{value}&c is not a valid number"
+  Air: "&cYou cannot add air to a shop..."
 
 Prompt:
   Item Search:

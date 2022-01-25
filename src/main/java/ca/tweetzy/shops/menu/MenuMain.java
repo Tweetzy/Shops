@@ -32,6 +32,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 	private Map<Integer, Shop> manualShopSpots = null;
 	private List<Button> manualShopButtons = null;
 
+	private final Button cartButton;
 	private final Button searchButton;
 
 	public MenuMain() {
@@ -52,6 +53,11 @@ public final class MenuMain extends MenuPagged<Shop> {
 				}
 			});
 		}
+
+		this.cartButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.Main.CART_BUTTON_MATERIAL).get())
+				.name(Localization.Menus.Main.CART_BUTTON_NAME)
+				.lore(Localization.Menus.Main.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
 
 		this.searchButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.SEARCH_BUTTON_MATERIAL).get())
@@ -95,6 +101,9 @@ public final class MenuMain extends MenuPagged<Shop> {
 	public ItemStack getItemAt(int slot) {
 		if ((Settings.Menus.Main.SEARCH_BUTTON_SLOT == -1 && slot == getSize() - 9) || (Settings.Menus.Main.SEARCH_BUTTON_SLOT == -2 && slot == getSize() - 1) || slot == Settings.Menus.Main.SEARCH_BUTTON_SLOT)
 			return this.searchButton.getItem();
+
+		if (slot == getSize() - 9 + Settings.Menus.Main.CART_BUTTON_SLOT)
+			return this.cartButton.getItem();
 
 		if (slot == getPreviousButtonPosition() || slot == getNextButtonPosition())
 			return super.getItemAt(slot);
