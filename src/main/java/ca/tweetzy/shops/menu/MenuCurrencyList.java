@@ -27,18 +27,20 @@ public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
+	private final boolean editing;
 	private final Button backButton;
 
-	public MenuCurrencyList(@NonNull final Shop shop, final ShopItem shopItem) {
+	public MenuCurrencyList(@NonNull final Shop shop, final ShopItem shopItem, final boolean editing) {
 		super(Shops.getCurrencyManager().getCurrencies());
 		setTitle("&e" + shop.getId() + " &8> &eSelect Currency");
 		this.shop = shop;
 		this.shopItem = shopItem;
+		this.editing = editing;
 		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> {
 			if (shopItem == null)
 				new MenuShopEdit(this.shop).displayTo(player);
 			else
-				new MenuAddShopItem(this.shop, this.shopItem).displayTo(player);
+				new MenuAddShopItem(this.shop, this.shopItem, this.editing).displayTo(player);
 
 		});
 	}
@@ -73,12 +75,12 @@ public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 			new MenuShopEdit(this.shop).displayTo(player);
 		} else {
 			this.shopItem.setCurrency(currency);
-			new MenuAddShopItem(this.shop, this.shopItem).displayTo(player);
+			new MenuAddShopItem(this.shop, this.shopItem, this.editing).displayTo(player);
 		}
 	}
 
 	@Override
 	public Menu newInstance() {
-		return new MenuCurrencyList(this.shop, this.shopItem);
+		return new MenuCurrencyList(this.shop, this.shopItem, this.editing);
 	}
 }

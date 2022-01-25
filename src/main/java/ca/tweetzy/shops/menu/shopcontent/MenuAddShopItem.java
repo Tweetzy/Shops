@@ -262,8 +262,8 @@ public final class MenuAddShopItem extends Menu {
 			}
 		});
 
-		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, this.shopItem), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shopItem.getCurrency().getPluginName() + "&7/&e" + shopItem.getCurrency().getName(), "", "&eClick &7to edit currency"));
-		this.refillButton = new ButtonMenu(new MenuRefillTimeList(this.shop, this.shopItem), ItemCreator.of(CompMaterial.CLOCK, "&eRefill Times").lore("", "&eClick &7to edit refill times"));
+		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, this.shopItem, this.editing), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shopItem.getCurrency().getPluginName() + "&7/&e" + shopItem.getCurrency().getName(), "", "&eClick &7to edit currency"));
+		this.refillButton = new ButtonMenu(new MenuRefillTimeList(this.shop, this.shopItem, this.editing), ItemCreator.of(CompMaterial.CLOCK, "&eRefill Times").lore("", "&eClick &7to edit refill times"));
 
 		this.stockButton = new Button() {
 			@Override
@@ -293,7 +293,7 @@ public final class MenuAddShopItem extends Menu {
 			}
 		};
 
-		this.commandsButton = new ButtonMenu(new MenuShopItemCommands(this.shop, this.shopItem), ItemCreator.of(CompMaterial.WRITABLE_BOOK, "&eCommands").lore("", "&eClick &7to edit commands"));
+		this.commandsButton = new ButtonMenu(new MenuShopItemCommands(this.shop, this.shopItem, this.editing), ItemCreator.of(CompMaterial.WRITABLE_BOOK, "&eCommands").lore("", "&eClick &7to edit commands"));
 
 		final List<String> itemDesc = new ArrayList<>();
 		itemDesc.add("");
@@ -302,7 +302,7 @@ public final class MenuAddShopItem extends Menu {
 		itemDesc.add("");
 		itemDesc.add("&eClick &7to adjust description");
 
-		this.descriptionButton = new ButtonMenu(new MenuShopItemDesc(this.shop, this.shopItem), ItemCreator.of(CompMaterial.PAPER).name("&EDescription").lore(itemDesc));
+		this.descriptionButton = new ButtonMenu(new MenuShopItemDesc(this.shop, this.shopItem, this.editing), ItemCreator.of(CompMaterial.PAPER).name("&EDescription").lore(itemDesc));
 
 		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", this.editing ? "&eClick &7to update item" : "&eClick &7to add item to shop"), player -> {
 			if (!this.editing) {
@@ -378,6 +378,6 @@ public final class MenuAddShopItem extends Menu {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuAddShopItem(this.shop, this.shopItem);
+		return new MenuAddShopItem(this.shop, this.shopItem, this.editing);
 	}
 }

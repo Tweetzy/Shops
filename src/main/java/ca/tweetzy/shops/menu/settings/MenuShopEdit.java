@@ -69,7 +69,7 @@ public final class MenuShopEdit extends Menu {
 		});
 
 		this.itemsButton = new ButtonMenu(new MenuShopContentEdit(this.shop), ItemCreator.of(CompMaterial.CHEST).name("&eItems").lore("&eClick &7to edit items"));
-		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, null), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
+		this.currencyButton = new ButtonMenu(new MenuCurrencyList(this.shop, null, false), ItemCreator.of(CompMaterial.GOLD_INGOT).name("&eCurrency").lore("", "&e" + shop.getCurrency().getPluginName() + "&7/&e" + shop.getCurrency().getName(), "", "&eClick &7to edit currency"));
 		this.settingsButton = new ButtonMenu(new MenuShopSettings(this.shop), ItemCreator.of(CompMaterial.REPEATER).name("&eSettings").lore("&eClick &7to view more settings"));
 		this.backButton = new ButtonMenu(new MenuShopList(ShopListType.EDIT), ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"));
 	}

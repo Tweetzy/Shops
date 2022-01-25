@@ -10,6 +10,8 @@ Menus:
     Search Button:
       Slot: -2
       Material: COMPASS
+    Cart Button:
+      Slot:
 
   Shop Content:
     Search Button:

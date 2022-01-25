@@ -33,6 +33,7 @@ public final class MenuNewRefillTime extends Menu {
 	private final Shop shop;
 	private final ShopItem shopItem;
 	private final RefillTime refillTime;
+	private final boolean editing;
 
 	private final Button dayButton;
 	private final Button hourButton;
@@ -42,14 +43,15 @@ public final class MenuNewRefillTime extends Menu {
 	private final Button backButton;
 	private final Button confirmButton;
 
-	public MenuNewRefillTime(@NonNull final Shop shop, @NonNull final ShopItem shopItem, @NonNull final RefillTime refillTime) {
+	public MenuNewRefillTime(@NonNull final Shop shop, @NonNull final ShopItem shopItem, @NonNull final RefillTime refillTime, final boolean editing) {
 		this.shop = shop;
 		this.shopItem = shopItem;
 		this.refillTime = refillTime;
+		this.editing = editing;
 		setTitle("&e" + shop.getId() + " &8> &eNew Refill");
 		setSize(9 * 5);
 
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuRefillTimeList(this.shop, this.shopItem).displayTo(player));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuRefillTimeList(this.shop, this.shopItem, this.editing).displayTo(player));
 
 		this.dayButton = new Button() {
 			@Override
@@ -145,7 +147,7 @@ public final class MenuNewRefillTime extends Menu {
 				.lore("", "&eRefills&f: &b" + ItemUtil.bountifyCapitalized(this.refillTime.getDay()) + " " + this.refillTime.getHour() + ":" + this.refillTime.getMinute() + " " + this.refillTime.getTimePeriod(), "", "&eClick &7to add refill time"), player -> {
 
 			this.shopItem.getRefillTimes().add(this.refillTime);
-			new MenuRefillTimeList(this.shop, this.shopItem).displayTo(player);
+			new MenuRefillTimeList(this.shop, this.shopItem, this.editing).displayTo(player);
 		});
 	}
 
@@ -174,6 +176,6 @@ public final class MenuNewRefillTime extends Menu {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuNewRefillTime(this.shop, this.shopItem, this.refillTime);
+		return new MenuNewRefillTime(this.shop, this.shopItem, this.refillTime, this.editing);
 	}
 }

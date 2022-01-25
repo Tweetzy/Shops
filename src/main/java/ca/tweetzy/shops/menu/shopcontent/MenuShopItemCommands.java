@@ -26,14 +26,16 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
+	private final boolean editing;
 
 	private final Button addCommandButton;
 	private final Button backButton;
 
-	public MenuShopItemCommands(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
+	public MenuShopItemCommands(@NonNull final Shop shop, @NonNull final ShopItem shopItem, final boolean editing) {
 		super(shopItem.getCommands());
 		this.shop = shop;
 		this.shopItem = shopItem;
+		this.editing = editing;
 		setTitle("&e" + shop.getId() + " &8> &eItem Commands");
 
 		this.addCommandButton = Button.makeSimple(ItemCreator.of(CompMaterial.SLIME_BALL, "&E&lAdd Command", "", "&eClick &7to add a new command"), player -> new TitleInput(player, "&eShop Item Edit", "&7Enter new command") {
@@ -49,7 +51,7 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 			}
 		});
 
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem).displayTo(player));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem, this.editing).displayTo(player));
 	}
 
 	@Override
@@ -85,6 +87,6 @@ public final class MenuShopItemCommands extends MenuPagged<String> {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuShopItemCommands(this.shop, this.shopItem);
+		return new MenuShopItemCommands(this.shop, this.shopItem, this.editing);
 	}
 }

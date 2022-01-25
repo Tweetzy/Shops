@@ -26,14 +26,16 @@ public final class MenuShopItemDesc extends MenuPagged<String> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
+	private final boolean editing;
 
 	private final Button addLineButton;
 	private final Button backButton;
 
-	public MenuShopItemDesc(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
+	public MenuShopItemDesc(@NonNull final Shop shop, @NonNull final ShopItem shopItem, final boolean editing) {
 		super(shopItem.getDescription());
 		this.shop = shop;
 		this.shopItem = shopItem;
+		this.editing = editing;
 		setTitle("&e" + shop.getId() + " &8> &eItem Desc");
 
 		this.addLineButton = Button.makeSimple(ItemCreator.of(CompMaterial.SLIME_BALL, "&E&lAdd Line", "", "&eClick &7to add a new lore line"), player -> new TitleInput(player, "&eShop Item Edit", "&7Enter new desc line") {
@@ -49,7 +51,7 @@ public final class MenuShopItemDesc extends MenuPagged<String> {
 			}
 		});
 
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem).displayTo(player));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem, this.editing).displayTo(player));
 	}
 
 	@Override
@@ -85,6 +87,6 @@ public final class MenuShopItemDesc extends MenuPagged<String> {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuShopItemDesc(this.shop, this.shopItem);
+		return new MenuShopItemDesc(this.shop, this.shopItem, this.editing);
 	}
 }

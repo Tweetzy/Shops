@@ -31,18 +31,20 @@ public final class MenuRefillTimeList extends MenuPagged<RefillTime> {
 
 	private final Shop shop;
 	private final ShopItem shopItem;
+	private final boolean editing;
 
 	private final Button addButton;
 	private final Button backButton;
 
-	public MenuRefillTimeList(@Nonnull final Shop shop, @NonNull final ShopItem shopItem) {
+	public MenuRefillTimeList(@Nonnull final Shop shop, @NonNull final ShopItem shopItem, final boolean editing) {
 		super(shopItem.getRefillTimes());
 		this.shop = shop;
 		this.shopItem = shopItem;
+		this.editing = editing;
 		setTitle("&e" + shop.getId() + " &8> &eRefills");
 
-		this.addButton = new ButtonMenu(new MenuNewRefillTime(this.shop, this.shopItem, new RefillTime()), ItemCreator.of(CompMaterial.SLIME_BALL, "&a&lAdd Refill Time", "", "&eClick &7to add new refill time"));
-		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem).displayTo(player));
+		this.addButton = new ButtonMenu(new MenuNewRefillTime(this.shop, this.shopItem, new RefillTime(), this.editing), ItemCreator.of(CompMaterial.SLIME_BALL, "&a&lAdd Refill Time", "", "&eClick &7to add new refill time"));
+		this.backButton = Button.makeSimple(ItemCreator.of(CompMaterial.IRON_DOOR).name("&eBack").lore("&eClick &7to exit/go back"), player -> new MenuAddShopItem(this.shop, this.shopItem, this.editing).displayTo(player));
 	}
 
 	@Override
@@ -91,6 +93,6 @@ public final class MenuRefillTimeList extends MenuPagged<RefillTime> {
 
 	@Override
 	public Menu newInstance() {
-		return new MenuRefillTimeList(this.shop, this.shopItem);
+		return new MenuRefillTimeList(this.shop, this.shopItem, this.editing);
 	}
 }
