@@ -5,10 +5,7 @@ import ca.tweetzy.shops.api.Inflector;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
-import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.impl.ShopDisplay;
-import ca.tweetzy.shops.impl.ShopSettings;
-import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.model.ItemInspect;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.collection.StrictList;
@@ -94,8 +91,8 @@ public class ShopManager extends Manager<Collection<Shop>> {
 	}
 
 
-	public List<IShopItem> filterShopItems(@NonNull final Shop shop, @NonNull final String keyword) {
-		final List<IShopItem> originalShopItems = shop.getShopItems();
+	public List<ShopItem> filterShopItems(@NonNull final Shop shop, @NonNull final String keyword) {
+		final List<ShopItem> originalShopItems = shop.getShopItems();
 		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).collect(Collectors.toList());
 	}
 

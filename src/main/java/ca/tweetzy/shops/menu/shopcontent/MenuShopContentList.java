@@ -4,6 +4,7 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.MenuMain;
 import ca.tweetzy.shops.settings.Localization;
@@ -28,7 +29,7 @@ import java.util.List;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 
-public final class MenuShopContentList extends MenuPagged<IShopItem> {
+public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	private final Shop shop;
 	private final Button searchButton;
@@ -82,7 +83,7 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 	}
 
 	@Override
-	protected ItemStack convertToItemStack(IShopItem item) {
+	protected ItemStack convertToItemStack(ShopItem item) {
 		final List<String> lore = item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLoreFormat.LIMITED : Localization.ShopContentMenu.ShopItemLoreFormat.UNLIMITED;
 
 		if (item.getDescription().isEmpty())
@@ -113,7 +114,7 @@ public final class MenuShopContentList extends MenuPagged<IShopItem> {
 	}
 
 	@Override
-	protected void onPageClick(Player player, IShopItem item, ClickType click) {
+	protected void onPageClick(Player player, ShopItem item, ClickType click) {
 
 	}
 

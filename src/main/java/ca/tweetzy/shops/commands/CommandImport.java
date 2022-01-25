@@ -10,7 +10,6 @@ import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.FileUtil;
-import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
@@ -60,14 +59,14 @@ public final class CommandImport extends AbstractSubCommand {
 				final ConfigurationSection shopSection = configurationSection.getConfigurationSection(shopId);
 				if (shopSection == null) return;
 				final ConfigurationSection shopItemsSection = shopSection.getConfigurationSection("items");
-				final List<IShopItem> shopItems = new ArrayList<>();
+				final List<ShopItem> shopItems = new ArrayList<>();
 
 				if (shopItemsSection != null) {
 					shopItemsSection.getKeys(false).forEach(node -> {
 						final ConfigurationSection shopItemSection = shopItemsSection.getConfigurationSection(node);
 						final ItemStack item = shopItemSection.getItemStack("item");
 
-						final ShopItem shopItem = new ShopItem(
+						final ca.tweetzy.shops.impl.ShopItem shopItem = new ca.tweetzy.shops.impl.ShopItem(
 								item,
 								ShopItemType.ITEM,
 								ShopItemQuantityType.UNLIMITED,

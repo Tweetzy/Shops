@@ -2,6 +2,7 @@ package ca.tweetzy.shops.api.interfaces.shop;
 
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.impl.ShopDisplay;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.impl.ShopSettings;
 import ca.tweetzy.shops.impl.SmartItem;
 import lombok.NonNull;
@@ -96,7 +97,7 @@ public interface IShop {
 	/**
 	 * Get the items the shop contains
 	 *
-	 * @return a list of the shop {@link IShopItem}
+	 * @return a list of the shop {@link ShopItem}
 	 */
-	@NonNull List<IShopItem> getShopItems();
+	@NonNull List<ShopItem> getShopItems();
 }

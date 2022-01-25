@@ -56,11 +56,17 @@ public final class MenuAddShopItem extends Menu {
 	private final Button confirmButton;
 
 	private boolean selectingFromInventory;
+	private boolean editing;
 
 	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem) {
+		this(shop, shopItem, false);
+	}
+
+	public MenuAddShopItem(@NonNull final Shop shop, @NonNull final ShopItem shopItem, final boolean editing) {
 		this.shop = shop;
 		this.shopItem = shopItem;
 		this.selectingFromInventory = false;
+		this.editing = editing;
 		setTitle("&e" + shop.getId() + " &8> &eAdd Item");
 		setSize(9 * 6);
 
@@ -298,9 +304,12 @@ public final class MenuAddShopItem extends Menu {
 
 		this.descriptionButton = new ButtonMenu(new MenuShopItemDesc(this.shop, this.shopItem), ItemCreator.of(CompMaterial.PAPER).name("&EDescription").lore(itemDesc));
 
-		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", "&eClick &7to add item to shop"), player -> {
-			this.shop.getShopItems().add(this.shopItem);
-			Shops.getPriceMapManager().addPriceMap(new PriceMap(this.shopItem.getItem().clone(), this.shopItem.getBuyPrice(), this.shopItem.getSellPrice(), this.shopItem.getCurrency()));
+		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", this.editing ? "&eClick &7to update item" : "&eClick &7to add item to shop"), player -> {
+			if (!this.editing) {
+				this.shop.getShopItems().add(this.shopItem);
+				Shops.getPriceMapManager().addPriceMap(new PriceMap(this.shopItem.getItem().clone(), this.shopItem.getBuyPrice(), this.shopItem.getSellPrice(), this.shopItem.getCurrency()));
+			}
+
 			ShopsData.getInstance().saveAll();
 			new MenuShopContentEdit(this.shop).displayTo(player);
 		});

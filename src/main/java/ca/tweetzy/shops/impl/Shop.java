@@ -30,7 +30,7 @@ public final class Shop implements IShop, ConfigSerializable {
 	private ShopCurrency currency;
 	private ShopDisplay display;
 	private ShopSettings settings;
-	private List<IShopItem> items;
+	private List<ShopItem> items;
 
 	public static Shop empty() {
 		return new Shop("shops-plugin-empty-placeholder", new SmartItem(""), "", "", Shops.getCurrencyManager().getCurrency("Vault"), ShopDisplay.empty(), ShopSettings.empty(), Collections.emptyList());
@@ -92,7 +92,7 @@ public final class Shop implements IShop, ConfigSerializable {
 	}
 
 	@Override
-	public @NonNull List<IShopItem> getShopItems() {
+	public @NonNull List<ShopItem> getShopItems() {
 		return this.items;
 	}
 
@@ -121,7 +121,7 @@ public final class Shop implements IShop, ConfigSerializable {
 				currencyValues.getKey().equalsIgnoreCase("UltraEconomy") ? Shops.getCurrencyManager().getCurrency(currencyValues.getKey(), currencyValues.getValue()) : Shops.getCurrencyManager().getCurrency(currencyValues.getKey()),
 				map.get("display", ShopDisplay.class),
 				map.get("settings", ShopSettings.class),
-				new ArrayList<>(map.getList("items", ShopItem.class))
+				new ArrayList<>(map.getList("items", ca.tweetzy.shops.impl.ShopItem.class))
 		);
 	}
 }

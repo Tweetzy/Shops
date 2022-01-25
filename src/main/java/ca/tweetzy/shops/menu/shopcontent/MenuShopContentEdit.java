@@ -24,7 +24,7 @@ import java.util.List;
  * Time Created: 8:57 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
+public final class MenuShopContentEdit extends MenuPagged<ShopItem> {
 
 	private final Shop shop;
 
@@ -42,7 +42,7 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 			@Override
 			public void onClickedInMenu(Player player, Menu menu, ClickType click) {
 				if (click == ClickType.LEFT)
-					new MenuAddShopItem(MenuShopContentEdit.this.shop, new ShopItem()).displayTo(player);
+					new MenuAddShopItem(MenuShopContentEdit.this.shop, new ca.tweetzy.shops.impl.ShopItem()).displayTo(player);
 			}
 
 			@Override
@@ -65,7 +65,7 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 	}
 
 	@Override
-	protected ItemStack convertToItemStack(IShopItem shopItem) {
+	protected ItemStack convertToItemStack(ShopItem shopItem) {
 		final List<String> lore = new ArrayList<>();
 
 		lore.add("");
@@ -105,14 +105,16 @@ public final class MenuShopContentEdit extends MenuPagged<IShopItem> {
 	}
 
 	@Override
-	protected void onPageClick(Player player, IShopItem item, ClickType click) {
+	protected void onPageClick(Player player, ShopItem item, ClickType click) {
 		if (click == ClickType.DROP) {
 			this.shop.getShopItems().remove(item);
 			ShopsData.getInstance().save();
 			newInstance().displayTo(player);
-			return;
 		}
 
+		if (click == ClickType.LEFT) {
+			new MenuAddShopItem(this.shop, item, true).displayTo(player);
+		}
 	}
 
 	@Override
