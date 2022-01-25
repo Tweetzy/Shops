@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.menu.main;
+package ca.tweetzy.shops.menu;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopLayout;

@@ -1,6 +1,6 @@
 package ca.tweetzy.shops.commands;
 
-import ca.tweetzy.shops.menu.main.MenuMain;
+import ca.tweetzy.shops.menu.MenuMain;
 import ca.tweetzy.tweety.annotation.AutoRegister;
 import ca.tweetzy.tweety.command.SimpleCommandGroup;
 import lombok.AccessLevel;
