@@ -34,7 +34,7 @@ public final class PlayerPointsCurrency extends ShopCurrency {
 
 	@Override
 	public String getName() {
-		return "PlayerPoints";
+		return "Points";
 	}
 
 	@Override

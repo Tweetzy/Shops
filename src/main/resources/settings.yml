@@ -23,6 +23,45 @@ Menus:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
 
+  Buy Item:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Increment One: 1
+    Increment Two: 32
+    Increment Three: 64
+    Decrement One: 1
+    Decrement Two: 32
+    Decrement Three: 64
+
+    Cart Button:
+      Slot: 40
+      Material: MINECART
+    Sell Button:
+      Slot: 39
+      Material: RED_DYE
+    Buy Button:
+      Slot: 41
+      Material: LIME_DYE
+    Info Button:
+      Slot: 31
+      Material: NETHER_STAR
+    Increment Button One:
+      Slot: 16
+      Material: LIME_STAINED_GLASS_PANE
+    Increment Button Two:
+      Slot: 25
+      Material: LIME_STAINED_GLASS_PANE
+    Increment Button Three:
+      Slot: 34
+      Material: LIME_STAINED_GLASS_PANE
+    Decrement Button One:
+      Slot: 10
+      Material: RED_STAINED_GLASS_PANE
+    Decrement Button Two:
+      Slot: 19
+      Material: RED_STAINED_GLASS_PANE
+    Decrement Button Three:
+      Slot: 28
+      Material: RED_STAINED_GLASS_PANE
 
 # Should the main shop menu fill shop items dynamically?
 # Set this to false, if you want to manually place each shop into its slot
@@ -35,6 +74,9 @@ Dynamic Fill Main Menu: true
 # If you aren't using any refills (meaning all shops have unlimited items)
 # You can set this to -1 which disables the task entirely
 Shop Tick Task Speed: 20
+
+# Number format
+Number Format: "%,.2f"
 
 # -------------------------------------------------------------------------------------------------
 # The format used in the {timestamp} placeholder (google "Java timestamp format" for options).

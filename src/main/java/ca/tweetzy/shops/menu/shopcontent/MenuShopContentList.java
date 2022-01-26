@@ -3,9 +3,11 @@ package ca.tweetzy.shops.menu.shopcontent;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
+import ca.tweetzy.shops.impl.Checkout;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.menu.MenuItemPurchase;
 import ca.tweetzy.shops.menu.MenuMain;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
@@ -123,7 +125,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	@Override
 	protected void onPageClick(Player player, ShopItem item, ClickType click) {
-
+		new MenuItemPurchase(this.shop, item, new Checkout(this.shop, item, 1)).displayTo(player);
 	}
 
 	@Override

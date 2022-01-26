@@ -37,7 +37,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 
 	public MenuMain() {
 		super(Settings.DYNAMIC_FILL_MAIN_MENU ? Shops.getShopManager().getShops() : Shops.getShopManager().getEmptyPopulated());
-		setTitle(Localization.Menus.Main.TITLE);
+		setTitle(Localization.MainMenu.TITLE);
 
 		if (!Settings.DYNAMIC_FILL_MAIN_MENU) {
 			this.manualShopSpots = new HashMap<>();
@@ -56,13 +56,13 @@ public final class MenuMain extends MenuPagged<Shop> {
 
 		this.cartButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.CART_BUTTON_MATERIAL).get())
-				.name(Localization.Menus.Main.CART_BUTTON_NAME)
-				.lore(Localization.Menus.Main.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
+				.name(Localization.MainMenu.CART_BUTTON_NAME)
+				.lore(Localization.MainMenu.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
 
 		this.searchButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.SEARCH_BUTTON_MATERIAL).get())
-				.name(Localization.Menus.Main.SEARCH_BUTTON_NAME)
-				.lore(Localization.Menus.Main.SEARCH_BUTTON_LORE), player -> new TitleInput(player, Localization.Prompt.ITEM_SEARCH_TITLE, Localization.Prompt.ITEM_SEARCH_SUBTITLE) {
+				.name(Localization.MainMenu.SEARCH_BUTTON_NAME)
+				.lore(Localization.MainMenu.SEARCH_BUTTON_LORE), player -> new TitleInput(player, Localization.Prompt.ITEM_SEARCH_TITLE, Localization.Prompt.ITEM_SEARCH_SUBTITLE) {
 
 			@Override
 			public boolean onResult(String string) {

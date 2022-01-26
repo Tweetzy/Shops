@@ -84,27 +84,27 @@ public final class Localization extends SimpleLocalization {
 				LORE = getStringList("Lore");
 			}
 		}
+	}
 
-		public static final class Main {
+	public static final class MainMenu {
 
-			public static String TITLE;
+		public static String TITLE;
 
-			public static String SEARCH_BUTTON_NAME;
-			public static List<String> SEARCH_BUTTON_LORE;
+		public static String SEARCH_BUTTON_NAME;
+		public static List<String> SEARCH_BUTTON_LORE;
 
-			public static String CART_BUTTON_NAME;
-			public static List<String> CART_BUTTON_LORE;
+		public static String CART_BUTTON_NAME;
+		public static List<String> CART_BUTTON_LORE;
 
-			private static void init() {
-				pathPrefix("Menus.Main");
+		private static void init() {
+			pathPrefix("Menus.Main");
 
-				TITLE = getString("Title");
-				SEARCH_BUTTON_NAME = getString("Search Button.Name");
-				SEARCH_BUTTON_LORE = getStringList("Search Button.Lore");
+			TITLE = getString("Title");
+			SEARCH_BUTTON_NAME = getString("Search Button.Name");
+			SEARCH_BUTTON_LORE = getStringList("Search Button.Lore");
 
-				CART_BUTTON_NAME = getString("Cart Button.Name");
-				CART_BUTTON_LORE = getStringList("Cart Button.Lore");
-			}
+			CART_BUTTON_NAME = getString("Cart Button.Name");
+			CART_BUTTON_LORE = getStringList("Cart Button.Lore");
 		}
 	}
 
@@ -158,6 +158,91 @@ public final class Localization extends SimpleLocalization {
 
 				LIMITED = getStringList("Limited");
 				UNLIMITED = getStringList("Unlimited");
+			}
+		}
+	}
+
+	public static final class BuyItemMenu {
+
+		public static String TITLE;
+		
+		public static String CART_NAME;
+		public static List<String> CART_LORE;
+
+		public static String SELL_NAME;
+		public static List<String> SELL_LORE;
+
+		public static String BUY_NAME;
+		public static List<String> BUY_LORE;
+
+		public static String INFO_NAME;
+		public static List<String> INFO_LORE;
+
+		public static String INC_ONE_NAME;
+		public static List<String> INC_ONE_LORE;
+
+		public static String INC_TWO_NAME;
+		public static List<String> INC_TWO_LORE;
+
+		public static String INC_THREE_NAME;
+		public static List<String> INC_THREE_LORE;
+
+		public static String DECR_ONE_NAME;
+		public static List<String> DECR_ONE_LORE;
+
+		public static String DECR_TWO_NAME;
+		public static List<String> DECR_TWO_LORE;
+
+		public static String DECR_THREE_NAME;
+		public static List<String> DECR_THREE_LORE;
+		
+		private static void init() {
+			pathPrefix("Menus.Buy Item");
+
+			TITLE = getString("Title");
+
+			 CART_NAME = getString("Cart Button.Name");
+			 CART_LORE = getStringList("Cart Button.Lore");
+
+			 SELL_NAME = getString("Sell Button.Name");
+			 SELL_LORE = getStringList("Sell Button.Lore");
+
+			 BUY_NAME = getString("Buy Button.Name");
+			 BUY_LORE = getStringList("Buy Button.Lore");
+
+			 INFO_NAME = getString("Info Button.Name");
+			 INFO_LORE = getStringList("Info Button.Lore Format");
+
+			 INC_ONE_NAME = getString("Increment Button One.Name");
+			 INC_ONE_LORE = getStringList("Increment Button One.Lore");
+
+			 INC_TWO_NAME = getString("Increment Button Two.Name");
+			 INC_TWO_LORE = getStringList("Increment Button Two.Lore");
+
+			 INC_THREE_NAME = getString("Increment Button Three.Name");
+			 INC_THREE_LORE = getStringList("Increment Button Three.Lore");
+
+			 DECR_ONE_NAME = getString("Decrement Button One.Name");
+			 DECR_ONE_LORE = getStringList("Decrement Button One.Lore");
+
+			 DECR_TWO_NAME = getString("Decrement Button Two.Name");
+			 DECR_TWO_LORE = getStringList("Decrement Button Two.Lore");
+
+			 DECR_THREE_NAME = getString("Decrement Button Three.Name");
+			 DECR_THREE_LORE = getStringList("Decrement Button Three.Lore");
+		}
+
+
+		public static final class InfoLores {
+
+			public static String BUY_COST;
+			public static String SELL_COST;
+
+			private static void init() {
+				pathPrefix("Menus.Buy Item.Info Button.Lores");
+
+				BUY_COST = getString("Buy Cost");
+				SELL_COST = getString("Sell Cost");
 			}
 		}
 	}

@@ -7,4 +7,6 @@ package ca.tweetzy.shops.api.interfaces;
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
 public interface IShopPlayer {
+
+	// not really sure what I want to do with this yet
 }

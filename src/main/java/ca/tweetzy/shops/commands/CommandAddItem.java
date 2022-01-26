@@ -28,7 +28,7 @@ public final class CommandAddItem extends AbstractSubCommand {
 		super("additem");
 		setMinArguments(3);
 		setDescription("Used to add a new item to a shop");
-		setUsage("<shop> <buyPrice> <sellPrice> [--nosell] [--nobuy]");
+		setUsage("<shop> <buyPrice> <sellPrice> [-nosell] [-nobuy]");
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public final class CommandAddItem extends AbstractSubCommand {
 			final double buyPrice = findNumber(Double.class, 1, Localization.Error.NOT_A_NUMBER.replace("{value}", args[1]));
 			final double sellPrice = findNumber(Double.class, 2, Localization.Error.NOT_A_NUMBER.replace("{value}", args[2]));
 
-			final boolean allowSell = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("--nosell"));
-			final boolean allowBuy = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("--nobuy"));
+			final boolean allowSell = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-nosell"));
+			final boolean allowBuy = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-nobuy"));
 
 			final ItemStack hand = PlayerHand.get(player);
 			if (hand == null || hand.getType() == CompMaterial.AIR.toMaterial()) {

@@ -15,6 +15,60 @@ Menus:
       Lore:
         - "&bClick &7to view cart"
 
+  Buy Item:
+    Title: "{shop_displayname} &8> &eCheckout"
+    Cart Button:
+      Name: "&e&lAdd to cart"
+      Lore:
+        - "&bClick &7to add this to your cart"
+    Sell Button:
+      Name: "&eSell"
+      Lore:
+        - "&eClick &7to sell items in inventory"
+    Buy Button:
+      Name: "&eBuy"
+      Lore:
+        - "&eClick &7to purchase items"
+    Info Button:
+      Name: "&ePurchase Info"
+      Lores:
+        Buy Cost: "&7Cost to buy&f: &a{purchase_cost}"
+        Sell Cost: "&7Sells for&f: &a{sells_for}"
+      Lore Format:
+        - ""
+        - "&7Stack Size&F: &a{stack_size}"
+        - "&7Purchase Qty&f: &a{purchase_qty}"
+        - "&7Currency&f: &a{item_currency}"
+        - ""
+        - "&7Discount&f: &a{price_discount}&f%"
+        - ""
+        - "{buy_cost}" #if buy is disabled, this line is deleted
+        - "{sell_cost}" #if selling is disabled, this line is deleted
+    Increment Button One:
+      Name: "&a+{increment_one}"
+      Lore:
+        - "&eClick &7to add &e{increment_one}"
+    Increment Button Two:
+      Name: "&a+{increment_two}"
+      Lore:
+        - "&eClick &7to add &e{increment_two}"
+    Increment Button Three:
+      Name: "&a+{increment_three}"
+      Lore:
+        - "&eClick &7to add &e{increment_three}"
+    Decrement Button One:
+      Name: "&a-{decrement_one}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_one}"
+    Decrement Button Two:
+      Name: "&a-{decrement_two}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_two}"
+    Decrement Button Three:
+      Name: "&a-{decrement_three}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_three}"
+
   Shop Content:
     Shop Item Lores:
       Out Of Stock: "&7Stock&f: &cOut of Stock"
