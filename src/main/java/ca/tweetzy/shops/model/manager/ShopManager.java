@@ -12,6 +12,8 @@ import ca.tweetzy.tweety.collection.StrictList;
 import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,6 +105,35 @@ public class ShopManager extends Manager<Collection<Shop>> {
 				ItemInspect.match(phrase, ItemInspect.getItemLore(shopItem.getItem())) ||
 				ItemInspect.match(phrase, ItemInspect.getItemEnchantments(shopItem.getItem()));
 	}
+
+	public int getItemCountInPlayerInventory(@NonNull final Player player, @NonNull final ItemStack stack) {
+		int total = 0;
+		for (ItemStack item : player.getInventory().getContents()) {
+			if (item == null || !item.isSimilar(stack)) continue;
+			total += item.getAmount();
+		}
+		return total;
+	}
+
+	public void removeSpecificItemQuantityFromPlayer(@NonNull final Player player, @NonNull final ItemStack stack, final int amount) {
+		int i = amount;
+		for (int j = 0; j < player.getInventory().getSize(); j++) {
+			ItemStack item = player.getInventory().getItem(j);
+			if (item == null) continue;
+			if (!item.isSimilar(stack)) continue;
+
+			if (i >= item.getAmount()) {
+				player.getInventory().clear(j);
+				i -= item.getAmount();
+			} else if (i > 0) {
+				item.setAmount(item.getAmount() - i);
+				i = 0;
+			} else {
+				break;
+			}
+		}
+	}
+
 
 	@Override
 	public void load(Consumer<Collection<Shop>> data) {

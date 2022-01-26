@@ -8,10 +8,10 @@ import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.tweety.PlayerUtil;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
-import ca.tweetzy.tweety.model.HookManager;
 import ca.tweetzy.tweety.model.Replacer;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
@@ -19,7 +19,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The current file has been created by Kiran Hart
@@ -131,9 +133,15 @@ public final class MenuItemPurchase extends Menu {
 				.lore(Localization.BuyItemMenu.BUY_LORE), player -> {
 
 			if (ShopsEconomy.hasBalance(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice())) {
-				tell("You have enough money from " + this.shopItem.getCurrency().getName());
-			} else {
-				tell("You do not have enough money from " + this.shopItem.getCurrency().getName());
+				final List<ItemStack> items = new ArrayList<>();
+				for (int i = 0; i < this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity(); i++)
+					items.add(this.shopItem.getItem().clone());
+
+				final Map<Integer, ItemStack> itemsNotFitted = PlayerUtil.addItems(player.getInventory(), items);
+				if (itemsNotFitted.size() != 0) {
+					// if the purchase items could not fit into their inventory then give them an order item with contains the rest
+				}
+				
 			}
 		});
 

@@ -22,5 +22,6 @@ public interface ICheckout {
 	double calculateBuyPrice();
 
 	void incrementQty(final int amount);
+
 	void decrementQty(final int amount);
 }

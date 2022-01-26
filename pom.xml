@@ -37,15 +37,11 @@
             <id>rosewood-repo</id>
             <url>https://repo.rosewooddev.io/repository/public/</url>
         </repository>
+        <repository>
+            <id>maven-all</id>
+            <url>https://repo.mrivanplays.com/repository/maven-all/</url>
+        </repository>
     </repositories>
-
-    <!-- UNCOMMENT ONLY IF YOUR java.version IS SET TO JAVA 16 OR HIGHER. -->
-    <!--    <pluginRepositories>-->
-    <!--        <pluginRepository>-->
-    <!--            <id>maven-snapshots</id>-->
-    <!--            <url>https://repository.apache.org/content/repositories/snapshots/</url>-->
-    <!--        </pluginRepository>-->
-    <!--    </pluginRepositories>-->
 
     <dependencies>
         <dependency>
@@ -73,6 +69,12 @@
             <groupId>org.black_ixx</groupId>
             <artifactId>playerpoints</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.lokka30.treasury</groupId>
+            <artifactId>treasury-api-bukkit</artifactId>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
