@@ -279,6 +279,7 @@ public final class MenuAddShopItem extends Menu {
 						}
 
 						MenuAddShopItem.this.shopItem.setStock(Integer.parseInt(string));
+						MenuAddShopItem.this.shopItem.setCurrentStock(Integer.parseInt(string));
 						reopen(player);
 						return true;
 					}

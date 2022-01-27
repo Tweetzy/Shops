@@ -75,8 +75,18 @@ Dynamic Fill Main Menu: true
 # You can set this to -1 which disables the task entirely
 Shop Tick Task Speed: 20
 
+Order Package:
+  # If false, when a purchase cannot fit into the player's
+  # inventory it will be dropped onto the floor
+  Enabled: true
+  Material: CHEST
+
 # Number format
 Number Format: "%,.2f"
+
+# You can set it to 0 to disable tax, I'm just using 13%
+# as it's the tax % where I live
+Tax: 13.0
 
 # -------------------------------------------------------------------------------------------------
 # The format used in the {timestamp} placeholder (google "Java timestamp format" for options).

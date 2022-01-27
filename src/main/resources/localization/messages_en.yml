@@ -104,6 +104,17 @@ Menus:
       Lore:
         - "&bClick &7to view cart"
 
+Order Package:
+  Name: "&eOrder Package"
+  Lore:
+    - "&7Your recent purchase was too large"
+    - "&7to fit into your inventory, so it was"
+    - "&7packaged in this to be opened later."
+    - ""
+    - "&eClick &7to open package"
+    - "&c&oAny items that still cannot fill"
+    - "&c&owill be dropped on the floor!"
+
 Shop Creation:
   Enter ID:
     Title: "&eShop Creation &7(&f1&7/&f2&7)"
@@ -115,17 +126,32 @@ Shop Creation:
 Success:
   Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
   Shop Deleted: "&aDeleted shop with id&f: &b{shop_id}"
+  Money Remove:
+    # mainly for economies implementing vault where the currency symbol is $ or similar
+    Dollar Type: "&c&l- {currency_symbol}{value}"
+    # for any other named currency type, example player points -> points, ultra economy -> gems, etc
+    Other Type: "&c&l- {amount} {currency}"
+
+  Money Add:
+    # mainly for economies implementing vault where the currency symbol is $ or similar
+    Dollar Type: "&a&l+ {currency_symbol}{amount}"
+    # for any other named currency type, example player points -> points, ultra economy -> gems, etc
+    Other Type: "&a&l+ {amount} {currency}"
 
 Error:
   Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
   Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
   Not A Number: "&4{value}&c is not a valid number"
   Air: "&cYou cannot add air to a shop..."
+  Inventory Full: "&cPlease empty your inventory to make purchase"
+  No Money: "&cYou do not have enough money!"
 
 Prompt:
   Item Search:
     Title: "&7Item Search"
     Subtitle: "&fEnter keywords in chat"
+
+Currency Symbol: "$"
 
 # -------------------------------------------------------------------------------------------------
 # Do not change this value, otherwise it will corrupt your plugin installation!

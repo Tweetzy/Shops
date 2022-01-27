@@ -152,4 +152,8 @@ public interface IShopSettings {
 	 */
 	void setSellPermission(@NonNull final String permission);
 
+	double getDiscount();
+
+	void setDiscount(final double discount);
+
 }

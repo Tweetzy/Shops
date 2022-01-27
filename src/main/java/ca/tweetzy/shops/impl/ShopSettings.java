@@ -26,9 +26,10 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 	private String seePermission;
 	private String buyPermission;
 	private String sellPermission;
+	private double discount;
 
 	public static ShopSettings empty() {
-		return new ShopSettings(false, ShopState.BUY_AND_SELL, false, "", false, false, false, "", "", "");
+		return new ShopSettings(false, ShopState.BUY_AND_SELL, false, "", false, false, false, "", "", "", 0);
 	}
 
 	@Override
@@ -132,6 +133,16 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 	}
 
 	@Override
+	public double getDiscount() {
+		return this.discount;
+	}
+
+	@Override
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	@Override
 	public SerializedMap serialize() {
 		return SerializedMap.ofArray(
 				"public", this.isPublic,
@@ -143,7 +154,8 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 				"requires buy permission", this.requirePermissionToBuy,
 				"see permission", this.seePermission,
 				"buy permission", this.buyPermission,
-				"sell permission", this.sellPermission
+				"sell permission", this.sellPermission,
+				"discount", this.discount
 		);
 	}
 
@@ -158,7 +170,8 @@ public final class ShopSettings implements IShopSettings, ConfigSerializable {
 				map.getBoolean("requires buy permission"),
 				map.getString("see permission"),
 				map.getString("buy permission"),
-				map.getString("sell permission")
+				map.getString("sell permission"),
+				map.getDouble("discount", 0D)
 		);
 	}
 }

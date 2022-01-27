@@ -5,7 +5,6 @@ import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.enums.ShopLayout;
 import ca.tweetzy.shops.api.enums.ShopState;
-import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.Common;
@@ -96,7 +95,7 @@ public final class CommandImport extends AbstractSubCommand {
 						Shops.getCurrencyManager().getCurrency("Vault"),
 						new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(IntStream.rangeClosed(0, 44).boxed().collect(Collectors.toList())), new StrictMap<>(), -1, -1),
 						new ShopSettings(false, ShopState.BUY_AND_SELL, true, shopId, shopSection.getBoolean("needs see perm"), shopSection.getBoolean("needs sell perm"), shopSection.getBoolean("needs buy perm"),
-								shopSection.getString("see perm"), shopSection.getString("buy perm"), shopSection.getString("sell perm")),
+								shopSection.getString("see perm"), shopSection.getString("buy perm"), shopSection.getString("sell perm"), 0),
 						shopItems
 				);
 

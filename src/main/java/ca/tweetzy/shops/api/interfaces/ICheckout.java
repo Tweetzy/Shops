@@ -24,4 +24,6 @@ public interface ICheckout {
 	void incrementQty(final int amount);
 
 	void decrementQty(final int amount);
+
+	void setTotalQty(final int amount);
 }

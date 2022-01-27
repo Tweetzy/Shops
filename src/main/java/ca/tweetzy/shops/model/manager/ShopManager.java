@@ -14,7 +14,12 @@ import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -84,7 +89,7 @@ public class ShopManager extends Manager<Collection<Shop>> {
 				desc,
 				Shops.getCurrencyManager().getCurrency("Vault"),
 				new ShopDisplay(ShopLayout.AUTOMATIC, CompMaterial.BLACK_STAINED_GLASS_PANE, new StrictList<>(IntStream.rangeClosed(0, 44).boxed().collect(Collectors.toList())), new StrictMap<>(), -1, -1),
-				new ShopSettings(false, ShopState.BUY_AND_SELL, true, id, false, false, false, "shops.see." + id, "shops.buy." + id, "shops.sell." + id),
+				new ShopSettings(false, ShopState.BUY_AND_SELL, true, id, false, false, false, "shops.see." + id, "shops.buy." + id, "shops.sell." + id, 0),
 				new ArrayList<>()
 		);
 
@@ -134,6 +139,26 @@ public class ShopManager extends Manager<Collection<Shop>> {
 		}
 	}
 
+	public byte[] serializeItemStack(ItemStack item) {
+		try (ByteArrayOutputStream stream = new ByteArrayOutputStream(); BukkitObjectOutputStream bukkitStream = new BukkitObjectOutputStream(stream)) {
+			bukkitStream.writeObject(item);
+			return stream.toByteArray();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	public ItemStack deserializeItem(byte[] serializedItem) {
+		ItemStack stack = null;
+		try (BukkitObjectInputStream stream = new BukkitObjectInputStream(new ByteArrayInputStream(serializedItem))) {
+			stack = (ItemStack) stream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return stack;
+	}
 
 	@Override
 	public void load(Consumer<Collection<Shop>> data) {

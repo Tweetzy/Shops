@@ -3,7 +3,6 @@ package ca.tweetzy.shops.impl;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.ShopCurrency;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
-import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.tweety.collection.SerializedMap;
 import ca.tweetzy.tweety.model.ConfigSerializable;
 import ca.tweetzy.tweety.model.Tuple;

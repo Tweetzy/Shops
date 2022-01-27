@@ -1,10 +1,10 @@
 package ca.tweetzy.shops.menu;
 
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopState;
-import ca.tweetzy.shops.impl.Checkout;
-import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.impl.ShopItem;
-import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.impl.*;
+import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
@@ -19,7 +19,6 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,17 +131,48 @@ public final class MenuItemPurchase extends Menu {
 				.name(Localization.BuyItemMenu.BUY_NAME)
 				.lore(Localization.BuyItemMenu.BUY_LORE), player -> {
 
+			if (player.getInventory().firstEmpty() == -1) {
+				tell(Localization.Error.INVENTORY_FULL);
+				return;
+			}
+
+			if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
+				if (this.shopItem.getCurrentStock() <= 0) {
+					new MenuShopContentList(this.shop, null).displayTo(player);
+					return;
+				}
+
+				if ((this.shopItem.getCurrentStock() - this.checkout.getPurchaseQty() <= 0)) {
+					this.checkout.setTotalQty(this.shopItem.getCurrentStock());
+				}
+			}
+
 			if (ShopsEconomy.hasBalance(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice())) {
 				final List<ItemStack> items = new ArrayList<>();
 				for (int i = 0; i < this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity(); i++)
 					items.add(this.shopItem.getItem().clone());
 
-				final Map<Integer, ItemStack> itemsNotFitted = PlayerUtil.addItems(player.getInventory(), items);
-				if (itemsNotFitted.size() != 0) {
-					// if the purchase items could not fit into their inventory then give them an order item with contains the rest
+				if (Settings.ORDER_PACKAGE_ENABLED) {
+					final Map<Integer, ItemStack> itemsNotFitted = PlayerUtil.addItems(player.getInventory(), items);
+					if (!itemsNotFitted.isEmpty()) {
+						final ItemStack item = itemsNotFitted.values().stream().findFirst().orElse(null);
+						item.setAmount(item.getAmount() + this.shopItem.getPurchaseQuantity());
+						Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem(), this.shopItem.getPurchaseQuantity());
+						PlayerUtil.addItems(player.getInventory(), new OrderPackage(item).build());
+					}
+				} else {
+					PlayerUtil.addItemsOrDrop(player, items.toArray(new ItemStack[0]));
 				}
-				
+
+				if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
+					this.shopItem.setCurrentStock(this.shopItem.getCurrentStock() - this.checkout.getPurchaseQty());
+				}
+
+				ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice());
+				return;
 			}
+
+			tell(Localization.Error.NO_MONEY);
 		});
 
 		this.infoButton = new Button() {
@@ -169,7 +199,7 @@ public final class MenuItemPurchase extends Menu {
 								"stack_size", MenuItemPurchase.this.shopItem.getPurchaseQuantity(),
 								"purchase_qty", MenuItemPurchase.this.checkout.getPurchaseQty(),
 								"item_currency", MenuItemPurchase.this.shopItem.getCurrency().getName().equalsIgnoreCase("Vault") ? "$" : MenuItemPurchase.this.shopItem.getCurrency().getName(),
-								"price_discount", 0.0,
+								"price_discount", MenuItemPurchase.this.shop.getSettings().getDiscount(),
 								"buy_cost", Localization.BuyItemMenu.InfoLores.BUY_COST.replace("{purchase_cost}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateBuyPrice())),
 								"sell_cost", Localization.BuyItemMenu.InfoLores.SELL_COST.replace("{sells_for}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateSellPrice()))
 						))

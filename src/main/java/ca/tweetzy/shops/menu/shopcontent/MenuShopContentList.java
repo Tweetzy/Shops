@@ -115,7 +115,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 		return ItemCreator
 				.of(item.getItem())
 				.lore(Replacer.replaceArray(lore,
-						"stock_status", item.getStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK.replace("{shop_item_stock}", String.valueOf(item.getStock())),
+						"stock_status", item.getCurrentStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK.replace("{shop_item_stock}", String.valueOf(item.getStock())),
 						"buy", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.BUY, item),
 						"sell", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.SELL, item),
 						"view", Localization.ShopContentMenu.ShopItemLores.VIEW
@@ -125,6 +125,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	@Override
 	protected void onPageClick(Player player, ShopItem item, ClickType click) {
+		if (item.getQuantityType() == ShopItemQuantityType.LIMITED && item.getCurrentStock() <= 0) return;
 		new MenuItemPurchase(this.shop, item, new Checkout(this.shop, item, 1)).displayTo(player);
 	}
 

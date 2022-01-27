@@ -16,6 +16,10 @@ public final class Settings extends SimpleSettings {
 	public static Integer SHOP_TICK_TASK_SPEED;
 	public static String NUMBER_FORMAT;
 
+	public static Boolean ORDER_PACKAGE_ENABLED;
+	public static String ORDER_PACKAGE_MATERIAL;
+	public static Double TAX;
+
 	private static void init() {
 		pathPrefix(null);
 		PREFIX = getString("Prefix");
@@ -23,6 +27,10 @@ public final class Settings extends SimpleSettings {
 		DYNAMIC_FILL_MAIN_MENU = getBoolean("Dynamic Fill Main Menu");
 		SHOP_TICK_TASK_SPEED = getInteger("Shop Tick Task Speed");
 		NUMBER_FORMAT = getString("Number Format");
+		TAX = getDouble("Tax");
+
+		ORDER_PACKAGE_ENABLED = getBoolean("Order Package.Enabled");
+		ORDER_PACKAGE_MATERIAL = getString("Order Package.Material");
 	}
 
 	public static final class Menus {

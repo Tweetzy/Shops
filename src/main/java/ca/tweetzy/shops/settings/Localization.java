@@ -12,6 +12,27 @@ import java.util.List;
  */
 public final class Localization extends SimpleLocalization {
 
+	public static String CURRENCY_SYMBOL;
+
+	private static void init() {
+		pathPrefix(null);
+
+		CURRENCY_SYMBOL = getString("Currency Symbol");
+	}
+
+	public static final class OrderPackage {
+
+		public static String NAME;
+		public static List<String> LORE;
+
+		private static void init() {
+			pathPrefix("Order Package");
+			NAME = getString("Name");
+			LORE = getStringList("Lore");
+		}
+	}
+
+
 	public static final class Prompt {
 
 		public static String ITEM_SEARCH_TITLE;
@@ -48,6 +69,30 @@ public final class Localization extends SimpleLocalization {
 		public static String SHOP_CREATED;
 		public static String SHOP_DELETED;
 
+		public static final class MoneyRemove {
+
+			public static String DOLLAR_TYPE;
+			public static String OTHER_TYPE;
+
+			private static void init() {
+				pathPrefix("Success.Money Remove");
+				DOLLAR_TYPE = getString("Dollar Type");
+				OTHER_TYPE = getString("Other Type");
+			}
+		}
+
+		public static final class MoneyAdd {
+
+			public static String DOLLAR_TYPE;
+			public static String OTHER_TYPE;
+
+			private static void init() {
+				pathPrefix("Success.Money Add");
+				DOLLAR_TYPE = getString("Dollar Type");
+				OTHER_TYPE = getString("Other Type");
+			}
+		}
+
 		private static void init() {
 			pathPrefix("Success");
 			SHOP_CREATED = getString("Shop Created");
@@ -61,6 +106,8 @@ public final class Localization extends SimpleLocalization {
 		public static String SHOP_ID_TAKEN;
 		public static String NOT_A_NUMBER;
 		public static String AIR;
+		public static String INVENTORY_FULL;
+		public static String NO_MONEY;
 
 		private static void init() {
 			pathPrefix("Error");
@@ -68,6 +115,8 @@ public final class Localization extends SimpleLocalization {
 			SHOP_ID_TAKEN = getString("Shop ID Taken");
 			NOT_A_NUMBER = getString("Not A Number");
 			AIR = getString("Air");
+			INVENTORY_FULL = getString("Inventory Full");
+			NO_MONEY = getString("No Money");
 		}
 	}
 
@@ -165,7 +214,7 @@ public final class Localization extends SimpleLocalization {
 	public static final class BuyItemMenu {
 
 		public static String TITLE;
-		
+
 		public static String CART_NAME;
 		public static List<String> CART_LORE;
 
@@ -195,41 +244,41 @@ public final class Localization extends SimpleLocalization {
 
 		public static String DECR_THREE_NAME;
 		public static List<String> DECR_THREE_LORE;
-		
+
 		private static void init() {
 			pathPrefix("Menus.Buy Item");
 
 			TITLE = getString("Title");
 
-			 CART_NAME = getString("Cart Button.Name");
-			 CART_LORE = getStringList("Cart Button.Lore");
+			CART_NAME = getString("Cart Button.Name");
+			CART_LORE = getStringList("Cart Button.Lore");
 
-			 SELL_NAME = getString("Sell Button.Name");
-			 SELL_LORE = getStringList("Sell Button.Lore");
+			SELL_NAME = getString("Sell Button.Name");
+			SELL_LORE = getStringList("Sell Button.Lore");
 
-			 BUY_NAME = getString("Buy Button.Name");
-			 BUY_LORE = getStringList("Buy Button.Lore");
+			BUY_NAME = getString("Buy Button.Name");
+			BUY_LORE = getStringList("Buy Button.Lore");
 
-			 INFO_NAME = getString("Info Button.Name");
-			 INFO_LORE = getStringList("Info Button.Lore Format");
+			INFO_NAME = getString("Info Button.Name");
+			INFO_LORE = getStringList("Info Button.Lore Format");
 
-			 INC_ONE_NAME = getString("Increment Button One.Name");
-			 INC_ONE_LORE = getStringList("Increment Button One.Lore");
+			INC_ONE_NAME = getString("Increment Button One.Name");
+			INC_ONE_LORE = getStringList("Increment Button One.Lore");
 
-			 INC_TWO_NAME = getString("Increment Button Two.Name");
-			 INC_TWO_LORE = getStringList("Increment Button Two.Lore");
+			INC_TWO_NAME = getString("Increment Button Two.Name");
+			INC_TWO_LORE = getStringList("Increment Button Two.Lore");
 
-			 INC_THREE_NAME = getString("Increment Button Three.Name");
-			 INC_THREE_LORE = getStringList("Increment Button Three.Lore");
+			INC_THREE_NAME = getString("Increment Button Three.Name");
+			INC_THREE_LORE = getStringList("Increment Button Three.Lore");
 
-			 DECR_ONE_NAME = getString("Decrement Button One.Name");
-			 DECR_ONE_LORE = getStringList("Decrement Button One.Lore");
+			DECR_ONE_NAME = getString("Decrement Button One.Name");
+			DECR_ONE_LORE = getStringList("Decrement Button One.Lore");
 
-			 DECR_TWO_NAME = getString("Decrement Button Two.Name");
-			 DECR_TWO_LORE = getStringList("Decrement Button Two.Lore");
+			DECR_TWO_NAME = getString("Decrement Button Two.Name");
+			DECR_TWO_LORE = getStringList("Decrement Button Two.Lore");
 
-			 DECR_THREE_NAME = getString("Decrement Button Three.Name");
-			 DECR_THREE_LORE = getStringList("Decrement Button Three.Lore");
+			DECR_THREE_NAME = getString("Decrement Button Three.Name");
+			DECR_THREE_LORE = getStringList("Decrement Button Three.Lore");
 		}
 
 

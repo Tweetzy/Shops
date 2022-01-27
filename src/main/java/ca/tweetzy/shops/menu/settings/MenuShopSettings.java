@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu.settings;
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.settings.display.MenuShopDisplaySettings;
+import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.conversation.TitleInput;
 import ca.tweetzy.tweety.menu.Menu;
@@ -11,6 +12,7 @@ import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
+import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +37,7 @@ public final class MenuShopSettings extends Menu {
 	private final Button sellPermissionButton;
 	private final Button buyPermissionButton;
 	private final Button displaySettingsButton;
+	private final Button discountButton;
 
 	private final Button backButton;
 
@@ -85,6 +88,26 @@ public final class MenuShopSettings extends Menu {
 				return ItemCreator.of(CompMaterial.PAPER).name("&eState").lore(stateLore).make();
 			}
 		};
+
+		this.discountButton = Button.makeSimple(ItemCreator
+				.of(CompMaterial.ANVIL)
+				.name("&eDiscount")
+				.lore("", "&7Current&f: &e" + this.shop.getSettings().getDiscount(), "", "&eClick &7to change discount"), player -> new TitleInput(player, "&eShop Edit", "&7Enter new discount") {
+
+			@Override
+			public boolean onResult(String string) {
+				if (!NumberUtils.isNumber(string)) {
+					tell(Localization.Error.NOT_A_NUMBER.replace("{value}", string));
+					return false;
+				}
+
+				final double discount = Double.parseDouble(string);
+
+				MenuShopSettings.this.shop.getSettings().setDiscount(Math.min(Math.max(discount, 0D), 100D));
+				saveAndReopen(player);
+				return true;
+			}
+		});
 
 		this.openCommandButton = new Button() {
 			@Override
@@ -215,8 +238,11 @@ public final class MenuShopSettings extends Menu {
 		if (slot == 10)
 			return this.publicButton.getItem();
 
-		if (slot == 13)
+		if (slot == 12)
 			return this.stateButton.getItem();
+
+		if (slot == 14)
+			return this.discountButton.getItem();
 
 		if (slot == 16)
 			return this.openCommandButton.getItem();

@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.api.interfaces.ICheckout;
+import ca.tweetzy.shops.settings.Settings;
 import lombok.AllArgsConstructor;
 
 /**
@@ -42,12 +43,28 @@ public final class Checkout implements ICheckout {
 	}
 
 	@Override
+	public void setTotalQty(int amount) {
+		this.purchaseQty = amount;
+	}
+
+	@Override
 	public double calculateSellPrice() {
-		return this.purchaseQty * this.shopItem.getSellPrice();
+		return this.getTaxedSaleTotal();
 	}
 
 	@Override
 	public double calculateBuyPrice() {
-		return this.purchaseQty * this.shopItem.getBuyPrice();
+		final double discount = this.getTaxedBuyTotal() * (this.shop.getSettings().getDiscount() / 100D);
+		return this.getTaxedBuyTotal() - discount;
+	}
+
+	private double getTaxedBuyTotal() {
+		final double pre = this.purchaseQty * this.shopItem.getBuyPrice();
+		return ((Settings.TAX / 100D) * pre) + pre;
+	}
+
+	private double getTaxedSaleTotal() {
+		final double pre = this.purchaseQty * this.shopItem.getSellPrice();
+		return pre - ((Settings.TAX / 100D) * pre);
 	}
 }
