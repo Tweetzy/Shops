@@ -20,19 +20,6 @@ public final class Localization extends SimpleLocalization {
 		CURRENCY_SYMBOL = getString("Currency Symbol");
 	}
 
-	public static final class OrderPackage {
-
-		public static String NAME;
-		public static List<String> LORE;
-
-		private static void init() {
-			pathPrefix("Order Package");
-			NAME = getString("Name");
-			LORE = getStringList("Lore");
-		}
-	}
-
-
 	public static final class Prompt {
 
 		public static String ITEM_SEARCH_TITLE;
@@ -180,7 +167,6 @@ public final class Localization extends SimpleLocalization {
 
 			public static String OUT_OF_STOCK;
 			public static String IN_STOCK;
-			public static String REFILLS_IN;
 			public static String BUY;
 			public static String SELL;
 			public static String VIEW;
@@ -191,7 +177,6 @@ public final class Localization extends SimpleLocalization {
 
 				OUT_OF_STOCK = getString("Out Of Stock");
 				IN_STOCK = getString("In Stock");
-				REFILLS_IN = getString("Refill In");
 				BUY = getString("Buy");
 				SELL = getString("Sell");
 				VIEW = getString("View");
@@ -210,6 +195,44 @@ public final class Localization extends SimpleLocalization {
 				LIMITED = getStringList("Limited");
 				UNLIMITED = getStringList("Unlimited");
 			}
+		}
+	}
+
+	public static final class Cart {
+
+		public static String TITLE;
+		public static List<String> ITEM_LORE;
+
+		public static String EMPTY_BUTTON_NAME;
+		public static List<String> EMPTY_BUTTON_LORE;
+
+		public static String SELL_BUTTON_NAME;
+		public static List<String> SELL_BUTTON_LORE;
+
+		public static String BUY_BUTTON_NAME;
+		public static List<String> BUY_BUTTON_LORE;
+
+		public static String INFO_BUTTON_NAME;
+		public static List<String> INFO_BUTTON_LORE;
+
+		private static void init() {
+			pathPrefix("Menus.Cart");
+
+			TITLE = getString("Title");
+
+			ITEM_LORE = getStringList("Item Lore");
+
+			EMPTY_BUTTON_NAME = getString("Empty Button.Name");
+			EMPTY_BUTTON_LORE = getStringList("Empty Button.Lore");
+
+			SELL_BUTTON_NAME = getString("Sell Button.Name");
+			SELL_BUTTON_LORE = getStringList("Sell Button.Lore");
+
+			BUY_BUTTON_NAME = getString("Buy Button.Name");
+			BUY_BUTTON_LORE = getStringList("Buy Button.Lore");
+
+			INFO_BUTTON_NAME = getString("Info Button.Name");
+			INFO_BUTTON_LORE = getStringList("Info Button.Lore");
 		}
 	}
 

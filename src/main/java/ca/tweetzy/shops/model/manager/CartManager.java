@@ -2,7 +2,9 @@ package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.impl.Cart;
 import ca.tweetzy.shops.impl.Checkout;
+import ca.tweetzy.tweety.Common;
 import lombok.NonNull;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -22,12 +24,20 @@ public final class CartManager {
 			this.carts.put(player, new Cart());
 	}
 
-	public boolean addItemToCart(@NonNull final UUID player, @NonNull final Checkout checkout) {
-		this.createCart(player);
-		final Cart cart = this.getCart(player);
+	public boolean addItemToCart(@NonNull final Player player, @NonNull final Checkout checkout) {
+		this.createCart(player.getUniqueId());
+		final Cart cart = this.getCart(player.getUniqueId());
 
-		if (cart.getCartItems().contains(checkout)) return false;
-		if (cart.getCartItems().stream().anyMatch(items -> items.getShopItem().getCurrency() != checkout.getShopItem().getCurrency())) return false;
+		if (cart.getCartItems().contains(checkout)) {
+			Common.tell(player, "&cItem already in cart");
+			return false;
+		}
+
+		if (cart.getCartItems().stream().anyMatch(items -> items.getShopItem().getCurrency() != checkout.getShopItem().getCurrency())) {
+			Common.tell(player, "&cPlease checkout first before adding more cart items");
+
+			return false;
+		}
 
 		cart.getCartItems().add(checkout);
 		return true;
@@ -38,6 +48,6 @@ public final class CartManager {
 	}
 
 	public Cart getCart(@NonNull final UUID player) {
-		return this.carts.getOrDefault(player, null);
+		return this.carts.getOrDefault(player, new Cart());
 	}
 }

@@ -23,6 +23,21 @@ Menus:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
 
+  Cart:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Empty Button:
+      Slot: 8 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: HOPPER
+    Sell Button:
+      Slot: 39
+      Material: RED_DYE
+    Buy Button:
+      Slot: 41
+      Material: LIME_DYE
+    Info Button:
+      Slot: 31
+      Material: NETHER_STAR
+
   Buy Item:
     Background Item: BLACK_STAINED_GLASS_PANE
     Increment One: 1

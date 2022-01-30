@@ -54,12 +54,19 @@ public final class MenuItemPurchase extends Menu {
 	private final Button sellButton;
 	private final Button buyButton;
 
+	private final Button backButton;
+
 	public MenuItemPurchase(@NonNull final Shop shop, @NonNull final ShopItem shopItem, @NonNull final Checkout checkout) {
 		this.shop = shop;
 		this.shopItem = shopItem;
 		this.checkout = checkout;
 		setTitle(Localization.BuyItemMenu.TITLE.replace("{shop_displayname}", shop.getDisplayName()));
 		setSize(9 * 6);
+
+		this.backButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
+				.name(Localization.Menus.BackButton.NAME)
+				.lore(Localization.Menus.BackButton.LORE), player -> new MenuShopContentList(this.shop, null).displayTo(player));
 
 		this.shopItemButton = Button.makeDummy(this.shopItem.getItem());
 
@@ -122,6 +129,9 @@ public final class MenuItemPurchase extends Menu {
 				.name(Localization.BuyItemMenu.CART_NAME)
 				.lore(Localization.BuyItemMenu.CART_LORE), player -> {
 
+			if (Shops.getCartManager().addItemToCart(player, this.checkout)) {
+				new MenuCart(player).displayTo(player);
+			}
 		});
 
 		this.sellButton = Button.makeSimple(ItemCreator
@@ -249,7 +259,7 @@ public final class MenuItemPurchase extends Menu {
 						.lore(Replacer.replaceArray(lore,
 								"stack_size", MenuItemPurchase.this.shopItem.getPurchaseQuantity(),
 								"purchase_qty", MenuItemPurchase.this.checkout.getPurchaseQty(),
-								"item_currency", MenuItemPurchase.this.shopItem.getCurrency().getName().equalsIgnoreCase("Vault") ? "$" : MenuItemPurchase.this.shopItem.getCurrency().getName(),
+								"item_currency", MenuItemPurchase.this.shopItem.getCurrency().getName().equalsIgnoreCase("Vault") ? Localization.CURRENCY_SYMBOL : MenuItemPurchase.this.shopItem.getCurrency().getName(),
 								"price_discount", MenuItemPurchase.this.shop.getSettings().getDiscount(),
 								"buy_cost", Localization.BuyItemMenu.InfoLores.BUY_COST.replace("{purchase_cost}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateBuyPrice())),
 								"sell_cost", Localization.BuyItemMenu.InfoLores.SELL_COST.replace("{sells_for}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateSellPrice()))
@@ -261,6 +271,9 @@ public final class MenuItemPurchase extends Menu {
 
 	@Override
 	public ItemStack getItemAt(int slot) {
+		if ((Settings.Menus.BackButton.SLOT == -1 && slot == getSize() - 9) || (Settings.Menus.BackButton.SLOT == -2 && slot == getSize() - 1) || slot == Settings.Menus.BackButton.SLOT)
+			return this.backButton.getItem();
+
 		if (slot == 9 + 4)
 			return this.shopItemButton.getItem();
 

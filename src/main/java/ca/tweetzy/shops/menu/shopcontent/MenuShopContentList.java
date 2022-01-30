@@ -7,6 +7,7 @@ import ca.tweetzy.shops.impl.Checkout;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.menu.MenuCart;
 import ca.tweetzy.shops.menu.MenuItemPurchase;
 import ca.tweetzy.shops.menu.MenuMain;
 import ca.tweetzy.shops.settings.Localization;
@@ -67,7 +68,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 		this.cartButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.ShopContent.CART_BUTTON_MATERIAL).get())
 				.name(Localization.ShopContentMenu.CART_BUTTON_NAME)
-				.lore(Localization.ShopContentMenu.CART_BUTTON_LORE), player -> new MenuMain(player).displayTo(player)); // TODO DIRECT TO CART MENU
+				.lore(Localization.ShopContentMenu.CART_BUTTON_LORE), player -> new MenuCart(player).displayTo(player));
 
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())

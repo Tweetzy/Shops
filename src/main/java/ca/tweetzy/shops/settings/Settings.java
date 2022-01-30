@@ -87,6 +87,41 @@ public final class Settings extends SimpleSettings {
 			}
 		}
 
+		public static final class Cart {
+
+			public static String BACKGROUND_ITEM;
+
+			public static String EMPTY_BUTTON_MATERIAL;
+			public static Integer EMPTY_BUTTON_SLOT;
+
+			public static String SELL_BUTTON_MATERIAL;
+			public static Integer SELL_BUTTON_SLOT;
+
+			public static String BUY_BUTTON_MATERIAL;
+			public static Integer BUY_BUTTON_SLOT;
+
+			public static String INFO_BUTTON_MATERIAL;
+			public static Integer INFO_BUTTON_SLOT;
+
+
+			private static void init() {
+				pathPrefix("Menus.Cart");
+				BACKGROUND_ITEM = getString("Background Item");
+
+				EMPTY_BUTTON_MATERIAL = getString("Empty Button.Material");
+				EMPTY_BUTTON_SLOT = getInteger("Empty Button.Slot");
+
+				SELL_BUTTON_MATERIAL = getString("Sell Button.Material");
+				SELL_BUTTON_SLOT = getInteger("Sell Button.Slot");
+
+				BUY_BUTTON_MATERIAL = getString("Buy Button.Material");
+				BUY_BUTTON_SLOT = getInteger("Buy Button.Slot");
+
+				INFO_BUTTON_MATERIAL = getString("Info Button.Material");
+				INFO_BUTTON_SLOT = getInteger("Info Button.Slot");
+			}
+		}
+
 		public static final class BuyItem {
 
 			public static String BACKGROUND_ITEM;

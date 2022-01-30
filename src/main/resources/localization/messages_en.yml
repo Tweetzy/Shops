@@ -15,6 +15,40 @@ Menus:
       Lore:
         - "&bClick &7to view cart"
 
+  Cart:
+    Title: "&eCart"
+
+    Item Lore:
+      - ""
+      - "&7Quantity&f: &e{item_quantity}"
+      - "&7Sell Price&f: &e{item_sell_price}"
+      - "&7Buy Price&f: &e{item_buy_price}"
+      - ""
+      - "&eClick &7to remove from cart"
+
+    Empty Button:
+      Name: "&c&lEmpty"
+      Lore:
+        - "&bClick &7to empty your cart"
+    Sell Button:
+      Name: "&eSell"
+      Lore:
+        - "&eClick &7to sell items in inventory"
+    Buy Button:
+      Name: "&eBuy"
+      Lore:
+        - "&eClick &7to purchase items"
+    Info Button:
+      Name: "&ePurchase Info"
+      Lore:
+        - ""
+        - "&7Currency&f: &a{item_currency}"
+        - "&7Discount&f: &a{price_discount}&f%"
+        - ""
+        - "&7Cost to buy&f: &a{purchase_cost}"
+        - "&7Sells for&f: &a{sells_for}"
+
+
   Buy Item:
     Title: "{shop_displayname} &8> &eCheckout"
     Cart Button:
@@ -73,7 +107,6 @@ Menus:
     Shop Item Lores:
       Out Of Stock: "&7Stock&f: &cOut of Stock"
       In Stock: "&7Stock&f: &a{shop_item_stock}"
-      Refill In: "&7Restocks In&f: &a{refill_days}&f/&a{refill_hours}&f/&a{refill_minutes}&f/&a{refill_seconds}"
       Buy: "&7Buy x{shop_item_qty}&f: &a{shop_item_buy_cost}"
       Sell: "&7Sell x{shop_item_qty}&f: &a{shop_item_sell_cost}"
       View: "&bClick &7to &ebuy&f/&esell &7this item"
@@ -83,7 +116,6 @@ Menus:
         - "{item_description}"
         - ""
         - "{stock_status}"
-        - "{refills_in}" # only will shown if stock status is out of stock
         - ""
         - "{buy}" #if the item can be bought, it will be shown
         - "{sell}" #if the item can be sold, it will be shown
@@ -103,17 +135,6 @@ Menus:
       Name: "&e&lView Cart"
       Lore:
         - "&bClick &7to view cart"
-
-Order Package:
-  Name: "&eOrder Package"
-  Lore:
-    - "&7Your recent purchase was too large"
-    - "&7to fit into your inventory, so it was"
-    - "&7packaged in this to be opened later."
-    - ""
-    - "&eClick &7to open package"
-    - "&c&oAny items that still cannot fill"
-    - "&c&owill be dropped on the floor!"
 
 Shop Creation:
   Enter ID:

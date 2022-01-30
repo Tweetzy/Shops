@@ -62,7 +62,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 		this.cartButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.CART_BUTTON_MATERIAL).get())
 				.name(Localization.MainMenu.CART_BUTTON_NAME)
-				.lore(Localization.MainMenu.CART_BUTTON_LORE), player -> new MenuMain(player).displayTo(player)); // TODO DIRECT TO CART MENU
+				.lore(Localization.MainMenu.CART_BUTTON_LORE), player -> new MenuCart(player).displayTo(player));
 
 		this.searchButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.SEARCH_BUTTON_MATERIAL).get())
