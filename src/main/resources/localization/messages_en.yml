@@ -145,6 +145,7 @@ Error:
   Air: "&cYou cannot add air to a shop..."
   Inventory Full: "&cPlease empty your inventory to make purchase"
   No Money: "&cYou do not have enough money!"
+  No Items: "&cYou do not have any items to sell"
 
 Prompt:
   Item Search:

@@ -108,6 +108,7 @@ public final class Localization extends SimpleLocalization {
 		public static String AIR;
 		public static String INVENTORY_FULL;
 		public static String NO_MONEY;
+		public static String NO_ITEMS;
 
 		private static void init() {
 			pathPrefix("Error");
@@ -117,6 +118,7 @@ public final class Localization extends SimpleLocalization {
 			AIR = getString("Air");
 			INVENTORY_FULL = getString("Inventory Full");
 			NO_MONEY = getString("No Money");
+			NO_ITEMS = getString("No Items");
 		}
 	}
 
