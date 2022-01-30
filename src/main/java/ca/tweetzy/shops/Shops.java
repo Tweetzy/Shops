@@ -1,14 +1,17 @@
 package ca.tweetzy.shops;
 
+import ca.tweetzy.shops.api.ShopsPAPIExpansion;
 import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.model.manager.CurrencyManager;
 import ca.tweetzy.shops.model.manager.PriceMapManager;
 import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.shops.task.ShopsTask;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.Messenger;
 import ca.tweetzy.tweety.MinecraftVersion;
+import ca.tweetzy.tweety.model.HookManager;
 import ca.tweetzy.tweety.model.SpigotUpdater;
 import ca.tweetzy.tweety.plugin.TweetyPlugin;
 
@@ -35,6 +38,9 @@ public final class Shops extends TweetyPlugin {
 			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
 				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
 		}));
+
+		if (HookManager.isPlaceholderAPILoaded())
+			new ShopsPAPIExpansion().register();
 	}
 
 	@Override
@@ -55,6 +61,8 @@ public final class Shops extends TweetyPlugin {
 	protected void onPluginStop() {
 		if (this.shopsTask != null)
 			this.shopsTask.cancel();
+
+		ShopsData.getInstance().saveAll();
 	}
 
 	public static Shops getInstance() {
@@ -87,7 +95,6 @@ public final class Shops extends TweetyPlugin {
 	public SpigotUpdater getUpdateCheck() {
 		return super.getUpdateCheck();
 	}
-
 
 	private void normalizePrefix() {
 		Common.ADD_TELL_PREFIX = true;

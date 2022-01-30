@@ -9,9 +9,11 @@ import ca.tweetzy.shops.model.TextureResolver;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.conversation.TitleInput;
+import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -29,15 +31,18 @@ import java.util.Map;
  */
 public final class MenuMain extends MenuPagged<Shop> {
 
+	private final Player thePlayer;
+
 	private Map<Integer, Shop> manualShopSpots = null;
 	private List<Button> manualShopButtons = null;
 
 	private final Button cartButton;
 	private final Button searchButton;
 
-	public MenuMain() {
-		super(Settings.DYNAMIC_FILL_MAIN_MENU ? Shops.getShopManager().getShops() : Shops.getShopManager().getEmptyPopulated());
+	public MenuMain(@NonNull final Player thePlayer) {
+		super(Settings.DYNAMIC_FILL_MAIN_MENU ? Shops.getShopManager().getShops(thePlayer) : Shops.getShopManager().getEmptyPopulated());
 		setTitle(Localization.MainMenu.TITLE);
+		this.thePlayer = thePlayer;
 
 		if (!Settings.DYNAMIC_FILL_MAIN_MENU) {
 			this.manualShopSpots = new HashMap<>();
@@ -57,7 +62,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 		this.cartButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.CART_BUTTON_MATERIAL).get())
 				.name(Localization.MainMenu.CART_BUTTON_NAME)
-				.lore(Localization.MainMenu.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
+				.lore(Localization.MainMenu.CART_BUTTON_LORE), player -> new MenuMain(player).displayTo(player)); // TODO DIRECT TO CART MENU
 
 		this.searchButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.Main.SEARCH_BUTTON_MATERIAL).get())
@@ -121,5 +126,10 @@ public final class MenuMain extends MenuPagged<Shop> {
 	@Override
 	protected ItemStack backgroundItem() {
 		return ItemCreator.of(TextureResolver.resolve(Settings.Menus.Main.BACKGROUND_ITEM)).name(" ").make();
+	}
+
+	@Override
+	public Menu newInstance() {
+		return new MenuMain(this.thePlayer);
 	}
 }

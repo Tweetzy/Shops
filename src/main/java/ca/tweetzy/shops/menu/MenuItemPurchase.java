@@ -4,14 +4,13 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.enums.ShopState;
-import ca.tweetzy.shops.impl.Checkout;
-import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.impl.ShopItem;
-import ca.tweetzy.shops.impl.SmartItem;
+import ca.tweetzy.shops.api.enums.TransactionType;
+import ca.tweetzy.shops.impl.*;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.PlayerUtil;
 import ca.tweetzy.tweety.menu.Menu;
@@ -26,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -137,7 +137,8 @@ public final class MenuItemPurchase extends Menu {
 				return;
 			}
 
-			double totalSell = 0D;
+			double totalSell;
+			Transaction transaction;
 
 			if (this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity() > totalItemsSellable) {
 				final double pricePerOne = this.shopItem.getSellPrice() / this.checkout.getShopItem().getPurchaseQuantity();
@@ -145,12 +146,16 @@ public final class MenuItemPurchase extends Menu {
 				totalSell = totalSell - (Settings.TAX / 100D * totalSell);
 
 				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), totalItemsSellable);
+				transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), totalItemsSellable, totalSell, TransactionType.SELL, System.currentTimeMillis());
 			} else {
 				totalSell = this.checkout.calculateSellPrice();
 				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity());
+				transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity(), totalSell, TransactionType.SELL, System.currentTimeMillis());
 			}
 
 			ShopsEconomy.deposit(player, this.shopItem.getCurrency(), totalSell);
+			// insert transaction but don't save
+			ShopsData.getInstance().getTransactions().add(transaction);
 		});
 
 		this.buyButton = Button.makeSimple(ItemCreator
@@ -205,6 +210,16 @@ public final class MenuItemPurchase extends Menu {
 				}
 
 				ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice());
+				ShopsData.getInstance().getTransactions().add(new Transaction(
+						UUID.randomUUID(),
+						player.getUniqueId(),
+						this.shop.getId(),
+						this.shopItem.getItem().clone(),
+						totalQtyGave,
+						this.checkout.calculateBuyPrice(),
+						TransactionType.BUY,
+						System.currentTimeMillis()
+				));
 				return;
 			}
 

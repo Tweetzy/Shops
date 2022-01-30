@@ -67,12 +67,12 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 		this.cartButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.ShopContent.CART_BUTTON_MATERIAL).get())
 				.name(Localization.ShopContentMenu.CART_BUTTON_NAME)
-				.lore(Localization.ShopContentMenu.CART_BUTTON_LORE), player -> new MenuMain().displayTo(player)); // TODO DIRECT TO CART MENU
+				.lore(Localization.ShopContentMenu.CART_BUTTON_LORE), player -> new MenuMain(player).displayTo(player)); // TODO DIRECT TO CART MENU
 
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
-				.lore(Localization.Menus.BackButton.LORE), player -> new MenuMain().displayTo(player));
+				.lore(Localization.Menus.BackButton.LORE), player -> new MenuMain(player).displayTo(player));
 	}
 
 	@Override

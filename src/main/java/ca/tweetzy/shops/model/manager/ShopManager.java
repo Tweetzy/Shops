@@ -77,6 +77,17 @@ public class ShopManager extends Manager<Collection<Shop>> {
 		return new StrictList<>(this.shops.values());
 	}
 
+	public List<Shop> getShops(@NonNull final Player player) {
+		final List<Shop> shopsList = new ArrayList<>();
+		this.shops.values().forEach(shop -> {
+			if (!shop.getSettings().isPublic()) return;
+			if (shop.getSettings().isRequirePermissionToSee() && !player.hasPermission(shop.getSettings().getSeePermission())) return;
+
+			shopsList.add(shop);
+		});
+		return shopsList;
+	}
+
 	public List<String> getShopIds() {
 		return new ArrayList<>(this.shops.keySet());
 	}

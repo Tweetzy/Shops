@@ -28,7 +28,7 @@ public final class ShopsCommand extends SimpleCommandGroup {
 		if (!(sender instanceof Player)) return;
 		final Player player = (Player) sender;
 
-		new MenuMain().displayTo(player);
+		new MenuMain(player).displayTo(player);
 
 	}
 
