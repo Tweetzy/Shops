@@ -32,6 +32,10 @@ public final class PriceMapManager extends Manager<StrictList<PriceMap>> {
 		return this.knownPrices.getSource().stream().filter(map -> map.getItem() == itemStack).findFirst().orElse(null);
 	}
 
+	public List<PriceMap> getPriceMap() {
+		return Collections.unmodifiableList(knownPrices.getSource());
+	}
+
 	public double getSellPrice(@NonNull final ItemStack itemStack) {
 		final PriceMap found = getPriceMap(itemStack);
 		return found == null ? 0D : found.getSellPrice();
@@ -40,10 +44,6 @@ public final class PriceMapManager extends Manager<StrictList<PriceMap>> {
 	public double getBuyPrice(@NonNull final ItemStack itemStack) {
 		final PriceMap found = getPriceMap(itemStack);
 		return found == null ? 0D : found.getBuyPrice();
-	}
-
-	public List<PriceMap> getPriceMap() {
-		return Collections.unmodifiableList(knownPrices.getSource());
 	}
 
 	@Override
