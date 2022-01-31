@@ -90,13 +90,6 @@ Dynamic Fill Main Menu: true
 # You can set this to -1 which disables the task entirely
 Shop Tick Task Speed: 20
 
-# This is being worked on still
-Order Package:
-  # If false, when a purchase cannot fit into the player's
-  # inventory it will be dropped onto the floor
-  Enabled: true
-  Material: CHEST
-
 # Number format
 Number Format: "%,.2f"
 
