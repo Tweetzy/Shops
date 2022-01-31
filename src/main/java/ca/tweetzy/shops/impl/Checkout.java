@@ -144,6 +144,11 @@ public final class Checkout implements ICheckout {
 	}
 
 	@Override
+	public boolean executeBuy(@NonNull Player player) {
+		return this.executeBuy(player, false);
+	}
+
+	@Override
 	public boolean executeSell(@NonNull Player player, final boolean omit) {
 		if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return false;
 		int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
@@ -179,11 +184,6 @@ public final class Checkout implements ICheckout {
 	@Override
 	public boolean executeSell(@NonNull Player player) {
 		return this.executeSell(player, false);
-	}
-
-	@Override
-	public boolean executeBuy(@NonNull Player player) {
-		return this.executeBuy(player, false);
 	}
 
 	private double getTaxedBuyTotal() {
