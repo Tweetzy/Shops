@@ -20,7 +20,9 @@ Menus:
 
     Item Lore:
       - ""
+      - "&7Stack Size&F: &a{stack_size}"
       - "&7Quantity&f: &e{item_quantity}"
+      - ""
       - "&7Sell Price&f: &e{item_sell_price}"
       - "&7Buy Price&f: &e{item_buy_price}"
       - ""
@@ -166,6 +168,8 @@ Error:
   Inventory Full: "&cPlease empty your inventory to make purchase"
   No Money: "&cYou do not have enough money!"
   No Items: "&cYou do not have any items to sell"
+  Item Already In Cart: "&cItem already in cart"
+  Checkout First: "&cPlease checkout first before adding more cart items"
 
 Prompt:
   Item Search:

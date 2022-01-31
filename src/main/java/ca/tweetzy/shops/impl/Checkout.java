@@ -77,11 +77,12 @@ public final class Checkout implements ICheckout {
 	}
 
 	@Override
-	public boolean executeBuy(@NonNull final Player player) {
+	public boolean executeBuy(@NonNull final Player player, final boolean omit) {
 		if (this.shop.getSettings().isRequirePermissionToBuy() && !player.hasPermission(this.shop.getSettings().getBuyPermission())) return false;
 
 		if (player.getInventory().firstEmpty() == -1) {
-			Common.tell(player, Localization.Error.INVENTORY_FULL);
+			if (!omit)
+				Common.tell(player, Localization.Error.INVENTORY_FULL);
 			return false;
 		}
 
@@ -143,12 +144,13 @@ public final class Checkout implements ICheckout {
 	}
 
 	@Override
-	public boolean executeSell(@NonNull final Player player) {
+	public boolean executeSell(@NonNull Player player, final boolean omit) {
 		if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return false;
 		int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
 
 		if (totalItemsSellable == 0) {
-			Common.tell(player, Localization.Error.NO_ITEMS);
+			if (!omit)
+				Common.tell(player, Localization.Error.NO_ITEMS);
 			return false;
 		}
 
@@ -172,6 +174,16 @@ public final class Checkout implements ICheckout {
 		// insert transaction but don't save
 		ShopsData.getInstance().getTransactions().add(transaction);
 		return true;
+	}
+
+	@Override
+	public boolean executeSell(@NonNull Player player) {
+		return this.executeSell(player, false);
+	}
+
+	@Override
+	public boolean executeBuy(@NonNull Player player) {
+		return this.executeBuy(player, false);
 	}
 
 	private double getTaxedBuyTotal() {

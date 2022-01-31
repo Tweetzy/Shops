@@ -31,5 +31,9 @@ public interface ICheckout {
 
 	boolean executeBuy(@NonNull final Player player);
 
+	boolean executeBuy(@NonNull final Player player, final boolean omit);
+
+	boolean executeSell(@NonNull final Player player, final boolean omit);
+
 	boolean executeSell(@NonNull final Player player);
 }

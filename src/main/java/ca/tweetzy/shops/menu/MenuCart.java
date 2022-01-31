@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -53,6 +54,15 @@ public final class MenuCart extends MenuPagged<Checkout> {
 				.name(Localization.Cart.SELL_BUTTON_NAME)
 				.lore(Localization.Cart.SELL_BUTTON_LORE), player -> {
 
+			final Iterator<Checkout> checkoutIterator = this.cart.getCartItems().iterator();
+			while (checkoutIterator.hasNext()) {
+				final Checkout checkout = checkoutIterator.next();
+				if (checkout.executeSell(player, true)) {
+					checkoutIterator.remove();
+				}
+			}
+
+			newInstance().displayTo(player);
 		});
 
 		this.buyButton = Button.makeSimple(ItemCreator
@@ -60,6 +70,20 @@ public final class MenuCart extends MenuPagged<Checkout> {
 				.name(Localization.Cart.BUY_BUTTON_NAME)
 				.lore(Localization.Cart.BUY_BUTTON_LORE), player -> {
 
+			if (player.getInventory().firstEmpty() == -1) {
+				tell(Localization.Error.INVENTORY_FULL);
+				return;
+			}
+
+			final Iterator<Checkout> checkoutIterator = this.cart.getCartItems().iterator();
+			while (checkoutIterator.hasNext()) {
+				final Checkout checkout = checkoutIterator.next();
+				if (checkout.executeBuy(player, true)) {
+					checkoutIterator.remove();
+				}
+			}
+
+			newInstance().displayTo(player);
 		});
 	}
 
@@ -75,7 +99,7 @@ public final class MenuCart extends MenuPagged<Checkout> {
 			return this.buyButton.getItem();
 
 		if (Settings.Menus.Cart.INFO_BUTTON_SLOT == slot) {
-			final ShopCurrency currency = this.cart.getCartItems().get(0).getShop().getCurrency();
+			final ShopCurrency currency = this.cart.getCartItems().isEmpty() ? Shops.getCurrencyManager().getCurrency("Vault") : this.cart.getCartItems().get(0).getShop().getCurrency();
 
 			return ItemCreator
 					.of(new SmartItem(Settings.Menus.Cart.INFO_BUTTON_MATERIAL).get())
@@ -96,7 +120,8 @@ public final class MenuCart extends MenuPagged<Checkout> {
 		Replacer.replaceArray(Localization.Cart.ITEM_LORE,
 				"item_quantity", item.getPurchaseQty(),
 				"item_sell_price", String.format(Settings.NUMBER_FORMAT, item.calculateSellPrice()),
-				"item_buy_price", String.format(Settings.NUMBER_FORMAT, item.calculateBuyPrice())
+				"item_buy_price", String.format(Settings.NUMBER_FORMAT, item.calculateBuyPrice()),
+				"stack_size", item.getShopItem().getPurchaseQuantity()
 		).forEach(creator::lore);
 
 		return creator.make();

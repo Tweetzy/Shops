@@ -2,6 +2,7 @@ package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.impl.Cart;
 import ca.tweetzy.shops.impl.Checkout;
+import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.tweety.Common;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
@@ -29,13 +30,12 @@ public final class CartManager {
 		final Cart cart = this.getCart(player.getUniqueId());
 
 		if (cart.getCartItems().contains(checkout)) {
-			Common.tell(player, "&cItem already in cart");
+			Common.tell(player, Localization.Error.ITEM_ALREADY_IN_CART);
 			return false;
 		}
 
 		if (cart.getCartItems().stream().anyMatch(items -> items.getShopItem().getCurrency() != checkout.getShopItem().getCurrency())) {
-			Common.tell(player, "&cPlease checkout first before adding more cart items");
-
+			Common.tell(player, Localization.Error.CHECKOUT_FIRST);
 			return false;
 		}
 

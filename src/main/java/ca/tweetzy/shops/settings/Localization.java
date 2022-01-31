@@ -96,6 +96,8 @@ public final class Localization extends SimpleLocalization {
 		public static String INVENTORY_FULL;
 		public static String NO_MONEY;
 		public static String NO_ITEMS;
+		public static String CHECKOUT_FIRST;
+		public static String ITEM_ALREADY_IN_CART;
 
 		private static void init() {
 			pathPrefix("Error");
@@ -106,6 +108,8 @@ public final class Localization extends SimpleLocalization {
 			INVENTORY_FULL = getString("Inventory Full");
 			NO_MONEY = getString("No Money");
 			NO_ITEMS = getString("No Items");
+			ITEM_ALREADY_IN_CART= getString("Item Already In Cart");
+			CHECKOUT_FIRST= getString("Checkout First");
 		}
 	}
 
