@@ -2,6 +2,8 @@ package ca.tweetzy.shops.api.interfaces;
 
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
+import lombok.NonNull;
+import org.bukkit.entity.Player;
 
 /**
  * The current file has been created by Kiran Hart
@@ -26,4 +28,8 @@ public interface ICheckout {
 	void decrementQty(final int amount);
 
 	void setTotalQty(final int amount);
+
+	boolean executeBuy(@NonNull final Player player);
+
+	boolean executeSell(@NonNull final Player player);
 }

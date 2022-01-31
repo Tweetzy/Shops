@@ -1,8 +1,26 @@
 package ca.tweetzy.shops.impl;
 
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
+import ca.tweetzy.shops.api.enums.ShopItemType;
+import ca.tweetzy.shops.api.enums.TransactionType;
 import ca.tweetzy.shops.api.interfaces.ICheckout;
+import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
+import ca.tweetzy.shops.model.manager.ShopsEconomy;
+import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.settings.ShopsData;
+import ca.tweetzy.tweety.Common;
+import ca.tweetzy.tweety.PlayerUtil;
+import ca.tweetzy.tweety.model.HookManager;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -56,6 +74,104 @@ public final class Checkout implements ICheckout {
 	public double calculateBuyPrice() {
 		final double discount = this.getTaxedBuyTotal() * (this.shop.getSettings().getDiscount() / 100D);
 		return this.getTaxedBuyTotal() - discount;
+	}
+
+	@Override
+	public boolean executeBuy(@NonNull final Player player) {
+		if (this.shop.getSettings().isRequirePermissionToBuy() && !player.hasPermission(this.shop.getSettings().getBuyPermission())) return false;
+
+		if (player.getInventory().firstEmpty() == -1) {
+			Common.tell(player, Localization.Error.INVENTORY_FULL);
+			return false;
+		}
+
+		if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
+			if (this.shopItem.getCurrentStock() <= 0) {
+				new MenuShopContentList(this.shop, null).displayTo(player);
+				return false;
+			}
+
+			if ((this.shopItem.getCurrentStock() - this.getPurchaseQty() <= 0)) {
+				this.setTotalQty(this.shopItem.getCurrentStock());
+			}
+		}
+
+		if (ShopsEconomy.hasBalance(player, this.shopItem.getCurrency(), this.calculateBuyPrice())) {
+			final List<ItemStack> items = new ArrayList<>();
+			for (int i = 0; i < this.getPurchaseQty() * this.shopItem.getPurchaseQuantity(); i++)
+				items.add(this.shopItem.getItem().clone());
+
+			final int userDefinedQty = this.getPurchaseQty();
+			int totalQtyGave = 0;
+
+			for (ItemStack item : items) {
+				if (!PlayerUtil.addItems(player.getInventory(), item).isEmpty()) break;
+
+				if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
+					this.shopItem.setCurrentStock(this.shopItem.getCurrentStock() - 1);
+				}
+
+				totalQtyGave++;
+			}
+
+			if (totalQtyGave != userDefinedQty) {
+				this.setTotalQty(totalQtyGave / this.shopItem.getPurchaseQuantity());
+			}
+
+			// execute the permissions last
+			if (this.shopItem.getType() == ShopItemType.COMMAND || this.shopItem.getType() == ShopItemType.BOTH)
+				for (int i = 0; i < this.getPurchaseQty(); i++) {
+					this.shopItem.getCommands().forEach(cmd -> Common.dispatchCommand(player, HookManager.replacePlaceholders(player, cmd)));
+				}
+
+			ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.calculateBuyPrice());
+			ShopsData.getInstance().getTransactions().add(new Transaction(
+					UUID.randomUUID(),
+					player.getUniqueId(),
+					this.shop.getId(),
+					this.shopItem.getItem().clone(),
+					totalQtyGave,
+					this.calculateBuyPrice(),
+					TransactionType.BUY,
+					System.currentTimeMillis()
+			));
+			return true;
+		}
+
+		Common.tell(player, Localization.Error.NO_MONEY);
+		return false;
+	}
+
+	@Override
+	public boolean executeSell(@NonNull final Player player) {
+		if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return false;
+		int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
+
+		if (totalItemsSellable == 0) {
+			Common.tell(player, Localization.Error.NO_ITEMS);
+			return false;
+		}
+
+		double totalSell;
+		Transaction transaction;
+
+		if (this.getPurchaseQty() * this.shopItem.getPurchaseQuantity() > totalItemsSellable) {
+			final double pricePerOne = this.shopItem.getSellPrice() / this.getShopItem().getPurchaseQuantity();
+			totalSell = pricePerOne * totalItemsSellable;
+			totalSell = totalSell - (Settings.TAX / 100D * totalSell);
+
+			Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), totalItemsSellable);
+			transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), totalItemsSellable, totalSell, TransactionType.SELL, System.currentTimeMillis());
+		} else {
+			totalSell = this.calculateSellPrice();
+			Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), this.getPurchaseQty() * this.shopItem.getPurchaseQuantity());
+			transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), this.getPurchaseQty() * this.shopItem.getPurchaseQuantity(), totalSell, TransactionType.SELL, System.currentTimeMillis());
+		}
+
+		ShopsEconomy.deposit(player, this.shopItem.getCurrency(), totalSell);
+		// insert transaction but don't save
+		ShopsData.getInstance().getTransactions().add(transaction);
+		return true;
 	}
 
 	private double getTaxedBuyTotal() {

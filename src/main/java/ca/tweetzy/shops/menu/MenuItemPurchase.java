@@ -1,22 +1,17 @@
 package ca.tweetzy.shops.menu;
 
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
-import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.enums.ShopState;
-import ca.tweetzy.shops.api.enums.TransactionType;
-import ca.tweetzy.shops.impl.*;
+import ca.tweetzy.shops.impl.Checkout;
+import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
+import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
-import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
-import ca.tweetzy.shops.settings.ShopsData;
-import ca.tweetzy.tweety.Common;
-import ca.tweetzy.tweety.PlayerUtil;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
-import ca.tweetzy.tweety.model.HookManager;
 import ca.tweetzy.tweety.model.Replacer;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
@@ -25,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * The current file has been created by Kiran Hart
@@ -137,104 +131,12 @@ public final class MenuItemPurchase extends Menu {
 		this.sellButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.SELL_BUTTON_MATERIAL).get())
 				.name(Localization.BuyItemMenu.SELL_NAME)
-				.lore(Localization.BuyItemMenu.SELL_LORE), player -> {
-
-			if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return;
-			int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
-
-			if (totalItemsSellable == 0) {
-				tell(Localization.Error.NO_ITEMS);
-				return;
-			}
-
-			double totalSell;
-			Transaction transaction;
-
-			if (this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity() > totalItemsSellable) {
-				final double pricePerOne = this.shopItem.getSellPrice() / this.checkout.getShopItem().getPurchaseQuantity();
-				totalSell = pricePerOne * totalItemsSellable;
-				totalSell = totalSell - (Settings.TAX / 100D * totalSell);
-
-				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), totalItemsSellable);
-				transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), totalItemsSellable, totalSell, TransactionType.SELL, System.currentTimeMillis());
-			} else {
-				totalSell = this.checkout.calculateSellPrice();
-				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, this.shopItem.getItem().clone(), this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity());
-				transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity(), totalSell, TransactionType.SELL, System.currentTimeMillis());
-			}
-
-			ShopsEconomy.deposit(player, this.shopItem.getCurrency(), totalSell);
-			// insert transaction but don't save
-			ShopsData.getInstance().getTransactions().add(transaction);
-		});
+				.lore(Localization.BuyItemMenu.SELL_LORE), this.checkout::executeSell);
 
 		this.buyButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.BUY_BUTTON_MATERIAL).get())
 				.name(Localization.BuyItemMenu.BUY_NAME)
-				.lore(Localization.BuyItemMenu.BUY_LORE), player -> {
-
-			if (this.shop.getSettings().isRequirePermissionToBuy() && !player.hasPermission(this.shop.getSettings().getBuyPermission())) return;
-
-			if (player.getInventory().firstEmpty() == -1) {
-				tell(Localization.Error.INVENTORY_FULL);
-				return;
-			}
-
-			if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
-				if (this.shopItem.getCurrentStock() <= 0) {
-					new MenuShopContentList(this.shop, null).displayTo(player);
-					return;
-				}
-
-				if ((this.shopItem.getCurrentStock() - this.checkout.getPurchaseQty() <= 0)) {
-					this.checkout.setTotalQty(this.shopItem.getCurrentStock());
-				}
-			}
-
-			if (ShopsEconomy.hasBalance(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice())) {
-				final List<ItemStack> items = new ArrayList<>();
-				for (int i = 0; i < this.checkout.getPurchaseQty() * this.shopItem.getPurchaseQuantity(); i++)
-					items.add(this.shopItem.getItem().clone());
-
-				final int userDefinedQty = this.checkout.getPurchaseQty();
-				int totalQtyGave = 0;
-
-				for (ItemStack item : items) {
-					if (!PlayerUtil.addItems(player.getInventory(), item).isEmpty()) break;
-
-					if (this.shopItem.getQuantityType() == ShopItemQuantityType.LIMITED) {
-						this.shopItem.setCurrentStock(this.shopItem.getCurrentStock() - 1);
-					}
-
-					totalQtyGave++;
-				}
-
-				if (totalQtyGave != userDefinedQty) {
-					this.checkout.setTotalQty(totalQtyGave / this.shopItem.getPurchaseQuantity());
-				}
-
-				// execute the permissions last
-				if (this.shopItem.getType() == ShopItemType.COMMAND || this.shopItem.getType() == ShopItemType.BOTH)
-				for (int i = 0; i < this.checkout.getPurchaseQty(); i++) {
-					this.shopItem.getCommands().forEach(cmd -> Common.dispatchCommand(player, HookManager.replacePlaceholders(player, cmd)));
-				}
-
-				ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.checkout.calculateBuyPrice());
-				ShopsData.getInstance().getTransactions().add(new Transaction(
-						UUID.randomUUID(),
-						player.getUniqueId(),
-						this.shop.getId(),
-						this.shopItem.getItem().clone(),
-						totalQtyGave,
-						this.checkout.calculateBuyPrice(),
-						TransactionType.BUY,
-						System.currentTimeMillis()
-				));
-				return;
-			}
-
-			tell(Localization.Error.NO_MONEY);
-		});
+				.lore(Localization.BuyItemMenu.BUY_LORE), this.checkout::executeBuy);
 
 		this.infoButton = new Button() {
 			@Override
@@ -263,8 +165,7 @@ public final class MenuItemPurchase extends Menu {
 								"price_discount", MenuItemPurchase.this.shop.getSettings().getDiscount(),
 								"buy_cost", Localization.BuyItemMenu.InfoLores.BUY_COST.replace("{purchase_cost}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateBuyPrice())),
 								"sell_cost", Localization.BuyItemMenu.InfoLores.SELL_COST.replace("{sells_for}", String.format(Settings.NUMBER_FORMAT, MenuItemPurchase.this.checkout.calculateSellPrice()))
-						))
-						.make();
+						)).make();
 			}
 		};
 	}
