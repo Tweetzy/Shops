@@ -43,7 +43,6 @@ Menus:
       Lore:
         - ""
         - "&7Currency&f: &a{item_currency}"
-        - "&7Discount&f: &a{price_discount}&f%"
         - ""
         - "&7Cost to buy&f: &a{purchase_cost}"
         - "&7Sells for&f: &a{sells_for}"

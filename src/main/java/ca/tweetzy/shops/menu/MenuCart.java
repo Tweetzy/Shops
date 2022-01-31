@@ -1,6 +1,8 @@
 package ca.tweetzy.shops.menu;
 
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.impl.Cart;
 import ca.tweetzy.shops.impl.Checkout;
 import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.settings.Localization;
@@ -26,27 +28,64 @@ import java.util.stream.IntStream;
  */
 public final class MenuCart extends MenuPagged<Checkout> {
 
-	private final Player player;
+	private final Player thePlayer;
+	private final Cart cart;
+
+	private final Button sellButton;
+	private final Button buyButton;
 
 	private final Button backButton;
 
-
-	public MenuCart(@NonNull final Player player) {
-		super(null, IntStream.rangeClosed(0, 26).boxed().collect(Collectors.toList()), Shops.getCartManager().getCart(player.getUniqueId()).getCartItems());
+	public MenuCart(@NonNull final Player thePlayer) {
+		super(null, IntStream.rangeClosed(0, 26).boxed().collect(Collectors.toList()), Shops.getCartManager().getCart(thePlayer.getUniqueId()).getCartItems());
 		setTitle(Localization.Cart.TITLE);
 		setSize(9 * 6);
-		this.player = player;
+		this.thePlayer = thePlayer;
+		this.cart = Shops.getCartManager().getCart(thePlayer.getUniqueId());
 
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
-				.lore(Localization.Menus.BackButton.LORE), user -> new MenuMain(user).displayTo(player));
+				.lore(Localization.Menus.BackButton.LORE), user -> new MenuMain(user).displayTo(thePlayer));
+
+		this.sellButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.Cart.SELL_BUTTON_MATERIAL).get())
+				.name(Localization.Cart.SELL_BUTTON_NAME)
+				.lore(Localization.Cart.SELL_BUTTON_LORE), player -> {
+
+		});
+
+		this.buyButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.Cart.BUY_BUTTON_MATERIAL).get())
+				.name(Localization.Cart.BUY_BUTTON_NAME)
+				.lore(Localization.Cart.BUY_BUTTON_LORE), player -> {
+
+		});
 	}
 
 	@Override
 	public ItemStack getItemAt(int slot) {
 		if ((Settings.Menus.BackButton.SLOT == -1 && slot == getSize() - 9) || (Settings.Menus.BackButton.SLOT == -2 && slot == getSize() - 1) || slot == Settings.Menus.BackButton.SLOT)
 			return this.backButton.getItem();
+
+		if (Settings.Menus.Cart.SELL_BUTTON_SLOT == slot)
+			return this.sellButton.getItem();
+
+		if (Settings.Menus.Cart.BUY_BUTTON_SLOT == slot)
+			return this.buyButton.getItem();
+
+		if (Settings.Menus.Cart.INFO_BUTTON_SLOT == slot) {
+			final ShopCurrency currency = this.cart.getCartItems().get(0).getShop().getCurrency();
+
+			return ItemCreator
+					.of(new SmartItem(Settings.Menus.Cart.INFO_BUTTON_MATERIAL).get())
+					.name(Localization.Cart.INFO_BUTTON_NAME)
+					.lore(Replacer.replaceArray(Localization.Cart.INFO_BUTTON_LORE,
+							"item_currency", currency.getName().equalsIgnoreCase("Vault") ? Localization.CURRENCY_SYMBOL : currency.getName(),
+							"purchase_cost", String.format(Settings.NUMBER_FORMAT, this.cart.getCartItems().stream().mapToDouble(Checkout::calculateBuyPrice).sum()),
+							"sells_for", String.format(Settings.NUMBER_FORMAT, this.cart.getCartItems().stream().mapToDouble(Checkout::calculateSellPrice).sum())
+					)).make();
+		}
 
 		return super.getItemAt(slot);
 	}
@@ -65,12 +104,12 @@ public final class MenuCart extends MenuPagged<Checkout> {
 
 	@Override
 	protected void onPageClick(Player player, Checkout item, ClickType click) {
-		Shops.getCartManager().getCart(player.getUniqueId()).getCartItems().remove(item);
+		this.cart.getCartItems().remove(item);
 		newInstance().displayTo(player);
 	}
 
 	@Override
 	public Menu newInstance() {
-		return new MenuCart(this.player);
+		return new MenuCart(this.thePlayer);
 	}
 }
