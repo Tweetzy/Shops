@@ -1,0 +1,130 @@
+# If you use -2 it will be placed in the last slot in the menu
+# If you use -1 it will be placed in the bottom left corner
+# Slot values are from 0 to 53 (google Minecraft Chest Numbers to view them)
+Menus:
+  Back Button:
+    Slot: -1
+    Material: IRON_DOOR
+
+  Main:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Search Button:
+      Slot: -2
+      Material: COMPASS
+    Cart Button:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
+
+  Shop Content:
+    Search Button:
+      Slot: -2
+      Material: COMPASS
+    Cart Button:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
+
+  Cart:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Empty Button:
+      Slot: 8 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: HOPPER
+    Sell Button:
+      Slot: 39
+      Material: RED_DYE
+    Buy Button:
+      Slot: 41
+      Material: LIME_DYE
+    Info Button:
+      Slot: 40
+      Material: NETHER_STAR
+
+  Buy Item:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Increment One: 1
+    Increment Two: 32
+    Increment Three: 64
+    Decrement One: 1
+    Decrement Two: 32
+    Decrement Three: 64
+
+    Cart Button:
+      Slot: 40
+      Material: MINECART
+    Sell Button:
+      Slot: 39
+      Material: RED_DYE
+    Buy Button:
+      Slot: 41
+      Material: LIME_DYE
+    Info Button:
+      Slot: 31
+      Material: NETHER_STAR
+    Increment Button One:
+      Slot: 16
+      Material: LIME_STAINED_GLASS_PANE
+    Increment Button Two:
+      Slot: 25
+      Material: LIME_STAINED_GLASS_PANE
+    Increment Button Three:
+      Slot: 34
+      Material: LIME_STAINED_GLASS_PANE
+    Decrement Button One:
+      Slot: 10
+      Material: RED_STAINED_GLASS_PANE
+    Decrement Button Two:
+      Slot: 19
+      Material: RED_STAINED_GLASS_PANE
+    Decrement Button Three:
+      Slot: 28
+      Material: RED_STAINED_GLASS_PANE
+
+# Should the main shop menu fill shop items dynamically?
+# Set this to false, if you want to manually place each shop into its slot
+Dynamic Fill Main Menu: true
+
+# How often should the shop task run? By, default its one second (20 ticks = 1sec)
+# It's one second because of refill times, unless you setup shop refill times in a way
+# in which they can't be skipped over, then go ahead and change it.
+
+# If you aren't using any refills (meaning all shops have unlimited items)
+# You can set this to -1 which disables the task entirely
+Shop Tick Task Speed: 20
+
+# Number format
+Number Format: "%,.2f"
+
+# You can set it to 0 to disable tax, I'm just using 13%
+# as it's the tax % where I live
+Tax: 13.0
+
+# -------------------------------------------------------------------------------------------------
+# The format used in the {timestamp} placeholder (google "Java timestamp format" for options).
+# -------------------------------------------------------------------------------------------------
+Timestamp_Format: "dd.MM.yyyy HH:mm:ss"
+
+# -------------------------------------------------------------------------------------------------
+# * THE FIRST ALIAS IS THE MAIN LABEL, PLEASE DO NOT REMOVE IT. *
+# -------------------------------------------------------------------------------------------------
+Command_Aliases: [ shops, shop ]
+
+# -------------------------------------------------------------------------------------------------
+# What language should we use for messages? If it exists, the language file will be copied
+# to your messages/ folder where you can edit it.
+# -------------------------------------------------------------------------------------------------
+Locale: en
+
+# -------------------------------------------------------------------------------------------------
+# The prefix used in front of most chat or console messages
+# -------------------------------------------------------------------------------------------------
+Prefix: "&8[&eShops&8]"
+
+# -------------------------------------------------------------------------------------------------
+# We log a console message if an operation takes over the time below (milliseconds).
+# Set to -1 to disable.
+# -------------------------------------------------------------------------------------------------
+Log_Lag_Over_Milis: 250
+
+# -------------------------------------------------------------------------------------------------
+# Do not change this value, otherwise it will corrupt your plugin installation!
+# -------------------------------------------------------------------------------------------------
+Version: 1

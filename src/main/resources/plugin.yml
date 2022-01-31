@@ -1,70 +1,9 @@
-name: Shops
-version: maven-version-number
+name: ${project.name}
+version: ${project.version}
+main: ${main.class}
+author: ${author}
 api-version: 1.13
-main: ca.tweetzy.shops.Shops
-description: Ever wanted to setup categorized shops, this plugin is for you
-website: https://tweetzy.ca/
-authors: [ Kiran Hart ]
-softdepend: [ Vault, PlayerPoints, Reserve, EconomyPlus ]
-
+libraries:
+  - org.openjdk.nashorn:nashorn-core:15.3
+softdepend: [ AuthMe, BanManager, BungeeChatAPI, CMI, DiscordSRV, Factions, Feudal, ItemsAdder, Essentials, LegacyFactions, Lands, LuckPerms, Multiverse-Core, MVdWPlaceholderAPI, MythicMobs, mcMMO, NashornPlus, Nicky, PlaceholderAPI, ProtocolLib, SimpleClans, Towny, TownyChat, Vault, WorldEdit ]
 commands:
-  shops:
-    description: Main command for the shop plugin
-    aliases: [ shop ]
-    usage: /shops
-
-permissions:
-  shops.*:
-    shops.cmd: true
-    shops.cmd.additem: true
-    shops.cmd.cart: true
-    shops.cmd.convert: true
-    shops.cmd.create: true
-    shops.cmd.edit: true
-    shops.cmd.list: true
-    shops.cmd.reload: true
-    shops.cmd.remove: true
-    shops.cmd.set: true
-    shops.cmd.settings: true
-    shops.cmd.open: true
-    shops.cmd.changeid: true
-    shops.admin: true
-  shops.cmd:
-    description: Allows the user to view the public shops
-    default: op
-  shops.cmd.additem:
-    description: Allows the user to add an item to a shop
-    default: op
-  shops.cmd.cart:
-    description: Allows the user to open their cart
-    default: op
-  shops.cmd.convert:
-    description: Allows the user to run the conversion task
-    default: op
-  shops.cmd.create:
-    description: Allows the user to create a new shop
-    default: op
-  shops.cmd.edit:
-    description: Allows the user to edit a shop
-    default: op
-  shops.cmd.list:
-    description: Allows the user to list out all created shops.
-    default: op
-  shops.cmd.reload:
-    description: Allows the user to reload the plugin
-    default: op
-  shops.cmd.remove:
-    description: Allows the user to remove a shop
-    default: op
-  shops.cmd.set:
-    description: Allows the user to user to change options on a shop
-    default: op
-  shops.cmd.settings:
-    description: Allows the user to open the in game config editor
-    default: op
-  shops.cmd.changeid:
-    description: Allows the user to change a shop's id
-    default: op
-  shops.cmd.open:
-    description: Allows the user to open a specific shop directly.
-    default: op

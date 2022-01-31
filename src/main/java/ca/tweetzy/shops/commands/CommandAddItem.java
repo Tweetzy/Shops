@@ -1,89 +1,80 @@
 package ca.tweetzy.shops.commands;
 
-import ca.tweetzy.core.commands.AbstractCommand;
-import ca.tweetzy.core.compatibility.XMaterial;
-import ca.tweetzy.core.utils.NumberUtils;
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.ShopAPI;
-import ca.tweetzy.shops.managers.StorageManager;
-import ca.tweetzy.shops.shop.Shop;
-import ca.tweetzy.shops.shop.ShopItem;
-import org.bukkit.command.CommandSender;
+import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
+import ca.tweetzy.shops.api.enums.ShopItemType;
+import ca.tweetzy.shops.impl.PriceMap;
+import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
+import ca.tweetzy.shops.model.PlayerHand;
+import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.ShopsData;
+import ca.tweetzy.tweety.remain.CompMaterial;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The current file has been created by Kiran Hart
- * Date Created: March 29 2021
- * Time Created: 2:58 p.m.
+ * Date Created: January 25 2022
+ * Time Created: 12:55 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class CommandAddItem extends AbstractCommand {
+public final class CommandAddItem extends AbstractSubCommand {
 
 	public CommandAddItem() {
-		super(CommandType.PLAYER_ONLY, "additem");
+		super("additem");
+		setMinArguments(3);
+		setDescription("Used to add a new item to a shop");
+		setUsage("<shop> <buyPrice> <sellPrice> [-nosell] [-nobuy]");
 	}
 
 	@Override
-	protected ReturnType runCommand(CommandSender sender, String... args) {
-		if (args.length < 3) return ReturnType.SYNTAX_ERROR;
-		Player player = (Player) sender;
+	protected void onCommand() {
+		checkConsole();
 
-		ItemStack toAdd = ShopAPI.getInstance().getHeldItem(player);
-		if (toAdd == null || toAdd.getType() == XMaterial.AIR.parseMaterial()) {
-			Shops.getInstance().getLocale().getMessage("general.nothing_in_hand").sendPrefixedMessage(player);
-			return ReturnType.FAILURE;
+		final Player player = getPlayer();
+
+		if (args.length >= 3) {
+			final Shop shop = Shops.getShopManager().getShop(args[0]);
+
+			if (shop == null) {
+				returnTell(Localization.Error.INVALID_SHOP_ID.replace("{shop_id}", args[0]));
+			}
+
+			final double buyPrice = findNumber(Double.class, 1, Localization.Error.NOT_A_NUMBER.replace("{value}", args[1]));
+			final double sellPrice = findNumber(Double.class, 2, Localization.Error.NOT_A_NUMBER.replace("{value}", args[2]));
+
+			final boolean allowSell = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-nosell"));
+			final boolean allowBuy = Arrays.stream(args).anyMatch(arg -> arg.equalsIgnoreCase("-nobuy"));
+
+			final ItemStack hand = PlayerHand.get(player);
+			if (hand == null || hand.getType() == CompMaterial.AIR.toMaterial()) {
+				returnTell(Localization.Error.AIR);
+			}
+
+			final ShopItem shopItem = new ShopItem(
+					hand,
+					ShopItemType.ITEM,
+					ShopItemQuantityType.UNLIMITED,
+					new ArrayList<>(),
+					Shops.getCurrencyManager().getCurrency("Vault"),
+					buyPrice,
+					sellPrice,
+					hand.getAmount(),
+					1,
+					1,
+					!allowBuy,
+					!allowSell,
+					new ArrayList<>(),
+					new ArrayList<>()
+			);
+
+			shop.getShopItems().add(shopItem);
+			Shops.getPriceMapManager().addPriceMap(new PriceMap(hand.clone(), shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+			ShopsData.getInstance().saveAll();
 		}
-
-		Shop shop = Shops.getInstance().getShopManager().getShop(args[0]);
-
-		if (shop == null) {
-			Shops.getInstance().getLocale().getMessage("shop.does_not_exists").processPlaceholder("shop_id", args[0]).sendPrefixedMessage(player);
-			return ReturnType.FAILURE;
-		}
-
-		if (!NumberUtils.isDouble(args[1]) || !NumberUtils.isDouble(args[2])) {
-			Shops.getInstance().getLocale().getMessage("general.not_double_value").sendPrefixedMessage(player);
-			return ReturnType.FAILURE;
-		}
-
-		if (args.length == 3) {
-			shop.getShopItems().add(new ShopItem(shop.getId(), toAdd, Double.parseDouble(args[1]), Double.parseDouble(args[2])));
-		} else {
-			// they're passing in the additional arguments to state whether the item is buy/sell only
-			shop.getShopItems().add(new ShopItem(shop.getId(), toAdd, Double.parseDouble(args[1]), Double.parseDouble(args[2]), Boolean.parseBoolean(args[3]), args.length == 5 && Boolean.parseBoolean(args[4])));
-		}
-
-		Shops.getInstance().getLocale().getMessage("shop.add_new_item").processPlaceholder("shop_id", args[0]).processPlaceholder("sell_price", args[1]).processPlaceholder("buy_price", args[2]).sendPrefixedMessage(player);
-		StorageManager.getInstance().updateShop(player, shop);
-		return ReturnType.SUCCESS;
-	}
-
-	@Override
-	protected List<String> onTab(CommandSender sender, String... args) {
-		if (args.length == 1)
-			return Shops.getInstance().getShopManager().getShops().stream().map(Shop::getId).collect(Collectors.toList());
-		if (args.length == 2 || args.length == 3) return Arrays.asList("1", "2", "3", "4", "5");
-		if (args.length == 4 || args.length == 5) return Arrays.asList("true", "false");
-		return null;
-	}
-
-	@Override
-	public String getPermissionNode() {
-		return "shops.cmd.additem";
-	}
-
-	@Override
-	public String getSyntax() {
-		return Shops.getInstance().getLocale().getMessage("commands.syntax.additem").getMessage();
-	}
-
-	@Override
-	public String getDescription() {
-		return Shops.getInstance().getLocale().getMessage("commands.description.additem").getMessage();
 	}
 }

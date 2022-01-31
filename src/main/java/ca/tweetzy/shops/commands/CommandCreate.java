@@ -1,52 +1,52 @@
 package ca.tweetzy.shops.commands;
 
-import ca.tweetzy.core.commands.AbstractCommand;
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.managers.StorageManager;
-import ca.tweetzy.shops.shop.Shop;
-import org.bukkit.command.CommandSender;
+import ca.tweetzy.shops.menu.settings.MenuShopEdit;
+import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.tweety.conversation.TitleInput;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
- * Date Created: March 24 2021
- * Time Created: 9:26 p.m.
+ * Date Created: December 19 2021
+ * Time Created: 9:16 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public class CommandCreate extends AbstractCommand {
+public final class CommandCreate extends AbstractSubCommand {
 
 	public CommandCreate() {
-		super(CommandType.PLAYER_ONLY, "create");
+		super("create|new");
+		setDescription("Used to create a new shop");
 	}
 
 	@Override
-	protected ReturnType runCommand(CommandSender sender, String... args) {
-		if (args.length != 1) return ReturnType.SYNTAX_ERROR;
+	protected void onCommand() {
+		checkConsole();
 
-		Player player = (Player) sender;
-		String shopId = args[0].toLowerCase();
-		return StorageManager.getInstance().createShop(player, new Shop(shopId));
-	}
+		final Player player = getPlayer();
 
-	@Override
-	public String getPermissionNode() {
-		return "shops.cmd.create";
-	}
+		if (args.length == 0) {
+			new TitleInput(player, Localization.ShopCreation.ENTER_ID_TITLE, Localization.ShopCreation.ENTER_ID_SUBTITLE) {
+				@Override
+				public boolean onResult(String possibleID) {
+					if (Shops.getShopManager().doesShopExists(possibleID)) {
+						tell(Localization.Error.SHOP_ID_TAKEN.replace("{shop_id}", possibleID));
+						return false;
+					}
 
-	@Override
-	public String getSyntax() {
-		return Shops.getInstance().getLocale().getMessage("commands.syntax.create").getMessage();
-	}
-
-	@Override
-	public String getDescription() {
-		return Shops.getInstance().getLocale().getMessage("commands.description.create").getMessage();
-	}
-
-	@Override
-	protected List<String> onTab(CommandSender sender, String... args) {
-		return null;
+					new TitleInput(player, Localization.ShopCreation.ENTER_DESC_TITLE, Localization.ShopCreation.ENTER_DESC_SUBTITLE) {
+						@Override
+						public boolean onResult(String desc) {
+							if (desc.length() <= 3) return false;
+							Shops.getShopManager().createShop(possibleID, desc);
+							tell(Localization.Success.SHOP_CREATED.replace("{shop_id}", possibleID));
+							new MenuShopEdit(Shops.getShopManager().getShop(possibleID)).displayTo(player);
+							return true;
+						}
+					};
+					return true;
+				}
+			};
+		}
 	}
 }

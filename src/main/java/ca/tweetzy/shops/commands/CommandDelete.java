@@ -4,24 +4,20 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.MenuShopList;
-import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
-import ca.tweetzy.tweety.TabUtil;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
- * Date Created: December 22 2021
- * Time Created: 9:57 p.m.
+ * Date Created: December 19 2021
+ * Time Created: 9:16 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class CommandEdit extends AbstractSubCommand {
+public final class CommandDelete extends AbstractSubCommand {
 
-	public CommandEdit() {
-		super("edit");
-		setDescription("Used to edit a specific shop");
+	public CommandDelete() {
+		super("remove|del");
+		setDescription("Used to delete an existing shop");
 	}
 
 	@Override
@@ -30,24 +26,16 @@ public final class CommandEdit extends AbstractSubCommand {
 
 		final Player player = getPlayer();
 
-
 		if (args.length == 1) {
 			final Shop shop = Shops.getShopManager().getShop(args[0]);
 			if (shop == null) {
 				returnTell(Localization.Error.INVALID_SHOP_ID.replace("{shop_id}", args[0]));
 			}
 
-			new MenuShopEdit(shop).displayTo(player);
-			return;
+			Shops.getShopManager().deleteShop(shop.getId());
+			returnTell(Localization.Success.SHOP_DELETED.replace("{shop_id}", args[0]));
 		}
 
-		new MenuShopList(ShopListType.EDIT).displayTo(player);
-	}
-
-	@Override
-	protected List<String> tabComplete() {
-		if (args.length == 1)
-			return TabUtil.complete(args[0], Shops.getShopManager().getShopIds());
-		return NO_COMPLETE;
+		new MenuShopList(ShopListType.DELETE).displayTo(player);
 	}
 }

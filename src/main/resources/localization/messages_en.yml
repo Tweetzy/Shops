@@ -1,0 +1,184 @@
+Menus:
+  Back Button:
+    Name: "&e&lBack"
+    Lore:
+      - "&BClick &7to go back"
+
+  Main:
+    Title: "&eShops"
+    Search Button:
+      Name: "&e&lSearch Items"
+      Lore:
+        - "&bClick &7to search items"
+    Cart Button:
+      Name: "&e&lView Cart"
+      Lore:
+        - "&bClick &7to view cart"
+
+  Cart:
+    Title: "&eCart"
+
+    Item Lore:
+      - ""
+      - "&7Stack Size&F: &a{stack_size}"
+      - "&7Quantity&f: &e{item_quantity}"
+      - ""
+      - "&7Sell Price&f: &e{item_sell_price}"
+      - "&7Buy Price&f: &e{item_buy_price}"
+      - ""
+      - "&eClick &7to remove from cart"
+
+    Empty Button:
+      Name: "&c&lEmpty"
+      Lore:
+        - "&bClick &7to empty your cart"
+    Sell Button:
+      Name: "&eSell"
+      Lore:
+        - "&eClick &7to sell items in inventory"
+    Buy Button:
+      Name: "&eBuy"
+      Lore:
+        - "&eClick &7to purchase items"
+    Info Button:
+      Name: "&ePurchase Info"
+      Lore:
+        - ""
+        - "&7Currency&f: &a{item_currency}"
+        - ""
+        - "&7Cost to buy&f: &a{purchase_cost}"
+        - "&7Sells for&f: &a{sells_for}"
+
+
+  Buy Item:
+    Title: "{shop_displayname} &8> &eCheckout"
+    Cart Button:
+      Name: "&e&lAdd to cart"
+      Lore:
+        - "&bClick &7to add this to your cart"
+    Sell Button:
+      Name: "&eSell"
+      Lore:
+        - "&eClick &7to sell items in inventory"
+    Buy Button:
+      Name: "&eBuy"
+      Lore:
+        - "&eClick &7to purchase items"
+    Info Button:
+      Name: "&ePurchase Info"
+      Lores:
+        Buy Cost: "&7Cost to buy&f: &a{purchase_cost}"
+        Sell Cost: "&7Sells for&f: &a{sells_for}"
+      Lore Format:
+        - ""
+        - "&7Stack Size&F: &a{stack_size}"
+        - "&7Purchase Qty&f: &a{purchase_qty}"
+        - "&7Currency&f: &a{item_currency}"
+        - ""
+        - "&7Discount&f: &a{price_discount}&f%"
+        - ""
+        - "{buy_cost}" #if buy is disabled, this line is deleted
+        - "{sell_cost}" #if selling is disabled, this line is deleted
+    Increment Button One:
+      Name: "&a+{increment_one}"
+      Lore:
+        - "&eClick &7to add &e{increment_one}"
+    Increment Button Two:
+      Name: "&a+{increment_two}"
+      Lore:
+        - "&eClick &7to add &e{increment_two}"
+    Increment Button Three:
+      Name: "&a+{increment_three}"
+      Lore:
+        - "&eClick &7to add &e{increment_three}"
+    Decrement Button One:
+      Name: "&a-{decrement_one}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_one}"
+    Decrement Button Two:
+      Name: "&a-{decrement_two}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_two}"
+    Decrement Button Three:
+      Name: "&a-{decrement_three}"
+      Lore:
+        - "&eClick &7to remove &e{decrement_three}"
+
+  Shop Content:
+    Shop Item Lores:
+      Out Of Stock: "&7Stock&f: &cOut of Stock"
+      In Stock: "&7Stock&f: &a{shop_item_stock}"
+      Buy: "&7Buy x{shop_item_qty}&f: &a{shop_item_buy_cost}"
+      Sell: "&7Sell x{shop_item_qty}&f: &a{shop_item_sell_cost}"
+      View: "&bClick &7to &ebuy&f/&esell &7this item"
+
+    Shop Item Lore Format:
+      Limited:
+        - "{item_description}"
+        - ""
+        - "{stock_status}"
+        - ""
+        - "{buy}" #if the item can be bought, it will be shown
+        - "{sell}" #if the item can be sold, it will be shown
+        - "{view}"
+      Unlimited:
+        - "{item_description}"
+        - ""
+        - "{buy}" #if the item can be bought, it will be shown
+        - "{sell}" #if the item can be sold, it will be shown
+        - "{view}"
+
+    Search Button:
+      Name: "&e&lSearch Items"
+      Lore:
+        - "&bClick &7to search items"
+    Cart Button:
+      Name: "&e&lView Cart"
+      Lore:
+        - "&bClick &7to view cart"
+
+Shop Creation:
+  Enter ID:
+    Title: "&eShop Creation &7(&f1&7/&f2&7)"
+    Subtitle: "&7Enter an ID for the Shop"
+  Enter Description:
+    Title: "&eShop Creation &7(&f2&7/&f2&7)"
+    Subtitle: "&7Enter a description for the Shop"
+
+Success:
+  Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
+  Shop Deleted: "&aDeleted shop with id&f: &b{shop_id}"
+  Money Remove:
+    # mainly for economies implementing vault where the currency symbol is $ or similar
+    Dollar Type: "&c&l- {currency_symbol}{value}"
+    # for any other named currency type, example player points -> points, ultra economy -> gems, etc
+    Other Type: "&c&l- {amount} {currency}"
+
+  Money Add:
+    # mainly for economies implementing vault where the currency symbol is $ or similar
+    Dollar Type: "&a&l+ {currency_symbol}{amount}"
+    # for any other named currency type, example player points -> points, ultra economy -> gems, etc
+    Other Type: "&a&l+ {amount} {currency}"
+
+Error:
+  Shop ID Invalid: "&cCould not find shop with id&f: &4{shop_id}"
+  Shop ID Taken: "&cShop id&f: &4{shop_id}&c is already in use"
+  Not A Number: "&4{value}&c is not a valid number"
+  Air: "&cYou cannot add air to a shop..."
+  Inventory Full: "&cPlease empty your inventory to make purchase"
+  No Money: "&cYou do not have enough money!"
+  No Items: "&cYou do not have any items to sell"
+  Item Already In Cart: "&cItem already in cart"
+  Checkout First: "&cPlease checkout first before adding more cart items"
+
+Prompt:
+  Item Search:
+    Title: "&7Item Search"
+    Subtitle: "&fEnter keywords in chat"
+
+Currency Symbol: "$"
+
+# -------------------------------------------------------------------------------------------------
+# Do not change this value, otherwise it will corrupt your plugin installation!
+# -------------------------------------------------------------------------------------------------
+Version: 1
