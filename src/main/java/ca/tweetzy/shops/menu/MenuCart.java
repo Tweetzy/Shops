@@ -99,7 +99,7 @@ public final class MenuCart extends MenuPagged<Checkout> {
 			return this.buyButton.getItem();
 
 		if (Settings.Menus.Cart.INFO_BUTTON_SLOT == slot) {
-			final ShopCurrency currency = this.cart.getCartItems().isEmpty() ? Shops.getCurrencyManager().getCurrency("Vault") : this.cart.getCartItems().get(0).getShop().getCurrency();
+			final ShopCurrency currency = this.cart.getCartItems().isEmpty() ? Shops.getCurrencyManager().getCurrency("Vault") : this.cart.getCartItems().get(0).getShopItem().getCurrency();
 
 			return ItemCreator
 					.of(new SmartItem(Settings.Menus.Cart.INFO_BUTTON_MATERIAL).get())
