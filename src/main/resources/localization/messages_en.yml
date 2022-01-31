@@ -15,6 +15,17 @@ Menus:
       Lore:
         - "&bClick &7to view cart"
 
+  Search:
+    Title: "&eSearch&f: &7{keyword}"
+    Search Button:
+      Name: "&e&lSearch Items"
+      Lore:
+        - "&bClick &7to search items"
+    Cart Button:
+      Name: "&e&lView Cart"
+      Lore:
+        - "&bClick &7to view cart"
+
   Cart:
     Title: "&eCart"
 

@@ -54,6 +54,7 @@ public final class Shops extends TweetyPlugin {
 
 	@Override
 	protected void onPluginReload() {
+		ShopsData.getInstance().reload();
 		this.shopManager.load(loaded -> loaded.forEach(shop -> {
 			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
 				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));

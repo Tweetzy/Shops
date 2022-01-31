@@ -6,6 +6,15 @@ Menus:
     Slot: -1
     Material: IRON_DOOR
 
+  Search:
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Search Button:
+      Slot: -2
+      Material: COMPASS
+    Cart Button:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
+
   Main:
     Background Item: BLACK_STAINED_GLASS_PANE
     Search Button:

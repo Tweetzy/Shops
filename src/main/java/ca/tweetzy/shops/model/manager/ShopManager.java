@@ -114,6 +114,17 @@ public class ShopManager extends Manager<Collection<Shop>> {
 		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).collect(Collectors.toList());
 	}
 
+	public List<SearchedShopItem> filterShopItemsSearched(@NonNull final Shop shop, @NonNull final String keyword) {
+		final List<ShopItem> originalShopItems = shop.getShopItems();
+		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).map(item -> new SearchedShopItem(shop, item)).collect(Collectors.toList());
+	}
+
+	public List<SearchedShopItem> searchShopItems(@NonNull final Player player, @NonNull final String keyword) {
+		final List<SearchedShopItem> items = new ArrayList<>();
+		getShops(player).forEach(shop -> items.addAll(filterShopItemsSearched(shop, keyword)));
+		return items;
+	}
+
 	public boolean checkSearchCriteria(@NonNull final String phrase, @NonNull final IShopItem shopItem) {
 		return ItemInspect.match(phrase, ItemInspect.getItemName(shopItem.getItem())) ||
 				ItemInspect.match(phrase, Inflector.getInstance().pluralize(shopItem.getItem().getType().name())) ||

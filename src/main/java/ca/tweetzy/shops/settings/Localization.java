@@ -128,6 +128,28 @@ public final class Localization extends SimpleLocalization {
 		}
 	}
 
+	public static final class SearchMenu {
+
+		public static String TITLE;
+
+		public static String SEARCH_BUTTON_NAME;
+		public static List<String> SEARCH_BUTTON_LORE;
+
+		public static String CART_BUTTON_NAME;
+		public static List<String> CART_BUTTON_LORE;
+
+		private static void init() {
+			pathPrefix("Menus.Search");
+
+			TITLE = getString("Title");
+			SEARCH_BUTTON_NAME = getString("Search Button.Name");
+			SEARCH_BUTTON_LORE = getStringList("Search Button.Lore");
+
+			CART_BUTTON_NAME = getString("Cart Button.Name");
+			CART_BUTTON_LORE = getStringList("Cart Button.Lore");
+		}
+	}
+
 	public static final class MainMenu {
 
 		public static String TITLE;

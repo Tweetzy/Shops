@@ -74,6 +74,7 @@ public final class MenuMain extends MenuPagged<Shop> {
 				if (string == null || string.length() < 3)
 					return false;
 
+				new MenuSearch(player, string).displayTo(player);
 				return true;
 			}
 		});

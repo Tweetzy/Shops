@@ -42,6 +42,28 @@ public final class Settings extends SimpleSettings {
 			}
 		}
 
+		public static final class Search {
+
+			public static String BACKGROUND_ITEM;
+
+			public static String SEARCH_BUTTON_MATERIAL;
+			public static Integer SEARCH_BUTTON_SLOT;
+
+			public static String CART_BUTTON_MATERIAL;
+			public static Integer CART_BUTTON_SLOT;
+
+			private static void init() {
+				pathPrefix("Menus.Search");
+				BACKGROUND_ITEM = getString("Background Item");
+
+				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
+				SEARCH_BUTTON_SLOT = getInteger("Search Button.Slot");
+
+				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
+				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+			}
+		}
+
 		public static final class Main {
 
 			public static String BACKGROUND_ITEM;
