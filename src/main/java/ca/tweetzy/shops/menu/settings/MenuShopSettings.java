@@ -1,6 +1,8 @@
 package ca.tweetzy.shops.menu.settings;
 
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopState;
+import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.menu.settings.display.MenuShopDisplaySettings;
 import ca.tweetzy.shops.settings.Localization;
@@ -11,6 +13,7 @@ import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
+import ca.tweetzy.tweety.remain.Remain;
 import lombok.NonNull;
 import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.entity.Player;
@@ -117,7 +120,9 @@ public final class MenuShopSettings extends Menu {
 
 						@Override
 						public boolean onResult(String string) {
+							Remain.unregisterCommand(MenuShopSettings.this.shop.getSettings().getOpenCommand());
 							MenuShopSettings.this.shop.getSettings().setOpenCommand(string);
+							Remain.registerCommand(new DynamicShopCommand(MenuShopSettings.this.shop.getSettings().getOpenCommand()));
 							saveAndReopen(player);
 							return true;
 						}
@@ -125,7 +130,14 @@ public final class MenuShopSettings extends Menu {
 				}
 
 				if (clickType == ClickType.RIGHT) {
-					MenuShopSettings.this.shop.getSettings().setUseOpenCommand(!MenuShopSettings.this.shop.getSettings().isUseOpenCommand());
+					if (MenuShopSettings.this.shop.getSettings().isUseOpenCommand()) {
+						MenuShopSettings.this.shop.getSettings().setUseOpenCommand(false);
+						Remain.unregisterCommand(MenuShopSettings.this.shop.getSettings().getOpenCommand());
+					} else {
+						MenuShopSettings.this.shop.getSettings().setUseOpenCommand(true);
+						Remain.registerCommand(new DynamicShopCommand(MenuShopSettings.this.shop.getSettings().getOpenCommand()));
+					}
+
 					saveAndReopen(player);
 				}
 			}

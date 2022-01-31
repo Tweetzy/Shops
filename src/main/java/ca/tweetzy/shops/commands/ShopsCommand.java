@@ -39,6 +39,7 @@ public final class ShopsCommand extends SimpleCommandGroup {
 		registerSubcommand(new CommandAddItem());
 		registerSubcommand(new CommandEdit());
 		registerSubcommand(new CommandImport());
+		registerSubcommand(new CommandReload());
 	}
 
 	@Override
