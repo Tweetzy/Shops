@@ -153,8 +153,9 @@ public final class ShopsAPI {
 	/**
 	 * Get the price map of a specific itemstack
 	 * since shops lets users add the same itemstack multiple times,
-	 * the one with the higher buy/sell price will always overwrite the
-	 * old one, even if they have the same item in multiple shops
+	 * the first found item in the map will be used, this may change
+	 * in later versions to just use the higher value
+	 *
 	 * <p>
 	 * It's recommended you use this method to find the worth of
 	 * item stacks since it provides the {@link ShopCurrency} in which the item uses
