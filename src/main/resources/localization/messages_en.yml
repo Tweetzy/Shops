@@ -14,7 +14,11 @@ Menus:
       Name: "&e&lView Cart"
       Lore:
         - "&bClick &7to view cart"
-
+    Sell All Button:
+      Name: "&e&lSell All"
+      Lore:
+        - "&bClick &7to sell all the items"
+        - "&7in your inventory"
   Search:
     Title: "&eSearch&f: &7{keyword}"
     Search Button:
@@ -147,6 +151,11 @@ Menus:
       Name: "&e&lView Cart"
       Lore:
         - "&bClick &7to view cart"
+    Sell All Button:
+      Name: "&e&lSell All"
+      Lore:
+        - "&bClick &7to sell all the items"
+        - "&7in your inventory"
 
 Shop Creation:
   Enter ID:

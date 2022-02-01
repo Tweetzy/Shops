@@ -41,7 +41,7 @@ public final class MenuShopContentEdit extends MenuPagged<ShopItem> {
 			@Override
 			public void onClickedInMenu(Player player, Menu menu, ClickType click) {
 				if (click == ClickType.LEFT)
-					new MenuAddShopItem(MenuShopContentEdit.this.shop, new ca.tweetzy.shops.impl.ShopItem()).displayTo(player);
+					new MenuAddShopItem(MenuShopContentEdit.this.shop, new ShopItem()).displayTo(player);
 			}
 
 			@Override

@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * The current file has been created by Kiran Hart
@@ -21,7 +22,7 @@ import java.util.List;
 public final class ShopsData extends YamlConfig {
 
 	private List<Shop> shops;
-	private List<PriceMap> priceMappings;
+	private CopyOnWriteArrayList<PriceMap> priceMappings;
 	private List<Transaction> transactions;
 
 	@Getter
@@ -34,7 +35,7 @@ public final class ShopsData extends YamlConfig {
 	@Override
 	protected void onLoadFinish() {
 		this.shops = getList("Shops", Shop.class);
-		this.priceMappings = getList("Price Mappings", PriceMap.class);
+		this.priceMappings = new CopyOnWriteArrayList<>(getList("Price Mappings", PriceMap.class));
 		this.transactions = getList("Transactions", Transaction.class);
 	}
 

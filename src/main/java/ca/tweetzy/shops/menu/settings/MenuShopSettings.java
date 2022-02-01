@@ -1,6 +1,5 @@
 package ca.tweetzy.shops.menu.settings;
 
-import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopState;
 import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.impl.Shop;

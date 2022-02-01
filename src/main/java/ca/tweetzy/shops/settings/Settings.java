@@ -74,6 +74,9 @@ public final class Settings extends SimpleSettings {
 			public static String CART_BUTTON_MATERIAL;
 			public static Integer CART_BUTTON_SLOT;
 
+			public static String SELL_ALL_BUTTON_MATERIAL;
+			public static Integer SELL_ALL_BUTTON_SLOT;
+
 			private static void init() {
 				pathPrefix("Menus.Main");
 				BACKGROUND_ITEM = getString("Background Item");
@@ -83,6 +86,9 @@ public final class Settings extends SimpleSettings {
 
 				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
 				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+
+				SELL_ALL_BUTTON_MATERIAL = getString("Sell All Button.Material");
+				SELL_ALL_BUTTON_SLOT = getInteger("Sell All Button.Slot");
 			}
 		}
 
@@ -94,6 +100,9 @@ public final class Settings extends SimpleSettings {
 			public static String CART_BUTTON_MATERIAL;
 			public static Integer CART_BUTTON_SLOT;
 
+			public static String SELL_ALL_BUTTON_MATERIAL;
+			public static Integer SELL_ALL_BUTTON_SLOT;
+
 			private static void init() {
 				pathPrefix("Menus.Shop Content");
 				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
@@ -101,6 +110,9 @@ public final class Settings extends SimpleSettings {
 
 				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
 				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+
+				SELL_ALL_BUTTON_MATERIAL = getString("Sell All Button.Material");
+				SELL_ALL_BUTTON_SLOT = getInteger("Sell All Button.Slot");
 			}
 		}
 

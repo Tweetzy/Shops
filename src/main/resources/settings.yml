@@ -23,6 +23,9 @@ Menus:
     Cart Button:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
+    Sell All Button:
+      Slot: 0 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: SUNFLOWER
 
   Shop Content:
     Search Button:
@@ -31,6 +34,9 @@ Menus:
     Cart Button:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
+    Sell All Button:
+      Slot: 1 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: SUNFLOWER
 
   Cart:
     Background Item: BLACK_STAINED_GLASS_PANE

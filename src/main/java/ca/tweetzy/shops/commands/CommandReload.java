@@ -8,7 +8,7 @@ import ca.tweetzy.shops.Shops;
  * Time Created: 10:48 p.m.
  * Usage of any code found within this class is prohibited unless given explicit permission otherwise
  */
-public final class CommandReload extends AbstractSubCommand{
+public final class CommandReload extends AbstractSubCommand {
 
 	public CommandReload() {
 		super("reload|rl");

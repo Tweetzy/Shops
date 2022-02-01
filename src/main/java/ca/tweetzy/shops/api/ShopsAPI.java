@@ -152,9 +152,10 @@ public final class ShopsAPI {
 
 	/**
 	 * Get the price map of a specific itemstack
-	 * due to the way shops is setup, STONE with a stack size 64
-	 * is going to be a different price map than STONE with a stack size of 32
-	 *
+	 * since shops lets users add the same itemstack multiple times,
+	 * the one with the higher buy/sell price will always overwrite the
+	 * old one, even if they have the same item in multiple shops
+	 * <p>
 	 * It's recommended you use this method to find the worth of
 	 * item stacks since it provides the {@link ShopCurrency} in which the item uses
 	 *
@@ -189,4 +190,5 @@ public final class ShopsAPI {
 		final PriceMap found = getPriceMap(itemStack);
 		return found == null ? 0D : found.getBuyPrice();
 	}
+
 }

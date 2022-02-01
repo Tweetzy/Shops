@@ -7,7 +7,6 @@ import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
 import ca.tweetzy.shops.menu.MenuShopList;
-import ca.tweetzy.shops.menu.shopcontent.MenuAddShopItem;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentEdit;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.conversation.TitleInput;

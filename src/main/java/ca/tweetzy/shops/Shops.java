@@ -41,6 +41,8 @@ public final class Shops extends TweetyPlugin {
 				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
 		}));
 
+		this.priceMapManager.load(null);
+
 		if (HookManager.isPlaceholderAPILoaded())
 			new ShopsPAPIExpansion().register();
 

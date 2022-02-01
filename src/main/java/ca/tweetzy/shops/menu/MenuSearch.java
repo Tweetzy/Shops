@@ -6,7 +6,6 @@ import ca.tweetzy.shops.api.interfaces.shop.IShopItem;
 import ca.tweetzy.shops.impl.Checkout;
 import ca.tweetzy.shops.impl.SearchedShopItem;
 import ca.tweetzy.shops.impl.SmartItem;
-import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.conversation.TitleInput;

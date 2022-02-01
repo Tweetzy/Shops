@@ -41,6 +41,7 @@ public final class ShopsEconomy {
 					"currency_symbol", Localization.CURRENCY_SYMBOL,
 					"amount", String.format(Settings.NUMBER_FORMAT, amount)
 			));
+			return true;
 		}
 		return false;
 	}

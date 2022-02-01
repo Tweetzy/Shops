@@ -1,7 +1,6 @@
 package ca.tweetzy.shops.api.interfaces;
 
 import ca.tweetzy.shops.api.enums.TransactionType;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;

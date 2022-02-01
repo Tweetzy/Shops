@@ -108,8 +108,8 @@ public final class Localization extends SimpleLocalization {
 			INVENTORY_FULL = getString("Inventory Full");
 			NO_MONEY = getString("No Money");
 			NO_ITEMS = getString("No Items");
-			ITEM_ALREADY_IN_CART= getString("Item Already In Cart");
-			CHECKOUT_FIRST= getString("Checkout First");
+			ITEM_ALREADY_IN_CART = getString("Item Already In Cart");
+			CHECKOUT_FIRST = getString("Checkout First");
 		}
 	}
 
@@ -160,6 +160,9 @@ public final class Localization extends SimpleLocalization {
 		public static String CART_BUTTON_NAME;
 		public static List<String> CART_BUTTON_LORE;
 
+		public static String SELL_ALL_BUTTON_NAME;
+		public static List<String> SELL_ALL_BUTTON_LORE;
+
 		private static void init() {
 			pathPrefix("Menus.Main");
 
@@ -169,6 +172,9 @@ public final class Localization extends SimpleLocalization {
 
 			CART_BUTTON_NAME = getString("Cart Button.Name");
 			CART_BUTTON_LORE = getStringList("Cart Button.Lore");
+
+			SELL_ALL_BUTTON_NAME = getString("Sell All Button.Name");
+			SELL_ALL_BUTTON_LORE = getStringList("Sell All Button.Lore");
 		}
 	}
 
@@ -180,6 +186,9 @@ public final class Localization extends SimpleLocalization {
 		public static String CART_BUTTON_NAME;
 		public static List<String> CART_BUTTON_LORE;
 
+		public static String SELL_ALL_BUTTON_NAME;
+		public static List<String> SELL_ALL_BUTTON_LORE;
+
 		private static void init() {
 			pathPrefix("Menus.Shop Content");
 			SEARCH_BUTTON_NAME = getString("Search Button.Name");
@@ -187,6 +196,9 @@ public final class Localization extends SimpleLocalization {
 
 			CART_BUTTON_NAME = getString("Cart Button.Name");
 			CART_BUTTON_LORE = getStringList("Cart Button.Lore");
+
+			SELL_ALL_BUTTON_NAME = getString("Sell All Button.Name");
+			SELL_ALL_BUTTON_LORE = getStringList("Sell All Button.Lore");
 		}
 
 		public static final class ShopItemLores {

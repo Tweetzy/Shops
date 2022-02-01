@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import me.TechsCode.UltraEconomy.UltraEconomy;
 import me.TechsCode.UltraEconomy.objects.Account;
+import me.TechsCode.UltraEconomy.objects.Balance;
 import me.TechsCode.UltraEconomy.objects.Currency;
 import org.bukkit.entity.Player;
 
@@ -43,9 +44,18 @@ public final class UltraEconomyCurrency extends ShopCurrency {
 		final Currency currency = UltraEconomy.getAPI().getCurrencies().name(this.currencyName).orElse(null);
 		if (currency == null) return false;
 
-		final float oldAmount = account.getBalance(currency).getOnBank();
-		account.getBalance(currency).setBank(oldAmount - (float) amount);
-		return true;
+		final Balance balance = account.getBalance(currency);
+		if (balance.getOnBank() >= amount) {
+			balance.removeBank((float) amount);
+			return true;
+		}
+
+		if (balance.getOnHand() >= amount) {
+			balance.removeHand((float) amount);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -56,8 +66,7 @@ public final class UltraEconomyCurrency extends ShopCurrency {
 		final Currency currency = UltraEconomy.getAPI().getCurrencies().name(this.currencyName).orElse(null);
 		if (currency == null) return false;
 
-		final float oldAmount = account.getBalance(currency).getOnBank();
-		account.getBalance(currency).setBank(oldAmount + (float) amount);
+		account.getBalance(currency).addHand((float) amount);
 		return true;
 	}
 
@@ -67,7 +76,7 @@ public final class UltraEconomyCurrency extends ShopCurrency {
 		if (currency == null) return false;
 
 		final Account account = UltraEconomy.getAPI().getAccounts().uuid(player.getUniqueId()).orElse(null);
-		return account != null && account.getBalance(currency).getOnBank() >= amount;
+		return account != null && (account.getBalance(currency).getOnBank() >= amount || account.getBalance(currency).getOnHand() >= amount);
 	}
 
 }
