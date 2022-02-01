@@ -2,12 +2,15 @@ package ca.tweetzy.shops.api;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.interfaces.shop.IShop;
+import ca.tweetzy.shops.impl.PriceMap;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.model.manager.CurrencyManager;
+import ca.tweetzy.shops.model.manager.PriceMapManager;
 import ca.tweetzy.shops.model.manager.ShopManager;
 import ca.tweetzy.tweety.collection.StrictList;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ public final class ShopsAPI {
 
 	private final ShopManager SHOP_MANAGER = Shops.getShopManager();
 	private final CurrencyManager CURRENCY_MANAGER = Shops.getCurrencyManager();
+	private final PriceMapManager PRICE_MAP_MANAGER = Shops.getPriceMapManager();
 
 	/**
 	 * Checks whether a shop exists by its id
@@ -135,5 +139,54 @@ public final class ShopsAPI {
 	 */
 	public StrictList<ShopCurrency> getCurrencies() {
 		return CURRENCY_MANAGER.getCurrencies();
+	}
+
+	/**
+	 * Get the entire price map
+	 *
+	 * @return a list of all {@link PriceMap}s
+	 */
+	public List<PriceMap> getPriceMap() {
+		return PRICE_MAP_MANAGER.getPriceMap();
+	}
+
+	/**
+	 * Get the price map of a specific itemstack
+	 * due to the way shops is setup, STONE with a stack size 64
+	 * is going to be a different price map than STONE with a stack size of 32
+	 *
+	 * It's recommended you use this method to find the worth of
+	 * item stacks since it provides the {@link ShopCurrency} in which the item uses
+	 *
+	 * @return the found {@link PriceMap} or nll
+	 */
+	public PriceMap getPriceMap(@NonNull final ItemStack itemStack) {
+		return PRICE_MAP_MANAGER.getPriceMap(itemStack);
+	}
+
+	/**
+	 * Get the sell price of a specific itemstack, it doesn't take the
+	 * {@link ShopCurrency} into account, if you need to know which
+	 * currency the item is using, see {@link #getPriceMap(ItemStack) }
+	 *
+	 * @param itemStack is the {@link ItemStack} being checked
+	 * @return 0 or the found sell price
+	 */
+	public double getSellPrice(@NonNull final ItemStack itemStack) {
+		final PriceMap found = getPriceMap(itemStack);
+		return found == null ? 0D : found.getSellPrice();
+	}
+
+	/**
+	 * Get the buy price of a specific itemstack, it doesn't take the
+	 * {@link ShopCurrency} into account, if you need to know which
+	 * currency the item is using, see {@link #getPriceMap(ItemStack) }
+	 *
+	 * @param itemStack is the {@link ItemStack} being checked
+	 * @return 0 or the found buy price
+	 */
+	public double getBuyPrice(@NonNull final ItemStack itemStack) {
+		final PriceMap found = getPriceMap(itemStack);
+		return found == null ? 0D : found.getBuyPrice();
 	}
 }

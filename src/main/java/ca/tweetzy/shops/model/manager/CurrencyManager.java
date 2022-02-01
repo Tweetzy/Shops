@@ -1,11 +1,13 @@
 package ca.tweetzy.shops.model.manager;
 
 import ca.tweetzy.shops.api.ShopCurrency;
+import ca.tweetzy.shops.api.ShopsAPI;
 import ca.tweetzy.shops.impl.currency.PlayerPointsCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
 import ca.tweetzy.shops.model.UltraEconomyLoader;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.collection.StrictList;
+import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -31,6 +33,7 @@ public class CurrencyManager extends Manager<StrictList<ShopCurrency>> {
 	}
 
 	public ShopCurrency getCurrency(@NonNull final String plugin, @NonNull final String currencyName) {
+		ShopsAPI.getSellPrice(CompMaterial.MILK_BUCKET.toItem());
 		return this.currencies.getSource().stream().filter(currency -> currency.getPluginName().equalsIgnoreCase(plugin) && currency.getName().equals(currencyName)).findFirst().orElse(null);
 	}
 

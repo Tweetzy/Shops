@@ -46,8 +46,13 @@ public final class PriceMapManager extends Manager<StrictList<PriceMap>> {
 		return found == null ? 0D : found.getBuyPrice();
 	}
 
+
+
 	@Override
 	public void load(Consumer<StrictList<PriceMap>> data) {
+		this.knownPrices.clear();
+		ShopsData.getInstance().getPriceMappings().forEach(this::addPriceMap);
+
 		if (data != null)
 			data.accept(this.knownPrices);
 	}
