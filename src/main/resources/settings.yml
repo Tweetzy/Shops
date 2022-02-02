@@ -112,6 +112,9 @@ Number Format: "%,.2f"
 # as it's the tax % where I live
 Tax: 13.0
 
+# Disabling metrics will disable custom prefixes
+Metrics: true
+
 # -------------------------------------------------------------------------------------------------
 # The format used in the {timestamp} placeholder (google "Java timestamp format" for options).
 # -------------------------------------------------------------------------------------------------

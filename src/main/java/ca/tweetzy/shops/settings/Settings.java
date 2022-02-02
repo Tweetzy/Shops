@@ -15,6 +15,7 @@ public final class Settings extends SimpleSettings {
 	public static Boolean DYNAMIC_FILL_MAIN_MENU;
 	public static Integer SHOP_TICK_TASK_SPEED;
 	public static String NUMBER_FORMAT;
+	public static Boolean METRICS;
 
 	public static Double TAX;
 
@@ -26,6 +27,7 @@ public final class Settings extends SimpleSettings {
 		SHOP_TICK_TASK_SPEED = getInteger("Shop Tick Task Speed");
 		NUMBER_FORMAT = getString("Number Format");
 		TAX = getDouble("Tax");
+		METRICS = getBoolean("Metrics");
 	}
 
 	public static final class Menus {
