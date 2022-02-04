@@ -5,6 +5,10 @@ Menus:
   Back Button:
     Slot: -1
     Material: IRON_DOOR
+  Prev Button:
+    Material: ARROW
+  Next Button:
+    Material: ARROW
 
   Search:
     Background Item: BLACK_STAINED_GLASS_PANE
@@ -16,6 +20,8 @@ Menus:
       Material: MINECART
 
   Main:
+    # set to -1 to use automatic sizing
+    Size: 54
     Background Item: BLACK_STAINED_GLASS_PANE
     Search Button:
       Slot: -2

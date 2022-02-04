@@ -126,6 +126,30 @@ public final class Localization extends SimpleLocalization {
 				LORE = getStringList("Lore");
 			}
 		}
+
+		public static final class PrevButton {
+
+			public static String NAME;
+			public static List<String> LORE;
+
+			private static void init() {
+				pathPrefix("Menus.Prev Button");
+				NAME = getString("Name");
+				LORE = getStringList("Lore");
+			}
+		}
+
+		public static final class NextButton {
+
+			public static String NAME;
+			public static List<String> LORE;
+
+			private static void init() {
+				pathPrefix("Menus.Next Button");
+				NAME = getString("Name");
+				LORE = getStringList("Lore");
+			}
+		}
 	}
 
 	public static final class SearchMenu {

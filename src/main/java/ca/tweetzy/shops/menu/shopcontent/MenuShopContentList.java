@@ -45,11 +45,21 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 	private final Button sellAllButton;
 
 	public MenuShopContentList(@NonNull final Shop shop, final String keyword) {
-		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems());
+		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems(), true);
 		this.shop = shop;
 		this.keyword = keyword;
 		setTitle(keyword != null ? this.shop.getDisplayName() + "&f: &7" + keyword : this.shop.getDisplayName());
-		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").clearLore().make());
+		setSize(9 * 6);
+
+		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").lore("").make());
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
+
 		setAsyncFill();
 
 		this.searchButton = Button.makeSimple(ItemCreator
@@ -141,6 +151,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 		return ItemCreator
 				.of(item.getItem())
+				.amount(item.getPurchaseQuantity())
 				.lore(Replacer.replaceArray(lore,
 						"stock_status", item.getCurrentStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK.replace("{shop_item_stock}", String.valueOf(item.getStock())),
 						"buy", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.BUY, item),
@@ -164,8 +175,8 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 	private String replaceBuySell(@NonNull String string, @NonNull final IShopItem shopItem) {
 		return string
 				.replace("{shop_item_qty}", String.valueOf(shopItem.getPurchaseQuantity()))
-				.replace("{shop_item_buy_cost}", String.valueOf(shopItem.getBuyPrice()))
-				.replace("{shop_item_sell_cost}", String.valueOf(shopItem.getSellPrice()));
+				.replace("{shop_item_buy_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getBuyPrice()))
+				.replace("{shop_item_sell_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getSellPrice()));
 	}
 
 	@Override

@@ -129,7 +129,7 @@ public final class MenuSearch extends MenuPagged<SearchedShopItem> {
 	private String replaceBuySell(@NonNull String string, @NonNull final IShopItem shopItem) {
 		return string
 				.replace("{shop_item_qty}", String.valueOf(shopItem.getPurchaseQuantity()))
-				.replace("{shop_item_buy_cost}", String.valueOf(shopItem.getBuyPrice()))
-				.replace("{shop_item_sell_cost}", String.valueOf(shopItem.getSellPrice()));
+				.replace("{shop_item_buy_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getBuyPrice()))
+				.replace("{shop_item_sell_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getSellPrice()));
 	}
 }

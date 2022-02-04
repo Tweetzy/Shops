@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu.shopcontent;
 import ca.tweetzy.shops.impl.Shop;
 import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
@@ -79,10 +80,10 @@ public final class MenuShopContentEdit extends MenuPagged<ShopItem> {
 				.of(shopItem.getItem())
 				.lore(lore)
 				.lore("")
-				.lore("&fx" + shopItem.getPurchaseQuantity() + " &ecosts &a$" + shopItem.getBuyPrice(),
-						"&fx1&e costs &a$" + shopItem.getBuyPrice() / shopItem.getPurchaseQuantity(),
-						"&fx" + shopItem.getPurchaseQuantity() + " &esells for &a$" + shopItem.getSellPrice(),
-						"&fx1&e sells for &a$" + shopItem.getSellPrice() / shopItem.getPurchaseQuantity(),
+				.lore("&fx" + shopItem.getPurchaseQuantity() + " &ecosts &a$" + String.format(Settings.NUMBER_FORMAT, shopItem.getBuyPrice()),
+						"&fx1&e costs &a$" + String.format(Settings.NUMBER_FORMAT, shopItem.getBuyPrice() / shopItem.getPurchaseQuantity()),
+						"&fx" + shopItem.getPurchaseQuantity() + " &esells for &a$" + String.format(Settings.NUMBER_FORMAT, shopItem.getSellPrice()),
+						"&fx1&e sells for &a$" + String.format(Settings.NUMBER_FORMAT, shopItem.getSellPrice() / shopItem.getPurchaseQuantity()),
 						"",
 						"&eLeft Click &7to edit shop item",
 						"&ePress Drop &7to delete item"

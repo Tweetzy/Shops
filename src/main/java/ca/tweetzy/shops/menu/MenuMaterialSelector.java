@@ -8,6 +8,8 @@ import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.menu.settings.display.MenuShopDisplaySettings;
 import ca.tweetzy.shops.menu.shopcontent.MenuAddShopItem;
 import ca.tweetzy.shops.model.InventorySafeMaterials;
+import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.menu.Menu;
@@ -37,6 +39,14 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 		this.shop = shop;
 		this.selectMode = selectMode;
 		this.shopItem = shopItem;
+
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
 	}
 
 	@Override

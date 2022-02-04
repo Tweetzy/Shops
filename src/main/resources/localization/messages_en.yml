@@ -3,6 +3,14 @@ Menus:
     Name: "&e&lBack"
     Lore:
       - "&BClick &7to go back"
+  Prev Button:
+    Name: "&8<< &7Page {page}"
+    Lore:
+      - "&7Click to go to page {page}"
+  Next Button:
+    Name: "&7Page {page} &8>>"
+    Lore:
+      - "&7Click to go to page {page}"
 
   Main:
     Title: "&eShops"

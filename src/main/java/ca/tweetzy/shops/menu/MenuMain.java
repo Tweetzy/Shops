@@ -46,7 +46,18 @@ public final class MenuMain extends MenuPagged<Shop> {
 	public MenuMain(@NonNull final Player thePlayer) {
 		super(Settings.DYNAMIC_FILL_MAIN_MENU ? Shops.getShopManager().getShops(thePlayer) : Shops.getShopManager().getEmptyPopulated());
 		setTitle(Localization.MainMenu.TITLE);
+		if (Settings.Menus.Main.SIZE != -1)
+			setSize(Settings.Menus.Main.SIZE);
 		this.thePlayer = thePlayer;
+
+		setInactivePageButton(new SmartItem(Settings.Menus.Main.BACKGROUND_ITEM).get());
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
 
 		if (!Settings.DYNAMIC_FILL_MAIN_MENU) {
 			this.manualShopSpots = new HashMap<>();

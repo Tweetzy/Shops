@@ -44,6 +44,26 @@ public final class Settings extends SimpleSettings {
 			}
 		}
 
+		public static final class PrevButton {
+
+			public static String MATERIAL;
+
+			private static void init() {
+				pathPrefix("Menus.Prev Button");
+				MATERIAL = getString("Material");
+			}
+		}
+
+		public static final class NextButton {
+
+			public static String MATERIAL;
+
+			private static void init() {
+				pathPrefix("Menus.Prev Button");
+				MATERIAL = getString("Material");
+			}
+		}
+
 		public static final class Search {
 
 			public static String BACKGROUND_ITEM;
@@ -68,6 +88,7 @@ public final class Settings extends SimpleSettings {
 
 		public static final class Main {
 
+			public static Integer SIZE;
 			public static String BACKGROUND_ITEM;
 
 			public static String SEARCH_BUTTON_MATERIAL;
@@ -81,6 +102,8 @@ public final class Settings extends SimpleSettings {
 
 			private static void init() {
 				pathPrefix("Menus.Main");
+
+				SIZE = getInteger("Size");
 				BACKGROUND_ITEM = getString("Background Item");
 
 				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");

@@ -62,7 +62,10 @@ public final class MenuItemPurchase extends Menu {
 				.name(Localization.Menus.BackButton.NAME)
 				.lore(Localization.Menus.BackButton.LORE), player -> new MenuShopContentList(this.shop, null).displayTo(player));
 
-		this.shopItemButton = Button.makeDummy(this.shopItem.getItem());
+		this.shopItemButton = Button.makeDummy(ItemCreator
+				.of(this.shopItem.getItem())
+				.amount(this.shopItem.getPurchaseQuantity())
+		);
 
 		this.decreaseOneButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.DECR_ONE_BUTTON_MATERIAL).get())
