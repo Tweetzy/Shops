@@ -49,8 +49,7 @@ public final class MenuShopContentEdit extends MenuPagged<ShopItem> {
 			public ItemStack getItem() {
 				return ItemCreator.of(CompMaterial.SLIME_BALL, "&eAdd Item",
 						"",
-						"&eLeft Click &7to add item",
-						"&eRight Click &7to quick select add"
+						"&eLeft Click &7to add item"
 				).make();
 			}
 		};

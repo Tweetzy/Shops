@@ -21,7 +21,7 @@ Menus:
 
   Main:
     # set to -1 to use automatic sizing
-    Size: 54
+    Size: -1
     Background Item: BLACK_STAINED_GLASS_PANE
     Search Button:
       Slot: -2

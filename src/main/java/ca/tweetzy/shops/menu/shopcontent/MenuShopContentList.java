@@ -43,6 +43,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 	private final Button cartButton;
 	private final Button backButton;
 	private final Button sellAllButton;
+	private final CompMaterial bg;
 
 	public MenuShopContentList(@NonNull final Shop shop, final String keyword) {
 		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems(), true);
@@ -51,6 +52,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 		setTitle(keyword != null ? this.shop.getDisplayName() + "&f: &7" + keyword : this.shop.getDisplayName());
 		setSize(9 * 6);
 
+		this.bg = this.shop.getDisplay().getBackgroundItem();
 		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").lore("").make());
 		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
 		setNextPageButtonName(Localization.Menus.NextButton.NAME);
@@ -169,7 +171,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	@Override
 	protected ItemStack backgroundItem() {
-		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
+		return ItemCreator.of(this.bg).name(" ").make();
 	}
 
 	private String replaceBuySell(@NonNull String string, @NonNull final IShopItem shopItem) {
