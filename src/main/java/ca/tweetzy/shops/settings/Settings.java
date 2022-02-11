@@ -59,7 +59,7 @@ public final class Settings extends SimpleSettings {
 			public static String MATERIAL;
 
 			private static void init() {
-				pathPrefix("Menus.Prev Button");
+				pathPrefix("Menus.Next Button");
 				MATERIAL = getString("Material");
 			}
 		}
