@@ -2,8 +2,8 @@ package ca.tweetzy.shops.menu;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopLayout;
-import ca.tweetzy.shops.impl.PriceMap;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.TextureResolver;
@@ -15,7 +15,6 @@ import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
-import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -99,19 +98,22 @@ public final class MenuMain extends MenuPagged<Shop> {
 				.name(Localization.MainMenu.SELL_ALL_BUTTON_NAME)
 				.lore(Localization.MainMenu.SELL_ALL_BUTTON_LORE), player -> {
 
-			for (ItemStack content : player.getInventory().getContents()) {
-				if (content == null || content.getType() == CompMaterial.AIR.toMaterial()) continue;
 
-				final PriceMap map = Shops.getPriceMapManager().getPriceMap(content);
-				if (map == null) continue;
+			for (Shop shop : Shops.getShopManager().getShops(player)) {
+				for (ShopItem shopItem : shop.getShopItems()) {
+					if (!shopItem.canBeSold()) continue;
+					if (shopItem.getSellPrice() <= 0D) continue;
 
-				if (map.getSellPrice() <= 0D) continue;
+					final int itemCount = Shops.getShopManager().getItemCountInPlayerInventory(player, shopItem.getItem());
+					if (itemCount == 0) continue;
 
-				final int itemCount = content.getAmount();
-				final double worth = map.getSellPrice() * itemCount;
+					final double pricePerOne = shopItem.getSellPrice() / shopItem.getPurchaseQuantity();
+					final double preTax = pricePerOne * itemCount;
+					final double worth = preTax - (preTax * Settings.TAX / 100D);
 
-				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, content, itemCount);
-				ShopsEconomy.deposit(player, map.getCurrency(), worth - (worth * Settings.TAX / 100D));
+					Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, shopItem.getItem(), itemCount);
+					ShopsEconomy.deposit(player, shopItem.getCurrency(), worth);
+				}
 			}
 		});
 	}
