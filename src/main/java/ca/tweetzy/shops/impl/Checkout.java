@@ -78,6 +78,7 @@ public final class Checkout implements ICheckout {
 
 	@Override
 	public boolean executeBuy(@NonNull final Player player, final boolean omit) {
+		if (!this.shopItem.canBeBought()) return true;
 		if (this.shop.getSettings().isRequirePermissionToBuy() && !player.hasPermission(this.shop.getSettings().getBuyPermission())) return false;
 
 		if (player.getInventory().firstEmpty() == -1) {
@@ -150,6 +151,7 @@ public final class Checkout implements ICheckout {
 
 	@Override
 	public boolean executeSell(@NonNull Player player, final boolean omit) {
+		if (!this.shopItem.canBeSold()) return true;
 		if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return false;
 		int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
 

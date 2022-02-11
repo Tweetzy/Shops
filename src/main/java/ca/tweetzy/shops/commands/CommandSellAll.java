@@ -2,6 +2,8 @@ package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.impl.PriceMap;
+import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.ShopItem;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.remain.CompMaterial;
@@ -25,19 +27,21 @@ public final class CommandSellAll extends AbstractSubCommand {
 		checkConsole();
 
 		final Player player = getPlayer();
-		for (ItemStack content : player.getInventory().getContents()) {
-			if (content == null || content.getType() == CompMaterial.AIR.toMaterial()) continue;
+		for (Shop shop : Shops.getShopManager().getShops(player)) {
+			for (ShopItem shopItem : shop.getShopItems()) {
+				if (!shopItem.canBeSold()) continue;
+				if (shopItem.getSellPrice() <= 0D) continue;
 
-			final PriceMap map = Shops.getPriceMapManager().getPriceMap(content);
-			if (map == null) continue;
+				final int itemCount = Shops.getShopManager().getItemCountInPlayerInventory(player, shopItem.getItem());
+				if (itemCount == 0) continue;
 
-			if (map.getSellPrice() <= 0D) continue;
+				final double pricePerOne = shopItem.getSellPrice() / shopItem.getPurchaseQuantity();
+				final double preTax = pricePerOne * itemCount;
+				final double worth = preTax - (preTax * Settings.TAX / 100D);
 
-			final int itemCount = content.getAmount();
-			final double worth = map.getSellPrice() * itemCount;
-
-			Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, content, itemCount);
-			ShopsEconomy.deposit(player, map.getCurrency(), worth - (worth * Settings.TAX / 100D));
+				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, shopItem.getItem(), itemCount);
+				ShopsEconomy.deposit(player, shopItem.getCurrency(), worth);
+			}
 		}
 	}
 }

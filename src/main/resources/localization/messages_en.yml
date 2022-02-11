@@ -176,9 +176,10 @@ Shop Creation:
 Success:
   Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
   Shop Deleted: "&aDeleted shop with id&f: &b{shop_id}"
+
   Money Remove:
     # mainly for economies implementing vault where the currency symbol is $ or similar
-    Dollar Type: "&c&l- {currency_symbol}{value}"
+    Dollar Type: "&c&l- {currency_symbol}{amount}"
     # for any other named currency type, example player points -> points, ultra economy -> gems, etc
     Other Type: "&c&l- {amount} {currency}"
 
