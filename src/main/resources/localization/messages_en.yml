@@ -176,6 +176,8 @@ Shop Creation:
 Success:
   Shop Created: "&aCreated new shop with id&f: &b{shop_id}"
   Shop Deleted: "&aDeleted shop with id&f: &b{shop_id}"
+  Item Bought: "&aYou bought &fx&e{qty} &2{item}"
+  Item Sold: "&aYou sold &fx&e{qty} &2{item}"
 
   Money Remove:
     # mainly for economies implementing vault where the currency symbol is $ or similar

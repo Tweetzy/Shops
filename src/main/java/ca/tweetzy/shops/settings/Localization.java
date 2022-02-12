@@ -55,6 +55,8 @@ public final class Localization extends SimpleLocalization {
 
 		public static String SHOP_CREATED;
 		public static String SHOP_DELETED;
+		public static String ITEM_SOLD;
+		public static String ITEM_BOUGHT;
 
 		public static final class MoneyRemove {
 
@@ -84,6 +86,8 @@ public final class Localization extends SimpleLocalization {
 			pathPrefix("Success");
 			SHOP_CREATED = getString("Shop Created");
 			SHOP_DELETED = getString("Shop Deleted");
+			ITEM_SOLD = getString("Item Sold");
+			ITEM_BOUGHT = getString("Item Bought");
 		}
 	}
 
