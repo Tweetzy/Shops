@@ -102,7 +102,6 @@ public final class MenuItemPurchase extends Menu {
 				.amount(Settings.Menus.BuyItem.INC_ONE)
 				.name(Localization.BuyItemMenu.INC_ONE_NAME.replace("{increment_one}", String.valueOf(Settings.Menus.BuyItem.INC_ONE)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.INC_ONE_LORE, "increment_one", Settings.Menus.BuyItem.INC_ONE)), player -> {
-
 			this.checkout.incrementQty(Settings.Menus.BuyItem.INC_ONE);
 			restartMenu();
 		});

@@ -7,7 +7,7 @@
     <artifactId>shops</artifactId>
 
     <name>Shops</name>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -15,7 +15,7 @@
         <jarName>${project.name}</jarName>
         <main.class>${project.groupId}.${project.artifactId}.${project.name}</main.class>
         <java.version>1.8</java.version>
-        <tweety.version>1.12.2</tweety.version>
+        <tweety.version>1.13.0</tweety.version>
         <tweety.path>com.github.kiranhart</tweety.path>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
