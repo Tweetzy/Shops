@@ -97,7 +97,7 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDisplayName(string);
-				ShopsData.getInstance().save();
+				ShopsData.getInstance().saveAll();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}
@@ -111,7 +111,7 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDescription(string);
-				ShopsData.getInstance().save();
+				ShopsData.getInstance().saveAll();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}

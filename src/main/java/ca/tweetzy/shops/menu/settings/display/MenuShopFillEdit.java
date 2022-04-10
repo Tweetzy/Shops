@@ -53,7 +53,7 @@ public final class MenuShopFillEdit extends MenuPagged<Integer> {
 		}
 
 		if (clickType == ClickType.RIGHT) {
-			ShopsData.getInstance().save();
+			ShopsData.getInstance().saveAll();
 			new MenuShopDisplaySettings(this.shop).displayTo(player);
 		}
 	}

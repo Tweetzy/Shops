@@ -16,6 +16,7 @@ import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
+import ca.tweetzy.tweety.remain.Remain;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -63,7 +64,7 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 		else
 			this.shopItem.setItem(compMaterial.toItem());
 
-		ShopsData.getInstance().save();
+		ShopsData.getInstance().saveAll();
 
 		if (this.selectMode == MaterialSelectMode.SHOP_ICON)
 			new MenuShopEdit(this.shop).displayTo(player);

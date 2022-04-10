@@ -107,7 +107,7 @@ public final class MenuShopContentEdit extends MenuPagged<ShopItem> {
 	protected void onPageClick(Player player, ShopItem item, ClickType click) {
 		if (click == ClickType.DROP) {
 			this.shop.getShopItems().remove(item);
-			ShopsData.getInstance().save();
+			ShopsData.getInstance().saveAll();
 			newInstance().displayTo(player);
 		}
 

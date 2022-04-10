@@ -278,7 +278,7 @@ public final class MenuShopSettings extends Menu {
 	}
 
 	private void saveAndReopen(@NonNull final Player player) {
-		ShopsData.getInstance().save();
+		ShopsData.getInstance().saveAll();
 		MenuShopSettings.this.newInstance().displayTo(player);
 	}
 

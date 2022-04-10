@@ -153,7 +153,7 @@ public final class MenuShopDisplaySettings extends Menu {
 	}
 
 	private void saveAndReopen(@NonNull final Player player) {
-		ShopsData.getInstance().save();
+		ShopsData.getInstance().saveAll();
 		MenuShopDisplaySettings.this.newInstance().displayTo(player);
 	}
 

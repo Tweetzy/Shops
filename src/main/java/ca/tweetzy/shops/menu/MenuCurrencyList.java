@@ -71,7 +71,7 @@ public final class MenuCurrencyList extends MenuPagged<ShopCurrency> {
 	protected void onPageClick(Player player, ShopCurrency currency, ClickType clickType) {
 		if (this.shopItem == null) {
 			this.shop.setCurrency(currency);
-			ShopsData.getInstance().save();
+			ShopsData.getInstance().saveAll();
 			new MenuShopEdit(this.shop).displayTo(player);
 		} else {
 			this.shopItem.setCurrency(currency);

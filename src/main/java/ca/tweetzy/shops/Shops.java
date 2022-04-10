@@ -76,11 +76,13 @@ public final class Shops extends TweetyPlugin {
 
 	@Override
 	protected void onPluginReload() {
-		ShopsData.getInstance().reload();
-		this.shopManager.load(loaded -> loaded.forEach(shop -> {
-			if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
-				registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
-		}));
+		Common.runAsync(() -> {
+			ShopsData.getInstance().reload();
+			this.shopManager.load(loaded -> loaded.forEach(shop -> {
+				if (shop.getSettings().isUseOpenCommand() && shop.getSettings().getOpenCommand().length() >= 1)
+					registerCommand(new DynamicShopCommand(shop.getSettings().getOpenCommand()));
+			}));
+		});
 	}
 
 	@Override
@@ -127,9 +129,6 @@ public final class Shops extends TweetyPlugin {
 	}
 
 	private void normalizePrefix() {
-		Common.ADD_TELL_PREFIX = true;
-		Common.ADD_LOG_PREFIX = true;
-
 		String prefixToUse = this.bStats ? Settings.PREFIX : "&8[&eShops&8]";
 
 		Common.setTellPrefix(prefixToUse);
