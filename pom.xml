@@ -46,7 +46,7 @@
     <dependencies>
         <dependency>
             <groupId>${tweety.path}</groupId>
-            <artifactId>tweety</artifactId>
+            <artifactId>Tweety</artifactId>
             <version>${tweety.version}</version>
         </dependency>
         <dependency>
@@ -123,7 +123,7 @@
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                     <artifactSet>
                         <includes>
-                            <include>${tweety.path}:tweety*</include>
+                            <include>${tweety.path}:Tweety*</include>
                         </includes>
                     </artifactSet>
                     <filters>
