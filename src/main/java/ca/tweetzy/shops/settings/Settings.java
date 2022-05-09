@@ -2,6 +2,8 @@ package ca.tweetzy.shops.settings;
 
 import ca.tweetzy.tweety.settings.SimpleSettings;
 
+import java.util.List;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 17 2021
@@ -28,6 +30,82 @@ public final class Settings extends SimpleSettings {
 		NUMBER_FORMAT = getString("Number Format");
 		TAX = getDouble("Tax");
 		METRICS = getBoolean("Metrics");
+	}
+
+	public static final class DiscordWebhook {
+
+		public static Boolean ENABLED;
+		public static Boolean SEND_ON_BUY;
+		public static Boolean SEND_ON_SELL;
+		public static Boolean USE_RANDOM_COLOUR;
+
+		public static String USERNAME;
+		public static String AVATAR;
+		public static String DEFAULT_COLOUR;
+		public static List<String> HOOKS;
+
+		public static String SOLD_TITLE;
+		public static String BOUGHT_TITLE;
+
+		private static void init() {
+			pathPrefix("Discord Webhooks");
+
+			ENABLED = getBoolean("Enabled");
+			SEND_ON_BUY = getBoolean("Send On Buy");
+			SEND_ON_SELL = getBoolean("Send On Sell");
+			USE_RANDOM_COLOUR = getBoolean("Use Random Colour");
+
+			USERNAME = getString("Username");
+			AVATAR = getString("Avatar");
+			DEFAULT_COLOUR = getString("Default Colour");
+			HOOKS = getStringList("Hooks");
+
+			SOLD_TITLE = getString("Sold Title");
+			BOUGHT_TITLE = getString("Bought Title");
+		}
+
+		public static final class Fields {
+
+			public static String PLAYER_NAME;
+			public static String PLAYER_VALUE;
+			public static Boolean PLAYER_INLINE;
+
+			public static String QTY_NAME;
+			public static String QTY_VALUE;
+			public static Boolean QTY_INLINE;
+
+			public static String ITEM_NAME;
+			public static String ITEM_VALUE;
+			public static Boolean ITEM_INLINE;
+
+			public static String PRICE_NAME;
+			public static String PRICE_VALUE;
+			public static Boolean PRICE_INLINE;
+
+			private static void init() {
+				pathPrefix("Discord Webhooks.Fields.Player");
+
+				PLAYER_NAME = getString("Name");
+				PLAYER_VALUE = getString("Value");
+				PLAYER_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Quantity");
+				QTY_NAME = getString("Name");
+				QTY_VALUE = getString("Value");
+				QTY_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Item");
+				ITEM_NAME = getString("Name");
+				ITEM_VALUE = getString("Value");
+				ITEM_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Price");
+				PRICE_NAME = getString("Name");
+				PRICE_VALUE = getString("Value");
+				PRICE_INLINE = getBoolean("Inline");
+
+			}
+		}
 	}
 
 	public static final class Menus {

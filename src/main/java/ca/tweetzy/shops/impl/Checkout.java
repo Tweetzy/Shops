@@ -1,10 +1,12 @@
 package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.TransactionCompleteEvent;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.enums.TransactionType;
 import ca.tweetzy.shops.api.interfaces.ICheckout;
+import ca.tweetzy.shops.api.interfaces.ITransaction;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
 import ca.tweetzy.shops.model.ItemInspect;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
@@ -136,7 +138,9 @@ public final class Checkout implements ICheckout {
 					"item", ItemInspect.getItemName(this.shopItem.getItem())
 			));
 			ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.calculateBuyPrice());
-			ShopsData.getInstance().getTransactions().add(new Transaction(
+
+
+			final Transaction transaction = new Transaction(
 					UUID.randomUUID(),
 					player.getUniqueId(),
 					this.shop.getId(),
@@ -145,7 +149,11 @@ public final class Checkout implements ICheckout {
 					this.calculateBuyPrice(),
 					TransactionType.BUY,
 					System.currentTimeMillis()
-			));
+			);
+
+			final TransactionCompleteEvent transactionCompleteEvent = new TransactionCompleteEvent(transaction, false);
+			Shops.getInstance().getServer().getPluginManager().callEvent(transactionCompleteEvent);
+			ShopsData.getInstance().getTransactions().add(transaction);
 			return true;
 		}
 
@@ -193,6 +201,11 @@ public final class Checkout implements ICheckout {
 		));
 		ShopsEconomy.deposit(player, this.shopItem.getCurrency(), totalSell);
 		// insert transaction but don't save
+
+		// run transaction event
+		final TransactionCompleteEvent transactionCompleteEvent = new TransactionCompleteEvent(transaction, false);
+		Shops.getInstance().getServer().getPluginManager().callEvent(transactionCompleteEvent);
+
 		ShopsData.getInstance().getTransactions().add(transaction);
 		return true;
 	}
