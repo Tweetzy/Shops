@@ -54,6 +54,7 @@ public final class Shops extends TweetyPlugin {
 		}
 
 		normalizePrefix();
+		registerEvents(new ShopsTransactionListener());
 
 		this.currencyManager.load(null);
 		this.shopManager.load(loaded -> loaded.forEach(shop -> {
