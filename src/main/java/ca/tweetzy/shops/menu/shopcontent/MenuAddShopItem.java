@@ -309,7 +309,9 @@ public final class MenuAddShopItem extends Menu {
 		this.confirmButton = Button.makeSimple(ItemCreator.of(CompMaterial.LIME_STAINED_GLASS_PANE, "&a&lConfirm", "", this.editing ? "&eClick &7to update item" : "&eClick &7to add item to shop"), player -> {
 			if (!this.editing) {
 				this.shop.getShopItems().add(this.shopItem);
-				Shops.getPriceMapManager().addPriceMap(new PriceMap(this.shopItem.getItem().clone(), this.shopItem.getBuyPrice(), this.shopItem.getSellPrice(), this.shopItem.getCurrency()));
+
+				final ItemStack mapItem = this.shopItem.getItem().clone();
+				Shops.getPriceMapManager().addPriceMap(new PriceMap(mapItem, this.shopItem.getBuyPrice() / this.shopItem.getPurchaseQuantity(), this.shopItem.getSellPrice() / this.shopItem.getPurchaseQuantity(), this.shopItem.getCurrency()));
 			}
 
 			ShopsData.getInstance().saveAll();

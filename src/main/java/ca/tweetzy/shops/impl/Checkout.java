@@ -1,11 +1,14 @@
 package ca.tweetzy.shops.impl;
 
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.TransactionCompleteEvent;
 import ca.tweetzy.shops.api.enums.ShopItemQuantityType;
 import ca.tweetzy.shops.api.enums.ShopItemType;
 import ca.tweetzy.shops.api.enums.TransactionType;
 import ca.tweetzy.shops.api.interfaces.ICheckout;
+import ca.tweetzy.shops.api.interfaces.ITransaction;
 import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
+import ca.tweetzy.shops.model.ItemInspect;
 import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
@@ -13,6 +16,8 @@ import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.Common;
 import ca.tweetzy.tweety.PlayerUtil;
 import ca.tweetzy.tweety.model.HookManager;
+import ca.tweetzy.tweety.model.Replacer;
+import ca.tweetzy.tweety.remain.Remain;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
@@ -20,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -78,6 +84,7 @@ public final class Checkout implements ICheckout {
 
 	@Override
 	public boolean executeBuy(@NonNull final Player player, final boolean omit) {
+		if (!this.shopItem.canBeBought()) return true;
 		if (this.shop.getSettings().isRequirePermissionToBuy() && !player.hasPermission(this.shop.getSettings().getBuyPermission())) return false;
 
 		if (player.getInventory().firstEmpty() == -1) {
@@ -125,8 +132,15 @@ public final class Checkout implements ICheckout {
 					this.shopItem.getCommands().forEach(cmd -> Common.dispatchCommand(player, HookManager.replacePlaceholders(player, cmd)));
 				}
 
+			Common.tell(player, Replacer.replaceArray(
+					Localization.Success.ITEM_BOUGHT,
+					"qty", this.getPurchaseQty() * this.shopItem.getPurchaseQuantity(),
+					"item", ItemInspect.getItemName(this.shopItem.getItem())
+			));
 			ShopsEconomy.withdraw(player, this.shopItem.getCurrency(), this.calculateBuyPrice());
-			ShopsData.getInstance().getTransactions().add(new Transaction(
+
+
+			final Transaction transaction = new Transaction(
 					UUID.randomUUID(),
 					player.getUniqueId(),
 					this.shop.getId(),
@@ -135,7 +149,11 @@ public final class Checkout implements ICheckout {
 					this.calculateBuyPrice(),
 					TransactionType.BUY,
 					System.currentTimeMillis()
-			));
+			);
+
+			final TransactionCompleteEvent transactionCompleteEvent = new TransactionCompleteEvent(transaction, false);
+			Shops.getInstance().getServer().getPluginManager().callEvent(transactionCompleteEvent);
+			ShopsData.getInstance().getTransactions().add(transaction);
 			return true;
 		}
 
@@ -150,6 +168,7 @@ public final class Checkout implements ICheckout {
 
 	@Override
 	public boolean executeSell(@NonNull Player player, final boolean omit) {
+		if (!this.shopItem.canBeSold()) return true;
 		if (this.shop.getSettings().isRequirePermissionToSell() && !player.hasPermission(this.shop.getSettings().getSellPermission())) return false;
 		int totalItemsSellable = Shops.getShopManager().getItemCountInPlayerInventory(player, this.shopItem.getItem().clone());
 
@@ -175,8 +194,18 @@ public final class Checkout implements ICheckout {
 			transaction = new Transaction(UUID.randomUUID(), player.getUniqueId(), this.shop.getId(), this.shopItem.getItem().clone(), this.getPurchaseQty() * this.shopItem.getPurchaseQuantity(), totalSell, TransactionType.SELL, System.currentTimeMillis());
 		}
 
+		Common.tell(player, Replacer.replaceArray(
+				Localization.Success.ITEM_SOLD,
+				"qty", this.getPurchaseQty() * this.shopItem.getPurchaseQuantity(),
+				"item", ItemInspect.getItemName(this.shopItem.getItem())
+		));
 		ShopsEconomy.deposit(player, this.shopItem.getCurrency(), totalSell);
 		// insert transaction but don't save
+
+		// run transaction event
+		final TransactionCompleteEvent transactionCompleteEvent = new TransactionCompleteEvent(transaction, false);
+		Shops.getInstance().getServer().getPluginManager().callEvent(transactionCompleteEvent);
+
 		ShopsData.getInstance().getTransactions().add(transaction);
 		return true;
 	}

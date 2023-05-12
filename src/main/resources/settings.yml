@@ -5,8 +5,12 @@ Menus:
   Back Button:
     Slot: -1
     Material: IRON_DOOR
+  Prev Button:
+    Material: ARROW
+  Next Button:
+    Material: ARROW
 
-  Main:
+  Search:
     Background Item: BLACK_STAINED_GLASS_PANE
     Search Button:
       Slot: -2
@@ -15,6 +19,20 @@ Menus:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
 
+  Main:
+    # set to -1 to use automatic sizing
+    Size: -1
+    Background Item: BLACK_STAINED_GLASS_PANE
+    Search Button:
+      Slot: -2
+      Material: COMPASS
+    Cart Button:
+      Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: MINECART
+    Sell All Button:
+      Slot: 0 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: SUNFLOWER
+
   Shop Content:
     Search Button:
       Slot: -2
@@ -22,6 +40,9 @@ Menus:
     Cart Button:
       Slot: 7 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
       Material: MINECART
+    Sell All Button:
+      Slot: 1 # the slot here is for the column, so 0 - 8 since it will automatically be placed in the last row
+      Material: SUNFLOWER
 
   Cart:
     Background Item: BLACK_STAINED_GLASS_PANE
@@ -96,6 +117,42 @@ Number Format: "%,.2f"
 # You can set it to 0 to disable tax, I'm just using 13%
 # as it's the tax % where I live
 Tax: 13.0
+
+Discord Webhooks:
+  Enabled: false
+  Send On Buy: true
+  Send On Sell: true
+  Hooks:
+    - "https://discord.com/api/webhooks/971074894928420995/kLeFASL6aTAfZvPUU3apion6ow3n7Q3If-_Xr47Vkd3wcOpCoxlCrvbaCqg1i73d31fM"
+  Username: "Shops"
+  Avatar: "https://i.imgur.com/oW96v0t.png"
+  Use Random Colour: true
+  Default Colour: "137-100-100"
+  # settings for the sell/buy embeds
+
+  Sold Title: "Item Sold"
+  Bought Title: "Item Bought"
+
+  Fields:
+    Player:
+      Name: "Player"
+      Value: "{player}"
+      Inline: true
+    Quantity:
+      Name: "Quantity"
+      Value: "{quantity}"
+      Inline: true
+    Item:
+      Name: "Item"
+      Value: "{item}"
+      Inline: true
+    Price:
+      Name: "Price"
+      Value: "{price}"
+      Inline: true
+
+# Disabling metrics will disable custom prefixes
+Metrics: true
 
 # -------------------------------------------------------------------------------------------------
 # The format used in the {timestamp} placeholder (google "Java timestamp format" for options).

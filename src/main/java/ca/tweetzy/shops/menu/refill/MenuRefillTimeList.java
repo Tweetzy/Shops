@@ -86,7 +86,7 @@ public final class MenuRefillTimeList extends MenuPagged<RefillTime> {
 	protected void onPageClick(Player player, RefillTime refillTime, ClickType clickType) {
 		if (clickType == ClickType.DROP) {
 			this.shopItem.getRefillTimes().remove(refillTime);
-			ShopsData.getInstance().save();
+			ShopsData.getInstance().saveAll();
 			newInstance().displayTo(player);
 		}
 	}

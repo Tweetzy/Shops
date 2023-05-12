@@ -3,8 +3,10 @@ package ca.tweetzy.shops.menu;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
@@ -27,6 +29,14 @@ public final class MenuShopList extends MenuPagged<Shop> {
 		super(Shops.getShopManager().getShops());
 		this.shopListType = shopListType;
 		setTitle("&eSelect Shop");
+
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
 	}
 
 	@Override

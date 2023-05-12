@@ -73,7 +73,9 @@ public final class CommandAddItem extends AbstractSubCommand {
 			);
 
 			shop.getShopItems().add(shopItem);
-			Shops.getPriceMapManager().addPriceMap(new PriceMap(hand.clone(), shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+			final ItemStack mapItem = hand.clone();
+
+			Shops.getPriceMapManager().addPriceMap(new PriceMap(mapItem, shopItem.getBuyPrice() / shopItem.getPurchaseQuantity(), shopItem.getSellPrice() / shopItem.getPurchaseQuantity(), shopItem.getCurrency()));
 			ShopsData.getInstance().saveAll();
 		}
 	}

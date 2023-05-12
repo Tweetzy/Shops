@@ -82,7 +82,10 @@ public final class CommandImport extends AbstractSubCommand {
 								new ArrayList<>()
 						);
 
-						Shops.getPriceMapManager().addPriceMap(new PriceMap(item.clone(), shopItem.getBuyPrice(), shopItem.getSellPrice(), shopItem.getCurrency()));
+						ItemStack mapItem = item.clone();
+						mapItem.setAmount(1);
+
+						Shops.getPriceMapManager().addPriceMap(new PriceMap(mapItem, shopItem.getBuyPrice() / shopItem.getPurchaseQuantity(), shopItem.getSellPrice() / shopItem.getPurchaseQuantity(), shopItem.getCurrency()));
 						shopItems.add(shopItem);
 					});
 				}

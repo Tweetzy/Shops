@@ -7,7 +7,7 @@
     <artifactId>shops</artifactId>
 
     <name>Shops</name>
-    <version>3.0.0</version>
+    <version>3.5.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -15,7 +15,7 @@
         <jarName>${project.name}</jarName>
         <main.class>${project.groupId}.${project.artifactId}.${project.name}</main.class>
         <java.version>1.8</java.version>
-        <tweety.version>1.11.1</tweety.version>
+        <tweety.version>1.16.0</tweety.version>
         <tweety.path>com.github.kiranhart</tweety.path>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -157,6 +157,23 @@
                         </goals>
                         <configuration>
                             <outputDirectory>C:\Dev\Minecraft\latest\plugins</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>C:\Users\Kiran\Documents\Development\Minecraft\Active\${project.name}\target</directory>
+                                    <include>${project.name}.jar</include>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-to-ready-jars</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>C:\Users\Kiran\Documents\Development\Minecraft\Ready Jars</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>C:\Users\Kiran\Documents\Development\Minecraft\Active\${project.name}\target</directory>

@@ -27,9 +27,9 @@ public final class ShopsCommand extends SimpleCommandGroup {
 	protected void zeroArgActions(CommandSender sender) {
 		if (!(sender instanceof Player)) return;
 		final Player player = (Player) sender;
+		if (!player.hasPermission("shops.command")) return;
 
 		new MenuMain(player).displayTo(player);
-
 	}
 
 	@Override
@@ -39,6 +39,9 @@ public final class ShopsCommand extends SimpleCommandGroup {
 		registerSubcommand(new CommandAddItem());
 		registerSubcommand(new CommandEdit());
 		registerSubcommand(new CommandImport());
+		registerSubcommand(new CommandReload());
+		registerSubcommand(new CommandSellAll());
+		registerSubcommand(new CommandOpen());
 	}
 
 	@Override

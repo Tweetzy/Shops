@@ -62,10 +62,14 @@ public final class MenuItemPurchase extends Menu {
 				.name(Localization.Menus.BackButton.NAME)
 				.lore(Localization.Menus.BackButton.LORE), player -> new MenuShopContentList(this.shop, null).displayTo(player));
 
-		this.shopItemButton = Button.makeDummy(this.shopItem.getItem());
+		this.shopItemButton = Button.makeDummy(ItemCreator
+				.of(this.shopItem.getItem())
+				.amount(this.shopItem.getPurchaseQuantity())
+		);
 
 		this.decreaseOneButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.DECR_ONE_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.DECR_ONE)
 				.name(Localization.BuyItemMenu.DECR_ONE_NAME.replace("{decrement_one}", String.valueOf(Settings.Menus.BuyItem.DECR_ONE)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.DECR_ONE_LORE, "decrement_one", Settings.Menus.BuyItem.DECR_ONE)), player -> {
 
@@ -75,6 +79,7 @@ public final class MenuItemPurchase extends Menu {
 
 		this.decreaseTwoButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.DECR_TWO_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.DECR_TWO)
 				.name(Localization.BuyItemMenu.DECR_TWO_NAME.replace("{decrement_two}", String.valueOf(Settings.Menus.BuyItem.DECR_TWO)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.DECR_TWO_LORE, "decrement_two", Settings.Menus.BuyItem.DECR_TWO)), player -> {
 
@@ -84,6 +89,7 @@ public final class MenuItemPurchase extends Menu {
 
 		this.decreaseThreeButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.DECR_THREE_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.DECR_THREE)
 				.name(Localization.BuyItemMenu.DECR_THREE_NAME.replace("{decrement_three}", String.valueOf(Settings.Menus.BuyItem.DECR_THREE)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.DECR_THREE_LORE, "decrement_three", Settings.Menus.BuyItem.DECR_THREE)), player -> {
 
@@ -93,15 +99,16 @@ public final class MenuItemPurchase extends Menu {
 
 		this.increaseOneButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.INC_ONE_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.INC_ONE)
 				.name(Localization.BuyItemMenu.INC_ONE_NAME.replace("{increment_one}", String.valueOf(Settings.Menus.BuyItem.INC_ONE)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.INC_ONE_LORE, "increment_one", Settings.Menus.BuyItem.INC_ONE)), player -> {
-
 			this.checkout.incrementQty(Settings.Menus.BuyItem.INC_ONE);
 			restartMenu();
 		});
 
 		this.increaseTwoButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.INC_TWO_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.INC_TWO)
 				.name(Localization.BuyItemMenu.INC_TWO_NAME.replace("{increment_two}", String.valueOf(Settings.Menus.BuyItem.INC_TWO)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.INC_TWO_LORE, "increment_two", Settings.Menus.BuyItem.INC_TWO)), player -> {
 
@@ -111,6 +118,7 @@ public final class MenuItemPurchase extends Menu {
 
 		this.increaseThreeButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BuyItem.INC_THREE_BUTTON_MATERIAL).get())
+				.amount(Settings.Menus.BuyItem.INC_THREE)
 				.name(Localization.BuyItemMenu.INC_THREE_NAME.replace("{increment_three}", String.valueOf(Settings.Menus.BuyItem.INC_THREE)))
 				.lore(Replacer.replaceArray(Localization.BuyItemMenu.INC_THREE_LORE, "increment_three", Settings.Menus.BuyItem.INC_THREE)), player -> {
 

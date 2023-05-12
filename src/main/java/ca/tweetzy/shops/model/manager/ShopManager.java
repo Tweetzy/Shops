@@ -13,6 +13,7 @@ import ca.tweetzy.tweety.collection.StrictMap;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -42,7 +43,8 @@ public class ShopManager extends Manager<Collection<Shop>> {
 	}
 
 	public void addShop(@NonNull final Shop shop) {
-		this.shops.put(shop.getId(), shop);
+		if (!this.shops.containsKey(shop.getId()))
+			this.shops.put(shop.getId(), shop);
 	}
 
 	public void removeShop(@NonNull final String id) {
@@ -114,6 +116,17 @@ public class ShopManager extends Manager<Collection<Shop>> {
 		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).collect(Collectors.toList());
 	}
 
+	public List<SearchedShopItem> filterShopItemsSearched(@NonNull final Shop shop, @NonNull final String keyword) {
+		final List<ShopItem> originalShopItems = shop.getShopItems();
+		return originalShopItems.stream().filter(shopItem -> checkSearchCriteria(keyword, shopItem)).map(item -> new SearchedShopItem(shop, item)).collect(Collectors.toList());
+	}
+
+	public List<SearchedShopItem> searchShopItems(@NonNull final Player player, @NonNull final String keyword) {
+		final List<SearchedShopItem> items = new ArrayList<>();
+		getShops(player).forEach(shop -> items.addAll(filterShopItemsSearched(shop, keyword)));
+		return items;
+	}
+
 	public boolean checkSearchCriteria(@NonNull final String phrase, @NonNull final IShopItem shopItem) {
 		return ItemInspect.match(phrase, ItemInspect.getItemName(shopItem.getItem())) ||
 				ItemInspect.match(phrase, Inflector.getInstance().pluralize(shopItem.getItem().getType().name())) ||
@@ -122,13 +135,17 @@ public class ShopManager extends Manager<Collection<Shop>> {
 				ItemInspect.match(phrase, ItemInspect.getItemEnchantments(shopItem.getItem()));
 	}
 
-	public int getItemCountInPlayerInventory(@NonNull final Player player, @NonNull final ItemStack stack) {
+	public int getItemCountInInventory(@NonNull final Inventory inventory, @NonNull final ItemStack stack) {
 		int total = 0;
-		for (ItemStack item : player.getInventory().getContents()) {
+		for (ItemStack item : inventory.getContents()) {
 			if (item == null || !item.isSimilar(stack)) continue;
 			total += item.getAmount();
 		}
 		return total;
+	}
+
+	public int getItemCountInPlayerInventory(@NonNull final Player player, @NonNull final ItemStack stack) {
+		return getItemCountInInventory(player.getInventory(), stack);
 	}
 
 	public void removeSpecificItemQuantityFromPlayer(@NonNull final Player player, @NonNull final ItemStack stack, final int amount) {

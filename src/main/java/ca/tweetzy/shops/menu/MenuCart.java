@@ -44,6 +44,14 @@ public final class MenuCart extends MenuPagged<Checkout> {
 		this.thePlayer = thePlayer;
 		this.cart = Shops.getCartManager().getCart(thePlayer.getUniqueId());
 
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
+
 		this.backButton = Button.makeSimple(ItemCreator
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
@@ -117,6 +125,7 @@ public final class MenuCart extends MenuPagged<Checkout> {
 	@Override
 	protected ItemStack convertToItemStack(Checkout item) {
 		final ItemCreator creator = ItemCreator.of(item.getShopItem().getItem());
+		creator.amount(item.getShopItem().getPurchaseQuantity());
 		Replacer.replaceArray(Localization.Cart.ITEM_LORE,
 				"item_quantity", item.getPurchaseQty(),
 				"item_sell_price", String.format(Settings.NUMBER_FORMAT, item.calculateSellPrice()),

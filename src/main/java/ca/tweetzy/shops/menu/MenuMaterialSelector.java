@@ -8,12 +8,15 @@ import ca.tweetzy.shops.menu.settings.MenuShopEdit;
 import ca.tweetzy.shops.menu.settings.display.MenuShopDisplaySettings;
 import ca.tweetzy.shops.menu.shopcontent.MenuAddShopItem;
 import ca.tweetzy.shops.model.InventorySafeMaterials;
+import ca.tweetzy.shops.settings.Localization;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.ShopsData;
 import ca.tweetzy.tweety.ItemUtil;
 import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.MenuPagged;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
 import ca.tweetzy.tweety.remain.CompMaterial;
+import ca.tweetzy.tweety.remain.Remain;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -37,6 +40,14 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 		this.shop = shop;
 		this.selectMode = selectMode;
 		this.shopItem = shopItem;
+
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
 	}
 
 	@Override
@@ -53,7 +64,7 @@ public final class MenuMaterialSelector extends MenuPagged<CompMaterial> {
 		else
 			this.shopItem.setItem(compMaterial.toItem());
 
-		ShopsData.getInstance().save();
+		ShopsData.getInstance().saveAll();
 
 		if (this.selectMode == MaterialSelectMode.SHOP_ICON)
 			new MenuShopEdit(this.shop).displayTo(player);

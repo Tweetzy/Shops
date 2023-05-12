@@ -10,6 +10,7 @@ import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.MenuCart;
 import ca.tweetzy.shops.menu.MenuItemPurchase;
 import ca.tweetzy.shops.menu.MenuMain;
+import ca.tweetzy.shops.model.manager.ShopsEconomy;
 import ca.tweetzy.shops.settings.Localization;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.tweety.conversation.TitleInput;
@@ -41,13 +42,26 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 	private final Button searchButton;
 	private final Button cartButton;
 	private final Button backButton;
+	private final Button sellAllButton;
+	private final CompMaterial bg;
 
 	public MenuShopContentList(@NonNull final Shop shop, final String keyword) {
-		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems());
+		super(null, shop.getDisplay().getShopItemSlots().getSource(), keyword != null ? Shops.getShopManager().filterShopItems(shop, keyword) : shop.getShopItems(), true);
 		this.shop = shop;
 		this.keyword = keyword;
 		setTitle(keyword != null ? this.shop.getDisplayName() + "&f: &7" + keyword : this.shop.getDisplayName());
-		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").clearLore().make());
+		setSize(9 * 6);
+
+		this.bg = this.shop.getDisplay().getBackgroundItem();
+		setInactivePageButton(ItemCreator.of(shop.getDisplay().getBackgroundItem()).name(" ").lore("").make());
+		setNextPageButton(new SmartItem(Settings.Menus.NextButton.MATERIAL).get());
+		setNextPageButtonName(Localization.Menus.NextButton.NAME);
+		setNextPageButtonLore(Localization.Menus.NextButton.LORE);
+
+		setPreviousPageButton(new SmartItem(Settings.Menus.PrevButton.MATERIAL).get());
+		setPreviousPageButtonName(Localization.Menus.PrevButton.NAME);
+		setPreviousPageButtonLore(Localization.Menus.PrevButton.LORE);
+
 		setAsyncFill();
 
 		this.searchButton = Button.makeSimple(ItemCreator
@@ -74,6 +88,27 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 				.of(new SmartItem(Settings.Menus.BackButton.MATERIAL).get())
 				.name(Localization.Menus.BackButton.NAME)
 				.lore(Localization.Menus.BackButton.LORE), player -> new MenuMain(player).displayTo(player));
+
+		this.sellAllButton = Button.makeSimple(ItemCreator
+				.of(new SmartItem(Settings.Menus.ShopContent.SELL_ALL_BUTTON_MATERIAL).get())
+				.name(Localization.ShopContentMenu.SELL_ALL_BUTTON_NAME)
+				.lore(Localization.ShopContentMenu.SELL_ALL_BUTTON_LORE), player -> {
+
+			for (ShopItem shopItem : this.shop.getShopItems()) {
+				if (!shopItem.canBeSold()) continue;
+				if (shopItem.getSellPrice() <= 0D) continue;
+
+				final int itemCount = Shops.getShopManager().getItemCountInPlayerInventory(player, shopItem.getItem());
+				if (itemCount == 0) continue;
+
+				final double pricePerOne = shopItem.getSellPrice() / shopItem.getPurchaseQuantity();
+				final double preTax = pricePerOne * itemCount;
+				final double worth = preTax - (preTax * Settings.TAX / 100D);
+
+				Shops.getShopManager().removeSpecificItemQuantityFromPlayer(player, shopItem.getItem(), itemCount);
+				ShopsEconomy.deposit(player, shopItem.getCurrency(), worth);
+			}
+		});
 	}
 
 	@Override
@@ -89,6 +124,9 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 		if (slot == getSize() - 9 + Settings.Menus.ShopContent.CART_BUTTON_SLOT)
 			return this.cartButton.getItem();
+
+		if (slot == getSize() - 9 + Settings.Menus.ShopContent.SELL_ALL_BUTTON_SLOT)
+			return this.sellAllButton.getItem();
 
 		return super.getItemAt(slot);
 	}
@@ -115,6 +153,7 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 		return ItemCreator
 				.of(item.getItem())
+				.amount(item.getPurchaseQuantity())
 				.lore(Replacer.replaceArray(lore,
 						"stock_status", item.getCurrentStock() <= 0 && item.getQuantityType() == ShopItemQuantityType.LIMITED ? Localization.ShopContentMenu.ShopItemLores.OUT_OF_STOCK : Localization.ShopContentMenu.ShopItemLores.IN_STOCK.replace("{shop_item_stock}", String.valueOf(item.getStock())),
 						"buy", replaceBuySell(Localization.ShopContentMenu.ShopItemLores.BUY, item),
@@ -132,14 +171,14 @@ public final class MenuShopContentList extends MenuPagged<ShopItem> {
 
 	@Override
 	protected ItemStack backgroundItem() {
-		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
+		return ItemCreator.of(this.bg).name(" ").make();
 	}
 
 	private String replaceBuySell(@NonNull String string, @NonNull final IShopItem shopItem) {
 		return string
 				.replace("{shop_item_qty}", String.valueOf(shopItem.getPurchaseQuantity()))
-				.replace("{shop_item_buy_cost}", String.valueOf(shopItem.getBuyPrice()))
-				.replace("{shop_item_sell_cost}", String.valueOf(shopItem.getSellPrice()));
+				.replace("{shop_item_buy_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getBuyPrice()))
+				.replace("{shop_item_sell_cost}", String.format(Settings.NUMBER_FORMAT, shopItem.getSellPrice()));
 	}
 
 	@Override

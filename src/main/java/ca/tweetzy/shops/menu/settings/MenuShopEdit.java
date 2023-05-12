@@ -3,6 +3,7 @@ package ca.tweetzy.shops.menu.settings;
 import ca.tweetzy.shops.api.enums.MaterialSelectMode;
 import ca.tweetzy.shops.api.enums.ShopListType;
 import ca.tweetzy.shops.impl.Shop;
+import ca.tweetzy.shops.impl.SmartItem;
 import ca.tweetzy.shops.menu.MenuCurrencyList;
 import ca.tweetzy.shops.menu.MenuMaterialSelector;
 import ca.tweetzy.shops.menu.MenuShopList;
@@ -13,9 +14,16 @@ import ca.tweetzy.tweety.menu.Menu;
 import ca.tweetzy.tweety.menu.button.Button;
 import ca.tweetzy.tweety.menu.button.ButtonMenu;
 import ca.tweetzy.tweety.menu.model.ItemCreator;
+import ca.tweetzy.tweety.menu.model.MenuClickLocation;
 import ca.tweetzy.tweety.remain.CompMaterial;
 import lombok.NonNull;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The current file has been created by Kiran Hart
@@ -34,12 +42,53 @@ public final class MenuShopEdit extends Menu {
 	private final Button settingsButton;
 	private final Button backButton;
 
+	private boolean selectingFromInventory;
+
 	public MenuShopEdit(@NonNull final Shop shop) {
 		this.shop = shop;
 		setTitle("&e" + shop.getId() + " &8> &eEdit");
 		setSize(9 * 6);
 
-		this.iconButton = new ButtonMenu(new MenuMaterialSelector(this.shop, MaterialSelectMode.SHOP_ICON, null), ItemCreator.of(shop.getIcon().get()).name(shop.getDisplayName()).lore("&eClick &7to edit icon"));
+		this.iconButton = new Button() {
+			@Override
+			public void onClickedInMenu(Player player, Menu menu, ClickType clickType) {
+				if (clickType == ClickType.LEFT) {
+					if (!MenuShopEdit.this.selectingFromInventory)
+						new MenuMaterialSelector(MenuShopEdit.this.shop, MaterialSelectMode.SHOP_ICON, null).displayTo(player);
+					else {
+						final ItemStack cursorItem = player.getItemOnCursor().clone();
+						if (cursorItem.getType() == CompMaterial.AIR.toMaterial()) return;
+
+						MenuShopEdit.this.shop.setIcon(new SmartItem(cursorItem, "CHEST"));
+						newInstance().displayTo(player);
+					}
+				}
+
+				if (clickType == ClickType.RIGHT) {
+					MenuShopEdit.this.selectingFromInventory = true;
+					restartMenu();
+				}
+			}
+
+			@Override
+			public ItemStack getItem() {
+
+				final List<String> lore = new ArrayList<>();
+				lore.add("");
+				if (MenuShopEdit.this.selectingFromInventory) {
+					lore.add("&eDrag on drop item here to set it");
+				} else {
+					lore.add("&eLeft Click &7to open material picker");
+					lore.add("&eRight Click &7to select from your inventory");
+				}
+
+				return ItemCreator
+						.of(shop.getIcon().get())
+						.name(shop.getDisplayName())
+						.lore(lore).make();
+			}
+		};
+
 		this.nameButton = Button.makeSimple(ItemCreator
 				.of(CompMaterial.NAME_TAG)
 				.name("&EDisplay Name")
@@ -48,7 +97,7 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDisplayName(string);
-				ShopsData.getInstance().save();
+				ShopsData.getInstance().saveAll();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}
@@ -62,7 +111,7 @@ public final class MenuShopEdit extends Menu {
 			@Override
 			public boolean onResult(String string) {
 				MenuShopEdit.this.shop.setDescription(string);
-				ShopsData.getInstance().save();
+				ShopsData.getInstance().saveAll();
 				MenuShopEdit.this.newInstance().displayTo(player);
 				return true;
 			}
@@ -92,6 +141,11 @@ public final class MenuShopEdit extends Menu {
 			return this.backButton.getItem();
 
 		return ItemCreator.of(CompMaterial.BLACK_STAINED_GLASS_PANE).name(" ").make();
+	}
+
+	@Override
+	protected boolean isActionAllowed(MenuClickLocation location, int slot, @Nullable ItemStack clicked, @Nullable ItemStack cursor) {
+		return location == MenuClickLocation.PLAYER_INVENTORY;
 	}
 
 	@Override

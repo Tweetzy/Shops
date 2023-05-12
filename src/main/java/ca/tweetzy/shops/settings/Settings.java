@@ -2,6 +2,8 @@ package ca.tweetzy.shops.settings;
 
 import ca.tweetzy.tweety.settings.SimpleSettings;
 
+import java.util.List;
+
 /**
  * The current file has been created by Kiran Hart
  * Date Created: December 17 2021
@@ -15,6 +17,7 @@ public final class Settings extends SimpleSettings {
 	public static Boolean DYNAMIC_FILL_MAIN_MENU;
 	public static Integer SHOP_TICK_TASK_SPEED;
 	public static String NUMBER_FORMAT;
+	public static Boolean METRICS;
 
 	public static Double TAX;
 
@@ -26,6 +29,83 @@ public final class Settings extends SimpleSettings {
 		SHOP_TICK_TASK_SPEED = getInteger("Shop Tick Task Speed");
 		NUMBER_FORMAT = getString("Number Format");
 		TAX = getDouble("Tax");
+		METRICS = getBoolean("Metrics");
+	}
+
+	public static final class DiscordWebhook {
+
+		public static Boolean ENABLED;
+		public static Boolean SEND_ON_BUY;
+		public static Boolean SEND_ON_SELL;
+		public static Boolean USE_RANDOM_COLOUR;
+
+		public static String USERNAME;
+		public static String AVATAR;
+		public static String DEFAULT_COLOUR;
+		public static List<String> HOOKS;
+
+		public static String SOLD_TITLE;
+		public static String BOUGHT_TITLE;
+
+		private static void init() {
+			pathPrefix("Discord Webhooks");
+
+			ENABLED = getBoolean("Enabled");
+			SEND_ON_BUY = getBoolean("Send On Buy");
+			SEND_ON_SELL = getBoolean("Send On Sell");
+			USE_RANDOM_COLOUR = getBoolean("Use Random Colour");
+
+			USERNAME = getString("Username");
+			AVATAR = getString("Avatar");
+			DEFAULT_COLOUR = getString("Default Colour");
+			HOOKS = getStringList("Hooks");
+
+			SOLD_TITLE = getString("Sold Title");
+			BOUGHT_TITLE = getString("Bought Title");
+		}
+
+		public static final class Fields {
+
+			public static String PLAYER_NAME;
+			public static String PLAYER_VALUE;
+			public static Boolean PLAYER_INLINE;
+
+			public static String QTY_NAME;
+			public static String QTY_VALUE;
+			public static Boolean QTY_INLINE;
+
+			public static String ITEM_NAME;
+			public static String ITEM_VALUE;
+			public static Boolean ITEM_INLINE;
+
+			public static String PRICE_NAME;
+			public static String PRICE_VALUE;
+			public static Boolean PRICE_INLINE;
+
+			private static void init() {
+				pathPrefix("Discord Webhooks.Fields.Player");
+
+				PLAYER_NAME = getString("Name");
+				PLAYER_VALUE = getString("Value");
+				PLAYER_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Quantity");
+				QTY_NAME = getString("Name");
+				QTY_VALUE = getString("Value");
+				QTY_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Item");
+				ITEM_NAME = getString("Name");
+				ITEM_VALUE = getString("Value");
+				ITEM_INLINE = getBoolean("Inline");
+
+				pathPrefix("Discord Webhooks.Fields.Price");
+				PRICE_NAME = getString("Name");
+				PRICE_VALUE = getString("Value");
+				PRICE_INLINE = getBoolean("Inline");
+
+			}
+		}
 	}
 
 	public static final class Menus {
@@ -42,7 +122,27 @@ public final class Settings extends SimpleSettings {
 			}
 		}
 
-		public static final class Main {
+		public static final class PrevButton {
+
+			public static String MATERIAL;
+
+			private static void init() {
+				pathPrefix("Menus.Prev Button");
+				MATERIAL = getString("Material");
+			}
+		}
+
+		public static final class NextButton {
+
+			public static String MATERIAL;
+
+			private static void init() {
+				pathPrefix("Menus.Next Button");
+				MATERIAL = getString("Material");
+			}
+		}
+
+		public static final class Search {
 
 			public static String BACKGROUND_ITEM;
 
@@ -53,7 +153,7 @@ public final class Settings extends SimpleSettings {
 			public static Integer CART_BUTTON_SLOT;
 
 			private static void init() {
-				pathPrefix("Menus.Main");
+				pathPrefix("Menus.Search");
 				BACKGROUND_ITEM = getString("Background Item");
 
 				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
@@ -61,6 +161,37 @@ public final class Settings extends SimpleSettings {
 
 				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
 				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+			}
+		}
+
+		public static final class Main {
+
+			public static Integer SIZE;
+			public static String BACKGROUND_ITEM;
+
+			public static String SEARCH_BUTTON_MATERIAL;
+			public static Integer SEARCH_BUTTON_SLOT;
+
+			public static String CART_BUTTON_MATERIAL;
+			public static Integer CART_BUTTON_SLOT;
+
+			public static String SELL_ALL_BUTTON_MATERIAL;
+			public static Integer SELL_ALL_BUTTON_SLOT;
+
+			private static void init() {
+				pathPrefix("Menus.Main");
+
+				SIZE = getInteger("Size");
+				BACKGROUND_ITEM = getString("Background Item");
+
+				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
+				SEARCH_BUTTON_SLOT = getInteger("Search Button.Slot");
+
+				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
+				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+
+				SELL_ALL_BUTTON_MATERIAL = getString("Sell All Button.Material");
+				SELL_ALL_BUTTON_SLOT = getInteger("Sell All Button.Slot");
 			}
 		}
 
@@ -72,6 +203,9 @@ public final class Settings extends SimpleSettings {
 			public static String CART_BUTTON_MATERIAL;
 			public static Integer CART_BUTTON_SLOT;
 
+			public static String SELL_ALL_BUTTON_MATERIAL;
+			public static Integer SELL_ALL_BUTTON_SLOT;
+
 			private static void init() {
 				pathPrefix("Menus.Shop Content");
 				SEARCH_BUTTON_MATERIAL = getString("Search Button.Material");
@@ -79,6 +213,9 @@ public final class Settings extends SimpleSettings {
 
 				CART_BUTTON_MATERIAL = getString("Cart Button.Material");
 				CART_BUTTON_SLOT = getInteger("Cart Button.Slot");
+
+				SELL_ALL_BUTTON_MATERIAL = getString("Sell All Button.Material");
+				SELL_ALL_BUTTON_SLOT = getInteger("Sell All Button.Slot");
 			}
 		}
 

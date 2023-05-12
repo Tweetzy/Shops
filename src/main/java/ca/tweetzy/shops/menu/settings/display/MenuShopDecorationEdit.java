@@ -57,7 +57,7 @@ public final class MenuShopDecorationEdit extends Menu {
 					this.shop.getDisplay().getDecorationItems().put(i, CompMaterial.fromItem(deco));
 			});
 
-			ShopsData.getInstance().save();
+			ShopsData.getInstance().saveAll();
 			new MenuShopDisplaySettings(this.shop).displayTo(player);
 		}
 	}
