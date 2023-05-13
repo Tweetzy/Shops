@@ -7,6 +7,7 @@ import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.SQLiteConnector;
 import ca.tweetzy.flight.gui.GuiManager;
 import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.impl.manager.CurrencyManager;
@@ -65,7 +66,9 @@ public final class Shops extends FlightPlugin {
 //		getServer().getPluginManager().registerEvents(new MarketTransactionListener(), this);
 
 		// setup commands
-		this.commandManager.registerCommandDynamically(new ShopsCommand());
+		this.commandManager.registerCommandDynamically(new ShopsCommand()).addSubCommands(
+				new AdminCommand()
+		);
 	}
 
 	@Override
@@ -88,6 +91,10 @@ public final class Shops extends FlightPlugin {
 
 	public static CurrencyManager getCurrencyManager() {
 		return getInstance().currencyManager;
+	}
+
+	public static GuiManager getGuiManager() {
+		return getInstance().guiManager;
 	}
 
 	public static Economy getEconomy() {
