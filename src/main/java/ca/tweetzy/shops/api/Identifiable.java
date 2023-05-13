@@ -4,7 +4,7 @@ import lombok.NonNull;
 
 import java.util.UUID;
 
-public interface Identifiable {
+public interface Identifiable<T> {
 
 	/**
 	 * The identifier for the group.
@@ -12,5 +12,5 @@ public interface Identifiable {
 	 * @return The id of the group.
 	 */
 	@NonNull
-	UUID getId();
+	T getId();
 }

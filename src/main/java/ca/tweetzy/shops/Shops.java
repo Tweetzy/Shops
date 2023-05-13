@@ -10,7 +10,9 @@ import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
+import ca.tweetzy.shops.database.migrations._1_InitialMigration;
 import ca.tweetzy.shops.impl.manager.CurrencyManager;
+import ca.tweetzy.shops.impl.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import net.milkbowl.vault.economy.Economy;
@@ -25,6 +27,7 @@ public final class Shops extends FlightPlugin {
 	private final CommandManager commandManager = new CommandManager(this);
 	private final GuiManager guiManager = new GuiManager(this);
 
+	private final ShopManager shopManager = new ShopManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
 
 	// default vault economy
@@ -41,7 +44,9 @@ public final class Shops extends FlightPlugin {
 		this.databaseConnector = new SQLiteConnector(this);
 		this.dataManager = new DataManager(this.databaseConnector, this);
 
-		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager);
+		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
+				new _1_InitialMigration()
+		);
 
 		// run migrations for tables
 		dataMigrationManager.runMigrations();
@@ -53,13 +58,8 @@ public final class Shops extends FlightPlugin {
 		this.guiManager.init();
 
 		// managers
-//		this.marketManager.load();
-//		this.playerManager.load();
 		this.currencyManager.load();
-//		this.offlineItemPaymentManager.load();
-//		this.bankManager.load();
-//		this.offerManager.load();
-//		this.requestManager.load();
+		this.shopManager.load();
 
 		// listeners
 //		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -87,6 +87,10 @@ public final class Shops extends FlightPlugin {
 
 	public static DataManager getDataManager() {
 		return getInstance().dataManager;
+	}
+
+	public static ShopManager getShopManager() {
+		return getInstance().shopManager;
 	}
 
 	public static CurrencyManager getCurrencyManager() {
