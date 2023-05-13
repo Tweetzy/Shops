@@ -2,3 +2,4 @@
 /src/test/
 .idea
 Shops.iml
+/buildNumber.properties
