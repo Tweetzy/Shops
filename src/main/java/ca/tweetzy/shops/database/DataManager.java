@@ -7,6 +7,8 @@ import ca.tweetzy.flight.database.UpdateCallback;
 import ca.tweetzy.flight.utils.SerializeUtil;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.impl.shop.ServerShop;
+import ca.tweetzy.shops.impl.shop.ShopLayout;
+import ca.tweetzy.shops.impl.shop.ShopSettings;
 import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +28,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void insertServerShop(@NonNull final Shop shop, final Callback<Shop> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "shop (id, display_name, description, icon, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "shop (id, display_name, description, icon, open, requires_permission, permission, uses_command, command, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "shop WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -37,9 +39,14 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setString(1, shop.getId().toLowerCase());
 				preparedStatement.setString(2, shop.getDisplayName());
 				preparedStatement.setString(3, String.join(";;;", shop.getDescription()));
-				preparedStatement.setString(4, SerializeUtil.encodeItem(shop.getDisplayIcon()));
-				preparedStatement.setLong(5, shop.getTimeCreated());
-				preparedStatement.setLong(6, shop.getLastUpdated());
+				preparedStatement.setString(4, SerializeUtil.encodeItem(shop.getShopOptions().getDisplayIcon()));
+				preparedStatement.setBoolean(5, shop.getShopOptions().isOpen());
+				preparedStatement.setBoolean(6, shop.getShopOptions().isRequiresPermission());
+				preparedStatement.setString(7, shop.getShopOptions().getPermission());
+				preparedStatement.setBoolean(8, shop.getShopOptions().isUsingCommand());
+				preparedStatement.setString(9, shop.getShopOptions().getCommand());
+				preparedStatement.setLong(10, shop.getTimeCreated());
+				preparedStatement.setLong(11, shop.getLastUpdated());
 
 				preparedStatement.executeUpdate();
 
@@ -48,6 +55,35 @@ public final class DataManager extends DataManagerAbstract {
 					res.next();
 					callback.accept(null, extractServerShop(res));
 				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void updateServerShop(@NonNull final Shop shop, final Callback<Boolean> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "UPDATE " + this.getTablePrefix() + "shop SET display_name = ?, description = ?, icon = ?, open = ?, requires_permission = ?, permission = ?, uses_command = ?, command = ?, updated_at = ? WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+				preparedStatement.setString(1, shop.getDisplayName());
+				preparedStatement.setString(2, String.join(";;;", shop.getDescription()));
+				preparedStatement.setString(3, SerializeUtil.encodeItem(shop.getShopOptions().getDisplayIcon()));
+				preparedStatement.setBoolean(4, shop.getShopOptions().isOpen());
+				preparedStatement.setBoolean(5, shop.getShopOptions().isRequiresPermission());
+				preparedStatement.setString(6, shop.getShopOptions().getPermission());
+				preparedStatement.setBoolean(7, shop.getShopOptions().isUsingCommand());
+				preparedStatement.setString(8, shop.getShopOptions().getCommand());
+				preparedStatement.setLong(9, System.currentTimeMillis());
+				preparedStatement.setString(10, shop.getId().toLowerCase());
+
+				int result = preparedStatement.executeUpdate();
+
+				if (callback != null)
+					callback.accept(null, result > 0);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -78,7 +114,15 @@ public final class DataManager extends DataManagerAbstract {
 				resultSet.getString("id"),
 				resultSet.getString("display_name"),
 				List.of(resultSet.getString("description").split(";;;")),
-				SerializeUtil.decodeItem(resultSet.getString("icon")),
+				new ShopSettings(
+						SerializeUtil.decodeItem(resultSet.getString("icon")),
+						new ShopLayout(),
+						resultSet.getBoolean("open"),
+						resultSet.getBoolean("requires_permission"),
+						resultSet.getBoolean("uses_command"),
+						resultSet.getString("permission"),
+						resultSet.getString("command")
+				),
 				new ArrayList<>(),
 				resultSet.getLong("created_at"),
 				resultSet.getLong("updated_at")

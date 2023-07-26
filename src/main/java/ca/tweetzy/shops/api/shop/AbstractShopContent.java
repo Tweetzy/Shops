@@ -10,7 +10,8 @@ public abstract class AbstractShopContent implements ShopContent {
 
 	protected final UUID id;
 	protected final String shopId;
-	protected double price;
+	protected double buyPrice;
+	protected double sellPrice;
 
 	@NotNull
 	@Override

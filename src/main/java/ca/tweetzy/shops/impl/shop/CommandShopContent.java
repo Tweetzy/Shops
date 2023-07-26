@@ -4,19 +4,18 @@ import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContent;
 import lombok.Getter;
 import lombok.NonNull;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public final class ItemShopContent extends AbstractShopContent {
+public final class CommandShopContent extends AbstractShopContent {
 
 	@Getter
-	private final ItemStack item;
+	private final String command;
 
-	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final double buyPrice, final double sellPrice) {
-		super(id, shopId.toLowerCase(), buyPrice, sellPrice);
-		this.item = item;
+	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final String command, final double price) {
+		super(id, shopId.toLowerCase(), price, 0);
+		this.command = command;
 	}
 
 	@Override
@@ -31,12 +30,11 @@ public final class ItemShopContent extends AbstractShopContent {
 
 	@Override
 	public double getSellPrice() {
-		return this.sellPrice;
+		return 0;
 	}
 
 	@Override
 	public void setSellPrice(double price) {
-		this.sellPrice = price;
 	}
 
 	@Override

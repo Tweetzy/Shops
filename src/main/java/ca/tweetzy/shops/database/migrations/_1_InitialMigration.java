@@ -21,6 +21,11 @@ public final class _1_InitialMigration extends DataMigration {
 					"display_name VARCHAR(64) NOT NULL, " +
 					"description TEXT NOT NULL, " +
 					"icon VARCHAR(40) NOT NULL, " +
+					"open BOOLEAN NOT NULL, " +
+					"requires_permission BOOLEAN NOT NULL, " +
+					"permission VARCHAR(64) NOT NULL, " +
+					"uses_command BOOLEAN NOT NULL, " +
+					"command VARCHAR(40) NOT NULL, " +
 					"created_at BigInt NOT NULL, " +
 					"updated_at BigInt NOT NULL " +
 					")");

@@ -30,7 +30,7 @@ public final class AdminShopListGUI extends ShopsPagedGUI<Shop> {
 	@Override
 	protected ItemStack makeDisplayItem(Shop shop) {
 		return QuickItem
-				.of(shop.getDisplayIcon())
+				.of(shop.getShopOptions().getDisplayIcon())
 				.name(shop.getDisplayName())
 				.lore(shop.getDescription())
 				.make();
