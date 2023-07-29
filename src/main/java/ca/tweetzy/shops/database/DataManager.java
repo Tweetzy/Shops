@@ -6,9 +6,9 @@ import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.UpdateCallback;
 import ca.tweetzy.flight.utils.SerializeUtil;
 import ca.tweetzy.shops.api.shop.Shop;
-import ca.tweetzy.shops.impl.shop.ServerShop;
-import ca.tweetzy.shops.impl.shop.ShopLayout;
-import ca.tweetzy.shops.impl.shop.ShopSettings;
+import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.impl.shop.*;
 import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public final class DataManager extends DataManagerAbstract {
 
@@ -126,6 +127,116 @@ public final class DataManager extends DataManagerAbstract {
 				new ArrayList<>(),
 				resultSet.getLong("created_at"),
 				resultSet.getLong("updated_at")
+		);
+	}
+
+	public void insertServerShopContent(@NonNull final ShopContent content, final Callback<ShopContent> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "INSERT INTO " + this.getTablePrefix() + "shop_content (id, shop_id, type, buy_price, sell_price, purchase_qty, item, command) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "shop_content WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+				final PreparedStatement fetch = connection.prepareStatement(fetchQuery);
+
+				fetch.setString(1, content.getId().toString());
+
+				preparedStatement.setString(1, content.getId().toString());
+				preparedStatement.setString(2, content.getShopId().toLowerCase());
+				preparedStatement.setString(3, content.getType().name());
+				preparedStatement.setDouble(4, content.getBuyPrice());
+				preparedStatement.setDouble(5, content.getSellPrice());
+				preparedStatement.setInt(6, content.getMinimumPurchaseQty());
+
+				if (content instanceof final ItemShopContent itemShopContent)
+					preparedStatement.setString(7, SerializeUtil.encodeItem(itemShopContent.getItem()));
+				else
+					preparedStatement.setString(7, null);
+
+				if (content instanceof final CommandShopContent commandShopContent)
+					preparedStatement.setString(8, commandShopContent.getCommand());
+				else
+					preparedStatement.setString(8, null);
+
+				preparedStatement.executeUpdate();
+
+				if (callback != null) {
+					final ResultSet res = fetch.executeQuery();
+					res.next();
+					callback.accept(null, extractServerShopContent(res));
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void updateServerShopContent(@NonNull final ShopContent content, final Callback<Boolean> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "UPDATE " + this.getTablePrefix() + "shop_content SET buy_price = ?, sell_price = ?, purchase_qty = ?, item = ?, command = ? WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+				preparedStatement.setDouble(1, content.getBuyPrice());
+				preparedStatement.setDouble(2, content.getSellPrice());
+				preparedStatement.setInt(3, content.getMinimumPurchaseQty());
+
+				if (content instanceof final ItemShopContent itemShopContent)
+					preparedStatement.setString(4, SerializeUtil.encodeItem(itemShopContent.getItem()));
+				else
+					preparedStatement.setString(4, null);
+
+				if (content instanceof final CommandShopContent commandShopContent)
+					preparedStatement.setString(5, commandShopContent.getCommand());
+				else
+					preparedStatement.setString(5, null);
+
+				preparedStatement.setString(6, content.getId().toString());
+
+				int result = preparedStatement.executeUpdate();
+
+				if (callback != null)
+					callback.accept(null, result > 0);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void getServerShopContents(@NonNull final Callback<List<ShopContent>> callback) {
+		final List<ShopContent> contents = new ArrayList<>();
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + this.getTablePrefix() + "shop_content")) {
+				final ResultSet resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					final ShopContent shopContent = extractServerShopContent(resultSet);
+					contents.add(shopContent);
+				}
+
+				callback.accept(null, contents);
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	private ShopContent extractServerShopContent(final ResultSet resultSet) throws SQLException {
+		return Enum.valueOf(ShopContentType.class, resultSet.getString("type").toUpperCase()) == ShopContentType.ITEM ? new ItemShopContent(
+				UUID.fromString(resultSet.getString("id")),
+				resultSet.getString("shop_id"),
+				SerializeUtil.decodeItem(resultSet.getString("item")),
+				resultSet.getInt("purchase_qty"),
+				resultSet.getDouble("buy_price"),
+				resultSet.getDouble("sell_price")
+		) : new CommandShopContent(
+				UUID.fromString(resultSet.getString("id")),
+				resultSet.getString("shop_id"),
+				resultSet.getString("command"),
+				resultSet.getInt("purchase_qty"),
+				resultSet.getDouble("buy_price")
 		);
 	}
 

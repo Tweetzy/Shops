@@ -20,7 +20,7 @@ public final class _1_InitialMigration extends DataMigration {
 					"id VARCHAR(48) PRIMARY KEY, " +
 					"display_name VARCHAR(64) NOT NULL, " +
 					"description TEXT NOT NULL, " +
-					"icon VARCHAR(40) NOT NULL, " +
+					"icon TEXT NOT NULL, " +
 					"open BOOLEAN NOT NULL, " +
 					"requires_permission BOOLEAN NOT NULL, " +
 					"permission VARCHAR(64) NOT NULL, " +

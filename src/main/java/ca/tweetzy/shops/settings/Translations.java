@@ -125,6 +125,23 @@ public final class Translations extends TranslationManager {
 			"&b&l%right_click% &7to toggle on/off"
 	);
 
+	public static final TranslationEntry GUI_SHOP_SELECT_CONTENT_TYPE_TITLE = create("gui.shop select content type.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Select Content Type");
+	public static final TranslationEntry GUI_SHOP_SELECT_CONTENT_TYPE_ITEMS_ITEM_NAME = create("gui.shop select content type.items.item.name", "<GRADIENT:5CAEFF>&lItem Content</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_SELECT_CONTENT_TYPE_ITEMS_ITEM_LORE = create("gui.shop select content type.items.item.lore",
+			"&7An item content is pretty much just",
+			"&7a normal item you want to sell to players.",
+			"",
+			"&e&lClick &7to select this content type."
+	);
+
+	public static final TranslationEntry GUI_SHOP_SELECT_CONTENT_TYPE_ITEMS_CMD_NAME = create("gui.shop select content type.items.cmd.name", "<GRADIENT:5CAEFF>&lCommand Content</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_SELECT_CONTENT_TYPE_ITEMS_CMD_LORE = create("gui.shop select content type.items.cmd.lore",
+			"&7A command content is essentially a command ",
+			"&7that gets executed when the player buys it.",
+			"",
+			"&e&lClick &7to select this content type."
+	);
+
 	public static void init() {
 		new Translations(Shops.getInstance()).setup();
 	}

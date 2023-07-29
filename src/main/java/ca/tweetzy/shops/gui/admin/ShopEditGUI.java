@@ -11,6 +11,7 @@ import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
@@ -42,6 +43,8 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 				))
 				.make(), click -> {
 
+			if (click.clickType == ClickType.LEFT)
+				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> {}));
 		});
 
 		setButton(5, 7, QuickItem

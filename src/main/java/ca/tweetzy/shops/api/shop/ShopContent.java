@@ -11,6 +11,12 @@ public interface ShopContent extends Identifiable<UUID>, Synchronize, Storeable<
 
 	@NonNull String getShopId();
 
+	@NonNull ShopContentType getType();
+
+	int getMinimumPurchaseQty();
+
+	void setMinimumPurchaseQty(final int qty);
+
 	double getBuyPrice();
 
 	void setBuyPrice(final double price);

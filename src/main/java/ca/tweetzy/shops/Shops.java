@@ -11,7 +11,9 @@ import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations._1_InitialMigration;
+import ca.tweetzy.shops.database.migrations._2_ShopItemMigration;
 import ca.tweetzy.shops.impl.manager.CurrencyManager;
+import ca.tweetzy.shops.impl.manager.ShopContentManager;
 import ca.tweetzy.shops.impl.manager.ShopManager;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
@@ -28,6 +30,7 @@ public final class Shops extends FlightPlugin {
 	private final GuiManager guiManager = new GuiManager(this);
 
 	private final ShopManager shopManager = new ShopManager();
+	private final ShopContentManager shopContentManager = new ShopContentManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
 
 	// default vault economy
@@ -45,7 +48,8 @@ public final class Shops extends FlightPlugin {
 		this.dataManager = new DataManager(this.databaseConnector, this);
 
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
-				new _1_InitialMigration()
+				new _1_InitialMigration(),
+				new _2_ShopItemMigration()
 		);
 
 		// run migrations for tables
@@ -91,6 +95,10 @@ public final class Shops extends FlightPlugin {
 
 	public static ShopManager getShopManager() {
 		return getInstance().shopManager;
+	}
+
+	public static ShopContentManager getShopContentManager() {
+		return getInstance().shopContentManager;
 	}
 
 	public static CurrencyManager getCurrencyManager() {
