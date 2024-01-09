@@ -24,4 +24,12 @@ public interface ShopContent extends Identifiable<UUID>, Synchronize, Storeable<
 	double getSellPrice();
 
 	void setSellPrice(final double price);
+
+	boolean isAllowBuy();
+
+	boolean isAllowSell();
+
+	void setAllowBuy(final boolean allowBuy);
+	void setAllowSell(final boolean allowSell);
+
 }

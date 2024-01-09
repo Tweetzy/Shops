@@ -17,6 +17,7 @@ public final class Translations extends TranslationManager {
 	=================== ERRORS ===================
 	 */
 	public static TranslationEntry SHOP_ID_TAKEN = create("error.shop id taken", "&cA shop with that id already exists!");
+	public static TranslationEntry NUMBER_CANNOT_BE_ZERO = create("error.number cannot be zero", "&cPlease enter a number greater than 0");
 
 
 	/*
@@ -30,6 +31,15 @@ public final class Translations extends TranslationManager {
 
 	public static TranslationEntry PROMPT_SERVER_SHOP_CMD_TITLE = create("prompts.server shop command.title", "<GRADIENT:5CAEFF>&lShop Command</GRADIENT:9F57FF>");
 	public static TranslationEntry PROMPT_SERVER_SHOP_CMD_SUBTITLE = create("prompts.server shop command.subtitle", "&fEnter the new command in chat.");
+
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_BUY_PRICE_TITLE = create("prompts.server shop item buy price.title", "<GRADIENT:5CAEFF>&lEnter Buy Price</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_BUY_PRICE_SUBTITLE = create("prompts.server shop item buy price.subtitle", "&fEnter the price for &ex&f1 of this item.");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_SELL_PRICE_TITLE = create("prompts.server shop item sell price.title", "<GRADIENT:5CAEFF>&lEnter Sell Price</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_SELL_PRICE_SUBTITLE = create("prompts.server shop item sell price.subtitle", "&fEnter the price for &ex&f1 of this item.");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_MIN_QTY_TITLE = create("prompts.server shop item min qty.title", "<GRADIENT:5CAEFF>&lEnter Minimum Qty</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_MIN_QTY_SUBTITLE = create("prompts.server shop item min qty.subtitle", "&fEnter the minimum purchase amount.");
+
+
 
 	/*
 	=================== GUI STUFF ===================
@@ -141,6 +151,81 @@ public final class Translations extends TranslationManager {
 			"",
 			"&e&lClick &7to select this content type."
 	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_TITLE = create("gui.shop add content.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7New Item");
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_PRICE_NAME = create("gui.shop add content.items.buy price.name", "<GRADIENT:5CAEFF>&lPurchase Price</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_PRICE_LORE = create("gui.shop add content.items.buy price.lore",
+			"&7The purchase price for &fx&e1 &7of this item.",
+			"",
+			"&7Current Price&f: &e%shop_item_buy_price%",
+			"",
+			"&e&lClick &7to adjust purchase price."
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_SELL_PRICE_NAME = create("gui.shop add content.items.sell price.name", "<GRADIENT:5CAEFF>&lSell Price</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_SELL_PRICE_LORE = create("gui.shop add content.items.sell price.lore",
+			"&7The sell price for &fx&e1 &7of this item.",
+			"",
+			"&7Current Price&f: &e%shop_item_sell_price%",
+			"",
+			"&e&lClick &7to adjust sell price."
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_TOGGLE_BUY_NAME = create("gui.shop add content.items.toggle buy.name", "<GRADIENT:5CAEFF>&lAllow Purchase</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_TOGGLE_BUY_LORE = create("gui.shop add content.items.toggle buy.lore",
+			"&7Used to toggle whether this item can be",
+			"&7purchased within this shop or not.",
+			"",
+			"&7Purchase Allowed&f: %is_true%",
+			"",
+			"&e&lClick &7to toggle on or off"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_TOGGLE_SELL_NAME = create("gui.shop add content.items.toggle sell.name", "<GRADIENT:5CAEFF>&lAllow Sell</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_TOGGLE_SELL_LORE = create("gui.shop add content.items.toggle sell.lore",
+			"&7Used to toggle whether this item can be",
+			"&7sold within this shop or not.",
+			"",
+			"&7Sell Allowed&f: %is_true%",
+			"",
+			"&e&lClick &7to toggle on or off"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_NAME = create("gui.shop add content.items.purchase qty.name", "<GRADIENT:5CAEFF>&lPurchase Quantity</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_LORE = create("gui.shop add content.items.purchase qty.lore",
+			"&7The minimum amount of this item",
+			"&7that a player must purchase.",
+			"",
+			"&7Purchase Qty&f: &e%shop_item_purchase_qty%",
+			"",
+			"&e&lClick &7to adjust purchase quantity"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ICON_LORE = create("gui.shop add content.items.icon.lore",
+			"&8&m------------------------------",
+			"&7Buying&f: %is_buy_enabled%",
+			"&7Selling&f: %is_sell_enabled%",
+			"",
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
+			"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%",
+			"",
+			"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
+			"",
+			"&7This item will cost the player a total of &a%shop_item_purchase_total%",
+			"&7to purchase in this shop before tax & discounts.",
+			"",
+			"&8&m------------------------------",
+			"&e&l%left_click% &7to open material picker",
+			"&b&l%right_click% &7to use item on cursor"
+	);
+
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME = create("gui.shop add content.items.add.name", "<GRADIENT:5CAEFF>&lAdd Item</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE = create("gui.shop add content.items.add.lore",
+			"&e&lClick &7to add to shop."
+	);
+
 
 	public static void init() {
 		new Translations(Shops.getInstance()).setup();

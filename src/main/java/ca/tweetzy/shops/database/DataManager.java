@@ -132,7 +132,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void insertServerShopContent(@NonNull final ShopContent content, final Callback<ShopContent> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "shop_content (id, shop_id, type, buy_price, sell_price, purchase_qty, item, command) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "shop_content (id, shop_id, type, buy_price, sell_price, purchase_qty, allow_buy, allow_sell, item, command) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "shop_content WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -146,16 +146,18 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setDouble(4, content.getBuyPrice());
 				preparedStatement.setDouble(5, content.getSellPrice());
 				preparedStatement.setInt(6, content.getMinimumPurchaseQty());
+				preparedStatement.setBoolean(7, content.isAllowBuy());
+				preparedStatement.setBoolean(8, content.isAllowSell());
 
 				if (content instanceof final ItemShopContent itemShopContent)
-					preparedStatement.setString(7, SerializeUtil.encodeItem(itemShopContent.getItem()));
+					preparedStatement.setString(9, SerializeUtil.encodeItem(itemShopContent.getItem()));
 				else
-					preparedStatement.setString(7, null);
+					preparedStatement.setString(9, null);
 
 				if (content instanceof final CommandShopContent commandShopContent)
-					preparedStatement.setString(8, commandShopContent.getCommand());
+					preparedStatement.setString(10, commandShopContent.getCommand());
 				else
-					preparedStatement.setString(8, null);
+					preparedStatement.setString(10, null);
 
 				preparedStatement.executeUpdate();
 
@@ -174,7 +176,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void updateServerShopContent(@NonNull final ShopContent content, final Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "UPDATE " + this.getTablePrefix() + "shop_content SET buy_price = ?, sell_price = ?, purchase_qty = ?, item = ?, command = ? WHERE id = ?";
+			final String query = "UPDATE " + this.getTablePrefix() + "shop_content SET buy_price = ?, sell_price = ?, purchase_qty = ?, item = ?, command = ?, allow_buy = ?, allow_sell = ? WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -192,7 +194,9 @@ public final class DataManager extends DataManagerAbstract {
 				else
 					preparedStatement.setString(5, null);
 
-				preparedStatement.setString(6, content.getId().toString());
+				preparedStatement.setBoolean(6, content.isAllowBuy());
+				preparedStatement.setBoolean(7, content.isAllowSell());
+				preparedStatement.setString(8, content.getId().toString());
 
 				int result = preparedStatement.executeUpdate();
 
@@ -223,8 +227,28 @@ public final class DataManager extends DataManagerAbstract {
 		}));
 	}
 
+	public void getServerShopContentsById(@NonNull final String shopId, @NonNull final Callback<List<ShopContent>> callback) {
+		final List<ShopContent> contents = new ArrayList<>();
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + this.getTablePrefix() + "shop_content WHERE shop_id = ?")) {
+
+				statement.setString(1, shopId.toLowerCase());
+
+				final ResultSet resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					final ShopContent shopContent = extractServerShopContent(resultSet);
+					contents.add(shopContent);
+				}
+
+				callback.accept(null, contents);
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
 	private ShopContent extractServerShopContent(final ResultSet resultSet) throws SQLException {
-		return Enum.valueOf(ShopContentType.class, resultSet.getString("type").toUpperCase()) == ShopContentType.ITEM ? new ItemShopContent(
+		ShopContent shopContent  =  Enum.valueOf(ShopContentType.class, resultSet.getString("type").toUpperCase()) == ShopContentType.ITEM ? new ItemShopContent(
 				UUID.fromString(resultSet.getString("id")),
 				resultSet.getString("shop_id"),
 				SerializeUtil.decodeItem(resultSet.getString("item")),
@@ -238,6 +262,11 @@ public final class DataManager extends DataManagerAbstract {
 				resultSet.getInt("purchase_qty"),
 				resultSet.getDouble("buy_price")
 		);
+
+		shopContent.setAllowBuy(resultSet.getBoolean("allow_buy"));
+		shopContent.setAllowSell(resultSet.getBoolean("allow_sell"));
+
+		return shopContent;
 	}
 
 

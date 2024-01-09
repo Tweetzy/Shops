@@ -18,7 +18,7 @@ public final class CommandShopContent extends AbstractShopContent {
 	private final String command;
 
 	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final String command, final int minPurchaseQty, final double price) {
-		super(id, ShopContentType.COMMAND, shopId.toLowerCase(), minPurchaseQty, price, 0);
+		super(id, ShopContentType.COMMAND, shopId.toLowerCase(), minPurchaseQty, price, 0, true, false);
 		this.command = command;
 	}
 
@@ -40,6 +40,27 @@ public final class CommandShopContent extends AbstractShopContent {
 	@Override
 	public void setSellPrice(double price) {
 	}
+
+	@Override
+	public boolean isAllowBuy() {
+		return this.allowBuy;
+	}
+
+	@Override
+	public boolean isAllowSell() {
+		return this.allowSell;
+	}
+
+	@Override
+	public void setAllowBuy(boolean allowBuy) {
+		this.allowBuy = allowBuy;
+	}
+
+	@Override
+	public void setAllowSell(boolean allowSell) {
+		this.allowSell = allowSell;
+	}
+
 
 	@Override
 	public void store(@NonNull Consumer<ShopContent> stored) {

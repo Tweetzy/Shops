@@ -2,17 +2,22 @@ package ca.tweetzy.shops.gui.admin;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.gui.ShopsPagedGUI;
+import ca.tweetzy.shops.gui.admin.content.ShopAddContentItemGUI;
+import ca.tweetzy.shops.gui.admin.content.ShopSelectContentTypeGUI;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 
@@ -44,7 +49,7 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 				.make(), click -> {
 
 			if (click.clickType == ClickType.LEFT)
-				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> {}));
+				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId())))));
 		});
 
 		setButton(5, 7, QuickItem
@@ -60,5 +65,10 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 	@Override
 	protected void onClick(ShopContent shopContent, GuiClickEvent click) {
 
+	}
+
+	@Override
+	protected List<Integer> fillSlots() {
+		return InventoryBorder.getInsideBorders(5);
 	}
 }

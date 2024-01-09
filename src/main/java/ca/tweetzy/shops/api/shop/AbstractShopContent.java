@@ -15,6 +15,9 @@ public abstract class AbstractShopContent implements ShopContent {
 	protected double buyPrice;
 	protected double sellPrice;
 
+	protected boolean allowBuy;
+	protected boolean allowSell;
+
 	@NotNull
 	@Override
 	public UUID getId() {

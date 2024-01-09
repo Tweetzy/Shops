@@ -38,8 +38,16 @@ public final class ShopManager extends KeyValueManager<String, Shop> {
 
 		Shops.getDataManager().getServerShops((error, result) -> {
 			if (error == null){
-				result.forEach(shop -> add(shop.getId().toLowerCase(), shop));
-				Shops.getShopContentManager().load();
+				result.forEach(shop -> {
+
+					// load content for shop
+					Shops.getDataManager().getServerShopContentsById(shop.getId().toLowerCase(), (contentError, foundContent) -> {
+						if (contentError == null)
+							foundContent.forEach(content -> shop.getContent().add(content));
+					});
+
+					add(shop.getId().toLowerCase(), shop);
+				});
 			}
 		});
 	}

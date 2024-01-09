@@ -1,4 +1,4 @@
-package ca.tweetzy.shops.gui.admin;
+package ca.tweetzy.shops.gui.admin.content;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.settings.TranslationManager;
@@ -6,6 +6,7 @@ import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
+import ca.tweetzy.shops.gui.admin.ShopEditGUI;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.entity.Player;

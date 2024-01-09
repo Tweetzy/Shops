@@ -47,7 +47,7 @@ public abstract class ShopsPagedGUI<T> extends PagedGUI<T> {
 	}
 
 	@Override
-	protected ItemStack getPreviousPageButton() {
+	protected ItemStack getPreviousButton() {
 		return QuickItem
 				.of(Settings.GUI_SHARED_ITEMS_PREVIOUS_BUTTON.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_SHARED_ITEMS_PREVIOUS_BUTTON_NAME))
@@ -56,12 +56,22 @@ public abstract class ShopsPagedGUI<T> extends PagedGUI<T> {
 	}
 
 	@Override
-	protected ItemStack getNextPageButton() {
+	protected ItemStack getNextButton() {
 		return QuickItem
 				.of(Settings.GUI_SHARED_ITEMS_NEXT_BUTTON.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_SHARED_ITEMS_NEXT_BUTTON_NAME))
 				.lore(TranslationManager.list(this.player, Translations.GUI_SHARED_ITEMS_NEXT_BUTTON_LORE, "left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK)))
 				.make();
+	}
+
+	@Override
+	protected int getPreviousButtonSlot() {
+		return 48;
+	}
+
+	@Override
+	protected int getNextButtonSlot() {
+		return 50;
 	}
 
 }

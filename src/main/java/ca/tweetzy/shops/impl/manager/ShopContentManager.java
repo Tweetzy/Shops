@@ -36,8 +36,15 @@ public final class ShopContentManager extends ListManager<ShopContent> {
 		clear();
 
 		Shops.getDataManager().getServerShopContents((error, result) -> {
-			if (error == null)
-				result.forEach(this::add);
+			if (error == null){
+				result.forEach(item -> {
+					add(item);
+					// add to actual shop
+//					item.get
+				});
+
+
+			}
 		});
 	}
 }
