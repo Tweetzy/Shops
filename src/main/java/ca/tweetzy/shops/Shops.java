@@ -10,9 +10,7 @@ import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
-import ca.tweetzy.shops.database.migrations._1_InitialMigration;
-import ca.tweetzy.shops.database.migrations._2_ShopItemMigration;
-import ca.tweetzy.shops.database.migrations._3_ShopItemBuySellToggleMigration;
+import ca.tweetzy.shops.database.migrations.*;
 import ca.tweetzy.shops.impl.manager.CurrencyManager;
 import ca.tweetzy.shops.impl.manager.ShopContentManager;
 import ca.tweetzy.shops.impl.manager.ShopManager;
@@ -29,7 +27,6 @@ public final class Shops extends FlightPlugin {
 
 	private final CommandManager commandManager = new CommandManager(this);
 	private final GuiManager guiManager = new GuiManager(this);
-
 	private final ShopManager shopManager = new ShopManager();
 	private final ShopContentManager shopContentManager = new ShopContentManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
@@ -51,7 +48,9 @@ public final class Shops extends FlightPlugin {
 		final DataMigrationManager dataMigrationManager = new DataMigrationManager(this.databaseConnector, this.dataManager,
 				new _1_InitialMigration(),
 				new _2_ShopItemMigration(),
-				new _3_ShopItemBuySellToggleMigration()
+				new _3_ShopItemBuySellToggleMigration(),
+				new _4_ShopCMDIconMigration(),
+				new _5_ShopCMDNameDescMigration()
 		);
 
 		// run migrations for tables
