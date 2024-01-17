@@ -7,9 +7,12 @@ import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.gui.ShopsPagedGUI;
+import ca.tweetzy.shops.gui.admin.content.ShopAddContentCmdGUI;
 import ca.tweetzy.shops.gui.admin.content.ShopAddContentItemGUI;
 import ca.tweetzy.shops.gui.admin.content.ShopSelectContentTypeGUI;
+import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
@@ -49,7 +52,12 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 				.make(), click -> {
 
 			if (click.clickType == ClickType.LEFT)
-				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId())))));
+				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> {
+					if (selectedType == ShopContentType.ITEM)
+						click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId())));
+					else
+						click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, this.shop, CommandShopContent.blank(this.shop.getId())));
+				}));
 		});
 
 		setButton(5, 7, QuickItem
