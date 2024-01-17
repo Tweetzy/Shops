@@ -35,6 +35,6 @@ public final class ShopsCommand extends Command {
 
 	@Override
 	public String getDescription() {
-		return "Mian command for shops";
+		return "Main command for shops";
 	}
 }
