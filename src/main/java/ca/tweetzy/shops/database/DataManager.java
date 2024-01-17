@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.database;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.database.Callback;
 import ca.tweetzy.flight.database.DataManagerAbstract;
 import ca.tweetzy.flight.database.DatabaseConnector;
@@ -132,7 +133,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void insertServerShopContent(@NonNull final ShopContent content, final Callback<ShopContent> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "shop_content (id, shop_id, type, buy_price, sell_price, purchase_qty, allow_buy, allow_sell, item, command) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "shop_content (id, shop_id, type, buy_price, sell_price, purchase_qty, allow_buy, allow_sell, item, command, cmd_icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "shop_content WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -154,10 +155,13 @@ public final class DataManager extends DataManagerAbstract {
 				else
 					preparedStatement.setString(9, null);
 
-				if (content instanceof final CommandShopContent commandShopContent)
+				if (content instanceof final CommandShopContent commandShopContent) {
 					preparedStatement.setString(10, commandShopContent.getCommand());
-				else
+					preparedStatement.setString(11, SerializeUtil.encodeItem(commandShopContent.getIcon()));
+				} else {
 					preparedStatement.setString(10, null);
+					preparedStatement.setString(11, null);
+				}
 
 				preparedStatement.executeUpdate();
 
@@ -176,7 +180,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void updateServerShopContent(@NonNull final ShopContent content, final Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "UPDATE " + this.getTablePrefix() + "shop_content SET buy_price = ?, sell_price = ?, purchase_qty = ?, item = ?, command = ?, allow_buy = ?, allow_sell = ? WHERE id = ?";
+			final String query = "UPDATE " + this.getTablePrefix() + "shop_content SET buy_price = ?, sell_price = ?, purchase_qty = ?, item = ?, command = ?, allow_buy = ?, allow_sell = ?, cmd_icon = ? WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -196,7 +200,13 @@ public final class DataManager extends DataManagerAbstract {
 
 				preparedStatement.setBoolean(6, content.isAllowBuy());
 				preparedStatement.setBoolean(7, content.isAllowSell());
-				preparedStatement.setString(8, content.getId().toString());
+
+				if (content instanceof CommandShopContent commandShopContent)
+					preparedStatement.setString(8, SerializeUtil.encodeItem(commandShopContent.getIcon()));
+				else
+					preparedStatement.setString(8, null);
+
+				preparedStatement.setString(9, content.getId().toString());
 
 				int result = preparedStatement.executeUpdate();
 
@@ -248,7 +258,7 @@ public final class DataManager extends DataManagerAbstract {
 	}
 
 	private ShopContent extractServerShopContent(final ResultSet resultSet) throws SQLException {
-		ShopContent shopContent  =  Enum.valueOf(ShopContentType.class, resultSet.getString("type").toUpperCase()) == ShopContentType.ITEM ? new ItemShopContent(
+		ShopContent shopContent = Enum.valueOf(ShopContentType.class, resultSet.getString("type").toUpperCase()) == ShopContentType.ITEM ? new ItemShopContent(
 				UUID.fromString(resultSet.getString("id")),
 				resultSet.getString("shop_id"),
 				SerializeUtil.decodeItem(resultSet.getString("item")),
@@ -258,6 +268,7 @@ public final class DataManager extends DataManagerAbstract {
 		) : new CommandShopContent(
 				UUID.fromString(resultSet.getString("id")),
 				resultSet.getString("shop_id"),
+				resultSet.getString("cmd_icon") == null ? CompMaterial.PAPER.parseItem() : SerializeUtil.decodeItem(resultSet.getString("cmd_icon")),
 				resultSet.getString("command"),
 				resultSet.getInt("purchase_qty"),
 				resultSet.getDouble("buy_price")
