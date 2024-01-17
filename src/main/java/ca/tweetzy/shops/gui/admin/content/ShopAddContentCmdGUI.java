@@ -49,6 +49,9 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 		// command button
 		drawCommandButton();
 
+		// name & desc buttons
+		drawInfoButtons();
+
 		// min buy qty button
 		drawMinPurchaseQtyButton();
 
@@ -82,7 +85,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 
 	private void drawCommandButton() {
 		// buy price
-		setButton(2, 4, QuickItem
+		setButton(2, 7, QuickItem
 				.of(CompMaterial.PAPER)
 				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME))
 				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_LORE, "shop_item_command", this.commandShopContent.getCommand()))
@@ -98,6 +101,50 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (input == null || input.length() < 3) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setCommand(input);
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				return true;
+			}
+		});
+	}
+
+	private void drawInfoButtons() {
+		setButton(3, 2, QuickItem
+				.of(CompMaterial.NAME_TAG)
+				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_NAME))
+				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_LORE, "shop_item_command_name", this.commandShopContent.getName()))
+				.make(), click -> new TitleInput(Shops.getInstance(), click.player, TranslationManager.string(click.player, Translations.PROMPT_SERVER_SHOP_ITEM_COMMAND_NAME_TITLE), TranslationManager.string(click.player, Translations.PROMPT_SERVER_SHOP_ITEM_COMMAND_NAME_SUBTITLE)) {
+
+			@Override
+			public void onExit(Player player) {
+				click.manager.showGUI(player, ShopAddContentCmdGUI.this);
+			}
+
+			@Override
+			public boolean onResult(String input) {
+				if (input == null || input.length() < 3) return false;
+
+				ShopAddContentCmdGUI.this.commandShopContent.setName(input);
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				return true;
+			}
+		});
+
+		setButton(3, 6, QuickItem
+				.of(CompMaterial.WRITTEN_BOOK)
+				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_NAME))
+				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_LORE, "shop_item_command_desc", this.commandShopContent.getDesc()))
+				.make(), click -> new TitleInput(Shops.getInstance(), click.player, TranslationManager.string(click.player, Translations.PROMPT_SERVER_SHOP_ITEM_COMMAND_DESC_TITLE), TranslationManager.string(click.player, Translations.PROMPT_SERVER_SHOP_ITEM_COMMAND_DESC_SUBTITLE)) {
+
+			@Override
+			public void onExit(Player player) {
+				click.manager.showGUI(player, ShopAddContentCmdGUI.this);
+			}
+
+			@Override
+			public boolean onResult(String input) {
+				if (input == null || input.length() < 3) return false;
+
+				ShopAddContentCmdGUI.this.commandShopContent.setDesc(input);
 				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
 				return true;
 			}

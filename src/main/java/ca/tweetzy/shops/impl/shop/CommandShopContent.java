@@ -15,20 +15,23 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+@Getter
+@Setter
 public final class CommandShopContent extends AbstractShopContent {
 
-	@Getter
-	@Setter
+
 	private ItemStack icon;
-
-	@Getter
-	@Setter
 	private String command;
+	private String name;
+	private String desc;
 
-	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String command, final int minPurchaseQty, final double price) {
+
+	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String name, @NonNull final String desc, @NonNull final String command, final int minPurchaseQty, final double price) {
 		super(id, ShopContentType.COMMAND, shopId.toLowerCase(), minPurchaseQty, price, 0, true, false);
 		this.command = command;
 		this.icon = icon;
+		this.name = name;
+		this.desc = desc;
 	}
 
 	@Override
@@ -92,6 +95,8 @@ public final class CommandShopContent extends AbstractShopContent {
 				UUID.randomUUID(),
 				shopId,
 				CompMaterial.HEART_OF_THE_SEA.parseItem(),
+				"Heal",
+				"You will be healed",
 				"heal %player%",
 				1,
 				1

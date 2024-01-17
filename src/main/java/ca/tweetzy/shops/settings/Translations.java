@@ -38,8 +38,12 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_SELL_PRICE_SUBTITLE = create("prompts.server shop item sell price.subtitle", "&fEnter the price for &ex&f1 of this item.");
 	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_MIN_QTY_TITLE = create("prompts.server shop item min qty.title", "<GRADIENT:5CAEFF>&lEnter Minimum Qty</GRADIENT:9F57FF>");
 	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_MIN_QTY_SUBTITLE = create("prompts.server shop item min qty.subtitle", "&fEnter the minimum purchase amount.");
-
-
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_TITLE = create("prompts.server shop item command.title", "<GRADIENT:5CAEFF>&lEnter Command</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_SUBTITLE = create("prompts.server shop item command.subtitle", "&fEnter the command for this item in chat.");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_NAME_TITLE = create("prompts.server shop item command name.title", "<GRADIENT:5CAEFF>&LCommand Name</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_NAME_SUBTITLE = create("prompts.server shop item command name.subtitle", "&fEnter display name for command");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_DESC_TITLE = create("prompts.server shop item command desc.title", "<GRADIENT:5CAEFF>&LCommand Description</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_ITEM_COMMAND_DESC_SUBTITLE = create("prompts.server shop item command desc.subtitle", "&fEnter description for command");
 
 	/*
 	=================== GUI STUFF ===================
@@ -220,6 +224,51 @@ public final class Translations extends TranslationManager {
 			"&b&l%right_click% &7to use item on cursor"
 	);
 
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_CMD_ICON_LORE = create("gui.shop add content.items.command icon.lore",
+			"&8&m------------------------------",
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
+			"",
+			"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
+			"&7Command&f: &7/&e%shop_item_command%",
+			"",
+			"&7This item will cost the player a total of &a%shop_item_purchase_total%",
+			"&7to purchase in this shop before tax & discounts.",
+			"",
+			"&8&m------------------------------",
+			"&e&l%left_click% &7to open material picker",
+			"&b&l%right_click% &7to use item on cursor"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME = create("gui.shop add content.items.command.name", "<GRADIENT:5CAEFF>&lCommand</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_LORE = create("gui.shop add content.items.command.lore",
+			"&7The command that will be executed",
+			"&7when a player purchases this item",
+			"",
+			"&7Command&f: &7/&e%shop_item_command%",
+			"",
+			"&e&lClick &7to change the command"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_NAME = create("gui.shop add content.items.command name.name", "<GRADIENT:5CAEFF>&lName</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_LORE = create("gui.shop add content.items.command name.lore",
+			"&7The display name that will be used",
+			"&7when showing this command in the shop.",
+			"",
+			"&7Name&f: %shop_item_command_name%",
+			"",
+			"&e&lClick &7to change the name"
+	);
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_NAME = create("gui.shop add content.items.command desc.name", "<GRADIENT:5CAEFF>&lDescription</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_LORE = create("gui.shop add content.items.command desc.lore",
+			"&7The description that will be used",
+			"&7when showing this command in the shop.",
+			"",
+			"&7Description&f:",
+			"%shop_item_command_desc%",
+			"",
+			"&e&lClick &7to change the description"
+	);
 
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME = create("gui.shop add content.items.add.name", "<GRADIENT:5CAEFF>&lAdd Item</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE = create("gui.shop add content.items.add.lore",
