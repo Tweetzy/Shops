@@ -17,6 +17,11 @@ public final class ShopManager extends KeyValueManager<String, Shop> {
 		return this.managerContent.containsKey(suggestedId.toLowerCase());
 	}
 
+	public Shop getById(@NonNull final String shopId) {
+		return getManagerContent().get(shopId.toLowerCase());
+	}
+
+
 		/*
 	=================== DATABASE CALLS ===================
 	 */
