@@ -74,6 +74,32 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_LORE = create("gui.admin shop list.items.create.lore", "&7Click to create a new shop");
 
 	public static final TranslationEntry GUI_SHOP_EDIT_TITLE = create("gui.shop edit.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Edit &8> &e%shop_id%");
+
+	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE = create("gui.shop edit.items.item content.lore",
+			"&8&m------------------------------",
+			"&7Buying&f: %is_buy_enabled%",
+			"&7Selling&f: %is_sell_enabled%",
+			"",
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
+			"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%",
+			"",
+			"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
+			"",
+			"&e&l%left_click% &7to edit shop item",
+			"&c&l%right_click% &7to delete item"
+	);
+
+	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_CMD_CONTENT_LORE = create("gui.shop edit.items.command content.lore",
+			"&8&m------------------------------",
+			"&7Buying&f: %is_buy_enabled%",
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
+			"",
+			"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
+			"",
+			"&e&l%left_click% &7to edit shop cmd",
+			"&c&l%right_click% &7to delete item"
+	);
+
 	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_CREATE_NAME = create("gui.shop edit.items.create.name", "<GRADIENT:5CAEFF>&LAdd Item</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_CREATE_LORE = create("gui.shop edit.items.create.lore",
 			"&7Used to add new items to this shop.",
