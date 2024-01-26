@@ -1,11 +1,15 @@
 package ca.tweetzy.shops.impl.shop;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.settings.Translations;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -73,21 +77,18 @@ public final class CommandShopContent extends AbstractShopContent {
 		this.allowSell = allowSell;
 	}
 
-
 	@Override
-	public void store(@NonNull Consumer<ShopContent> stored) {
-		Shops.getDataManager().insertServerShopContent(this, (error, created) -> {
-			if (error == null)
-				stored.accept(created);
-		});
-	}
+	public ItemStack generateDisplayItem(ShopContentDisplayType displayType) {
+		final QuickItem genItem = QuickItem.of(this.icon);
 
-	@Override
-	public void sync(@Nullable Consumer<SynchronizeResult> syncResult) {
-		Shops.getDataManager().updateServerShopContent(this, (error, updateStatus) -> {
-			if (syncResult != null)
-				syncResult.accept(error == null ? updateStatus ? SynchronizeResult.SUCCESS : SynchronizeResult.FAILURE : SynchronizeResult.FAILURE);
-		});
+		genItem.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_CMD_CONTENT_LORE,
+				"is_buy_enabled", TranslationManager.string(this.allowBuy ? Translations.ENABLED : Translations.DISABLED),
+				"shop_item_buy_price", this.buyPrice,
+				"shop_item_purchase_qty", this.minPurchaseQty,
+				"left_click", TranslationManager.string(Translations.MOUSE_LEFT_CLICK),
+				"right_click", TranslationManager.string(Translations.MOUSE_RIGHT_CLICK)));
+
+		return genItem.make();
 	}
 
 	public static CommandShopContent blank(@NonNull final String shopId) {

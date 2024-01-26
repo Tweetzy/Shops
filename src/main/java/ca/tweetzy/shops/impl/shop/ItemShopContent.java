@@ -1,11 +1,15 @@
 package ca.tweetzy.shops.impl.shop;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.settings.Translations;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -67,19 +71,19 @@ public final class ItemShopContent extends AbstractShopContent {
 	}
 
 	@Override
-	public void store(@NonNull Consumer<ShopContent> stored) {
-		Shops.getDataManager().insertServerShopContent(this, (error, created) -> {
-			if (error == null)
-				stored.accept(created);
-		});
-	}
+	public ItemStack generateDisplayItem(ShopContentDisplayType displayType) {
+		final QuickItem genItem = QuickItem.of(this.item);
 
-	@Override
-	public void sync(@Nullable Consumer<SynchronizeResult> syncResult) {
-		Shops.getDataManager().updateServerShopContent(this, (error, updateStatus) -> {
-			if (syncResult != null)
-				syncResult.accept(error == null ? updateStatus ? SynchronizeResult.SUCCESS : SynchronizeResult.FAILURE : SynchronizeResult.FAILURE);
-		});
+		genItem.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE,
+				"is_buy_enabled", TranslationManager.string(this.allowBuy ? Translations.ENABLED : Translations.DISABLED),
+				"is_sell_enabled", TranslationManager.string(this.allowSell ? Translations.ENABLED : Translations.DISABLED),
+				"shop_item_buy_price", this.buyPrice,
+				"shop_item_sell_price", this.sellPrice,
+				"shop_item_purchase_qty", this.minPurchaseQty,
+				"left_click", TranslationManager.string(Translations.MOUSE_LEFT_CLICK),
+				"right_click", TranslationManager.string(Translations.MOUSE_RIGHT_CLICK)));
+
+		return genItem.make();
 	}
 
 	public static ItemShopContent blank(@NonNull final String shopId) {
