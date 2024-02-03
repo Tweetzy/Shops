@@ -30,7 +30,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void insertServerShop(@NonNull final Shop shop, final Callback<Shop> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "shop (id, display_name, description, icon, open, requires_permission, permission, uses_command, command, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "shop (id, display_name, description, icon, open, requires_permission, permission, uses_command, command, created_at, updated_at, layout) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "shop WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -49,6 +49,7 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setString(9, shop.getShopOptions().getCommand());
 				preparedStatement.setLong(10, shop.getTimeCreated());
 				preparedStatement.setLong(11, shop.getLastUpdated());
+				preparedStatement.setString(12, shop.getShopOptions().getShopDisplay().getJSONString());
 
 				preparedStatement.executeUpdate();
 
@@ -67,7 +68,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void updateServerShop(@NonNull final Shop shop, final Callback<Boolean> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "UPDATE " + this.getTablePrefix() + "shop SET display_name = ?, description = ?, icon = ?, open = ?, requires_permission = ?, permission = ?, uses_command = ?, command = ?, updated_at = ? WHERE id = ?";
+			final String query = "UPDATE " + this.getTablePrefix() + "shop SET display_name = ?, description = ?, icon = ?, open = ?, requires_permission = ?, permission = ?, uses_command = ?, command = ?, updated_at = ?, layout = ? WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -80,7 +81,8 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setBoolean(7, shop.getShopOptions().isUsingCommand());
 				preparedStatement.setString(8, shop.getShopOptions().getCommand());
 				preparedStatement.setLong(9, System.currentTimeMillis());
-				preparedStatement.setString(10, shop.getId().toLowerCase());
+				preparedStatement.setString(10, shop.getShopOptions().getShopDisplay().getJSONString());
+				preparedStatement.setString(11, shop.getId().toLowerCase());
 
 				int result = preparedStatement.executeUpdate();
 
@@ -118,7 +120,7 @@ public final class DataManager extends DataManagerAbstract {
 				List.of(resultSet.getString("description").split(";;;")),
 				new ShopSettings(
 						SerializeUtil.decodeItem(resultSet.getString("icon")),
-						new ShopLayout(),
+						ShopLayout.decodeJSON(resultSet.getString("layout")),
 						resultSet.getBoolean("open"),
 						resultSet.getBoolean("requires_permission"),
 						resultSet.getBoolean("uses_command"),

@@ -18,6 +18,7 @@ public final class Translations extends TranslationManager {
 	 */
 	public static TranslationEntry SHOP_ID_TAKEN = create("error.shop id taken", "&cA shop with that id already exists!");
 	public static TranslationEntry NUMBER_CANNOT_BE_ZERO = create("error.number cannot be zero", "&cPlease enter a number greater than 0");
+	public static TranslationEntry ONE_FILL_SLOT_REQUIRED = create("error.one fill slot required", "&cThis layout requires at least one fill slot!");
 
 
 	/*
@@ -25,6 +26,12 @@ public final class Translations extends TranslationManager {
 	 */
 	public static TranslationEntry PROMPT_SERVER_SHOP_ID_TITLE = create("prompts.server shop id.title", "<GRADIENT:5CAEFF>&lShop Id</GRADIENT:9F57FF>");
 	public static TranslationEntry PROMPT_SERVER_SHOP_ID_SUBTITLE = create("prompts.server shop id.subtitle", "&fEnter id for new shop in chat.");
+
+	public static TranslationEntry PROMPT_SERVER_SHOP_DPN_TITLE = create("prompts.server shop display name.title", "<GRADIENT:5CAEFF>&lShop Name</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_DPN_SUBTITLE = create("prompts.server shop display name.subtitle", "&fEnter the new display name in chat.");
+
+	public static TranslationEntry PROMPT_SERVER_SHOP_DESC_TITLE = create("prompts.server shop description.title", "<GRADIENT:5CAEFF>&lShop Description</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SERVER_SHOP_DESC_SUBTITLE = create("prompts.server shop description.subtitle", "&fEnter the new description in chat.");
 
 	public static TranslationEntry PROMPT_SERVER_SHOP_PERM_TITLE = create("prompts.server shop permission.title", "<GRADIENT:5CAEFF>&lShop Permission</GRADIENT:9F57FF>");
 	public static TranslationEntry PROMPT_SERVER_SHOP_PERM_SUBTITLE = create("prompts.server shop permission.subtitle", "&fEnter the new permission in chat.");
@@ -123,6 +130,27 @@ public final class Translations extends TranslationManager {
 			"",
 			"&e&lClick &7to edit the display icon"
 	);
+
+	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DPN_NAME = create("gui.shop settings.items.display name.name", "<GRADIENT:5CAEFF>&lDisplay Name</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DPN_LORE = create("gui.shop settings.items.display name.lore",
+			"&7The display name of the shop",
+			"",
+			"&7Current&F: %shop_display_name%",
+			"",
+			"&e&lClick &7to edit display name"
+	);
+
+	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DESC_NAME = create("gui.shop settings.items.description.name", "<GRADIENT:5CAEFF>&lShop Description</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DESC_LORE = create("gui.shop settings.items.description.lore",
+			"&7The description of the shop",
+			"",
+			"&7Current&F:",
+			"%shop_description%",
+			"",
+			"&e&lClick &7to edit description"
+	);
+
+
 	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DECO_NAME = create("gui.shop settings.items.deco.name", "<GRADIENT:5CAEFF>&lShop Deco/Layout</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_DECO_LORE = create("gui.shop settings.items.deco.lore",
 			"&7How the shop content will be positioned,",
@@ -299,6 +327,78 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME = create("gui.shop add content.items.add.name", "<GRADIENT:5CAEFF>&lAdd Item</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE = create("gui.shop add content.items.add.lore",
 			"&e&lClick &7to add to shop."
+	);
+
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILL_SLOT_NAME = create("gui.layout editor.items.fill slot.name", "<GRADIENT:5CAEFF>&lFill Slot</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILL_SLOT_LORE = create("gui.layout editor.items.fill slot.lore",
+			"&7This slot will be populated by",
+			"&7the contents added to the shop",
+			"",
+			"&e&l%left_click% &7to disable this slot"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_DECO_SLOT_NAME = create("gui.layout editor.items.decoration slot.name", "<GRADIENT:5CAEFF>&lDecoration Slot</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_DECO_SLOT_LORE = create("gui.layout editor.items.decoration slot.lore",
+			"&7This is a decoration slot",
+			"",
+			"&e&l%left_click% &7to make empty slot",
+			"&d&l%right_click% &7with an item on your cursor",
+			"&7to change the decoration item."
+	);
+
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_EMPTY_SLOT_NAME = create("gui.layout editor.items.empty slot.name", "<GRADIENT:5CAEFF>&lEmpty Slot</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_EMPTY_SLOT_LORE = create("gui.layout editor.items.empty slot.lore",
+			"&7This is a free slot, you can add",
+			"&7decorations here or assign it as a ",
+			"&7populated slot or even move controls.",
+			"",
+			"&e&l%left_click% &7to set as fill slot",
+			"&b&l%right_click% &7to move a control here",
+			"&d&l%right_click% &7with an item on your cursor",
+			"&7to decorate this slot."
+	);
+
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILTER_NAME = create("gui.layout editor.items.filter.name", "<GRADIENT:5CAEFF>&lFilter</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILTER_LORE = create("gui.layout editor.items.filter.lore",
+			"&7Used to adjust the filtering",
+			"&7options for this shop"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_SEARCH_NAME = create("gui.layout editor.items.search.name", "<GRADIENT:5CAEFF>&lSearch</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_SEARCH_LORE = create("gui.layout editor.items.search.lore",
+			"&7Used to search for items",
+			"&7within this shop."
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_TITLE = create("gui.layout control picker.title", "&EShops &f- &7Select Layout Control");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT_NAME = create("gui.layout control picker.items.exit.name", "<GRADIENT:5CAEFF>&lExit Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT_LORE = create("gui.layout control picker.items.exit.lore",
+			"&7Used to exit shop menu",
+			"&e&l%left_click% &7to select this control"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER_NAME = create("gui.layout control picker.items.filter.name", "<GRADIENT:5CAEFF>&lFilter Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER_LORE = create("gui.layout control picker.items.filter.lore",
+			"&7Used to filter the shop items",
+			"&e&l%left_click% &7to select this control"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_BACK_NAME = create("gui.layout control picker.items.prev page.name", "<GRADIENT:5CAEFF>&lBack Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_BACK_LORE = create("gui.layout control picker.items.prev page.lore",
+			"&7Used to navigate back if theres multiple pages",
+			"&e&l%left_click% &7to select this control"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_NEXT_NAME = create("gui.layout control picker.items.next page.name", "<GRADIENT:5CAEFF>&lNext Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_NEXT_LORE = create("gui.layout control picker.items.next page.lore",
+			"&7Used to navigate forward if theres multiple pages",
+			"&e&l%left_click% &7to select this control"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH_NAME = create("gui.layout control picker.items.search.name", "<GRADIENT:5CAEFF>&lSearch Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH_LORE = create("gui.layout control picker.items.search.lore",
+			"&7Used to search for items in the shop",
+			"&e&l%left_click% &7to select this control"
 	);
 
 
