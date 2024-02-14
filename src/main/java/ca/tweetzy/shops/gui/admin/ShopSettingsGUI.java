@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.gui.admin;
 
+import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
@@ -8,6 +9,7 @@ import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.Shop;
+import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.layout.ShopLayoutEditorGUI;
 import ca.tweetzy.shops.settings.Translations;
@@ -17,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class ShopSettingsGUI extends ShopsBaseGUI {
@@ -195,6 +198,13 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 
 			if (click.clickType == ClickType.RIGHT) {
 				this.shop.getShopOptions().setUsingCommand(!this.shop.getShopOptions().isUsingCommand());
+
+				if (this.shop.getShopOptions().isUsingCommand())
+					Shops.getCommandManager().registerCommandDynamically(new DynamicShopCommand(shop));
+				else
+					CommandManager.unregisterCommands(Collections.singleton(Shops.getInstance().getServer().getPluginCommand(shop.getShopOptions().getCommand())));
+
+
 				this.shop.sync(result -> click.manager.showGUI(click.player, new ShopSettingsGUI(click.player, this.shop)));
 			}
 		});
