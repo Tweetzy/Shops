@@ -3,10 +3,7 @@ package ca.tweetzy.shops.impl.shop;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
-import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.settings.Translations;
@@ -14,10 +11,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
-import java.util.function.Consumer;
 
 @Getter
 @Setter

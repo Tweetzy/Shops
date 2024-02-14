@@ -1,7 +1,5 @@
 package ca.tweetzy.shops.api.shop;
 
-import ca.tweetzy.flight.settings.TranslationManager;
-import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
 import lombok.AllArgsConstructor;

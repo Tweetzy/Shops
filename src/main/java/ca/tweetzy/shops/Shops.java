@@ -1,7 +1,6 @@
 package ca.tweetzy.shops;
 
 import ca.tweetzy.flight.FlightPlugin;
-import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.database.DataMigrationManager;
 import ca.tweetzy.flight.database.DatabaseConnector;

@@ -8,7 +8,6 @@ import ca.tweetzy.flight.utils.MathUtil;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.ShopEditGUI;

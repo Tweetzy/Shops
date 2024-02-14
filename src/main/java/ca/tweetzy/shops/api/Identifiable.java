@@ -2,8 +2,6 @@ package ca.tweetzy.shops.api;
 
 import lombok.NonNull;
 
-import java.util.UUID;
-
 public interface Identifiable<T> {
 
 	/**

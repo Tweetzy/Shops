@@ -2,7 +2,6 @@ package ca.tweetzy.shops.commands;
 
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
-import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.command.ReturnType;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.ItemUtil;
@@ -17,8 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

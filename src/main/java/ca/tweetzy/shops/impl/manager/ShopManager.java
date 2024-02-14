@@ -1,6 +1,5 @@
 package ca.tweetzy.shops.impl.manager;
 
-import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.manager.KeyValueManager;
 import ca.tweetzy.shops.api.shop.Shop;
