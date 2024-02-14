@@ -3,10 +3,7 @@ package ca.tweetzy.shops.impl.shop;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
-import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.settings.Translations;
@@ -14,10 +11,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
+
+import static ca.tweetzy.shops.model.VariableHelper.replaceVariable;
 
 public final class ItemShopContent extends AbstractShopContent {
 
@@ -26,7 +24,7 @@ public final class ItemShopContent extends AbstractShopContent {
 	private ItemStack item;
 
 	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final int minPurchaseQty, final double buyPrice, final double sellPrice) {
-		super(id, ShopContentType.ITEM, shopId.toLowerCase(), minPurchaseQty, buyPrice, sellPrice, true, true);
+		super(id, ShopContentType.ITEM, shopId.toLowerCase(), minPurchaseQty, buyPrice, sellPrice, true, sellPrice != 0);
 		this.item = item;
 	}
 
@@ -74,14 +72,30 @@ public final class ItemShopContent extends AbstractShopContent {
 	public ItemStack generateDisplayItem(ShopContentDisplayType displayType) {
 		final QuickItem genItem = QuickItem.of(this.item);
 
-		genItem.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE,
-				"is_buy_enabled", TranslationManager.string(this.allowBuy ? Translations.ENABLED : Translations.DISABLED),
-				"is_sell_enabled", TranslationManager.string(this.allowSell ? Translations.ENABLED : Translations.DISABLED),
-				"shop_item_buy_price", this.buyPrice,
-				"shop_item_sell_price", this.sellPrice,
-				"shop_item_purchase_qty", this.minPurchaseQty,
-				"left_click", TranslationManager.string(Translations.MOUSE_LEFT_CLICK),
-				"right_click", TranslationManager.string(Translations.MOUSE_RIGHT_CLICK)));
+		if (displayType == ShopContentDisplayType.LIVE_SHOP) {
+			 List<String> baseLore = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE);
+
+			final List<String> buyInfo = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", this.buyPrice);// TODO add a global format option
+			final List<String> sellInfo = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", this.sellPrice);// TODO add a global format option
+			final List<String> minBuyInfo = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_MIN_BUY_INFO, "shop_item_purchase_qty", this.minPurchaseQty);// TODO add a global format option
+
+			replaceVariable(baseLore, "%shop_content_buy_info%", buyInfo, !this.allowBuy);
+			replaceVariable(baseLore, "%shop_content_sell_info%", sellInfo, !this.allowSell);
+			replaceVariable(baseLore, "%shop_content_purchase_qty_info%", minBuyInfo, !this.allowBuy);
+			replaceVariable(baseLore, "%shop_content_desc_info%", null, true);
+
+			genItem.lore(baseLore);
+
+		} else {
+			genItem.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE,
+					"is_buy_enabled", TranslationManager.string(this.allowBuy ? Translations.ENABLED : Translations.DISABLED),
+					"is_sell_enabled", TranslationManager.string(this.allowSell ? Translations.ENABLED : Translations.DISABLED),
+					"shop_item_buy_price", this.buyPrice,
+					"shop_item_sell_price", this.sellPrice,
+					"shop_item_purchase_qty", this.minPurchaseQty,
+					"left_click", TranslationManager.string(Translations.MOUSE_LEFT_CLICK),
+					"right_click", TranslationManager.string(Translations.MOUSE_RIGHT_CLICK)));
+		}
 
 		return genItem.make();
 	}
