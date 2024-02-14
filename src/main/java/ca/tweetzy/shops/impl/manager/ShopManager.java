@@ -1,8 +1,10 @@
 package ca.tweetzy.shops.impl.manager;
 
+import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.manager.KeyValueManager;
 import ca.tweetzy.shops.api.shop.Shop;
+import ca.tweetzy.shops.commands.DynamicShopCommand;
 import lombok.NonNull;
 
 import java.util.function.Consumer;
@@ -52,6 +54,11 @@ public final class ShopManager extends KeyValueManager<String, Shop> {
 					});
 
 					add(shop.getId().toLowerCase(), shop);
+
+					// register command if enabled
+					if (shop.getShopOptions().isUsingCommand()) {
+						Shops.getCommandManager().registerCommandDynamically(new DynamicShopCommand(shop));
+					}
 				});
 			}
 		});
