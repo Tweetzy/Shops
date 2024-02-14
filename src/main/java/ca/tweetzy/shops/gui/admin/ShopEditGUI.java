@@ -5,8 +5,10 @@ import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.shops.api.SynchronizeResult;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.gui.ShopsPagedGUI;
 import ca.tweetzy.shops.gui.admin.content.ShopAddContentCmdGUI;
@@ -34,10 +36,8 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected ItemStack makeDisplayItem(ShopContent shopContent) {
-		if (shopContent instanceof final ItemShopContent itemShopContent)
-			return QuickItem.of(itemShopContent.getItem()).make();
+		return shopContent.generateDisplayItem(ShopContentDisplayType.SHOP_EDIT);
 
-		return null;
 	}
 
 	@Override
@@ -72,7 +72,12 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void onClick(ShopContent shopContent, GuiClickEvent click) {
-
+		if  (click.clickType == ClickType.RIGHT) {
+			shopContent.unStore(result -> {
+				if (result == SynchronizeResult.FAILURE) return;
+				click.manager.showGUI(click.player, new ShopEditGUI(click.player, this.shop));
+			});
+		}
 	}
 
 	@Override
