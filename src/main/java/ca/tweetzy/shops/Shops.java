@@ -1,12 +1,14 @@
 package ca.tweetzy.shops;
 
 import ca.tweetzy.flight.FlightPlugin;
+import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.database.DataMigrationManager;
 import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.SQLiteConnector;
 import ca.tweetzy.flight.gui.GuiManager;
 import ca.tweetzy.flight.utils.Common;
+import ca.tweetzy.shops.commands.AddCommand;
 import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
@@ -68,11 +70,10 @@ public final class Shops extends FlightPlugin {
 		this.shopManager.load();
 
 		// listeners
-//		getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-//		getServer().getPluginManager().registerEvents(new MarketTransactionListener(), this);
 
 		// setup commands
 		this.commandManager.registerCommandDynamically(new ShopsCommand()).addSubCommands(
+				new AddCommand(),
 				new AdminCommand()
 		);
 	}
@@ -89,6 +90,10 @@ public final class Shops extends FlightPlugin {
 
 	public static Shops getInstance() {
 		return (Shops) FlightPlugin.getInstance();
+	}
+
+	public static CommandManager getCommandManager() {
+		return getInstance().commandManager;
 	}
 
 	public static DataManager getDataManager() {
