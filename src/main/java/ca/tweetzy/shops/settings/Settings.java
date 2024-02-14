@@ -28,6 +28,17 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_SHARED_ITEMS_PREVIOUS_BUTTON = create("gui.shared buttons.previous button.item", CompMaterial.ARROW.name());
 	public static ConfigEntry GUI_SHARED_ITEMS_NEXT_BUTTON = create("gui.shared buttons.next button.item", CompMaterial.ARROW.name());
 
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT = create("gui.layout control picker.items.exit.item", CompMaterial.BARRIER.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_PREV_PAGE = create("gui.layout control picker.items.prev page.item", CompMaterial.ARROW.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_NEXT_PAGE = create("gui.layout control picker.items.next page.item", CompMaterial.ARROW.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH = create("gui.layout control picker.items.search.item", CompMaterial.DARK_OAK_SIGN.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER = create("gui.layout control picker.items.review.item", CompMaterial.REPEATER.name());
+
+	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_SEARCH = create("gui.shop contents.items.review.item", CompMaterial.DARK_OAK_SIGN.name());
+	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_FILTER = create("gui.shop contents.items.filter.item", CompMaterial.REPEATER.name());
+
+
+
 	public static void init() {
 		Shops.getCoreConfig().init();
 	}
