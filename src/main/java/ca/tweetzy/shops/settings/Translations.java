@@ -17,13 +17,23 @@ public final class Translations extends TranslationManager {
 	=================== ERRORS ===================
 	 */
 	public static TranslationEntry SHOP_ID_TAKEN = create("error.shop id taken", "&cA shop with that id already exists!");
+	public static TranslationEntry SHOP_NOT_FOUND = create("error.shop not found", "&cCould not find any shops with that id!");
 	public static TranslationEntry NUMBER_CANNOT_BE_ZERO = create("error.number cannot be zero", "&cPlease enter a number greater than 0");
 	public static TranslationEntry ONE_FILL_SLOT_REQUIRED = create("error.one fill slot required", "&cThis layout requires at least one fill slot!");
+	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
+
+	/*
+	=================== INFORMATIONAL ===================
+	 */
+	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
 
 
 	/*
 	=================== PROMPTS ===================
 	 */
+	public static TranslationEntry PROMPT_SEARCH_TITLE = create("prompts.search.title", "<GRADIENT:5CAEFF>&lSearch</GRADIENT:9F57FF>");
+	public static TranslationEntry PROMPT_SEARCH_SUBTITLE = create("prompts.search.subtitle", "&fEnter search keywords into chat");
+
 	public static TranslationEntry PROMPT_SERVER_SHOP_ID_TITLE = create("prompts.server shop id.title", "<GRADIENT:5CAEFF>&lShop Id</GRADIENT:9F57FF>");
 	public static TranslationEntry PROMPT_SERVER_SHOP_ID_SUBTITLE = create("prompts.server shop id.subtitle", "&fEnter id for new shop in chat.");
 
@@ -120,6 +130,56 @@ public final class Translations extends TranslationManager {
 			"&7Used to adjust shop specific settings",
 			"",
 			"&e&lClick &7to open shop settings"
+	);
+
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_SEARCH_NAME = create("gui.shop contents.items.search.name", "<GRADIENT:5CAEFF>&lSearch</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_SEARCH_LORE = create("gui.shop contents.items.search.lore",
+			"&7Used to search for items",
+			"&7within this specific shop.",
+			"",
+			"&e&lClick &7to search in this shop."
+	);
+
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_FILTER_NAME = create("gui.shop contents.items.filter.name", "<GRADIENT:5CAEFF>&lFilter</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_FILTER_LORE = create("gui.shop contents.items.filter.lore",
+			"&7Used to filter items in shop",
+			"",
+			"&7Current Order&F: &e%shop_filter_order%",
+			"&7Current Type&F: &e%shop_filter_type%",
+			"",
+			"&e&lClick &7to change filter order."
+	);
+
+//				"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
+//						"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%",
+//						"",
+//						"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
+
+	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.shop contents.items.content.lore.base lore",
+			"&8&m------------------------------",
+			"%shop_content_buy_info%",
+			"%shop_content_sell_info%",
+			"%shop_content_purchase_qty_info%",
+			"%shop_content_desc_info%",
+			"",
+			"&c&l%right_click% &7to delete item"
+	);
+
+	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.shop contents.items.content.lore.buy lore",
+			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+	);
+
+	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.shop contents.items.content.lore.sell lore",
+			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+	);
+
+	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_MIN_BUY_INFO = create("gui.shop contents.items.content.lore.min buy lore",
+			"",
+			"&7Minimum Purchase Qty&f: x&e%shop_item_purchase_qty%"
+	);
+
+	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_DESC_INFO = create("gui.shop contents.items.content.lore.description lore",
+			"&e%shop_item_description%"
 	);
 
 	//
