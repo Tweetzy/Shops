@@ -1,14 +1,12 @@
 package ca.tweetzy.shops.model;
 
 import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
 import java.util.List;
 
-@UtilityClass
 public final class VariableHelper {
 
-	public List<String> replaceVariable(@NonNull List<String> originalList, final String variable, Object replacement, boolean removeVariable) {
+	public static List<String> replaceVariable(@NonNull List<String> originalList, final String variable, Object replacement, boolean removeVariable) {
 		final int varIndex = originalList.indexOf(variable);
 
 		if (varIndex == -1) {
