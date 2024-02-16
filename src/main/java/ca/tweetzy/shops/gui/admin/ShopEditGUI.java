@@ -54,9 +54,9 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 			if (click.clickType == ClickType.LEFT)
 				click.manager.showGUI(click.player, new ShopSelectContentTypeGUI(click.player, this.shop, selectedType -> {
 					if (selectedType == ShopContentType.ITEM)
-						click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId())));
+						click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId()), false));
 					else
-						click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, this.shop, CommandShopContent.blank(this.shop.getId())));
+						click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, this.shop, CommandShopContent.blank(this.shop.getId()), false));
 				}));
 		});
 
@@ -72,7 +72,15 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void onClick(ShopContent shopContent, GuiClickEvent click) {
-		if  (click.clickType == ClickType.RIGHT) {
+		if (click.clickType == ClickType.LEFT) {
+			if (shopContent instanceof final ItemShopContent itemShopContent)
+				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, itemShopContent, true));
+			if (shopContent instanceof final CommandShopContent commandShopContent)
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, this.shop, commandShopContent, true));
+		}
+
+
+		if (click.clickType == ClickType.RIGHT) {
 			shopContent.unStore(result -> {
 				if (result == SynchronizeResult.FAILURE) return;
 				click.manager.showGUI(click.player, new ShopEditGUI(click.player, this.shop));

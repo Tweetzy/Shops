@@ -150,11 +150,6 @@ public final class Translations extends TranslationManager {
 			"&e&lClick &7to change filter order."
 	);
 
-//				"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%",
-//						"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%",
-//						"",
-//						"&7Minimum Buy Qty&f: &e%shop_item_purchase_qty%",
-
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.shop contents.items.content.lore.base lore",
 			"&8&m------------------------------",
 			"%shop_content_buy_info%",
@@ -162,7 +157,8 @@ public final class Translations extends TranslationManager {
 			"%shop_content_purchase_qty_info%",
 			"%shop_content_desc_info%",
 			"",
-			"&c&l%right_click% &7to delete item"
+			"&e&l%left_click% &7to buy now",
+			"&b&l%right_click% &7to add to cart"
 	);
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.shop contents.items.content.lore.buy lore",
@@ -268,6 +264,13 @@ public final class Translations extends TranslationManager {
 			"&7that gets executed when the player buys it.",
 			"",
 			"&e&lClick &7to select this content type."
+	);
+
+	//
+	public static final TranslationEntry GUI_SHOP_EDIT_CONTENT_TITLE = create("gui.shop edit content.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Editing Item");
+	public static final TranslationEntry GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_NAME = create("gui.shop edit content.items.add.name", "<GRADIENT:5CAEFF>&LUpdate Item</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_LORE = create("gui.shop edit content.items.add.lore",
+			"&e&lClick &7to update item."
 	);
 
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_TITLE = create("gui.shop add content.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7New Item");

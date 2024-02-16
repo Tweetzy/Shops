@@ -22,12 +22,14 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 
 	private final Shop shop;
 	private CommandShopContent commandShopContent;
+	private final boolean isEditing;
 
 
-	public ShopAddContentCmdGUI(@NonNull Player player, @NonNull final Shop shop, @NonNull final CommandShopContent commandShopContent) {
-		super(new ShopEditGUI(player, shop), player, TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_TITLE), 6);
+	public ShopAddContentCmdGUI(@NonNull Player player, @NonNull final Shop shop, @NonNull final CommandShopContent commandShopContent, final boolean isEditing) {
+		super(new ShopEditGUI(player, shop), player, TranslationManager.string(isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_TITLE : Translations.GUI_SHOP_ADD_CONTENT_TITLE), 6);
 		this.shop = shop;
 		this.commandShopContent = commandShopContent;
+		this.isEditing = isEditing;
 		setAcceptsItems(true);
 		draw();
 	}
@@ -77,7 +79,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 			if (click.clickType == ClickType.LEFT) {
 				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
 					this.commandShopContent.setIcon(selected.parseItem());
-					click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+					click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				}));
 			}
 		});
@@ -101,7 +103,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (input == null || input.length() < 3) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setCommand(input);
-				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -124,7 +126,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (input == null || input.length() < 3) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setName(input);
-				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -145,7 +147,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (input == null || input.length() < 3) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setDesc(input);
-				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -170,7 +172,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (!validateIsNumber(click.player, input)) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setBuyPrice(Double.parseDouble(input));
-				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -194,7 +196,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 				if (!validateIsNumber(click.player, input)) return false;
 
 				ShopAddContentCmdGUI.this.commandShopContent.setMinimumPurchaseQty((int) Math.round(Double.parseDouble(input)));
-				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent));
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -203,9 +205,17 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 	private void drawAddButton() {
 		setButton(getRows() - 1, 4, QuickItem
 				.of(CompMaterial.LIME_DYE)
-				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME))
-				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE))
+				.name(TranslationManager.string(this.isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_NAME : Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME))
+				.lore(TranslationManager.list(this.isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_LORE : Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE))
 				.make(), click -> {
+
+			// if editing, update rather than create obv
+			if (this.isEditing) {
+				this.commandShopContent.sync(result -> {
+					click.manager.showGUI(click.player, new ShopEditGUI(click.player, this.shop));
+				});
+				return;
+			}
 
 			// add content and go back
 			Shops.getShopContentManager().create(this.shop, this.commandShopContent, created -> {

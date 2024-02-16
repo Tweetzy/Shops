@@ -22,12 +22,14 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 
 	private final Shop shop;
 	private ItemShopContent itemContent;
+	private final boolean isEditing;
 
 
-	public ShopAddContentItemGUI(@NonNull Player player, @NonNull final Shop shop, @NonNull final ItemShopContent itemContent) {
-		super(new ShopEditGUI(player, shop), player, TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_TITLE), 6);
+	public ShopAddContentItemGUI(@NonNull Player player, @NonNull final Shop shop, @NonNull final ItemShopContent itemContent, final boolean isEditing) {
+		super(new ShopEditGUI(player, shop), player, TranslationManager.string(isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_TITLE : Translations.GUI_SHOP_ADD_CONTENT_TITLE), 6);
 		this.shop = shop;
 		this.itemContent = itemContent;
+		this.isEditing = isEditing;
 		setAcceptsItems(true);
 		draw();
 	}
@@ -74,7 +76,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 			if (click.clickType == ClickType.LEFT) {
 				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
 					this.itemContent.setItem(selected.parseItem());
-					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent));
+					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
 				}));
 			}
 		});
@@ -99,7 +101,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 				if (!validateIsNumber(click.player, input)) return false;
 
 				ShopAddContentItemGUI.this.itemContent.setBuyPrice(Double.parseDouble(input));
-				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent));
+				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -122,7 +124,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 				if (!validateIsNumber(click.player, input)) return false;
 
 				ShopAddContentItemGUI.this.itemContent.setSellPrice(Double.parseDouble(input));
-				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent));
+				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -174,7 +176,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 				if (!validateIsNumber(click.player, input)) return false;
 
 				ShopAddContentItemGUI.this.itemContent.setMinimumPurchaseQty((int) Math.round(Double.parseDouble(input)));
-				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent));
+				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
 				return true;
 			}
 		});
@@ -183,12 +185,20 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 	private void drawAddButton() {
 		setButton(getRows() - 1, 4, QuickItem
 				.of(CompMaterial.LIME_DYE)
-				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME))
-				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE))
+				.name(TranslationManager.string(this.isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_NAME : Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_NAME))
+				.lore(TranslationManager.list(this.isEditing ? Translations.GUI_SHOP_EDIT_CONTENT_ITEMS_SAVE_LORE : Translations.GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE))
 				.make(), click -> {
 
 			if (!this.itemContent.isAllowBuy() && !this.itemContent.isAllowSell()) {
 				// why the fuck would you want this
+				return;
+			}
+
+			// if editing, update rather than create obv
+			if (this.isEditing) {
+				this.itemContent.sync(result -> {
+					click.manager.showGUI(click.player, new ShopEditGUI(click.player, this.shop));
+				});
 				return;
 			}
 
