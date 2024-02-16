@@ -73,7 +73,10 @@ public final class ItemShopContent extends AbstractShopContent {
 		final QuickItem genItem = QuickItem.of(this.item);
 
 		if (displayType == ShopContentDisplayType.LIVE_SHOP) {
-			 List<String> baseLore = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE);
+			List<String> baseLore = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE,
+					"left_click", TranslationManager.string(Translations.MOUSE_LEFT_CLICK),
+					"right_click", TranslationManager.string(Translations.MOUSE_RIGHT_CLICK)
+			);
 
 			final List<String> buyInfo = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", this.buyPrice);// TODO add a global format option
 			final List<String> sellInfo = TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", this.sellPrice);// TODO add a global format option
