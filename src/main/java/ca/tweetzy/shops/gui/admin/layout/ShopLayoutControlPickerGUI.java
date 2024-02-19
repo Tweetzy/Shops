@@ -30,6 +30,11 @@ public final class ShopLayoutControlPickerGUI extends ShopsPagedGUI<ShopLayoutCo
 	}
 
 	@Override
+	protected void drawFixed() {
+		applyBackExit();
+	}
+
+	@Override
 	protected ItemStack makeDisplayItem(ShopLayoutControl layoutControl) {
 		return switch (layoutControl) {
 			case EXIT_BACK_BUTTON -> QuickItem

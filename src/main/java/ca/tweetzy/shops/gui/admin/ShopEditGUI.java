@@ -42,6 +42,8 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void drawFixed() {
+		applyBackExit();
+
 		setButton(5, 4, QuickItem
 				.of(CompMaterial.LIME_DYE)
 				.name(TranslationManager.string(Translations.GUI_SHOP_EDIT_ITEMS_CREATE_NAME))

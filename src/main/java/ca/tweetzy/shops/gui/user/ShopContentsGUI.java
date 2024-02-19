@@ -31,6 +31,8 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void drawFixed() {
+		applyBackExit();
+
 		// decorations
 		this.shop.getShopOptions().getShopDisplay().getDecoration().forEach(this::setItem);
 

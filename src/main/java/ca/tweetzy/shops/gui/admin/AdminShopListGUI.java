@@ -38,6 +38,8 @@ public final class AdminShopListGUI extends ShopsPagedGUI<Shop> {
 
 	@Override
 	protected void drawFixed() {
+		applyBackExit();
+
 		setButton(5, 4, QuickItem
 				.of(CompMaterial.LIME_DYE)
 				.name(TranslationManager.string(Translations.GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_NAME))

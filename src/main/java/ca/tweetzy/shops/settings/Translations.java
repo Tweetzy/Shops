@@ -90,6 +90,12 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_NAME = create("gui.admin shop list.items.create.name", "<GRADIENT:5CAEFF>&LNew Shop</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_LORE = create("gui.admin shop list.items.create.lore", "&7Click to create a new shop");
 
+
+	public static final TranslationEntry GUI_CHECKOUT_TITLE = create("gui.checkout.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Checkout");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_NAME = create("gui.checkout.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Purchase</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_LORE = create("gui.checkout.items.checkout.lore", "&7Click to complete purchase");
+
+
 	public static final TranslationEntry GUI_SHOP_EDIT_TITLE = create("gui.shop edit.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Edit &8> &e%shop_id%");
 
 	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE = create("gui.shop edit.items.item content.lore",

@@ -5,7 +5,6 @@ import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.template.BaseGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
-import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.Getter;
@@ -37,8 +36,8 @@ public abstract class ShopsPagedGUI<T> extends BaseGUI {
 	@Override
 	protected void draw() {
 		reset();
-		drawFixed();
 		populateItems();
+		drawFixed();
 	}
 
 	protected void prePopulate() {
@@ -49,26 +48,22 @@ public abstract class ShopsPagedGUI<T> extends BaseGUI {
 
 	private void populateItems() {
 		if (this.items != null) {
-			Shops.newChain().asyncFirst(() -> {
-				this.fillSlots().forEach(slot -> setItem(slot, getDefaultItem()));
-				prePopulate();
+			this.fillSlots().forEach(slot -> setItem(slot, getDefaultItem()));
+			prePopulate();
 
-				final List<T> itemsToFill = this.items.stream().skip((page - 1) * (long) this.fillSlots().size()).limit(this.fillSlots().size()).collect(Collectors.toList());
-				return itemsToFill;
-			}).asyncLast((data) -> {
-				pages = (int) Math.max(1, Math.ceil(this.items.size() / (double) this.fillSlots().size()));
+			final List<T> itemsToFill = this.items.stream().skip((page - 1) * (long) this.fillSlots().size()).limit(this.fillSlots().size()).collect(Collectors.toList());
+			pages = (int) Math.max(1, Math.ceil(this.items.size() / (double) this.fillSlots().size()));
 
-				setPrevPage(getPreviousButtonSlot(), getPreviousButton());
-				setNextPage(getNextButtonSlot(), getNextButton());
-				setOnPage(e -> draw());
+			setPrevPage(getPreviousButtonSlot(), getPreviousButton());
+			setNextPage(getNextButtonSlot(), getNextButton());
+			setOnPage(e -> draw());
 
-				for (int i = 0; i < this.rows * 9; i++) {
-					if (this.fillSlots().contains(i) && this.fillSlots().indexOf(i) < data.size()) {
-						final T object = data.get(this.fillSlots().indexOf(i));
-						setButton(i, this.makeDisplayItem(object), click -> this.onClick(object, click));
-					}
+			for (int i = 0; i < this.rows * 9; i++) {
+				if (this.fillSlots().contains(i) && this.fillSlots().indexOf(i) < itemsToFill.size()) {
+					final T object = itemsToFill.get(this.fillSlots().indexOf(i));
+					setButton(i, this.makeDisplayItem(object), click -> this.onClick(object, click));
 				}
-			}).execute();
+			}
 		}
 	}
 

@@ -38,6 +38,9 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_FILTER = create("gui.shop contents.items.filter.item", CompMaterial.REPEATER.name());
 
 
+	public static ConfigEntry GUI_CHECKOUT_ITEMS_CHECKOUT = create("gui.checkout.items.checkout.item", CompMaterial.LIME_DYE.name());
+
+
 
 	public static void init() {
 		Shops.getCoreConfig().init();
