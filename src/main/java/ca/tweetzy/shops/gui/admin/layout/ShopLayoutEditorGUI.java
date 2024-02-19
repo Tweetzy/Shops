@@ -35,7 +35,7 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 	}
 
 	@Override
-	protected void drawAdditional() {
+	protected void drawFixed() {
 		final ShopDisplay layout = this.shop.getShopOptions().getShopDisplay();
 
 		// controls

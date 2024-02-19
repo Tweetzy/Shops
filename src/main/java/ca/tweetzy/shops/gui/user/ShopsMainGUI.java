@@ -7,8 +7,9 @@ import org.bukkit.entity.Player;
 
 public final class ShopsMainGUI extends ShopsBaseGUI {
 
-	public ShopsMainGUI(Gui parent, @NonNull Player player, @NonNull String title, int rows) {
-		super(parent, player, title, rows);
+	public ShopsMainGUI(Gui parent, @NonNull Player player) {
+		super(parent, player, "Shops", 6);
+		draw();
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 	}
 
 	@Override
-	protected void drawAdditional() {
+	protected void drawFixed() {
 		// decorations
 		this.shop.getShopOptions().getShopDisplay().getDecoration().forEach(this::setItem);
 
@@ -70,7 +71,8 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void onClick(ShopContent content, GuiClickEvent click) {
-
+		if (click.clickType == ClickType.LEFT)
+			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, content));
 	}
 
 	@Override
