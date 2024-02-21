@@ -1,8 +1,15 @@
 package ca.tweetzy.shops.api.filter;
 
-public enum FilterType {
+import ca.tweetzy.shops.api.Navigable;
+
+public enum FilterType implements Navigable<FilterType> {
 
 	NAME,
 	PRICE,
-	MIN_PURCHASE
+	MIN_PURCHASE;
+
+	@Override
+	public Class<FilterType> enumClass() {
+		return FilterType.class;
+	}
 }

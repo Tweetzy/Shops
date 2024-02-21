@@ -1,7 +1,14 @@
 package ca.tweetzy.shops.api.filter;
 
-public enum FilterOrder {
+import ca.tweetzy.shops.api.Navigable;
+
+public enum FilterOrder implements Navigable<FilterOrder> {
 
 	ASCENDING,
-	DESCENDING
+	DESCENDING;
+
+	@Override
+	public Class<FilterOrder> enumClass() {
+		return FilterOrder.class;
+	}
 }
