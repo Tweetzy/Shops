@@ -12,6 +12,7 @@ import ca.tweetzy.shops.commands.AdminCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations.*;
+import ca.tweetzy.shops.impl.manager.CartManager;
 import ca.tweetzy.shops.impl.manager.CurrencyManager;
 import ca.tweetzy.shops.impl.manager.ShopContentManager;
 import ca.tweetzy.shops.impl.manager.ShopManager;
@@ -31,6 +32,7 @@ public final class Shops extends FlightPlugin {
 	private final ShopManager shopManager = new ShopManager();
 	private final ShopContentManager shopContentManager = new ShopContentManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
+	private final CartManager cartManager = new CartManager();
 
 	// default vault economy
 	private Economy economy = null;
@@ -109,6 +111,10 @@ public final class Shops extends FlightPlugin {
 
 	public static CurrencyManager getCurrencyManager() {
 		return getInstance().currencyManager;
+	}
+
+	public static CartManager getCartManager() {
+		return getInstance().cartManager;
 	}
 
 	public static GuiManager getGuiManager() {
