@@ -95,6 +95,13 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_NAME = create("gui.checkout.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Purchase</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_LORE = create("gui.checkout.items.checkout.lore", "&7Click to complete purchase");
 
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_NAME = create("gui.checkout.items.breakdown.name", "<GRADIENT:5CAEFF>&LPricing Breakdown</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE = create("gui.checkout.items.breakdown.lore",
+			"&8&m------------------------------",
+			"",
+			"&8&m------------------------------"
+	);
+
 
 	public static final TranslationEntry GUI_SHOP_EDIT_TITLE = create("gui.shop edit.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Edit &8> &e%shop_id%");
 
@@ -154,6 +161,16 @@ public final class Translations extends TranslationManager {
 			"&7Current Type&F: &e%shop_filter_type%",
 			"",
 			"&e&lClick &7to change filter order."
+	);
+
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_CART_NAME = create("gui.shop contents.items.cart.name", "<GRADIENT:5CAEFF>&lYour Cart</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_CART_LORE = create("gui.shop contents.items.cart.lore",
+			"&7Your shopping cart contains any items",
+			"&7you may have added from other shops.",
+			"",
+			"&7Total Items&F: &e%shopping_cart_item_count%",
+			"",
+			"&e&lClick &7to view your cart."
 	);
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.shop contents.items.content.lore.base lore",
@@ -398,6 +415,7 @@ public final class Translations extends TranslationManager {
 			"&e&lClick &7to add to shop."
 	);
 
+	public static TranslationEntry GUI_LAYOUT_EDITOR_TITLE = create("gui.layout editor.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Layout Editor");
 	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILL_SLOT_NAME = create("gui.layout editor.items.fill slot.name", "<GRADIENT:5CAEFF>&lFill Slot</GRADIENT:9F57FF>");
 	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILL_SLOT_LORE = create("gui.layout editor.items.fill slot.lore",
 			"&7This slot will be populated by",
@@ -439,6 +457,13 @@ public final class Translations extends TranslationManager {
 			"&7within this shop."
 	);
 
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_CART_NAME = create("gui.layout editor.items.cart.name", "<GRADIENT:5CAEFF>&lCart</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_CART_LORE = create("gui.layout editor.items.cart.lore",
+			"&7Your shopping cart, may contain",
+			"&7items from other shops."
+	);
+
+
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_TITLE = create("gui.layout control picker.title", "&EShops &f- &7Select Layout Control");
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT_NAME = create("gui.layout control picker.items.exit.name", "<GRADIENT:5CAEFF>&lExit Button</GRADIENT:9F57FF>");
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT_LORE = create("gui.layout control picker.items.exit.lore",
@@ -467,6 +492,12 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH_NAME = create("gui.layout control picker.items.search.name", "<GRADIENT:5CAEFF>&lSearch Button</GRADIENT:9F57FF>");
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH_LORE = create("gui.layout control picker.items.search.lore",
 			"&7Used to search for items in the shop",
+			"&e&l%left_click% &7to select this control"
+	);
+
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART_NAME = create("gui.layout control picker.items.cart.name", "<GRADIENT:5CAEFF>&LCart Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART_LORE = create("gui.layout control picker.items.cart.lore",
+			"&7Used to view items added to your cart",
 			"&e&l%left_click% &7to select this control"
 	);
 

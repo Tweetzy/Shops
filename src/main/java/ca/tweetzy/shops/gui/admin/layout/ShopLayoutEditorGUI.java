@@ -25,7 +25,7 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 	private final Shop shop;
 
 	public ShopLayoutEditorGUI(@NonNull final Player player, @NonNull final Shop shop) {
-		super(new ShopSettingsGUI(player, shop), player, "shop layout editor", Math.max(2, shop.getShopOptions().getShopDisplay().getRows()), IntStream.rangeClosed(0, (Math.max(2, shop.getShopOptions().getShopDisplay().getRows()) * 9) - 1).boxed().collect(Collectors.toList()));
+		super(new ShopSettingsGUI(player, shop), player, TranslationManager.string(player, Translations.GUI_LAYOUT_EDITOR_TITLE), Math.max(2, shop.getShopOptions().getShopDisplay().getRows()), IntStream.rangeClosed(0, (Math.max(2, shop.getShopOptions().getShopDisplay().getRows()) * 9) - 1).boxed().collect(Collectors.toList()));
 		this.player = player;
 		this.shop = shop;
 
@@ -58,6 +58,12 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 				.of(CompMaterial.DARK_OAK_SIGN)
 				.name(TranslationManager.string(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_SEARCH_NAME))
 				.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_SEARCH_LORE))
+				.make());
+
+		setItem(layout.getCartButtonSlot(), QuickItem
+				.of(CompMaterial.MINECART)
+				.name(TranslationManager.string(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_CART_NAME))
+				.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_CART_LORE))
 				.make());
 
 	}
@@ -117,13 +123,6 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 				if (cursor != null && cursor.getType() != CompMaterial.AIR.parseMaterial()) {
 					final ItemStack newIcon = cursor.clone();
 					newIcon.setAmount(1);
-//					Map<Integer, ItemStack> decorationMap = this.layout.getDecoration();
-//
-//					if (decorationMap == null)
-//						decorationMap = new HashMap<>();
-//
-//					decorationMap.put(slot, newIcon);
-//					this.layout.setDecoration(decorationMap);
 					layout.getDecoration().put(slot, newIcon);
 					draw();
 					return;
@@ -136,6 +135,7 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 						case NEXT_PAGE_BUTTON -> layout.setNextPageButtonSlot(slot);
 						case SEARCH_BUTTON -> layout.setSearchButtonSlot(slot);
 						case FILTER_BUTTON -> layout.setFilterButtonSlot(slot);
+						case CART_BUTTON -> layout.setCartButtonSlot(slot);
 					}
 
 					layout.getFillSlots().remove(slot);
@@ -177,7 +177,8 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 				&& layout.getNextPageButtonSlot() != slot
 				&& layout.getPrevPageButtonSlot() != slot
 				&& layout.getSearchButtonSlot() != slot
-				&& layout.getFilterButtonSlot() != slot;
+				&& layout.getFilterButtonSlot() != slot
+				&& layout.getCartButtonSlot() != slot;
 	}
 
 	private ItemStack emptySlotItem() {
