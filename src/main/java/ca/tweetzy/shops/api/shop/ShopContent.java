@@ -35,6 +35,9 @@ public interface ShopContent extends Identifiable<UUID>, Synchronize, Storeable<
 	void setAllowBuy(final boolean allowBuy);
 	void setAllowSell(final boolean allowSell);
 
+	boolean isMatch(final String keyword);
+	String getName();
+
 	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType) {
 		return QuickItem.of(CompMaterial.CHEST).make();
 	}

@@ -2,6 +2,8 @@ package ca.tweetzy.shops.impl.shop;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Filterer;
+import ca.tweetzy.flight.utils.ItemUtil;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
@@ -112,5 +114,15 @@ public final class ItemShopContent extends AbstractShopContent {
 				1,
 				1
 		);
+	}
+
+	@Override
+	public boolean isMatch(String keyword) {
+		return Filterer.searchByItemInfo(keyword, this.item);
+	}
+
+	@Override
+	public String getName() {
+		return ItemUtil.getItemName(this.item);
 	}
 }
