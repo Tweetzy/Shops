@@ -26,13 +26,14 @@ public final class ShopLayout implements ShopDisplay {
 	private int nextPageButtonSlot;
 	private int searchButtonSlot;
 	private int filterButtonSlot;
+	private int cartButtonSlot;
 
 	private List<Integer> fillSlots;
 	private Map<Integer, ItemStack> decorations;
 	private ItemStack background;
 
 	public ShopLayout() {
-		this(6, 45, 48, 50, 53, 52, InventoryBorder.getInsideBorders(6), new HashMap<>(), QuickItem.bg(CompMaterial.BLACK_STAINED_GLASS_PANE.parseItem()));
+		this(6, 45, 48, 50, 53, 52, 53, InventoryBorder.getInsideBorders(6), new HashMap<>(), QuickItem.bg(CompMaterial.BLACK_STAINED_GLASS_PANE.parseItem()));
 	}
 
 	@Override
@@ -96,6 +97,16 @@ public final class ShopLayout implements ShopDisplay {
 	}
 
 	@Override
+	public int getCartButtonSlot() {
+		return this.cartButtonSlot;
+	}
+
+	@Override
+	public void setCartButtonSlot(int slot) {
+		this.cartButtonSlot = slot;
+	}
+
+	@Override
 	public List<Integer> getFillSlots() {
 		return this.fillSlots;
 	}
@@ -134,6 +145,7 @@ public final class ShopLayout implements ShopDisplay {
 		object.addProperty("nextPageButtonSlot", this.nextPageButtonSlot);
 		object.addProperty("filterButtonSlot", this.filterButtonSlot);
 		object.addProperty("searchButtonSlot", this.searchButtonSlot);
+		object.addProperty("cartButtonSlot", this.cartButtonSlot);
 		object.addProperty("rows", this.rows);
 
 		final JsonArray fillSlotsArray = new JsonArray();
@@ -179,6 +191,7 @@ public final class ShopLayout implements ShopDisplay {
 				parentObject.get("nextPageButtonSlot").getAsInt(),
 				parentObject.get("searchButtonSlot").getAsInt(),
 				parentObject.get("filterButtonSlot").getAsInt(),
+				parentObject.has("cartButtonSlot") ? parentObject.get("cartButtonSlot").getAsInt() : 53,
 				fillSlots,
 				decoration,
 				SerializeUtil.decodeItem(parentObject.get("backgroundItem").getAsString())
