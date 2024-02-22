@@ -1,7 +1,10 @@
 package ca.tweetzy.shops.api.shop;
 
+import ca.tweetzy.flight.utils.ItemUtil;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
+import ca.tweetzy.shops.api.currency.AbstractCurrency;
+import ca.tweetzy.shops.settings.Settings;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
@@ -98,5 +101,10 @@ public abstract class AbstractShopContent implements ShopContent {
 			if (syncResult != null)
 				syncResult.accept(error == null ? updateStatus ? SynchronizeResult.SUCCESS : SynchronizeResult.FAILURE : SynchronizeResult.FAILURE);
 		});
+	}
+
+	public Shop getOwningShop() {
+		final Shop shop = Shops.getShopManager().getById(getShopId());
+		return shop;
 	}
 }
