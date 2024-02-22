@@ -3,6 +3,7 @@ package ca.tweetzy.shops.api.shop;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.Identifiable;
+import ca.tweetzy.shops.api.Matchable;
 import ca.tweetzy.shops.api.Storeable;
 import ca.tweetzy.shops.api.Synchronize;
 import lombok.NonNull;
@@ -10,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public interface ShopContent extends Identifiable<UUID>, Synchronize, Storeable<ShopContent> {
+public interface ShopContent extends Identifiable<UUID>, Matchable, Synchronize, Storeable<ShopContent> {
 
 	@NonNull String getShopId();
 
@@ -33,10 +34,16 @@ public interface ShopContent extends Identifiable<UUID>, Synchronize, Storeable<
 	boolean isAllowSell();
 
 	void setAllowBuy(final boolean allowBuy);
+
 	void setAllowSell(final boolean allowSell);
 
-	boolean isMatch(final String keyword);
-	String getName();
+	String getCurrency();
+
+	void setCurrency(final String currency);
+
+	ItemStack getCurrencyItem();
+
+	void setCurrencyItem(final ItemStack currencyItem);
 
 	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType) {
 		return QuickItem.of(CompMaterial.CHEST).make();
