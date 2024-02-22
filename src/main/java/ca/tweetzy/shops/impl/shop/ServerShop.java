@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -30,7 +31,7 @@ public final class ServerShop implements Shop {
 				CompMaterial.CHEST.parseItem(),
 				new ShopLayout(),
 				true, false, false, "shops.access." + id.toLowerCase(), id.toLowerCase()
-		), Collections.emptyList(), System.currentTimeMillis(), System.currentTimeMillis());
+		), new ArrayList<>(), System.currentTimeMillis(), System.currentTimeMillis());
 	}
 
 	@Override
