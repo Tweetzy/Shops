@@ -90,14 +90,39 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_NAME = create("gui.admin shop list.items.create.name", "<GRADIENT:5CAEFF>&LNew Shop</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_ITEMS_CREATE_LORE = create("gui.admin shop list.items.create.lore", "&7Click to create a new shop");
 
+	public static final TranslationEntry GUI_CURRENCY_PICKER_TITLE = create("gui.currency picker.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Select Currency");
+	public static final TranslationEntry GUI_CURRENCY_PICKER_ITEMS_CUSTOM_NAME = create("gui.currency picker.items.custom currency.name", "<GRADIENT:5CAEFF>&LCustom Item</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CURRENCY_PICKER_ITEMS_CUSTOM_LORE = create("gui.currency picker.items.custom currency.lore",
+			"&7If you want to use use a specific item for",
+			"&7the currency, you can set that here.",
+			"",
+			"&b&l%right_click% &7to open a material picker &eor",
+			"&e&l%left_click% &7with the item you want to use",
+			"&7as the currency onto this icon."
+	);
 
 	public static final TranslationEntry GUI_CHECKOUT_TITLE = create("gui.checkout.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Checkout");
-	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_NAME = create("gui.checkout.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Purchase</GRADIENT:9F57FF>");
-	public static final TranslationEntry GUI_CHECKOUT_ITEMS_CREATE_LORE = create("gui.checkout.items.checkout.lore", "&7Click to complete purchase");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_PURCHASE_NAME = create("gui.checkout.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Purchase</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_PURCHASE_LORE = create("gui.checkout.items.checkout.lore", "&7Click to complete purchase");
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_NAME = create("gui.checkout.items.increment.name", "&a&l+%increment_value%");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_LORE = create("gui.checkout.items.increment.lore", "&e&lClick &7to increment qty");
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_DECR_NAME = create("gui.checkout.items.decrement.name", "&c&l-%decrement_value%");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_DECR_LORE = create("gui.checkout.items.decrement.lore", "&e&lClick &7to decrement qty");
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_NAME = create("gui.checkout.items.breakdown.name", "<GRADIENT:5CAEFF>&LPricing Breakdown</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE = create("gui.checkout.items.breakdown.lore",
 			"&8&m------------------------------",
+			"&7Selected Quantity&F: &e%checkout_item_qty%",
+			"",
+			"&A&LPurchase",
+			"&7Subtotal&F: &a$%checkout_item_buy_subtotal%",
+			"&7",
+			"&7&e&lTaxes & Discounts",
+			"&7",
+			"&7",
+			"&c&lSell",
 			"",
 			"&8&m------------------------------"
 	);
@@ -297,6 +322,17 @@ public final class Translations extends TranslationManager {
 	);
 
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_TITLE = create("gui.shop add content.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7New Item");
+
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_NAME = create("gui.shop add content.items.currency.name", "<GRADIENT:5CAEFF>&lSwitch Currency</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_LORE = create("gui.shop add content.items.currency.lore",
+			"&7Used to adjust which currency",
+			"&7will be used to buy/sell this item",
+			"",
+			"&7Current&f: &e%offer_currency%",
+			"",
+			"&e&lClick &7to edit currency"
+	);
+
 
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_PRICE_NAME = create("gui.shop add content.items.buy price.name", "<GRADIENT:5CAEFF>&lPurchase Price</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_BUY_PRICE_LORE = create("gui.shop add content.items.buy price.lore",
