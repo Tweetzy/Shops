@@ -14,6 +14,7 @@ import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.gui.ShopsPagedGUI;
+import ca.tweetzy.shops.impl.cart.CartItem;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
@@ -129,7 +130,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 	@Override
 	protected void onClick(ShopContent content, GuiClickEvent click) {
 		if (click.clickType == ClickType.LEFT)
-			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, content));
+			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, new CartItem(content, content.getMinimumPurchaseQty())));
 
 		if (click.clickType == ClickType.RIGHT) {
 			this.cart.addItem(content);
