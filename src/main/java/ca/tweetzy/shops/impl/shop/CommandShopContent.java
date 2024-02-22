@@ -7,6 +7,7 @@ import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.Getter;
 import lombok.NonNull;
@@ -29,12 +30,16 @@ public final class CommandShopContent extends AbstractShopContent {
 	private String desc;
 
 
-	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String name, @NonNull final String desc, @NonNull final String command, final int minPurchaseQty, final double price) {
-		super(id, ShopContentType.COMMAND, shopId.toLowerCase(), minPurchaseQty, price, 0, true, false);
+	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String name, @NonNull final String desc, @NonNull final String command, final int minPurchaseQty, final double price, final String currency, final ItemStack currencyItem) {
+		super(id, ShopContentType.COMMAND, shopId.toLowerCase(), minPurchaseQty, price, 0, true, false, currency, currencyItem);
 		this.command = command;
 		this.icon = icon;
 		this.name = name;
 		this.desc = desc;
+	}
+
+	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String name, @NonNull final String desc, @NonNull final String command, final int minPurchaseQty, final double price) {
+		this(id, shopId, icon, name, desc, command, minPurchaseQty, price, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.AIR.parseItem());
 	}
 
 	@Override
@@ -119,7 +124,9 @@ public final class CommandShopContent extends AbstractShopContent {
 				"You will be healed",
 				"heal %player%",
 				1,
-				1
+				1,
+				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
+				CompMaterial.AIR.parseItem()
 		);
 	}
 

@@ -8,6 +8,7 @@ import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.shop.AbstractShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.Getter;
 import lombok.NonNull;
@@ -19,15 +20,19 @@ import java.util.UUID;
 
 import static ca.tweetzy.shops.model.VariableHelper.replaceVariable;
 
+@Getter
+@Setter
 public final class ItemShopContent extends AbstractShopContent {
 
-	@Getter
-	@Setter
 	private ItemStack item;
 
-	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final int minPurchaseQty, final double buyPrice, final double sellPrice) {
-		super(id, ShopContentType.ITEM, shopId.toLowerCase(), minPurchaseQty, buyPrice, sellPrice, true, sellPrice != 0);
+	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final int minPurchaseQty, final double buyPrice, final double sellPrice, final String currency, final ItemStack currencyItem) {
+		super(id, ShopContentType.ITEM, shopId.toLowerCase(), minPurchaseQty, buyPrice, sellPrice, true, sellPrice != 0, currency, currencyItem);
 		this.item = item;
+	}
+
+	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final int minPurchaseQty, final double buyPrice, final double sellPrice) {
+		this(id, shopId, item, minPurchaseQty, buyPrice, sellPrice, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.AIR.parseItem());
 	}
 
 	@Override
@@ -69,6 +74,7 @@ public final class ItemShopContent extends AbstractShopContent {
 	public void setAllowSell(boolean allowSell) {
 		this.allowSell = allowSell;
 	}
+
 
 	@Override
 	public ItemStack generateDisplayItem(ShopContentDisplayType displayType) {
@@ -112,7 +118,9 @@ public final class ItemShopContent extends AbstractShopContent {
 				CompMaterial.CHEST.parseItem(),
 				1,
 				1,
-				1
+				1,
+				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
+				CompMaterial.AIR.parseItem()
 		);
 	}
 

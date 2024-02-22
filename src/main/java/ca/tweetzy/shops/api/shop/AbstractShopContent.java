@@ -4,6 +4,7 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +23,9 @@ public abstract class AbstractShopContent implements ShopContent {
 
 	protected boolean allowBuy;
 	protected boolean allowSell;
+
+	protected String currency;
+	protected ItemStack currencyItem;
 
 	@NotNull
 	@Override
@@ -49,6 +53,22 @@ public abstract class AbstractShopContent implements ShopContent {
 	@Override
 	public void setMinimumPurchaseQty(int qty) {
 		this.minPurchaseQty = qty;
+	}
+
+	public String getCurrency() {
+		return this.currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public ItemStack getCurrencyItem() {
+		return this.currencyItem;
+	}
+
+	public void setCurrencyItem(ItemStack currencyItem) {
+		this.currencyItem = currencyItem;
 	}
 
 	@Override
