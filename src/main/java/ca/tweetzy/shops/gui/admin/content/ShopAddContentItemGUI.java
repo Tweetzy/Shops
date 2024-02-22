@@ -11,6 +11,7 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.ShopEditGUI;
+import ca.tweetzy.shops.gui.selector.CurrencyPickerGUI;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
@@ -54,8 +55,33 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 		// min buy qty button
 		drawMinPurchaseQtyButton();
 
+		// currency button
+		drawCurrencyButton();
+
 		// add button
 		drawAddButton();
+	}
+
+	private void drawCurrencyButton() {
+		setButton(3, 5, QuickItem
+				.of(CompMaterial.GOLD_INGOT)
+				.name(Translations.string(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_NAME))
+				.lore(Translations.list(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_LORE,
+						"left_click", Translations.string(this.player, Translations.MOUSE_LEFT_CLICK),
+						"offer_currency", this.itemContent.getCurrencyDisplayName()))
+				.make(), click -> {
+
+			click.manager.showGUI(click.player, new CurrencyPickerGUI(this, click.player, (currency, item) -> {
+				click.gui.exit();
+
+				this.itemContent.setCurrency(currency.getStoreableName());
+
+				if (item != null)
+					this.itemContent.setCurrencyItem(item);
+
+				click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
+			}));
+		});
 	}
 
 	private void drawSellItem() {
@@ -159,7 +185,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 	}
 
 	private void drawMinPurchaseQtyButton() {
-		setButton(3, 4, QuickItem
+		setButton(3, 3, QuickItem
 				.of(CompMaterial.LEVER)
 				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_NAME))
 				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_LORE, "shop_item_purchase_qty", this.itemContent.getMinimumPurchaseQty()))

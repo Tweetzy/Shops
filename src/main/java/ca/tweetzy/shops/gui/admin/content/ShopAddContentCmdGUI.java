@@ -11,6 +11,7 @@ import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.ShopEditGUI;
+import ca.tweetzy.shops.gui.selector.CurrencyPickerGUI;
 import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
@@ -57,8 +58,33 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 		// min buy qty button
 		drawMinPurchaseQtyButton();
 
+		// currency button
+		drawCurrencyButton();
+
 		// add button
 		drawAddButton();
+	}
+
+	private void drawCurrencyButton() {
+		setButton(3, 5, QuickItem
+				.of(CompMaterial.GOLD_INGOT)
+				.name(Translations.string(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_NAME))
+				.lore(Translations.list(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_LORE,
+						"left_click", Translations.string(this.player, Translations.MOUSE_LEFT_CLICK),
+						"offer_currency", this.commandShopContent.getCurrencyDisplayName()))
+				.make(), click -> {
+
+			click.manager.showGUI(click.player, new CurrencyPickerGUI(this, click.player, (currency, item) -> {
+				click.gui.exit();
+
+				this.commandShopContent.setCurrency(currency.getStoreableName());
+
+				if (item != null)
+					this.commandShopContent.setCurrencyItem(item);
+
+				click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
+			}));
+		});
 	}
 
 	private void drawIcon() {
@@ -110,7 +136,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 	}
 
 	private void drawInfoButtons() {
-		setButton(3, 2, QuickItem
+		setButton(4, 1, QuickItem
 				.of(CompMaterial.NAME_TAG)
 				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_NAME))
 				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_NAME_LORE, "shop_item_command_name", this.commandShopContent.getName()))
@@ -131,7 +157,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 			}
 		});
 
-		setButton(3, 6, QuickItem
+		setButton(4, 7, QuickItem
 				.of(CompMaterial.WRITTEN_BOOK)
 				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_NAME))
 				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_COMMAND_DESC_LORE, "shop_item_command_desc", this.commandShopContent.getDesc()))
@@ -179,7 +205,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 	}
 
 	private void drawMinPurchaseQtyButton() {
-		setButton(3, 4, QuickItem
+		setButton(3, 3, QuickItem
 				.of(CompMaterial.LEVER)
 				.name(TranslationManager.string(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_NAME))
 				.lore(TranslationManager.list(Translations.GUI_SHOP_ADD_CONTENT_ITEMS_BUY_QTY_LORE, "shop_item_purchase_qty", this.commandShopContent.getMinimumPurchaseQty()))
