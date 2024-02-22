@@ -33,7 +33,7 @@ public final class ShopLayout implements ShopDisplay {
 	private ItemStack background;
 
 	public ShopLayout() {
-		this(6, 45, 48, 50, 53, 52, 53, InventoryBorder.getInsideBorders(6), new HashMap<>(), QuickItem.bg(CompMaterial.BLACK_STAINED_GLASS_PANE.parseItem()));
+		this(6, 45, 48, 50, 49, 52, 53, InventoryBorder.getInsideBorders(6), new HashMap<>(), QuickItem.bg(CompMaterial.BLACK_STAINED_GLASS_PANE.parseItem()));
 	}
 
 	@Override
