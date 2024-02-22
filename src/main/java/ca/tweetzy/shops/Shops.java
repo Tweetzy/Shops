@@ -54,7 +54,8 @@ public final class Shops extends FlightPlugin {
 				new _3_ShopItemBuySellToggleMigration(),
 				new _4_ShopCMDIconMigration(),
 				new _5_ShopCMDNameDescMigration(),
-				new _6_ShopLayoutMigration()
+				new _6_ShopLayoutMigration(),
+				new _7_ShopItemCurrencyMigration()
 		);
 
 		// run migrations for tables
