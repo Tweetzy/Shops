@@ -1,11 +1,15 @@
 package ca.tweetzy.shops.api.shop;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.utils.ItemUtil;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.Identifiable;
 import ca.tweetzy.shops.api.Matchable;
 import ca.tweetzy.shops.api.Storeable;
 import ca.tweetzy.shops.api.Synchronize;
+import ca.tweetzy.shops.api.currency.AbstractCurrency;
+import ca.tweetzy.shops.settings.Settings;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,5 +51,24 @@ public interface ShopContent extends Identifiable<UUID>, Matchable, Synchronize,
 
 	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType) {
 		return QuickItem.of(CompMaterial.CHEST).make();
+	}
+
+	default boolean isCurrencyOfItem() {
+		final String[] split = getCurrency().split("/");
+		return split[1].equalsIgnoreCase("item");
+	}
+
+	default String getCurrencyDisplayName() {
+		if (isCurrencyOfItem())
+			return ItemUtil.getItemName(this.getCurrencyItem());
+
+		final String[] split = getCurrency().split("/");
+
+		final AbstractCurrency abstractCurrency = Shops.getCurrencyManager().locateCurrency(split[0], split[1]);
+
+		if (!split[0].equalsIgnoreCase("vault") && !split[1].equalsIgnoreCase("vault") && abstractCurrency != null)
+			return abstractCurrency.getDisplayName();
+
+		return Settings.CURRENCY_VAULT_SYMBOL.getString();
 	}
 }
