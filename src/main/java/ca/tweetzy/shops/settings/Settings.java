@@ -32,14 +32,27 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_PREV_PAGE = create("gui.layout control picker.items.prev page.item", CompMaterial.ARROW.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_NEXT_PAGE = create("gui.layout control picker.items.next page.item", CompMaterial.ARROW.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH = create("gui.layout control picker.items.search.item", CompMaterial.DARK_OAK_SIGN.name());
-	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER = create("gui.layout control picker.items.review.item", CompMaterial.REPEATER.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER = create("gui.layout control picker.items.filter.item", CompMaterial.REPEATER.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART = create("gui.layout control picker.items.cart.item", CompMaterial.MINECART.name());
 
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_SEARCH = create("gui.shop contents.items.review.item", CompMaterial.DARK_OAK_SIGN.name());
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_FILTER = create("gui.shop contents.items.filter.item", CompMaterial.REPEATER.name());
+	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_CART = create("gui.shop contents.items.cart.item", CompMaterial.MINECART.name());
 
 
 	public static ConfigEntry GUI_CHECKOUT_ITEMS_CHECKOUT = create("gui.checkout.items.checkout.item", CompMaterial.LIME_DYE.name());
+	public static ConfigEntry GUI_CHECKOUT_ITEMS_BREAKDOWN = create("gui.checkout.items.breakdown.item", CompMaterial.PAPER.name());
+	public static ConfigEntry GUI_CHECKOUT_ITEMS_DECREASE_ITEMS = create("gui.checkout.items.decrease.items", List.of(
+			"item:RED_STAINED_GLASS_PANE quantity:1 slot:20 change:1",
+			"item:RED_STAINED_GLASS_PANE quantity:5 slot:28 change:5",
+			"item:RED_STAINED_GLASS_PANE quantity:10 slot:38 change:10"
+	), "Format: item, slot, change amount(how much the qty will increase/decrease by)");
 
+	public static ConfigEntry GUI_CHECKOUT_ITEMS_INCREASE_ITEMS = create("gui.checkout.items.increase.items", List.of(
+			"item:LIME_STAINED_GLASS_PANE quantity:1 slot:24 change:1",
+			"item:LIME_STAINED_GLASS_PANE quantity:5 slot:34 change:5",
+			"item:LIME_STAINED_GLASS_PANE quantity:10 slot:42 change:10"
+	), "Format: item, slot, change amount(how much the qty will increase/decrease by)");
 
 
 	public static void init() {
