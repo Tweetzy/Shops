@@ -54,6 +54,9 @@ public final class Settings extends FlightSettings {
 			"item:LIME_STAINED_GLASS_PANE quantity:10 slot:42 change:10"
 	), "Format: item, slot, change amount(how much the qty will increase/decrease by)");
 
+	public static ConfigEntry GUI_CART_ITEMS_CHECKOUT = create("gui.cart.items.checkout.item", CompMaterial.LIME_DYE.name());
+	public static ConfigEntry GUI_CART_ITEMS_CLEAR = create("gui.cart.items.clear.item", CompMaterial.LAVA_BUCKET.name());
+
 
 	public static void init() {
 		Shops.getCoreConfig().init();

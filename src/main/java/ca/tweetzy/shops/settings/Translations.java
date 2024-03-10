@@ -21,6 +21,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry NUMBER_CANNOT_BE_ZERO = create("error.number cannot be zero", "&cPlease enter a number greater than 0");
 	public static TranslationEntry ONE_FILL_SLOT_REQUIRED = create("error.one fill slot required", "&cThis layout requires at least one fill slot!");
 	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
+	public static TranslationEntry CHECKOUT_NOT_MIN_QTY = create("error.checkout is not min qty", "&cYou must buy at least &fx&e%shop_item_purchase_qty% &cof this item!");
 
 	/*
 	=================== INFORMATIONAL ===================
@@ -101,9 +102,66 @@ public final class Translations extends TranslationManager {
 			"&7as the currency onto this icon."
 	);
 
+	public static final TranslationEntry GUI_CART_TITLE = create("gui.cart.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Your Cart");
+	public static final TranslationEntry GUI_CART_ITEMS_PURCHASE_NAME = create("gui.cart.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Checkout</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CART_ITEMS_PURCHASE_LORE = create("gui.cart.items.checkout.lore",
+			"&e&l%left_click% &7to buy items",
+			"&b&l%right_click% &7to sell items"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_CLEAR_NAME = create("gui.cart.items.clear.name", "<GRADIENT:f12525>&LClear Cart</GRADIENT:f49918>");
+	public static final TranslationEntry GUI_CART_ITEMS_CLEAR_LORE = create("gui.cart.items.clear.lore",
+			"&7Used to clear your cart",
+			"",
+			"&e&lClick &7to clear cart items"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.cart.items.content.lore.base lore",
+			"&8&m------------------------------",
+			"%shop_content_desc_info%",
+			"%shop_content_purchase_qty_info%",
+			"%shop_content_buy_info%",
+			"%shop_content_sell_info%",
+			"",
+			"%shop_content_buy_info_total%",
+			"%shop_content_sell_info_total%",
+			"",
+			"&e&l%left_click% &7to quick buy item",
+			"&c&l%right_click% &7to remove from cart"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.cart.items.content.lore.buy lore",
+			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.cart.items.content.lore.sell lore",
+			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL = create("gui.cart.items.content.lore.buy total lore",
+			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_buy_price_total%"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL = create("gui.cart.items.content.lore.sell total lore",
+			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_sell_price_total%"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELECTED_QTY_INFO = create("gui.cart.items.content.lore.selected qty lore",
+			"",
+			"&7Selected Qty&f: x&e%shop_item_purchase_qty%"
+	);
+
+	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_DESC_INFO = create("gui.cart.items.content.lore.description lore",
+			"&e%shop_item_description%"
+	);
+
+
 	public static final TranslationEntry GUI_CHECKOUT_TITLE = create("gui.checkout.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Checkout");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_PURCHASE_NAME = create("gui.checkout.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Purchase</GRADIENT:9F57FF>");
-	public static final TranslationEntry GUI_CHECKOUT_ITEMS_PURCHASE_LORE = create("gui.checkout.items.checkout.lore", "&7Click to complete purchase");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_PURCHASE_LORE = create("gui.checkout.items.checkout.lore",
+			"&e&l%left_click% &7to buy now",
+			"&b&l%right_click% &7to add to cart"
+	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_NAME = create("gui.checkout.items.increment.name", "&a&l+%increment_value%");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_LORE = create("gui.checkout.items.increment.lore", "&e&lClick &7to increment qty");
@@ -127,6 +185,42 @@ public final class Translations extends TranslationManager {
 			"&8&m------------------------------"
 	);
 
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.checkout.items.content.lore.base lore",
+			"&8&m------------------------------",
+			"%shop_content_desc_info%",
+			"%shop_content_purchase_qty_info%",
+			"%shop_content_buy_info%",
+			"%shop_content_sell_info%",
+			"",
+			"%shop_content_buy_info_total%",
+			"%shop_content_sell_info_total%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.checkout.items.content.lore.buy lore",
+			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.checkout.items.content.lore.sell lore",
+			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL = create("gui.checkout.items.content.lore.buy total lore",
+			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_buy_price_total%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL = create("gui.checkout.items.content.lore.sell total lore",
+			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_sell_price_total%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELECTED_QTY_INFO = create("gui.checkout.items.content.lore.selected qty lore",
+			"",
+			"&7Selected Qty&f: x&e%shop_item_purchase_qty%"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_DESC_INFO = create("gui.checkout.items.content.lore.description lore",
+			"&e%shop_item_description%"
+	);
 
 	public static final TranslationEntry GUI_SHOP_EDIT_TITLE = create("gui.shop edit.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Edit &8> &e%shop_id%");
 
@@ -200,10 +294,10 @@ public final class Translations extends TranslationManager {
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.shop contents.items.content.lore.base lore",
 			"&8&m------------------------------",
+			"%shop_content_desc_info%",
+			"%shop_content_purchase_qty_info%",
 			"%shop_content_buy_info%",
 			"%shop_content_sell_info%",
-			"%shop_content_purchase_qty_info%",
-			"%shop_content_desc_info%",
 			"",
 			"&e&l%left_click% &7to buy now",
 			"&b&l%right_click% &7to add to cart"

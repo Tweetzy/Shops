@@ -117,8 +117,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 				.of(Settings.GUI_SHOP_CONTENT_ITEMS_CART.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_CART_NAME))
 				.lore(TranslationManager.list(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_CART_LORE, "shopping_cart_item_count", this.cart.getItems().size()))
-				.make(), click -> {
-		});
+				.make(), click -> click.manager.showGUI(click.player, new ShopsCartGUI(this, click.player, this.cart)));
 	}
 
 

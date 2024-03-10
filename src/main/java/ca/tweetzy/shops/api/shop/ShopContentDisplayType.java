@@ -4,5 +4,6 @@ public enum ShopContentDisplayType {
 
 	SHOP_EDIT,
 	LIVE_SHOP,
-	CHECKOUT
+	CHECKOUT,
+	CART
 }
