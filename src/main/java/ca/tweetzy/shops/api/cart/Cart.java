@@ -16,5 +16,17 @@ public interface Cart {
 		getItems().add(new CartItem(content, content.getMinimumPurchaseQty()));
 	}
 
+	default void addItem(@NonNull final CartContent content) {
+		getItems().add(content);
+	}
+
+	default void removeItem(@NonNull final CartContent content) {
+		getItems().remove(content);
+	}
+
 	TransactionResult executePurchase(@NonNull Player player);
+
+	default void clear() {
+		getItems().clear();
+	}
 }

@@ -9,6 +9,7 @@ import ca.tweetzy.flight.gui.GuiManager;
 import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.shops.commands.AddCommand;
 import ca.tweetzy.shops.commands.AdminCommand;
+import ca.tweetzy.shops.commands.CartCommand;
 import ca.tweetzy.shops.commands.ShopsCommand;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations.*;
@@ -42,7 +43,7 @@ public final class Shops extends FlightPlugin {
 		Settings.init();
 		Translations.init();
 
-		Common.setPrefix(Settings.PREFIX.getStringOr("&8[&EShops&8]"));
+		Common.setPrefix(Settings.PREFIX.getString("&8[&EShops&8]"));
 
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
@@ -76,6 +77,7 @@ public final class Shops extends FlightPlugin {
 		// setup commands
 		this.commandManager.registerCommandDynamically(new ShopsCommand()).addSubCommands(
 				new AddCommand(),
+				new CartCommand(),
 				new AdminCommand()
 		);
 	}

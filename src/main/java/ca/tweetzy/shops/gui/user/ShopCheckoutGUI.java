@@ -3,6 +3,7 @@ package ca.tweetzy.shops.gui.user;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
+import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.cart.CartContent;
 import ca.tweetzy.shops.api.currency.TransactionResult;
 import ca.tweetzy.shops.api.shop.Shop;
@@ -13,6 +14,7 @@ import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 import java.util.Map;
@@ -31,8 +33,7 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 
 	@Override
 	protected void draw() {
-
-		setItem(1,4, this.checkoutItem.getItem().generateDisplayItem(ShopContentDisplayType.LIVE_SHOP));
+		drawSelectedItem();
 
 		Settings.GUI_CHECKOUT_ITEMS_DECREASE_ITEMS.getStringList().forEach(itemLine -> {
 			final Map<String, List<String>> keyed = ItemParser.parseString(itemLine);
@@ -47,6 +48,7 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 
 				this.checkoutItem.removeQuantity(changeValue);
 				drawPriceBreakdown();
+				drawSelectedItem();
 			});
 		});
 
@@ -64,23 +66,36 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 
 				this.checkoutItem.addQuantity(changeValue);
 				drawPriceBreakdown();
+				drawSelectedItem();
 			});
 		});
 
 		setButton(getRows() - 1, 4, QuickItem
 				.of(Settings.GUI_CHECKOUT_ITEMS_CHECKOUT.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_CHECKOUT_ITEMS_PURCHASE_NAME))
-				.lore(TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_PURCHASE_LORE))
-				.make(), click -> {
+				.lore(TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_PURCHASE_LORE,
+						"left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK),
+						"right_click", TranslationManager.string(this.player, Translations.MOUSE_RIGHT_CLICK)
+				)).make(), click -> {
 
-			final TransactionResult transactionResult = this.checkoutItem.executePurchase(player);
-			if (transactionResult == TransactionResult.SUCCESS)
+			if (click.clickType == ClickType.LEFT) {
+				final TransactionResult transactionResult = this.checkoutItem.executePurchase(player);
 				click.manager.showGUI(click.player, new ShopContentsGUI(new ShopsMainGUI(null, click.player), click.player, this.shop));
+			}
+
+			if (click.clickType == ClickType.RIGHT) {
+				Shops.getCartManager().getOrAdd(click.player).addItem(this.checkoutItem);
+				click.manager.showGUI(click.player, new ShopContentsGUI(new ShopsMainGUI(null, click.player), click.player, this.shop));
+			}
 
 		});
 
 		drawPriceBreakdown();
 		applyBackExit();
+	}
+
+	private void drawSelectedItem() {
+		setItem(1, 4, this.checkoutItem.getItem().generateDisplayItem(ShopContentDisplayType.CHECKOUT, this.checkoutItem.getQuantity()));
 	}
 
 	private void drawPriceBreakdown() {
@@ -92,5 +107,4 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 						"checkout_item_buy_subtotal", this.checkoutItem.getQuantity() * this.checkoutItem.getItem().getBuyPrice()
 				)).make());
 	}
-
 }

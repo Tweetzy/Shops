@@ -16,7 +16,7 @@
         <jarName>${project.name}</jarName>
         <main.class>${project.groupId}.${project.artifactId}.${project.name}</main.class>
         <java.version>16</java.version>
-        <flight.version>3.18.0</flight.version>
+        <flight.version>3.19.0</flight.version>
         <flight.path>ca.tweetzy</flight.path>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -71,6 +71,12 @@
             <groupId>${flight.path}</groupId>
             <artifactId>funds</artifactId>
             <version>1.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>

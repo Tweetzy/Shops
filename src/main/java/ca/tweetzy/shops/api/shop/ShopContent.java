@@ -49,13 +49,21 @@ public interface ShopContent extends Identifiable<UUID>, Matchable, Synchronize,
 
 	void setCurrencyItem(final ItemStack currencyItem);
 
-	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType) {
+	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType, final int purchaseQty) {
 		return QuickItem.of(CompMaterial.CHEST).make();
+	}
+
+	default ItemStack generateDisplayItem(final ShopContentDisplayType displayType) {
+		return generateDisplayItem(displayType, getMinimumPurchaseQty());
 	}
 
 	default boolean isCurrencyOfItem() {
 		final String[] split = getCurrency().split("/");
 		return split[1].equalsIgnoreCase("item");
+	}
+
+	default Shop getOwningShop() {
+		return Shops.getShopManager().getById(getShopId());
 	}
 
 	default String getCurrencyDisplayName() {
