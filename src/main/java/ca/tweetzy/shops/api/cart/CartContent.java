@@ -40,6 +40,10 @@ public interface CartContent {
 		return getItem().getSellPrice() * actualQty;
 	}
 
+	default double getBuySubtotal(final int actualQty) {
+		return getItem().getBuyPrice() * actualQty;
+	}
+
 	default TransactionResult executeSell(@NonNull final Player player) {
 		if (!(getItem() instanceof ItemShopContent itemShopContent)) {
 			return TransactionResult.ERROR;

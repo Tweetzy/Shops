@@ -10,6 +10,9 @@ import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContentDisplayType;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.model.ItemParser;
+import ca.tweetzy.shops.model.NumberHelper;
+import ca.tweetzy.shops.model.Taxer;
+import ca.tweetzy.shops.model.VariableHelper;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
@@ -99,12 +102,28 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 	}
 
 	private void drawPriceBreakdown() {
+		final double subtotal = this.checkoutItem.getBuySubtotal(this.checkoutItem.getQuantity());
+		final double total = Taxer.getTaxedTotal(subtotal);
+
+
+		final String numberFormatSub = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) subtotal + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(subtotal);
+		final String numberFormatTotal = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) total + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(total);
+
+		List<String> base = TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE,
+				"checkout_item_qty", this.checkoutItem.getQuantity(),
+				"checkout_item_buy_subtotal", numberFormatSub,
+				"checkout_item_buy_total", numberFormatTotal
+		);
+
+		VariableHelper.replaceVariable(base, "%checkout_tax_info%", Settings.TAX_ENABLED.getBoolean() ?
+				TranslationManager.string(player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_HAS_TAX, "tax_rate", Settings.TAX_AMOUNT.getDouble())
+				:
+				TranslationManager.string(player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_NO_TAX), false);
+
+		//checkout_tax_info
 		setItem(getRows() - 3, 4, QuickItem
 				.of(Settings.GUI_CHECKOUT_ITEMS_BREAKDOWN.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_NAME))
-				.lore(TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE,
-						"checkout_item_qty", this.checkoutItem.getQuantity(),
-						"checkout_item_buy_subtotal", this.checkoutItem.getQuantity() * this.checkoutItem.getItem().getBuyPrice()
-				)).make());
+				.lore(base).make());
 	}
 }

@@ -3,14 +3,12 @@ package ca.tweetzy.shops.api.shop;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.settings.TranslationEntry;
 import ca.tweetzy.flight.settings.TranslationManager;
-import ca.tweetzy.flight.utils.ItemUtil;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.SynchronizeResult;
-import ca.tweetzy.shops.api.currency.AbstractCurrency;
 import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
-import ca.tweetzy.shops.settings.Settings;
+import ca.tweetzy.shops.model.NumberHelper;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -125,6 +123,12 @@ public abstract class AbstractShopContent implements ShopContent {
 			genItem.name(commandShopContent.getName());
 		}
 
+		String formattedPriceBuy = isCurrencyOfItem() ? (int) this.buyPrice + " " + getCurrencyDisplayName() : NumberHelper.format(this.buyPrice);
+		String formattedPriceBuyTotal = isCurrencyOfItem() ? (int) this.buyPrice * purchaseQty + " " + getCurrencyDisplayName() : NumberHelper.format(this.buyPrice * purchaseQty);
+
+		String formattedPriceSell = isCurrencyOfItem() ? (int) this.sellPrice + " " + getCurrencyDisplayName() : NumberHelper.format(this.sellPrice);
+		String formattedPriceSellTotal = isCurrencyOfItem() ? (int) this.sellPrice * purchaseQty + " " + getCurrencyDisplayName() : NumberHelper.format(this.sellPrice * purchaseQty);
+
 		if (displayType == ShopContentDisplayType.SHOP_EDIT) {
 			genItem.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_ITEM_CONTENT_LORE,
 					"is_buy_enabled", TranslationManager.string(this.allowBuy ? Translations.ENABLED : Translations.DISABLED),
@@ -149,15 +153,15 @@ public abstract class AbstractShopContent implements ShopContent {
 			);
 
 			final List<String> buyInfo = switch (displayType) {
-				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", this.buyPrice);
-				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", this.buyPrice);
-				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", this.buyPrice);
+				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", formattedPriceBuy);
+				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", formattedPriceBuy);
+				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO, "shop_item_buy_price", formattedPriceBuy);
 			};
 
 			final List<String> sellInfo = switch (displayType) {
-				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", this.sellPrice);
-				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", this.sellPrice);
-				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", this.sellPrice);
+				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", formattedPriceSell);
+				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price", formattedPriceSell);
+				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO, "shop_item_sell_price",formattedPriceSell);
 			};
 
 			final List<String> minBuyInfo = switch (displayType) {
@@ -167,14 +171,18 @@ public abstract class AbstractShopContent implements ShopContent {
 			};
 
 			final List<String> buyInfoTotal = switch (displayType) {
-				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL, "shop_item_buy_price_total", this.buyPrice * purchaseQty, "shop_item_purchase_qty", purchaseQty);
-				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL, "shop_item_buy_price_total", this.buyPrice * purchaseQty, "shop_item_purchase_qty", purchaseQty);
+				case CART ->
+						TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL, "shop_item_buy_price_total", formattedPriceBuyTotal, "shop_item_purchase_qty", purchaseQty);
+				case CHECKOUT ->
+						TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL, "shop_item_buy_price_total", formattedPriceBuyTotal, "shop_item_purchase_qty", purchaseQty);
 				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_MIN_BUY_INFO, "shop_item_purchase_qty", this.minPurchaseQty);
 			};
 
 			final List<String> sellInfoTotal = switch (displayType) {
-				case CART -> TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL, "shop_item_sell_price_total", this.sellPrice * purchaseQty, "shop_item_purchase_qty", purchaseQty);
-				case CHECKOUT -> TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL, "shop_item_sell_price_total", this.sellPrice * purchaseQty, "shop_item_purchase_qty", purchaseQty);
+				case CART ->
+						TranslationManager.list(Translations.GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL, "shop_item_sell_price_total", formattedPriceSellTotal, "shop_item_purchase_qty", purchaseQty);
+				case CHECKOUT ->
+						TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL, "shop_item_sell_price_total", formattedPriceSellTotal, "shop_item_purchase_qty", purchaseQty);
 				default -> TranslationManager.list(Translations.GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_MIN_BUY_INFO, "shop_item_purchase_qty", this.minPurchaseQty);
 			};
 

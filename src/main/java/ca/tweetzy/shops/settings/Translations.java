@@ -136,19 +136,19 @@ public final class Translations extends TranslationManager {
 	);
 
 	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.cart.items.content.lore.buy lore",
-			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%"
 	);
 
 	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.cart.items.content.lore.sell lore",
-			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+			"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%"
 	);
 
 	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL = create("gui.cart.items.content.lore.buy total lore",
-			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_buy_price_total%"
+			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a%shop_item_buy_price_total%"
 	);
 
 	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL = create("gui.cart.items.content.lore.sell total lore",
-			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_sell_price_total%"
+			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a%shop_item_sell_price_total%"
 	);
 
 	public static final TranslationEntry GUI_CART_ITEMS_ITEM_CONTENT_SELECTED_QTY_INFO = create("gui.cart.items.content.lore.selected qty lore",
@@ -179,15 +179,20 @@ public final class Translations extends TranslationManager {
 			"&8&m------------------------------",
 			"&7Selected Quantity&F: &e%checkout_item_qty%",
 			"",
-			"&7&e&lTaxes & Discounts",
-			"&7",
 			"&A&LPurchase",
-			"&7Subtotal&F: &a$%checkout_item_buy_subtotal%",
-			"&7",
-			"&c&lSell",
+			"&7Subtotal&F: &a%checkout_item_buy_subtotal%",
+			"",
+			"&7&e&lTaxes",
+			"%checkout_tax_info%",
+			"",
+			"&A&LPurchase (Total)",
+			"&7Total&F: &a%checkout_item_buy_total%",
 			"",
 			"&8&m------------------------------"
 	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_HAS_TAX = create("gui.checkout.items.breakdown.has tax lore", "&eServer Tax Rate &F(&7%tax_rate%&a%&f)");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_NO_TAX = create("gui.checkout.items.breakdown.no tax lore", "&cNo tax is currently applied.");
 
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.checkout.items.content.lore.base lore",
@@ -202,19 +207,19 @@ public final class Translations extends TranslationManager {
 	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.checkout.items.content.lore.buy lore",
-			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%"
 	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.checkout.items.content.lore.sell lore",
-			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+			"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%"
 	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_BUY_INFO_TOTAL = create("gui.checkout.items.content.lore.buy total lore",
-			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_buy_price_total%"
+			"&7Buy &fx&e%shop_item_purchase_qty%&f: &a%shop_item_buy_price_total%"
 	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELL_INFO_TOTAL = create("gui.checkout.items.content.lore.sell total lore",
-			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a$%shop_item_sell_price_total%"
+			"&7Sell &fx&e%shop_item_purchase_qty%&f: &a%shop_item_sell_price_total%"
 	);
 
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_SELECTED_QTY_INFO = create("gui.checkout.items.content.lore.selected qty lore",
@@ -308,11 +313,11 @@ public final class Translations extends TranslationManager {
 	);
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BUY_INFO = create("gui.shop contents.items.content.lore.buy lore",
-			"&7Buy Price (&fx&e1&7)&f: &a$%shop_item_buy_price%"
+			"&7Buy Price (&fx&e1&7)&f: &a%shop_item_buy_price%"
 	);
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_SELL_INFO = create("gui.shop contents.items.content.lore.sell lore",
-			"&7Sell Price (&fx&e1&7)&f: &a$%shop_item_sell_price%"
+			"&7Sell Price (&fx&e1&7)&f: &a%shop_item_sell_price%"
 	);
 
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_MIN_BUY_INFO = create("gui.shop contents.items.content.lore.min buy lore",
