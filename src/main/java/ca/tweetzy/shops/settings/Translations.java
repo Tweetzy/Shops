@@ -22,11 +22,13 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ONE_FILL_SLOT_REQUIRED = create("error.one fill slot required", "&cThis layout requires at least one fill slot!");
 	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
 	public static TranslationEntry CHECKOUT_NOT_MIN_QTY = create("error.checkout is not min qty", "&cYou must buy at least &fx&e%shop_item_purchase_qty% &cof this item!");
+	public static TranslationEntry NOT_ALLOWED_TO_USE_SHOP = create("error.no shop permission", "&cYou are not allowed to use that shop");
 
 	/*
 	=================== INFORMATIONAL ===================
 	 */
 	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
+	public static TranslationEntry SHOP_IS_CLOSED = create("info.shop.closed", "&cThat shop is currently closed!");
 
 
 	/*
@@ -85,6 +87,9 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry GUI_SHARED_ITEMS_NEXT_BUTTON_LORE = create("gui.shared buttons.next button.lore",
 			"&e&l%left_click% &7to go to next page"
 	);
+
+	public static TranslationEntry GUI_SHOPS_MAIN_TITLE = create("gui.shops main.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF>");
+
 
 	public static final TranslationEntry GUI_ADMIN_MAIN_TITLE = create("gui.admin main.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &7v%plugin_version%");
 	public static final TranslationEntry GUI_ADMIN_SHOP_LIST_TITLE = create("gui.admin shop list.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7List");
@@ -174,11 +179,10 @@ public final class Translations extends TranslationManager {
 			"&8&m------------------------------",
 			"&7Selected Quantity&F: &e%checkout_item_qty%",
 			"",
-			"&A&LPurchase",
-			"&7Subtotal&F: &a$%checkout_item_buy_subtotal%",
-			"&7",
 			"&7&e&lTaxes & Discounts",
 			"&7",
+			"&A&LPurchase",
+			"&7Subtotal&F: &a$%checkout_item_buy_subtotal%",
 			"&7",
 			"&c&lSell",
 			"",
