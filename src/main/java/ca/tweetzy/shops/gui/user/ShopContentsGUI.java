@@ -54,11 +54,11 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 			this.items = shop.getContent().stream().filter(shopContent -> shopContent.isMatch(this.search)).collect(Collectors.toList());
 
 		if (this.filterType == FilterType.NAME)
-			this.items = shop.getContent().stream().sorted(Comparator.comparing(ShopContent::getName)).collect(Collectors.toList());
+			this.items = this.items.stream().sorted(Comparator.comparing(ShopContent::getName)).collect(Collectors.toList());
 		else if (this.filterType == FilterType.PRICE)
-			this.items = shop.getContent().stream().sorted(Comparator.comparing(ShopContent::getBuyPrice)).collect(Collectors.toList());
+			this.items = this.items.stream().sorted(Comparator.comparing(ShopContent::getBuyPrice)).collect(Collectors.toList());
 		else
-			this.items = shop.getContent().stream().sorted(Comparator.comparing(ShopContent::getMinimumPurchaseQty)).collect(Collectors.toList());
+			this.items = this.items.stream().sorted(Comparator.comparing(ShopContent::getMinimumPurchaseQty)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -73,18 +73,26 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 				.of(Settings.GUI_SHOP_CONTENT_ITEMS_SEARCH.getItemStack())
 				.name(TranslationManager.string(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SEARCH_NAME))
 				.lore(TranslationManager.list(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SEARCH_LORE))
-				.make(), click -> new TitleInput(Shops.getInstance(), click.player, TranslationManager.string(click.player, Translations.PROMPT_SEARCH_TITLE), TranslationManager.string(click.player, Translations.PROMPT_SEARCH_SUBTITLE)) {
+				.make(), click -> {
 
-			@Override
-			public void onExit(Player player) {
-				click.manager.showGUI(click.player, ShopContentsGUI.this);
-			}
+			if (click.clickType == ClickType.LEFT)
+				new TitleInput(Shops.getInstance(), click.player, TranslationManager.string(click.player, Translations.PROMPT_SEARCH_TITLE), TranslationManager.string(click.player, Translations.PROMPT_SEARCH_SUBTITLE)) {
 
-			@Override
-			public boolean onResult(String string) {
-				click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, string));
-				return true;
-			}
+					@Override
+					public void onExit(Player player) {
+						click.manager.showGUI(click.player, ShopContentsGUI.this);
+					}
+
+					@Override
+					public boolean onResult(String string) {
+						click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, string));
+						return true;
+					}
+				};
+
+			if (click.clickType == ClickType.RIGHT)
+				click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, null));
+
 		});
 
 		// cart

@@ -273,7 +273,8 @@ public final class Translations extends TranslationManager {
 			"&7Used to search for items",
 			"&7within this specific shop.",
 			"",
-			"&e&lClick &7to search in this shop."
+			"&e&lLeft Click &7to search in this shop.",
+			"&b&lRight Click &7to reset search"
 	);
 
 	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_FILTER_NAME = create("gui.shop contents.items.filter.name", "<GRADIENT:5CAEFF>&lFilter</GRADIENT:9F57FF>");
