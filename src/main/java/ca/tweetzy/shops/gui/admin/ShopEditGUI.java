@@ -3,6 +3,7 @@ package ca.tweetzy.shops.gui.admin;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.helper.InventoryBorder;
+import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.api.SynchronizeResult;
@@ -60,6 +61,13 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 					else
 						click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, this.shop, CommandShopContent.blank(this.shop.getId()), false));
 				}));
+
+			// quick selector
+			if (click.clickType == ClickType.RIGHT)
+				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
+					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId(), selected), false));
+				}));
+
 		});
 
 		setButton(5, 7, QuickItem
