@@ -18,13 +18,20 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public final class AdminShopListGUI extends ShopsPagedGUI<Shop> {
 
 	public AdminShopListGUI(Gui parent, @NonNull Player player) {
-		super(parent, player, TranslationManager.string(Translations.GUI_ADMIN_SHOP_LIST_TITLE), 6, Shops.getShopManager().getValues());
+		super(parent, player, TranslationManager.string(Translations.GUI_ADMIN_SHOP_LIST_TITLE), 6, new ArrayList<>(Shops.getShopManager().getValues()));
 		draw();
+	}
+
+	@Override
+	protected void prePopulate() {
+		this.items.sort(Comparator.comparing(Shop::getTimeCreated));
 	}
 
 	@Override
