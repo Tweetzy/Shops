@@ -280,7 +280,6 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_FILTER_LORE = create("gui.shop contents.items.filter.lore",
 			"&7Used to filter items in shop",
 			"",
-			"&7Current Order&F: &e%shop_filter_order%",
 			"&7Current Type&F: &e%shop_filter_type%",
 			"",
 			"&e&lClick &7to change filter order."

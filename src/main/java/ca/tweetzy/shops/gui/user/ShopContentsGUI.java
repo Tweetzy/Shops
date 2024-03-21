@@ -103,9 +103,6 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 				)).make(), click -> {
 
 			if (click.clickType == ClickType.LEFT)
-				this.filterOrder = this.filterOrder.next();
-
-			if (click.clickType == ClickType.RIGHT)
 				this.filterType = this.filterType.next();
 
 			draw();
