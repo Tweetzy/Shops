@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,12 +31,29 @@ public final class ShoppingCart implements Cart {
 
 	@Override
 	public TransactionResult executePurchase(@NonNull Player player) {
+		ArrayList<CartContent> toRemove = new ArrayList<>();
+
 		for (CartContent cartItem : this.items) {
 			final TransactionResult transactionResult = cartItem.executePurchase(player);
-			if (transactionResult == TransactionResult.FAILED_NO_MONEY)
-				Common.broadcast("NO MONEY");
+			if (transactionResult == TransactionResult.SUCCESS)
+				toRemove.add(cartItem);
 		}
 
+		getItems().removeAll(toRemove);
+		return TransactionResult.SUCCESS;
+	}
+
+	@Override
+	public TransactionResult executeSell(@NonNull Player player) {
+		ArrayList<CartContent> toRemove = new ArrayList<>();
+
+		for (CartContent cartItem : this.items) {
+			final TransactionResult transactionResult = cartItem.executeSell(player);
+			if (transactionResult == TransactionResult.SUCCESS)
+				toRemove.add(cartItem);
+		}
+
+		getItems().removeAll(toRemove);
 		return TransactionResult.SUCCESS;
 	}
 }

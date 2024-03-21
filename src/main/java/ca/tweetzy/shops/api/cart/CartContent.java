@@ -10,6 +10,7 @@ import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.model.Taxer;
+import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -33,6 +34,38 @@ public interface CartContent {
 
 	default double getSellSubtotal() {
 		return getItem().getSellPrice() * getQuantity();
+	}
+
+	default double getSellSubtotal(final int actualQty) {
+		return getItem().getSellPrice() * actualQty;
+	}
+
+	default TransactionResult executeSell(@NonNull final Player player) {
+		if (!(getItem() instanceof ItemShopContent itemShopContent)) {
+			return TransactionResult.ERROR;
+		}
+
+		final int totalFoundInInventory = PlayerUtil.getItemCountInPlayerInventory(player, itemShopContent.getItem());
+		if (totalFoundInInventory == 0)
+			return TransactionResult.PLAYER_DOES_NOT_HAVE_ITEM;
+
+		final int amountToSell = Math.min(getQuantity(), totalFoundInInventory);
+
+		final double subTotal = getSellSubtotal(amountToSell);
+		final double total = Settings.TAX_SELL.getBoolean() ? subTotal - Taxer.calculateTaxAmount(subTotal) : subTotal;
+
+		if (getItem().isCurrencyOfItem()) {
+			Shops.getCurrencyManager().deposit(player, getItem().getCurrencyItem(), (int) total);
+		} else {
+			final String[] currencySplit = getItem().getCurrency().split("/");
+			Shops.getCurrencyManager().deposit(player, currencySplit[0], currencySplit[1], total);
+//			Common.tell(player, TranslationManager.string(player, Translations.NO_MONEY));TODO show money add
+		}
+
+		// remove total qty
+		PlayerUtil.removeSpecificItemQuantityFromPlayer(player, itemShopContent.getItem(), amountToSell);
+
+		return TransactionResult.SUCCESS;
 	}
 
 	default TransactionResult executePurchase(@NonNull final Player player) {

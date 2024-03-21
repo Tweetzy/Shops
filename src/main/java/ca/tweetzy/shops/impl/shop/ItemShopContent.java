@@ -152,6 +152,19 @@ public final class ItemShopContent extends AbstractShopContent {
 //		return genItem.make();
 //	}
 
+	public static ItemShopContent blank(@NonNull final String shopId, @NonNull CompMaterial material) {
+		return new ItemShopContent(
+				UUID.randomUUID(),
+				shopId,
+				material.parseItem(),
+				1,
+				1,
+				1,
+				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
+				CompMaterial.AIR.parseItem()
+		);
+	}
+
 	public static ItemShopContent blank(@NonNull final String shopId) {
 		return new ItemShopContent(
 				UUID.randomUUID(),
@@ -164,6 +177,7 @@ public final class ItemShopContent extends AbstractShopContent {
 				CompMaterial.AIR.parseItem()
 		);
 	}
+
 
 	@Override
 	public boolean isMatch(String keyword) {

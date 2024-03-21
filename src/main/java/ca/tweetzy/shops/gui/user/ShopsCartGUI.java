@@ -40,6 +40,15 @@ public final class ShopsCartGUI extends ShopsPagedGUI<CartContent> {
 						"right_click", TranslationManager.string(this.player, Translations.MOUSE_RIGHT_CLICK)
 				)).make(), click -> {
 
+			if (click.clickType == ClickType.LEFT) {
+				this.cart.executePurchase(click.player);
+				click.manager.showGUI(click.player, new ShopsCartGUI(this.parent, click.player, this.cart));
+			}
+
+			if (click.clickType == ClickType.RIGHT) {
+				this.cart.executeSell(click.player);
+				click.manager.showGUI(click.player, new ShopsCartGUI(this.parent, click.player, this.cart));
+			}
 		});
 
 

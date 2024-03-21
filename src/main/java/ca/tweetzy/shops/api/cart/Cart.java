@@ -25,6 +25,7 @@ public interface Cart {
 	}
 
 	TransactionResult executePurchase(@NonNull Player player);
+	TransactionResult executeSell(@NonNull Player player);
 
 	default void clear() {
 		getItems().clear();
