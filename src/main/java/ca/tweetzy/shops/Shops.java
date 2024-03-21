@@ -43,7 +43,7 @@ public final class Shops extends FlightPlugin {
 		Settings.init();
 		Translations.init();
 
-		Common.setPrefix(Settings.PREFIX.getString("&8[&EShops&8]"));
+		Common.setPrefix(Settings.PREFIX.getStringOr("&8[&EShops&8]"));
 
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);

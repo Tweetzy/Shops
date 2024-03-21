@@ -11,14 +11,13 @@ public final class Settings extends FlightSettings {
 
 	public static ConfigEntry PREFIX = create("prefix", "&8[&eShops&8]").withComment("The prefix for the plugin");
 	public static ConfigEntry LANGUAGE = create("language", "en_us").withComment("The primary language of the plugin");
-	public static ConfigEntry CURRENCY_ALLOW_PICK = create("settings.currency.allow user to pick", true).withComment("If true, players will be able to select which currency they want to use.");
 	public static ConfigEntry CURRENCY_DEFAULT_SELECTED = create("settings.currency.default selection", "Vault/Vault").withComment("The default currency selection, PluginName/CurrencyName -> Ex. Vault/Vault");
-	public static ConfigEntry CURRENCY_ITEM_DEFAULT_SELECTED = create("settings.currency.default item selection", "DIAMOND").withComment("The default currency selection if using item only mode");
 	public static ConfigEntry CURRENCY_VAULT_SYMBOL = create("settings.currency.vault symbol", "$").withComment("When using default/vault currency, what symbol should be used.");
 	public static ConfigEntry CURRENCY_USE_ITEM_ONLY = create("settings.currency.use item only", false).withComment("If true, Shops will only allow the usage of another item for currency.");
 	public static ConfigEntry CURRENCY_BLACKLISTED = create("settings.currency.black listed", List.of("UltraEconomy:Gems")).withComment("A list of owning plugins & the currency to be blacklisted. Ex. UltraEconomy:Gems");
 	public static ConfigEntry TAX_ENABLED = create("settings.tax.enabled", false).withComment("If true, will apply sales tax to the total when a user is buying an item");
 	public static ConfigEntry TAX_AMOUNT = create("settings.tax.percentage", 13.0).withComment("The tax percentage. By default it's 13%");
+	public static ConfigEntry TAX_SELL = create("settings.tax.tax on sell", false).withComment("If true, selling items to a shop will remove tax percentage");
 
 	/*
 	========================= GUI STUFF =========================
@@ -27,6 +26,26 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_SHARED_ITEMS_EXIT_BUTTON = create("gui.shared buttons.exit button.item", CompMaterial.BARRIER.name());
 	public static ConfigEntry GUI_SHARED_ITEMS_PREVIOUS_BUTTON = create("gui.shared buttons.previous button.item", CompMaterial.ARROW.name());
 	public static ConfigEntry GUI_SHARED_ITEMS_NEXT_BUTTON = create("gui.shared buttons.next button.item", CompMaterial.ARROW.name());
+
+	//========================= MAIN GUI CUSTOMIZATION =========================
+	public static ConfigEntry GUI_SHOPS_MAIN_ROWS = create("gui.shops main.rows", 6, "Number of rows for the gui, min 2 max 6");
+	public static ConfigEntry GUI_SHOPS_MAIN_BACKGROUND = create("gui.shops main.background", "WHITE_STAINED_GLASS_PANE", "You can use MATERIAL:Model Number if you want here, or textures.minecraft links");
+	public static ConfigEntry GUI_SHOPS_MAIN_USE_AUTOFILL = create("gui.shops main.use auto fill", true, "If true, shops will auto fill into specified slots");
+	public static ConfigEntry GUI_SHOPS_MAIN_FILL_SLOTS = create("gui.shops main.fill slots", List.of(20, 21, 22, 23, 24, 30, 31, 32), "The slots shops will be placed into if auto fill is on.");
+	public static ConfigEntry GUI_SHOPS_MAIN_FIXED_SHOPS = create("gui.shops main.fixed shops", List.of("slot:10 shop:food"), "Used manually specify shop slots, auto fill must be off. format -> slot:<slotNumber> shop:<shopId>");
+	public static ConfigEntry GUI_SHOPS_MAIN_DECORATIONS = create("gui.shops main.decorations", List.of(
+			"slot:0-8 item:BLACK_STAINED_GLASS_PANE",
+			"slot:45-53 item:BLACK_STAINED_GLASS_PANE",
+			"slot:9 item:BLACK_STAINED_GLASS_PANE",
+			"slot:18 item:BLACK_STAINED_GLASS_PANE",
+			"slot:27 item:BLACK_STAINED_GLASS_PANE",
+			"slot:36 item:BLACK_STAINED_GLASS_PANE",
+			"slot:17 item:BLACK_STAINED_GLASS_PANE",
+			"slot:26 item:BLACK_STAINED_GLASS_PANE",
+			"slot:35 item:BLACK_STAINED_GLASS_PANE",
+			"slot:44 item:BLACK_STAINED_GLASS_PANE"
+	), "TBD");
+
 
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT = create("gui.layout control picker.items.exit.item", CompMaterial.BARRIER.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_PREV_PAGE = create("gui.layout control picker.items.prev page.item", CompMaterial.ARROW.name());
