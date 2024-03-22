@@ -78,6 +78,19 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 						"right_click", TranslationManager.string(this.player, Translations.MOUSE_RIGHT_CLICK)
 				))
 				.make(), click -> click.manager.showGUI(click.player, new ShopSettingsGUI(click.player, this.shop)));
+
+
+		setButton(5, 2, QuickItem
+				.of(CompMaterial.LAVA_BUCKET)
+				.name(TranslationManager.string(Translations.GUI_SHOP_EDIT_ITEMS_DELETE_NAME))
+				.lore(TranslationManager.list(Translations.GUI_SHOP_EDIT_ITEMS_DELETE_LORE))
+				.make(), click -> {
+
+			this.shop.unStore(result -> {
+				if (result == SynchronizeResult.FAILURE) return;
+				click.manager.showGUI(click.player, new AdminShopListGUI(new ShopsAdminMainGUI(click.player), click.player));
+			});
+		});
 	}
 
 	@Override

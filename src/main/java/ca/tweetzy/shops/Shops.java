@@ -7,10 +7,7 @@ import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.SQLiteConnector;
 import ca.tweetzy.flight.gui.GuiManager;
 import ca.tweetzy.flight.utils.Common;
-import ca.tweetzy.shops.commands.AddCommand;
-import ca.tweetzy.shops.commands.AdminCommand;
-import ca.tweetzy.shops.commands.CartCommand;
-import ca.tweetzy.shops.commands.ShopsCommand;
+import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations.*;
 import ca.tweetzy.shops.impl.manager.CartManager;
@@ -77,8 +74,10 @@ public final class Shops extends FlightPlugin {
 		// setup commands
 		this.commandManager.registerCommandDynamically(new ShopsCommand()).addSubCommands(
 				new AddCommand(),
+				new DeleteCommand(),
 				new CartCommand(),
-				new AdminCommand()
+				new AdminCommand(),
+				new ReloadCommand()
 		);
 	}
 

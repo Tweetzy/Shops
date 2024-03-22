@@ -18,6 +18,7 @@ public final class Translations extends TranslationManager {
 	 */
 	public static TranslationEntry SHOP_ID_TAKEN = create("error.shop id taken", "&cA shop with that id already exists!");
 	public static TranslationEntry SHOP_NOT_FOUND = create("error.shop not found", "&cCould not find any shops with that id!");
+	public static TranslationEntry SHOP_DELETE_ERROR = create("error.shop.delete", "&cError, could not delete that shop!");
 	public static TranslationEntry NUMBER_CANNOT_BE_ZERO = create("error.number cannot be zero", "&cPlease enter a number greater than 0");
 	public static TranslationEntry ONE_FILL_SLOT_REQUIRED = create("error.one fill slot required", "&cThis layout requires at least one fill slot!");
 	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
@@ -29,6 +30,7 @@ public final class Translations extends TranslationManager {
 	 */
 	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
 	public static TranslationEntry SHOP_IS_CLOSED = create("info.shop.closed", "&cThat shop is currently closed!");
+	public static TranslationEntry SHOP_DELETED = create("info.shop.deleted", "&aSuccessfully deleted that shop!");
 
 
 	/*
@@ -271,6 +273,13 @@ public final class Translations extends TranslationManager {
 			"&7Used to adjust shop specific settings",
 			"",
 			"&e&lClick &7to open shop settings"
+	);
+
+	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_DELETE_NAME = create("gui.shop edit.items.delete.name", "<GRADIENT:5CAEFF>&LDelete Shop</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_EDIT_ITEMS_DELETE_LORE = create("gui.shop edit.items.delete.lore",
+			"&7Used to delete the shop",
+			"",
+			"&c&lClick &7to delete this shop"
 	);
 
 	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_SEARCH_NAME = create("gui.shop contents.items.search.name", "<GRADIENT:5CAEFF>&lSearch</GRADIENT:9F57FF>");

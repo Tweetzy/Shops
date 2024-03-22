@@ -105,7 +105,6 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 		final double subtotal = this.checkoutItem.getBuySubtotal(this.checkoutItem.getQuantity());
 		final double total = Taxer.getTaxedTotal(subtotal);
 
-
 		final String numberFormatSub = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) subtotal + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(subtotal);
 		final String numberFormatTotal = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) total + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(total);
 

@@ -96,6 +96,21 @@ public final class DataManager extends DataManagerAbstract {
 		}));
 	}
 
+	public void deleteServerShop(@NonNull final Shop shop, Callback<Boolean> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			try (PreparedStatement statement = connection.prepareStatement("DELETE FROM " + this.getTablePrefix() + "shop WHERE id = ?")) {
+				statement.setString(1, shop.getId().toLowerCase());
+
+				int result = statement.executeUpdate();
+				callback.accept(null, result > 0);
+
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+				e.printStackTrace();
+			}
+		}));
+	}
+
 	public void getServerShops(@NonNull final Callback<List<Shop>> callback) {
 		final List<Shop> shops = new ArrayList<>();
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
