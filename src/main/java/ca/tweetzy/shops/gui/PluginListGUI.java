@@ -21,21 +21,22 @@ import java.util.List;
  */
 public final class PluginListGUI extends ShopsPagedGUI<TweetzyPlugin> {
 
-	private final Player player;
-
 	public PluginListGUI(@NonNull final Player player) {
 		super(new ShopsAdminMainGUI(player), player, "&ATweetzy &8> &7Plugins", 6, List.of(
 				new TweetzyPlugin(60325, CompMaterial.CHEST, "Auction House", List.of("The most feature packed, up to date auction plugin"), 12),
-				new TweetzyPlugin(75600, CompMaterial.BARREL, "Shops", List.of("Shops is the ultimate server shop. Create", "unlimited shops with unlimited items."), 12),
+				new TweetzyPlugin(102575, CompMaterial.SPAWNER, "Spawners", List.of("Mineable spawners, chunk/player limits, custom spawner", "levels, presets, upgrading, spawner shop."), 12),
 				new TweetzyPlugin(92178, CompMaterial.LIME_SHULKER_BOX, "Markets", List.of("Markets is a completely new take on traditional player owned shops"), 12),
 				new TweetzyPlugin(89864, CompMaterial.PAPER, "Vouchers", List.of("An easy to use voucher plugin, completely GUI based."), 0),
-				new TweetzyPlugin(90098, CompMaterial.ZOMBIE_HEAD, "Skulls", List.of("Skulls is a collection of 43k+ custom textured Minecraft heads.", "A free alternative to Head Database"), 0),
+				new TweetzyPlugin(90098, CompMaterial.ZOMBIE_HEAD, "Skulls", List.of("Skulls is a collection of 55k+ custom textured Minecraft heads.", "A free alternative to Head Database"), 0),
+				new TweetzyPlugin(101670, CompMaterial.GOLD_NUGGET, "Funds", List.of("Create unlimited custom currencies, Vault Support", "Withdraw / Pay / and Physical Currency"), 0),
 				new TweetzyPlugin(29641, CompMaterial.NAME_TAG, "Item Name Tags", List.of("Allow players to rename items with ease, includes", "item name tags, lore tags, and delore tags."), 0)
 		));
-
-		this.player = player;
-
 		draw();
+	}
+
+	@Override
+	protected void drawFixed() {
+		applyBackExit();
 	}
 
 	@Override
@@ -44,6 +45,7 @@ public final class PluginListGUI extends ShopsPagedGUI<TweetzyPlugin> {
 				.name("&e" + plugin.name())
 				.lore(plugin.description())
 				.lore("", "&7Price&f: " + (plugin.price() > 0D ? "&a$" + String.format("%,.2f", plugin.price()) + " USD" : "&bFree"))
+				.hideTags(true)
 				.make();
 	}
 

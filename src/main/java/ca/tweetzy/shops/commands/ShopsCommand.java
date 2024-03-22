@@ -49,7 +49,7 @@ public final class ShopsCommand extends Command {
 
 	@Override
 	public String getPermissionNode() {
-		return null;
+		return "shops.command";
 	}
 
 	@Override

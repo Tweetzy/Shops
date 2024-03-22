@@ -1,6 +1,7 @@
 package ca.tweetzy.shops.gui.admin;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.flight.gui.helper.InventoryBorder;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.ChatUtil;
 import ca.tweetzy.flight.utils.Common;
@@ -22,7 +23,23 @@ public final class ShopsAdminMainGUI extends ShopsBaseGUI {
 	@Override
 	protected void draw() {
 
-		setButton(1, 1, QuickItem.of("https://textures.minecraft.net/texture/f2784307b892f52b92f74fa9db4984c4f0f02eb81c6752e5eba69ad67858427e")
+		mirrorFill(0,0, true, true, QuickItem.bg(CompMaterial.CYAN_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(0,1, true, true, QuickItem.bg(CompMaterial.CYAN_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(1,0, true, true, QuickItem.bg(CompMaterial.CYAN_STAINED_GLASS_PANE.parseItem()));
+
+		mirrorFill(2,0, false, true, QuickItem.bg(CompMaterial.LIGHT_GRAY_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(3,0, false, true, QuickItem.bg(CompMaterial.LIGHT_GRAY_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(0,2, true, true, QuickItem.bg(CompMaterial.LIGHT_GRAY_STAINED_GLASS_PANE.parseItem()));
+
+		mirrorFill(0,3, true, false, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(0,4, true, false, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(0,5, true, false, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+
+		mirrorFill(1,1, true, true, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(1,2, true, true, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+		mirrorFill(2,1, true, true, QuickItem.bg(CompMaterial.WHITE_STAINED_GLASS_PANE.parseItem()));
+
+		setButton(1, 4, QuickItem.of("https://textures.minecraft.net/texture/f2784307b892f52b92f74fa9db4984c4f0f02eb81c6752e5eba69ad67858427e")
 				.name("<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF>")
 				.lore(
 						"&7You can create, update, and delete shops",
@@ -31,18 +48,33 @@ public final class ShopsAdminMainGUI extends ShopsBaseGUI {
 				)
 				.make(), click -> click.manager.showGUI(click.player, new AdminShopListGUI(this, click.player)));
 
-		setButton(1, 4, QuickItem.of("https://textures.minecraft.net/texture/26599cbb8868237e3d864bb128ac51a0ec4a5a85e241232ee3ed6b0afac9b5c7")
-				.name("<GRADIENT:5CAEFF>&lVillager Trades</GRADIENT:9F57FF>")
-				.lore(
-						"&7You can create, update, and delete",
-						"&7custom villager trades here."
-				)
-				.make(), click -> {
+//		setButton(2, 2, QuickItem.of("https://textures.minecraft.net/texture/e4d49bae95c790c3b1ff5b2f01052a714d6185481d5b1c85930b3f99d2321674")
+//				.name("<GRADIENT:5CAEFF>&lSettings</GRADIENT:9F57FF>")
+//				.lore(
+//						"&7Opens the in-game settings editor"
+//				)
+//				.make(), click -> click.manager.showGUI(click.player, new AdminShopListGUI(this, click.player)));
 
-		});
+		setButton(2, 6, QuickItem.of("https://textures.minecraft.net/texture/c73e8bd3c43c4514c76481ca1daf55149dfc93bd1bcfa8ab9437b9f7eb3392d9")
+				.name("<GRADIENT:5CAEFF>&lTransactions</GRADIENT:9F57FF>")
+				.lore(
+						"&7Used to view all the transactions",
+						"&7that were made in the shops."
+				)
+				.make(), click -> click.manager.showGUI(click.player, new AdminShopListGUI(this, click.player)));
+
+//		setButton(1, 4, QuickItem.of("https://textures.minecraft.net/texture/26599cbb8868237e3d864bb128ac51a0ec4a5a85e241232ee3ed6b0afac9b5c7")
+//				.name("<GRADIENT:5CAEFF>&lVillager Trades</GRADIENT:9F57FF>")
+//				.lore(
+//						"&7You can create, update, and delete",
+//						"&7custom villager trades here."
+//				)
+//				.make(), click -> {
+//
+//		});
 
 		// Discord Button
-		setButton(4, 1, QuickItem.of("http://textures.minecraft.net/texture/4d42337be0bdca2128097f1c5bb1109e5c633c17926af5fb6fc20000011aeb53")
+		setButton(4, 3, QuickItem.of("http://textures.minecraft.net/texture/4d42337be0bdca2128097f1c5bb1109e5c633c17926af5fb6fc20000011aeb53")
 				.name("&e&LDiscord")
 				.lore(
 						"&8Ask questions, Get support",
@@ -89,7 +121,7 @@ public final class ShopsAdminMainGUI extends ShopsBaseGUI {
 		});
 
 		// More Plugins Button
-		setButton(4, 7, QuickItem.of("http://textures.minecraft.net/texture/b94ac36d9a6fbff1c558941381e4dcf595df825913f6c383ffaa71b756a875d3")
+		setButton(4, 5, QuickItem.of("http://textures.minecraft.net/texture/b94ac36d9a6fbff1c558941381e4dcf595df825913f6c383ffaa71b756a875d3")
 				.name("<GRADIENT:00a87f>&lMore Plugins</GRADIENT:00ce74>")
 				.lore(
 						"&8View more of my plugins",
