@@ -338,7 +338,7 @@ public final class DataManager extends DataManagerAbstract {
 
 	public void insertTransaction(@NonNull final Transaction transaction, final Callback<Transaction> callback) {
 		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "transaction (id, content_id, shop_id, shop_name, type, content_type, player_uuid, player_name, item, price, quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			final String query = "INSERT INTO " + this.getTablePrefix() + "transaction (id, content_id, shop_id, shop_name, type, content_type, player_uuid, player_name, item, price, quantity, created_at, updated_at, currency) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "transaction WHERE id = ?";
 
 			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -359,6 +359,7 @@ public final class DataManager extends DataManagerAbstract {
 				preparedStatement.setInt(11, transaction.getTransactionQuantity());
 				preparedStatement.setLong(12, transaction.getTimeCreated());
 				preparedStatement.setLong(13, transaction.getTimeCreated());
+				preparedStatement.setString(14, transaction.getCurrency());
 
 				preparedStatement.executeUpdate();
 
@@ -372,34 +373,6 @@ public final class DataManager extends DataManagerAbstract {
 				e.printStackTrace();
 				resolveCallback(callback, e);
 			}
-		}));
-	}
-
-	public void insertTransactions(@NonNull final Collection<Transaction> transactions) {
-		this.runAsync(() -> this.databaseConnector.connect(connection -> {
-			final String query = "INSERT INTO " + this.getTablePrefix() + "transaction (id, content_id, shop_id, shop_name, type, content_type, player_uuid, player_name, item, price, quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-			for (Transaction transaction : transactions) {
-				preparedStatement.setString(1, transaction.getId().toString());
-				preparedStatement.setString(2, transaction.getKnownContentId().toString());
-				preparedStatement.setString(3, transaction.getKnownShopId());
-				preparedStatement.setString(4, transaction.getKnownShopName());
-				preparedStatement.setString(5, transaction.getType().name());
-				preparedStatement.setString(6, transaction.getContentType().name());
-				preparedStatement.setString(7, transaction.getUserUUID().toString());
-				preparedStatement.setString(8, transaction.getUserLastKnownName());
-				preparedStatement.setString(9, SerializeUtil.encodeItem(transaction.getItem()));
-				preparedStatement.setDouble(10, transaction.getFinalPrice());
-				preparedStatement.setInt(11, transaction.getTransactionQuantity());
-				preparedStatement.setLong(12, transaction.getTimeCreated());
-				preparedStatement.setLong(13, transaction.getTimeCreated());
-
-				preparedStatement.addBatch();
-			}
-
-			preparedStatement.executeBatch();
 		}));
 	}
 
@@ -432,6 +405,7 @@ public final class DataManager extends DataManagerAbstract {
 				UUID.fromString(resultSet.getString("player_uuid")),
 				resultSet.getString("player_name"),
 				SerializeUtil.decodeItem(resultSet.getString("item")),
+				resultSet.getString("currency"),
 				resultSet.getDouble("price"),
 				resultSet.getInt("quantity"),
 				resultSet.getLong("created_at")

@@ -17,6 +17,7 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry CURRENCY_BLACKLISTED = create("settings.currency.black listed", List.of("UltraEconomy:Gems")).withComment("A list of owning plugins & the currency to be blacklisted. Ex. UltraEconomy:Gems");
 	public static ConfigEntry CURRENCY_FORMAT_LANGUAGE = create("settings.currency.format.language", "en").withComment("An ISO 639 alpha-2 or alpha-3 language code.");
 	public static ConfigEntry CURRENCY_FORMAT_COUNTRY = create("settings.currency.format.country", "US").withComment("An ISO 3166 alpha-2 country code or a UN M.49 numeric-3 area code.");
+	public static ConfigEntry DATETIME_FORMAT = create("settings.date time format", "MMM dd, yyyy hh:mm:ss a").withComment("How should timestamps be formatted");
 	public static ConfigEntry TAX_ENABLED = create("settings.tax.enabled", false).withComment("If true, will apply sales tax to the total when a user is buying an item");
 	public static ConfigEntry TAX_AMOUNT = create("settings.tax.percentage", 13.0).withComment("The tax percentage. By default it's 13%");
 	public static ConfigEntry TAX_SELL = create("settings.tax.tax on sell", false).withComment("If true, selling items to a shop will remove tax percentage");

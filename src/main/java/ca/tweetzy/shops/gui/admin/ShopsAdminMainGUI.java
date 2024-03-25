@@ -61,7 +61,7 @@ public final class ShopsAdminMainGUI extends ShopsBaseGUI {
 						"&7Used to view all the transactions",
 						"&7that were made in the shops."
 				)
-				.make(), click -> click.manager.showGUI(click.player, new AdminShopListGUI(this, click.player)));
+				.make(), click -> click.manager.showGUI(click.player, new ShopTransactionsGUI(this, click.player)));
 
 //		setButton(1, 4, QuickItem.of("https://textures.minecraft.net/texture/26599cbb8868237e3d864bb128ac51a0ec4a5a85e241232ee3ed6b0afac9b5c7")
 //				.name("<GRADIENT:5CAEFF>&lVillager Trades</GRADIENT:9F57FF>")

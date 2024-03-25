@@ -3,10 +3,12 @@ package ca.tweetzy.shops.commands;
 import ca.tweetzy.flight.command.AllowedExecutor;
 import ca.tweetzy.flight.command.Command;
 import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.gui.user.ShopContentsGUI;
 import ca.tweetzy.shops.gui.user.ShopsMainGUI;
+import ca.tweetzy.shops.settings.Translations;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,8 +33,14 @@ public final class ShopsCommand extends Command {
 				final Shop shop = Shops.getShopManager().getById(args[0]);
 
 				if (shop == null) return ReturnType.FAIL;
-				if (!shop.getShopOptions().isOpen()) return ReturnType.FAIL;
-				if (!player.hasPermission(shop.getShopOptions().getPermission()) && shop.getShopOptions().isRequiresPermission()) return ReturnType.FAIL;
+				if (!shop.getShopOptions().isOpen()){
+					tell(player, TranslationManager.string(player, Translations.SHOP_IS_CLOSED));
+					return ReturnType.FAIL;
+				}
+				if (!player.hasPermission(shop.getShopOptions().getPermission()) && shop.getShopOptions().isRequiresPermission()) {
+					tell(player, TranslationManager.string(player, Translations.NOT_ALLOWED_TO_USE_SHOP));
+					return ReturnType.FAIL;
+				}
 
 				// open shop
 				Shops.getGuiManager().showGUI(player, new ShopContentsGUI(null, player, shop));

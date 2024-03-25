@@ -6,6 +6,8 @@ import ca.tweetzy.shops.Shops;
 import lombok.NonNull;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 public final class Translations extends TranslationManager {
 
 	public Translations(@NonNull JavaPlugin plugin) {
@@ -554,6 +556,24 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_SHOP_ADD_CONTENT_ITEMS_ADD_LORE = create("gui.shop add content.items.add.lore",
 			"&e&lClick &7to add to shop."
 	);
+
+	public static TranslationEntry GUI_TRANSACTIONS_TITLE = create("gui.transactions.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Transactions");
+	public static TranslationEntry GUI_TRANSACTIONS_ITEMS_TRANSACTION_LORE = create("gui.transactions.items.transaction.lore",
+			"&8&m------------------------------",
+			"&7Transaction Type&f: &e%transaction_type%",
+			"&7Content Type&f: &e%content_type%",
+			"",
+			"&7Original Shop&f: &e%shop_name%",
+			"&7Player Name&f: &e%player_name%",
+			"",
+			"&7Quantity&F: &e%quantity%",
+			"&7Final Price&F: &e%final_price%",
+			"&7Currency&F: &e%currency%",
+			"&7Date&f: &e%transaction_date%",
+			"",
+			"&8&m------------------------------"
+	);
+
 
 	public static TranslationEntry GUI_LAYOUT_EDITOR_TITLE = create("gui.layout editor.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Layout Editor");
 	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_FILL_SLOT_NAME = create("gui.layout editor.items.fill slot.name", "<GRADIENT:5CAEFF>&lFill Slot</GRADIENT:9F57FF>");

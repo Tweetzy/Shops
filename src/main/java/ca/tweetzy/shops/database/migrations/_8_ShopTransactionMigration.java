@@ -26,6 +26,7 @@ public final class _8_ShopTransactionMigration extends DataMigration {
 					"player_uuid VARCHAR(48) NOT NULL, " +
 					"player_name VARCHAR(16) NOT NULL, " +
 					"item TEXT NOT NULL, " +
+					"currency TEXT NOT NULL, " +
 					"price DOUBLE NOT NULL, " +
 					"quantity INT NOT NULL, " +
 					"created_at BigInt NOT NULL, " +

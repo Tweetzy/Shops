@@ -91,6 +91,7 @@ public interface CartContent {
 				player.getUniqueId(),
 				player.getName(),
 				this.getItem().getRawItem(),
+				this.getItem().getCurrencyDisplayName(),
 				this.getItem().isCurrencyOfItem() ? (int) total : total,
 				amountToSell,
 				System.currentTimeMillis()
@@ -154,6 +155,7 @@ public interface CartContent {
 				player.getUniqueId(),
 				player.getName(),
 				this.getItem().getRawItem(),
+				this.getItem().getCurrencyDisplayName(),
 				this.getItem().isCurrencyOfItem() ? (int) total : total,
 				this.getQuantity(),
 				System.currentTimeMillis()

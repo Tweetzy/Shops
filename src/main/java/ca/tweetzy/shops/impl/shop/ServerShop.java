@@ -89,15 +89,17 @@ public final class ServerShop implements Shop {
 
 	@Override
 	public void unStore(@Nullable Consumer<SynchronizeResult> syncResult) {
+		getContent().forEach(item -> item.unStore(res -> {}));
+
 		Shops.getDataManager().deleteServerShop(this, (error, updateStatus) -> {
 			if (updateStatus) {
-				getContent().forEach(Shops.getShopContentManager()::remove);
 				Shops.getShopManager().remove(this.id);
 			}
 
 			if (syncResult != null)
 				syncResult.accept(error == null ? updateStatus ? SynchronizeResult.SUCCESS : SynchronizeResult.FAILURE : SynchronizeResult.FAILURE);
 		});
+
 	}
 
 	@Override

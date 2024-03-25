@@ -24,6 +24,8 @@ public interface Transaction extends Identifiable<UUID>, Storeable<Transaction>,
 
 	ItemStack getItem(); // if the content was a command item, it'll be a custom icon based on specified content values
 
+	String getCurrency();
+
 	double getFinalPrice();
 
 	int getTransactionQuantity();

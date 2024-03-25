@@ -23,6 +23,7 @@ public final class ShopTransaction implements Transaction {
 	private final UUID playerUUID;
 	private final String playerUsername;
 	private final ItemStack item;
+	private final String currency;
 	private final double price;
 	private final int quantity;
 	private final long time;
@@ -71,6 +72,11 @@ public final class ShopTransaction implements Transaction {
 	@Override
 	public ItemStack getItem() {
 		return this.item;
+	}
+
+	@Override
+	public String getCurrency() {
+		return this.currency;
 	}
 
 	@Override
