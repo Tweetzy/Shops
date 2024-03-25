@@ -1,1 +1,1 @@
-![Thread](https://static.tweetzy.ca/plugins/shops/3.0/Thread.png)
+![Thread](https://static.tweetzy.ca/plugins/shops/v4/Shops.png)

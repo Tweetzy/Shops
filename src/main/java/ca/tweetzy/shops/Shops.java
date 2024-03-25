@@ -86,7 +86,7 @@ public final class Shops extends FlightPlugin {
 
 	@Override
 	protected int getBStatsId() {
-		return 7689;
+		return 6807;
 	}
 
 	@Override
