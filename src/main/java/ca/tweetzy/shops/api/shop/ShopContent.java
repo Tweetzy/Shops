@@ -9,6 +9,8 @@ import ca.tweetzy.shops.api.Matchable;
 import ca.tweetzy.shops.api.Storeable;
 import ca.tweetzy.shops.api.Synchronize;
 import ca.tweetzy.shops.api.currency.AbstractCurrency;
+import ca.tweetzy.shops.impl.shop.CommandShopContent;
+import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.settings.Settings;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
@@ -57,6 +59,15 @@ public interface ShopContent extends Identifiable<UUID>, Matchable, Synchronize,
 		return generateDisplayItem(displayType, getMinimumPurchaseQty());
 	}
 
+	default ItemStack getRawItem() {
+		if (this instanceof final ItemShopContent shopContent) {
+			return shopContent.getItem();
+		}
+
+		final CommandShopContent commandShopContent = (CommandShopContent) this;
+		return QuickItem.of(commandShopContent.getIcon()).name(commandShopContent.getName()).lore(commandShopContent.getDesc()).make();
+	}
+
 	default boolean isCurrencyOfItem() {
 		final String[] split = getCurrency().split("/");
 		return split[1].equalsIgnoreCase("item");
@@ -65,6 +76,7 @@ public interface ShopContent extends Identifiable<UUID>, Matchable, Synchronize,
 	default Shop getOwningShop() {
 		return Shops.getShopManager().getById(getShopId());
 	}
+
 
 	default String getCurrencyDisplayName() {
 		if (isCurrencyOfItem())

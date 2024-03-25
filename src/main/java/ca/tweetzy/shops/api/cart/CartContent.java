@@ -5,8 +5,12 @@ import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.PlayerUtil;
 import ca.tweetzy.flight.utils.Replacer;
 import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.Transaction;
 import ca.tweetzy.shops.api.currency.TransactionResult;
+import ca.tweetzy.shops.api.events.ShopTransactionEvent;
 import ca.tweetzy.shops.api.shop.ShopContent;
+import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.impl.ShopTransaction;
 import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
 import ca.tweetzy.shops.model.Taxer;
@@ -15,6 +19,8 @@ import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public interface CartContent {
 
@@ -69,6 +75,24 @@ public interface CartContent {
 		// remove total qty
 		PlayerUtil.removeSpecificItemQuantityFromPlayer(player, itemShopContent.getItem(), amountToSell);
 
+		final Transaction transaction = new ShopTransaction(
+				UUID.randomUUID(),
+				this.getItem().getId(),
+				this.getItem().getShopId(),
+				this.getItem().getOwningShop().getDisplayName(),
+				Transaction.TransactionType.SELL,
+				this.getItem().getType(),
+				player.getUniqueId(),
+				player.getName(),
+				this.getItem().getRawItem(),
+				this.getItem().isCurrencyOfItem() ? (int) total : total,
+				amountToSell,
+				System.currentTimeMillis()
+		);
+
+		final ShopTransactionEvent transactionEvent = new ShopTransactionEvent(transaction);
+		Shops.getInstance().getServer().getPluginManager().callEvent(transactionEvent);
+
 		return TransactionResult.SUCCESS;
 	}
 
@@ -104,6 +128,26 @@ public interface CartContent {
 		if (getItem() instanceof ItemShopContent itemShopContent)
 			for (int i = 0; i < getQuantity(); i++)
 				PlayerUtil.giveItem(player, itemShopContent.getItem());
+
+
+		// purchase went through call transaction event
+		final Transaction transaction = new ShopTransaction(
+				UUID.randomUUID(),
+				this.getItem().getId(),
+				this.getItem().getShopId(),
+				this.getItem().getOwningShop().getDisplayName(),
+				Transaction.TransactionType.BUY,
+				this.getItem().getType(),
+				player.getUniqueId(),
+				player.getName(),
+				this.getItem().getRawItem(),
+				this.getItem().isCurrencyOfItem() ? (int) total : total,
+				this.getQuantity(),
+				System.currentTimeMillis()
+		);
+
+		final ShopTransactionEvent transactionEvent = new ShopTransactionEvent(transaction);
+		Bukkit.getPluginManager().callEvent(transactionEvent);
 
 		return TransactionResult.SUCCESS;
 	}

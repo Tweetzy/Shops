@@ -10,10 +10,8 @@ import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.shops.commands.*;
 import ca.tweetzy.shops.database.DataManager;
 import ca.tweetzy.shops.database.migrations.*;
-import ca.tweetzy.shops.impl.manager.CartManager;
-import ca.tweetzy.shops.impl.manager.CurrencyManager;
-import ca.tweetzy.shops.impl.manager.ShopContentManager;
-import ca.tweetzy.shops.impl.manager.ShopManager;
+import ca.tweetzy.shops.impl.manager.*;
+import ca.tweetzy.shops.listeners.ShopTransactionListener;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
 import net.milkbowl.vault.economy.Economy;
@@ -31,6 +29,8 @@ public final class Shops extends FlightPlugin {
 	private final ShopContentManager shopContentManager = new ShopContentManager();
 	private final CurrencyManager currencyManager = new CurrencyManager();
 	private final CartManager cartManager = new CartManager();
+	private final TransactionManager transactionManager = new TransactionManager();
+
 
 	// default vault economy
 	private Economy economy = null;
@@ -53,7 +53,8 @@ public final class Shops extends FlightPlugin {
 				new _4_ShopCMDIconMigration(),
 				new _5_ShopCMDNameDescMigration(),
 				new _6_ShopLayoutMigration(),
-				new _7_ShopItemCurrencyMigration()
+				new _7_ShopItemCurrencyMigration(),
+				new _8_ShopTransactionMigration()
 		);
 
 		// run migrations for tables
@@ -68,8 +69,10 @@ public final class Shops extends FlightPlugin {
 		// managers
 		this.currencyManager.load();
 		this.shopManager.load();
+		this.transactionManager.load();
 
 		// listeners
+		getServer().getPluginManager().registerEvents(new ShopTransactionListener(), this);
 
 		// setup commands
 		this.commandManager.registerCommandDynamically(new ShopsCommand()).addSubCommands(
@@ -117,6 +120,10 @@ public final class Shops extends FlightPlugin {
 
 	public static CartManager getCartManager() {
 		return getInstance().cartManager;
+	}
+
+	public static TransactionManager getTransactionManager() {
+		return getInstance().transactionManager;
 	}
 
 	public static GuiManager getGuiManager() {

@@ -6,9 +6,11 @@ import ca.tweetzy.flight.database.DataManagerAbstract;
 import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.UpdateCallback;
 import ca.tweetzy.flight.utils.SerializeUtil;
+import ca.tweetzy.shops.api.Transaction;
 import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.api.shop.ShopContent;
 import ca.tweetzy.shops.api.shop.ShopContentType;
+import ca.tweetzy.shops.impl.ShopTransaction;
 import ca.tweetzy.shops.impl.shop.*;
 import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
@@ -19,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -333,6 +336,107 @@ public final class DataManager extends DataManagerAbstract {
 		return shopContent;
 	}
 
+	public void insertTransaction(@NonNull final Transaction transaction, final Callback<Transaction> callback) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "INSERT INTO " + this.getTablePrefix() + "transaction (id, content_id, shop_id, shop_name, type, content_type, player_uuid, player_name, item, price, quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			final String fetchQuery = "SELECT * FROM " + this.getTablePrefix() + "transaction WHERE id = ?";
+
+			try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+				final PreparedStatement fetch = connection.prepareStatement(fetchQuery);
+
+				fetch.setString(1, transaction.getId().toString());
+
+				preparedStatement.setString(1, transaction.getId().toString());
+				preparedStatement.setString(2, transaction.getKnownContentId().toString());
+				preparedStatement.setString(3, transaction.getKnownShopId());
+				preparedStatement.setString(4, transaction.getKnownShopName());
+				preparedStatement.setString(5, transaction.getType().name());
+				preparedStatement.setString(6, transaction.getContentType().name());
+				preparedStatement.setString(7, transaction.getUserUUID().toString());
+				preparedStatement.setString(8, transaction.getUserLastKnownName());
+				preparedStatement.setString(9, SerializeUtil.encodeItem(transaction.getItem()));
+				preparedStatement.setDouble(10, transaction.getFinalPrice());
+				preparedStatement.setInt(11, transaction.getTransactionQuantity());
+				preparedStatement.setLong(12, transaction.getTimeCreated());
+				preparedStatement.setLong(13, transaction.getTimeCreated());
+
+				preparedStatement.executeUpdate();
+
+				if (callback != null) {
+					final ResultSet res = fetch.executeQuery();
+					res.next();
+					callback.accept(null, extractTransaction(res));
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+	public void insertTransactions(@NonNull final Collection<Transaction> transactions) {
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			final String query = "INSERT INTO " + this.getTablePrefix() + "transaction (id, content_id, shop_id, shop_name, type, content_type, player_uuid, player_name, item, price, quantity, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+			for (Transaction transaction : transactions) {
+				preparedStatement.setString(1, transaction.getId().toString());
+				preparedStatement.setString(2, transaction.getKnownContentId().toString());
+				preparedStatement.setString(3, transaction.getKnownShopId());
+				preparedStatement.setString(4, transaction.getKnownShopName());
+				preparedStatement.setString(5, transaction.getType().name());
+				preparedStatement.setString(6, transaction.getContentType().name());
+				preparedStatement.setString(7, transaction.getUserUUID().toString());
+				preparedStatement.setString(8, transaction.getUserLastKnownName());
+				preparedStatement.setString(9, SerializeUtil.encodeItem(transaction.getItem()));
+				preparedStatement.setDouble(10, transaction.getFinalPrice());
+				preparedStatement.setInt(11, transaction.getTransactionQuantity());
+				preparedStatement.setLong(12, transaction.getTimeCreated());
+				preparedStatement.setLong(13, transaction.getTimeCreated());
+
+				preparedStatement.addBatch();
+			}
+
+			preparedStatement.executeBatch();
+		}));
+	}
+
+	public void getTransactions(@NonNull final Callback<List<Transaction>> callback) {
+		final List<Transaction> transactions = new ArrayList<>();
+		this.runAsync(() -> this.databaseConnector.connect(connection -> {
+			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM " + this.getTablePrefix() + "transaction")) {
+				final ResultSet resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					final Transaction transaction = extractTransaction(resultSet);
+					transactions.add(transaction);
+				}
+
+				callback.accept(null, transactions);
+			} catch (Exception e) {
+				resolveCallback(callback, e);
+			}
+		}));
+	}
+
+
+	private Transaction extractTransaction(final ResultSet resultSet) throws SQLException {
+		return new ShopTransaction(
+				UUID.fromString(resultSet.getString("id")),
+				UUID.fromString(resultSet.getString("content_id")),
+				resultSet.getString("shop_id"),
+				resultSet.getString("shop_name"),
+				Enum.valueOf(Transaction.TransactionType.class, resultSet.getString("type")),
+				Enum.valueOf(ShopContentType.class, resultSet.getString("content_type")),
+				UUID.fromString(resultSet.getString("player_uuid")),
+				resultSet.getString("player_name"),
+				SerializeUtil.decodeItem(resultSet.getString("item")),
+				resultSet.getDouble("price"),
+				resultSet.getInt("quantity"),
+				resultSet.getLong("created_at")
+		);
+	}
 
 	private void resolveUpdateCallback(@Nullable UpdateCallback callback, @Nullable Exception ex) {
 		if (callback != null) {
