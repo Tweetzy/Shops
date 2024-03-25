@@ -1,35 +1,57 @@
 package ca.tweetzy.shops.commands;
 
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.shops.Shops;
-import ca.tweetzy.shops.impl.Shop;
-import ca.tweetzy.shops.menu.shopcontent.MenuShopContentList;
-import ca.tweetzy.tweety.command.SimpleCommand;
+import ca.tweetzy.shops.api.shop.Shop;
+import ca.tweetzy.shops.gui.user.ShopContentsGUI;
+import ca.tweetzy.shops.settings.Translations;
+import lombok.NonNull;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * The current file has been created by Kiran Hart
- * Date Created: December 26 2021
- * Time Created: 5:05 p.m.
- * Usage of any code found within this class is prohibited unless given explicit permission otherwise
- */
-public class DynamicShopCommand extends SimpleCommand {
+import java.util.List;
 
-	public DynamicShopCommand(String command) {
-		super(command);
-		setPermission(null);
+public final class DynamicShopCommand extends Command {
+
+	private final Shop shop;
+
+	public DynamicShopCommand(@NonNull final Shop shop) {
+		super(AllowedExecutor.PLAYER, shop.getShopOptions().getCommand());
+		this.shop = shop;
 	}
 
 	@Override
-	protected void onCommand() {
-		checkConsole();
+	protected ReturnType execute(CommandSender sender, String... args) {
+		final Player player = (Player) sender;
+		if (!this.shop.getShopOptions().isOpen()) {
+			tell(player, TranslationManager.string(player, Translations.SHOP_IS_CLOSED));
+			return ReturnType.FAIL;
+		}
 
-		final Player player = getPlayer();
-		final Shop shop = Shops.getShopManager().getShop(getLabel());
+		Shops.getGuiManager().showGUI(player, new ShopContentsGUI(null, player, this.shop));
+		return ReturnType.SUCCESS;
+	}
 
-		if (shop == null) return;
-		if (!shop.getSettings().isPublic()) return;
-		if (shop.getSettings().isRequirePermissionToSee() && !player.hasPermission(shop.getSettings().getSeePermission())) return;
+	@Override
+	protected List<String> tab(CommandSender sender, String... args) {
+		return null;
+	}
 
-		new MenuShopContentList(shop, null).displayTo(player);
+	@Override
+	public String getPermissionNode() {
+		return this.shop.getShopOptions().isRequiresPermission() ? this.shop.getShopOptions().getPermission() : null;
+	}
+
+	@Override
+	public String getSyntax() {
+		return null;
+	}
+
+	@Override
+	public String getDescription() {
+		return this.shop.getDescription().get(0);
 	}
 }

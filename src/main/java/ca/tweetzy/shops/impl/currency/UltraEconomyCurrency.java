@@ -1,82 +1,50 @@
 package ca.tweetzy.shops.impl.currency;
 
-import ca.tweetzy.shops.api.ShopCurrency;
-import ca.tweetzy.tweety.Common;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
+import ca.tweetzy.flight.comp.enums.CompMaterial;
+import ca.tweetzy.shops.api.currency.IconableCurrency;
 import me.TechsCode.UltraEconomy.UltraEconomy;
 import me.TechsCode.UltraEconomy.objects.Account;
-import me.TechsCode.UltraEconomy.objects.Balance;
 import me.TechsCode.UltraEconomy.objects.Currency;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
-/**
- * The current file has been created by Kiran Hart
- * Date Created: December 21 2021
- * Time Created: 10:20 p.m.
- * Usage of any code found within this class is prohibited unless given explicit permission otherwise
- */
-@AllArgsConstructor
-public final class UltraEconomyCurrency extends ShopCurrency {
+public final class UltraEconomyCurrency extends IconableCurrency {
 
-	private final String currencyName;
+	private final Currency currency;
 
-	@Override
-	public boolean isEnabled() {
-		return Common.doesPluginExist("UltraEconomy");
+	public UltraEconomyCurrency(String currencyName) {
+		super("UltraEconomy", currencyName, "", CompMaterial.PAPER.parseItem());
+
+		this.currency = UltraEconomy.getInstance().getCurrencies().name(currencyName).orElse(null);
+
+		if (this.currency != null) {
+			setDisplayName(this.currency.getName());
+		}
 	}
 
 	@Override
-	public @NonNull String getPluginName() {
-		return "UltraEconomy";
-	}
-
-	@Override
-	public String getName() {
-		return this.currencyName;
-	}
-
-	@Override
-	public boolean withdraw(@NonNull Player player, double amount) {
-		final Account account = UltraEconomy.getAPI().getAccounts().uuid(player.getUniqueId()).orElse(null);
+	public boolean has(OfflinePlayer player, double amount) {
+		final Account account = UltraEconomy.getInstance().getAccounts().uuid(player.getUniqueId()).orElse(null);
 		if (account == null) return false;
 
-		final Currency currency = UltraEconomy.getAPI().getCurrencies().name(this.currencyName).orElse(null);
-		if (currency == null) return false;
-
-		final Balance balance = account.getBalance(currency);
-		if (balance.getOnBank() >= amount) {
-			balance.removeBank((float) amount);
-			return true;
-		}
-
-		if (balance.getOnHand() >= amount) {
-			balance.removeHand((float) amount);
-			return true;
-		}
-
-		return false;
+		return account.getBalance(this.currency).getSum()>= amount;
 	}
 
 	@Override
-	public boolean deposit(@NonNull Player player, double amount) {
-		final Account account = UltraEconomy.getAPI().getAccounts().uuid(player.getUniqueId()).orElse(null);
+	public boolean withdraw(OfflinePlayer player, double amount) {
+		final Account account = UltraEconomy.getInstance().getAccounts().uuid(player.getUniqueId()).orElse(null);
 		if (account == null) return false;
 
-		final Currency currency = UltraEconomy.getAPI().getCurrencies().name(this.currencyName).orElse(null);
-		if (currency == null) return false;
-
-		account.getBalance(currency).addHand((float) amount);
+		account.removeBalance(this.currency, amount);
 		return true;
 	}
 
 	@Override
-	public boolean has(@NonNull Player player, double amount) {
-		final Currency currency = UltraEconomy.getAPI().getCurrencies().name(this.currencyName).orElse(null);
-		if (currency == null) return false;
+	public boolean deposit(OfflinePlayer player, double amount) {
+		final Account account = UltraEconomy.getInstance().getAccounts().uuid(player.getUniqueId()).orElse(null);
+		if (account == null) return false;
 
-		final Account account = UltraEconomy.getAPI().getAccounts().uuid(player.getUniqueId()).orElse(null);
-		return account != null && (account.getBalance(currency).getOnBank() >= amount || account.getBalance(currency).getOnHand() >= amount);
+		account.addBalance(this.currency, amount);
+		return true;
 	}
-
 }
+

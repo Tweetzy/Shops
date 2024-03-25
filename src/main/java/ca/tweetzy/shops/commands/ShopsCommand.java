@@ -1,61 +1,72 @@
 package ca.tweetzy.shops.commands;
 
-import ca.tweetzy.shops.menu.MenuMain;
-import ca.tweetzy.tweety.annotation.AutoRegister;
-import ca.tweetzy.tweety.command.SimpleCommandGroup;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.bukkit.ChatColor;
+import ca.tweetzy.flight.command.AllowedExecutor;
+import ca.tweetzy.flight.command.Command;
+import ca.tweetzy.flight.command.ReturnType;
+import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.shop.Shop;
+import ca.tweetzy.shops.gui.user.ShopContentsGUI;
+import ca.tweetzy.shops.gui.user.ShopsMainGUI;
+import ca.tweetzy.shops.settings.Translations;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/**
- * The current file has been created by Kiran Hart
- * Date Created: December 17 2021
- * Time Created: 11:03 p.m.
- * Usage of any code found within this class is prohibited unless given explicit permission otherwise
- */
-@AutoRegister
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ShopsCommand extends SimpleCommandGroup {
+import java.util.List;
 
-	@Getter
-	private final static ShopsCommand instance = new ShopsCommand();
+public final class ShopsCommand extends Command {
 
-	@Override
-	protected void zeroArgActions(CommandSender sender) {
-		if (!(sender instanceof Player)) return;
-		final Player player = (Player) sender;
-		if (!player.hasPermission("shops.command")) return;
-
-		new MenuMain(player).displayTo(player);
+	public ShopsCommand() {
+		super(AllowedExecutor.BOTH, "shop", "shops");
 	}
 
 	@Override
-	protected void registerSubcommands() {
-		registerSubcommand(new CommandCreate());
-		registerSubcommand(new CommandDelete());
-		registerSubcommand(new CommandAddItem());
-		registerSubcommand(new CommandEdit());
-		registerSubcommand(new CommandImport());
-		registerSubcommand(new CommandReload());
-		registerSubcommand(new CommandSellAll());
-		registerSubcommand(new CommandOpen());
+	protected ReturnType execute(CommandSender sender, String... args) {
+		if (sender instanceof final Player player) {
+
+			if (args.length == 0) {
+				Shops.getGuiManager().showGUI(player, new ShopsMainGUI(null, player));
+				return ReturnType.SUCCESS;
+			}
+
+			if (args.length == 1) {
+				final Shop shop = Shops.getShopManager().getById(args[0]);
+
+				if (shop == null) return ReturnType.FAIL;
+				if (!shop.getShopOptions().isOpen()){
+					tell(player, TranslationManager.string(player, Translations.SHOP_IS_CLOSED));
+					return ReturnType.FAIL;
+				}
+				if (!player.hasPermission(shop.getShopOptions().getPermission()) && shop.getShopOptions().isRequiresPermission()) {
+					tell(player, TranslationManager.string(player, Translations.NOT_ALLOWED_TO_USE_SHOP));
+					return ReturnType.FAIL;
+				}
+
+				// open shop
+				Shops.getGuiManager().showGUI(player, new ShopContentsGUI(null, player, shop));
+			}
+		}
+
+		return ReturnType.SUCCESS;
 	}
 
 	@Override
-	protected String getHeaderPrefix() {
-		return "" + ChatColor.YELLOW + ChatColor.BOLD;
-	}
-
-	@Override
-	protected boolean useZeroArgAction() {
-		return true;
-	}
-
-	@Override
-	protected String getCredits() {
+	protected List<String> tab(CommandSender sender, String... args) {
 		return null;
+	}
+
+	@Override
+	public String getPermissionNode() {
+		return "shops.command";
+	}
+
+	@Override
+	public String getSyntax() {
+		return "/shops";
+	}
+
+	@Override
+	public String getDescription() {
+		return "Main command for shops";
 	}
 }

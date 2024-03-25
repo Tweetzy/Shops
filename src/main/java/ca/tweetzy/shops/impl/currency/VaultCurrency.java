@@ -1,55 +1,28 @@
 package ca.tweetzy.shops.impl.currency;
 
-import ca.tweetzy.shops.api.ShopCurrency;
-import ca.tweetzy.tweety.model.HookManager;
-import lombok.NonNull;
-import org.bukkit.entity.Player;
+import ca.tweetzy.shops.Shops;
+import ca.tweetzy.shops.api.currency.AbstractCurrency;
+import ca.tweetzy.shops.settings.Settings;
+import org.bukkit.OfflinePlayer;
 
-/**
- * The current file has been created by Kiran Hart
- * Date Created: December 19 2021
- * Time Created: 9:00 p.m.
- * Usage of any code found within this class is prohibited unless given explicit permission otherwise
- */
-public final class VaultCurrency extends ShopCurrency {
+public final class VaultCurrency extends AbstractCurrency {
 
-	@Override
-	public boolean isEnabled() {
-		return HookManager.isVaultLoaded();
+	public VaultCurrency() {
+		super("Vault", "Vault", Settings.CURRENCY_VAULT_SYMBOL.getString());
 	}
 
 	@Override
-	public @NonNull String getPluginName() {
-		return "Vault";
+	public boolean has(OfflinePlayer player, double amount) {
+		return Shops.getEconomy().has(player, amount);
 	}
 
 	@Override
-	public String getName() {
-		return "Vault";
+	public boolean withdraw(OfflinePlayer player, double amount) {
+		return Shops.getEconomy().withdrawPlayer(player, amount).transactionSuccess();
 	}
 
 	@Override
-	public boolean withdraw(@NonNull Player player, double amount) {
-		try {
-			HookManager.withdraw(player, amount);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean deposit(@NonNull Player player, double amount) {
-		try {
-			HookManager.deposit(player, amount);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean has(@NonNull Player player, double amount) {
-		return HookManager.getBalance(player) >= amount;
+	public boolean deposit(OfflinePlayer player, double amount) {
+		return Shops.getEconomy().depositPlayer(player, amount).transactionSuccess();
 	}
 }
