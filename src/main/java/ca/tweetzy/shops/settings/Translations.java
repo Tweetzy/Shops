@@ -31,6 +31,9 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
 	public static TranslationEntry SHOP_IS_CLOSED = create("info.shop.closed", "&cThat shop is currently closed!");
 	public static TranslationEntry SHOP_DELETED = create("info.shop.deleted", "&aSuccessfully deleted that shop!");
+	public static TranslationEntry MONEY_ADD = create("info.money.add", "&f&l+ &a&l%currency%");
+	public static TranslationEntry MONEY_REMOVE = create("info.money.remove", "&f&l- &c&l%currency%");
+
 
 
 	/*
@@ -429,7 +432,7 @@ public final class Translations extends TranslationManager {
 			"&7Used to adjust which currency",
 			"&7will be used to buy/sell this item",
 			"",
-			"&7Current&f: &e%offer_currency%",
+			"&7Current&f: &e%currency%",
 			"",
 			"&e&lClick &7to edit currency"
 	);

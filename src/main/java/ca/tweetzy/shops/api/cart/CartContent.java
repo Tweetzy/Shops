@@ -9,10 +9,10 @@ import ca.tweetzy.shops.api.Transaction;
 import ca.tweetzy.shops.api.currency.TransactionResult;
 import ca.tweetzy.shops.api.events.ShopTransactionEvent;
 import ca.tweetzy.shops.api.shop.ShopContent;
-import ca.tweetzy.shops.api.shop.ShopContentType;
 import ca.tweetzy.shops.impl.ShopTransaction;
 import ca.tweetzy.shops.impl.shop.CommandShopContent;
 import ca.tweetzy.shops.impl.shop.ItemShopContent;
+import ca.tweetzy.shops.model.NumberHelper;
 import ca.tweetzy.shops.model.Taxer;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
@@ -64,13 +64,19 @@ public interface CartContent {
 		final double subTotal = getSellSubtotal(amountToSell);
 		final double total = Settings.TAX_SELL.getBoolean() ? subTotal - Taxer.calculateTaxAmount(subTotal) : subTotal;
 
+		String moneyAddMsg = "";
+
 		if (getItem().isCurrencyOfItem()) {
 			Shops.getCurrencyManager().deposit(player, getItem().getCurrencyItem(), (int) total);
+			moneyAddMsg += ((int) total) + " " + getItem().getCurrencyDisplayName();
 		} else {
 			final String[] currencySplit = getItem().getCurrency().split("/");
 			Shops.getCurrencyManager().deposit(player, currencySplit[0], currencySplit[1], total);
-//			Common.tell(player, TranslationManager.string(player, Translations.NO_MONEY));TODO show money add
+			moneyAddMsg += NumberHelper.format(total);
 		}
+
+		// show them msg
+		Common.tell(player, TranslationManager.string(player, Translations.MONEY_ADD, "currency", moneyAddMsg));
 
 		// remove total qty
 		PlayerUtil.removeSpecificItemQuantityFromPlayer(player, itemShopContent.getItem(), amountToSell);
@@ -105,21 +111,28 @@ public interface CartContent {
 
 		final double total = Taxer.getTaxedTotal(getBuySubtotal());
 
+		String moneyRemoveMsg = "";
+
 		if (getItem().isCurrencyOfItem()) {
 			if (!Shops.getCurrencyManager().has(player, getItem().getCurrencyItem(), (int) total)) {
 				Common.tell(player, TranslationManager.string(player, Translations.NO_MONEY));
 				return TransactionResult.FAILED_NO_MONEY;
-			} else
+			} else {
 				Shops.getCurrencyManager().withdraw(player, getItem().getCurrencyItem(), (int) total);
+				moneyRemoveMsg += ((int) total) + " " + getItem().getCurrencyDisplayName();
+			}
 		} else {
 			final String[] currencySplit = getItem().getCurrency().split("/");
 			if (!Shops.getCurrencyManager().has(player, currencySplit[0], currencySplit[1], total)) {
 				Common.tell(player, TranslationManager.string(player, Translations.NO_MONEY));
 				return TransactionResult.FAILED_NO_MONEY;
-			} else
+			} else {
 				Shops.getCurrencyManager().withdraw(player, currencySplit[0], currencySplit[1], total);
+				moneyRemoveMsg += NumberHelper.format(total);
+			}
 		}
 
+		Common.tell(player, TranslationManager.string(player, Translations.MONEY_REMOVE, "currency", moneyRemoveMsg));
 
 		if (getItem() instanceof CommandShopContent commandShopContent)
 			for (int i = 0; i < getQuantity(); i++)
