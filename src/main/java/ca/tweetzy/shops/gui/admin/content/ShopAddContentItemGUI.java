@@ -68,7 +68,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 				.name(Translations.string(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_NAME))
 				.lore(Translations.list(this.player, Translations.GUI_SHOP_ADD_CONTENT_ITEMS_CURRENCY_LORE,
 						"left_click", Translations.string(this.player, Translations.MOUSE_LEFT_CLICK),
-						"offer_currency", this.itemContent.getCurrencyDisplayName()))
+						"currency", this.itemContent.getCurrencyDisplayName()))
 				.make(), click -> {
 
 			click.manager.showGUI(click.player, new CurrencyPickerGUI(this, click.player, (currency, item) -> {
