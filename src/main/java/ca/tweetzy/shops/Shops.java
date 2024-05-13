@@ -80,6 +80,7 @@ public final class Shops extends FlightPlugin {
 				new DeleteCommand(),
 				new CartCommand(),
 				new AdminCommand(),
+				new PrefillCommand(),
 				new ReloadCommand()
 		);
 	}
