@@ -35,6 +35,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry SHOP_DELETED = create("info.shop.deleted", "&aSuccessfully deleted that shop!");
 	public static TranslationEntry MONEY_ADD = create("info.money.add", "&f&l+ &a&l%currency%");
 	public static TranslationEntry MONEY_REMOVE = create("info.money.remove", "&f&l- &c&l%currency%");
+	public static TranslationEntry SELL_NOT_ALLOWED = create("info.checkout.sell not allowed", "&CThe sale of that item is not allowed!");
 
 
 
@@ -175,6 +176,22 @@ public final class Translations extends TranslationManager {
 			"&b&l%right_click% &7to add to cart"
 	);
 
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_SELL_NAME = create("gui.checkout.items.sell.name", "<GRADIENT:5CAEFF>&LConfirm Sell</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_SELL_LORE = create("gui.checkout.items.sell.lore",
+			"&e&l%left_click% &7to sell now",
+			"&b&l%right_click% &7to add to cart"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_TOGGLE_SELL_NAME = create("gui.checkout.items.toggle sell.name", "<GRADIENT:5CAEFF>&LToggle Sell/Buy</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_TOGGLE_SELL_LORE = create("gui.checkout.items.toggle sell.lore",
+			"&7Used to toggle sell/buy mode",
+			"",
+			"&7Buy Mode&f: %is_true%",
+			"",
+			"&e&lClick &7to toggle buy/sell mode"
+	);
+
+
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_NAME = create("gui.checkout.items.increment.name", "&a&l+%increment_value%");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_LORE = create("gui.checkout.items.increment.lore", "&e&lClick &7to increment qty");
 
@@ -194,6 +211,16 @@ public final class Translations extends TranslationManager {
 			"",
 			"&A&LPurchase (Total)",
 			"&7Total&F: &a%checkout_item_buy_total%",
+			"",
+			"&8&m------------------------------"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_SELL_LORE = create("gui.checkout.items.sell breakdown.lore",
+			"&8&m------------------------------",
+			"&7Selected Quantity&F: &e%checkout_item_qty%",
+			"",
+			"&A&lSell (Total)",
+			"&7Total&F: &a%checkout_item_sell_total%",
 			"",
 			"&8&m------------------------------"
 	);
