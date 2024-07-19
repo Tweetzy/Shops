@@ -103,7 +103,7 @@ public final class ShopQuickSellGUI extends ShopsBaseGUI {
 
 		items.forEach(item -> {
 			final ItemShopContent shopContent = itemShopContents.stream().filter(content -> content.getItem().isSimilar(item)).findFirst().orElse(null);
-			if (shopContent == null) {
+			if (shopContent == null || !shopContent.isAllowSell()) {
 				PlayerUtil.giveItem(player, item);
 				return;
 			}
