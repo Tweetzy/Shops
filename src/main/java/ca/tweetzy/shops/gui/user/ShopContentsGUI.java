@@ -45,7 +45,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 		// apply default item
 		final ItemStack bg = this.shop.getShopOptions().getShopDisplay().getBackgroundItem();
 
-		setDefaultItem(bg.getType() == CompMaterial.AIR.parseMaterial() ? null :QuickItem.bg(bg));
+		setDefaultItem(bg.getType() == CompMaterial.AIR.parseMaterial() ? null : QuickItem.bg(bg));
 
 		draw();
 	}
@@ -105,6 +105,8 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 		drawCart();
 		// filter
 		drawFilter();
+		// sell drop box
+		drawSell();
 	}
 
 	private void drawFilter() {
@@ -129,6 +131,18 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 				.name(TranslationManager.string(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_CART_NAME))
 				.lore(TranslationManager.list(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_CART_LORE, "shopping_cart_item_count", this.cart.getItems().size()))
 				.make(), click -> click.manager.showGUI(click.player, new ShopsCartGUI(this, click.player, this.cart)));
+	}
+
+
+	private void drawSell() {
+		setButton(this.shop.getShopOptions().getShopDisplay().getSellButtonSlot(), QuickItem
+				.of(Settings.GUI_SHOP_CONTENT_ITEMS_SELL.getItemStack())
+				.name(TranslationManager.string(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SELL_NAME))
+				.lore(TranslationManager.list(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SELL_LORE))
+				.make(), click -> {
+
+			click.manager.showGUI(click.player, new ShopQuickSellGUI(click.player, this.shop));
+		});
 	}
 
 

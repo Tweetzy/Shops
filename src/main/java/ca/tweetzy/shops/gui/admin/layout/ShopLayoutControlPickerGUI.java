@@ -71,6 +71,11 @@ public final class ShopLayoutControlPickerGUI extends ShopsPagedGUI<ShopLayoutCo
 					.name(TranslationManager.string(this.player, Translations.GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART_NAME))
 					.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART_LORE, "left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK)))
 					.make();
+			case SELL_BUTTON -> QuickItem
+					.of(Settings.GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL.getItemStack())
+					.name(TranslationManager.string(this.player, Translations.GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL_NAME))
+					.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL_LORE, "left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK)))
+					.make();
 		};
 	}
 

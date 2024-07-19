@@ -66,6 +66,12 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 				.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_CART_LORE))
 				.make());
 
+		setItem(layout.getSellButtonSlot(), QuickItem
+				.of(CompMaterial.ENDER_CHEST)
+				.name(TranslationManager.string(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_SELL_NAME))
+				.lore(TranslationManager.list(this.player, Translations.GUI_LAYOUT_EDITOR_ITEMS_SELL_LORE))
+				.make());
+
 	}
 
 	@Override
@@ -136,6 +142,7 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 						case SEARCH_BUTTON -> layout.setSearchButtonSlot(slot);
 						case FILTER_BUTTON -> layout.setFilterButtonSlot(slot);
 						case CART_BUTTON -> layout.setCartButtonSlot(slot);
+						case SELL_BUTTON -> layout.setSellButtonSlot(slot);
 					}
 
 					layout.getFillSlots().remove(slot);
@@ -178,7 +185,8 @@ public final class ShopLayoutEditorGUI extends ShopsPagedGUI<Integer> {
 				&& layout.getPrevPageButtonSlot() != slot
 				&& layout.getSearchButtonSlot() != slot
 				&& layout.getFilterButtonSlot() != slot
-				&& layout.getCartButtonSlot() != slot;
+				&& layout.getCartButtonSlot() != slot
+				&& layout.getSellButtonSlot() != slot;
 	}
 
 	private ItemStack emptySlotItem() {
