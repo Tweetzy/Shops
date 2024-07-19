@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.gui.user;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.settings.TranslationManager;
@@ -41,6 +42,11 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 		this.filterType = FilterType.NAME;
 		this.filterOrder = FilterOrder.ASCENDING;
 		this.search = search;
+		// apply default item
+		final ItemStack bg = this.shop.getShopOptions().getShopDisplay().getBackgroundItem();
+
+		setDefaultItem(bg.getType() == CompMaterial.AIR.parseMaterial() ? null :QuickItem.bg(bg));
+
 		draw();
 	}
 

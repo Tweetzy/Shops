@@ -33,6 +33,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
 	public static TranslationEntry SHOP_IS_CLOSED = create("info.shop.closed", "&cThat shop is currently closed!");
 	public static TranslationEntry SHOP_DELETED = create("info.shop.deleted", "&aSuccessfully deleted that shop!");
+	public static TranslationEntry UPDATED_SHOP_BG = create("info.shop.updated background", "&aSuccessfully updated the shop background!");
 	public static TranslationEntry MONEY_ADD = create("info.money.add", "&f&l+ &a&l%currency%");
 	public static TranslationEntry MONEY_REMOVE = create("info.money.remove", "&f&l- &c&l%currency%");
 	public static TranslationEntry SELL_NOT_ALLOWED = create("info.checkout.sell not allowed", "&CThe sale of that item is not allowed!");
@@ -393,7 +394,10 @@ public final class Translations extends TranslationManager {
 			"&7How the shop content will be positioned,",
 			"&7and any extra decoration items in the gui",
 			"",
-			"&e&lClick &7to edit the layout/decoration"
+			"&e&l%left_click% &7to edit the layout/decoration",
+			"&b&l%right_click% &7with item to set background",
+			"&7If you right click with nothing it will set",
+			"&7the background item to nothing (AIR)"
 	);
 
 	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_OPEN_NAME = create("gui.shop settings.items.open.name", "<GRADIENT:5CAEFF>&lOpen/Close Shop</GRADIENT:9F57FF>");
@@ -690,6 +694,6 @@ public final class Translations extends TranslationManager {
 
 
 	public static void init() {
-		new Translations(Shops.getInstance()).setup();
+		new Translations(Shops.getInstance()).setup(Shops.getInstance());
 	}
 }
