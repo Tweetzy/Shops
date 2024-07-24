@@ -29,12 +29,18 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 	private final Shop shop;
 	private final CartContent checkoutItem;
 	private boolean isSelling = false;
+	private boolean fromSpawners;
 
-	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem) {
+	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem, boolean fromSpawners) {
 		super(parent, player, TranslationManager.string(player, Translations.GUI_CHECKOUT_TITLE));
 		this.shop = shop;
 		this.checkoutItem = checkoutItem;
+		this.fromSpawners = fromSpawners;
 		draw();
+	}
+
+	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem) {
+		this(parent, player, shop, checkoutItem, false);
 	}
 
 	@Override
@@ -78,7 +84,7 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 
 		drawBuySellButton();
 
-		if (this.checkoutItem.getItem().isAllowSell())
+		if (this.checkoutItem.getItem().isAllowSell() && !this.fromSpawners)
 			drawSellToggleButton();
 
 		drawPriceBreakdown();

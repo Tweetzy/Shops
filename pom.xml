@@ -8,7 +8,7 @@
 
     <name>Shops</name>
     <description>Shops is the ultimate solution for server shops</description>
-    <version>4.5.0</version>
+    <version>4.6.0</version>
     <packaging>jar</packaging>
 
     <properties>
