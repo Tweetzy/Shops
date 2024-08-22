@@ -26,6 +26,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
 	public static TranslationEntry CHECKOUT_NOT_MIN_QTY = create("error.checkout is not min qty", "&cYou must buy at least &fx&e%shop_item_purchase_qty% &cof this item!");
 	public static TranslationEntry NOT_ALLOWED_TO_USE_SHOP = create("error.no shop permission", "&cYou are not allowed to use that shop");
+	public static TranslationEntry CLICKING_TOO_FAST	 = create("error.clicking too fast", "&cHey, you are clicking too fast, slow it down :)");
 
 	/*
 	=================== INFORMATIONAL ===================

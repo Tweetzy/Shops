@@ -21,6 +21,8 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry TAX_ENABLED = create("settings.tax.enabled", false).withComment("If true, will apply sales tax to the total when a user is buying an item");
 	public static ConfigEntry TAX_AMOUNT = create("settings.tax.percentage", 13.0).withComment("The tax percentage. By default it's 13%");
 	public static ConfigEntry TAX_SELL = create("settings.tax.tax on sell", false).withComment("If true, selling items to a shop will remove tax percentage");
+	public static ConfigEntry GLOBAL_GUI_CLICK_DELAY = create("settings.click delays.global", 1000).withComment("In milliseconds, how long should the delay between clicks be (set to -1 to disable)");
+	public static ConfigEntry SEND_CLICK_DELAY_MSG = create("settings.send click delay message", false).withComment("Should shops tell the player to slow down? Or just send nothing.");
 
 	/*
 	========================= GUI STUFF =========================

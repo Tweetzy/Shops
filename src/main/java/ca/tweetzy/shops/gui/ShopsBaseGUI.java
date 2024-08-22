@@ -3,6 +3,7 @@ package ca.tweetzy.shops.gui;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.template.BaseGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
@@ -19,16 +20,22 @@ public abstract class ShopsBaseGUI extends BaseGUI {
 	public ShopsBaseGUI(Gui parent, @NonNull final Player player, @NonNull String title, int rows) {
 		super(parent, title, rows);
 		this.player = player;
+
+
+		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
+
+		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
+			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
 	}
 
 	public ShopsBaseGUI(Gui parent, @NonNull final Player player, @NonNull String title) {
 		super(parent, title);
 		this.player = player;
-	}
 
-	public ShopsBaseGUI(@NonNull final Player player, @NonNull String title) {
-		super(title);
-		this.player = player;
+		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
+
+		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
+			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
 	}
 
 	@Override
