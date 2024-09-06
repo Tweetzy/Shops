@@ -8,7 +8,7 @@
 
     <name>Shops</name>
     <description>Shops is the ultimate solution for server shops</description>
-    <version>4.7.0</version>
+    <version>4.9.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -16,7 +16,7 @@
         <jarName>${project.name}</jarName>
         <main.class>${project.groupId}.${project.artifactId}.${project.name}</main.class>
         <java.version>16</java.version>
-        <flight.version>3.24.1</flight.version>
+        <flight.version>3.25.0</flight.version>
         <flight.path>ca.tweetzy</flight.path>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -47,6 +47,10 @@
             <id>opencollab-snapshot</id>
             <url>https://repo.opencollab.dev/maven-snapshots/</url>
         </repository>
+        <repository>
+            <id>auxilor-plugins</id>
+            <url>https://repo.auxilor.io/repository/maven-public/</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -70,13 +74,19 @@
         <dependency>
             <groupId>${flight.path}</groupId>
             <artifactId>funds</artifactId>
-            <version>1.7.0</version>
+            <version>1.10.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>EcoBits</artifactId>
+            <version>1.8.4</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
