@@ -1,7 +1,9 @@
 package ca.tweetzy.shops.gui.user;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.Shops;
 import ca.tweetzy.shops.api.cart.CartContent;
@@ -26,12 +28,19 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 
 	private final Shop shop;
 	private final CartContent checkoutItem;
+	private boolean isSelling = false;
+	private boolean fromSpawners;
 
-	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem) {
+	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem, boolean fromSpawners) {
 		super(parent, player, TranslationManager.string(player, Translations.GUI_CHECKOUT_TITLE));
 		this.shop = shop;
 		this.checkoutItem = checkoutItem;
+		this.fromSpawners = fromSpawners;
 		draw();
+	}
+
+	public ShopCheckoutGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, @NonNull CartContent checkoutItem) {
+		this(parent, player, shop, checkoutItem, false);
 	}
 
 	@Override
@@ -73,16 +82,31 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 			});
 		});
 
+		drawBuySellButton();
+
+		if (this.checkoutItem.getItem().isAllowSell() && !this.fromSpawners)
+			drawSellToggleButton();
+
+		drawPriceBreakdown();
+
+		applyBackExit();
+	}
+
+	private void drawSelectedItem() {
+		setItem(1, 4, this.checkoutItem.getItem().generateDisplayItem(ShopContentDisplayType.CHECKOUT, this.checkoutItem.getQuantity()));
+	}
+
+	private void drawBuySellButton() {
 		setButton(getRows() - 1, 4, QuickItem
 				.of(Settings.GUI_CHECKOUT_ITEMS_CHECKOUT.getItemStack())
-				.name(TranslationManager.string(this.player, Translations.GUI_CHECKOUT_ITEMS_PURCHASE_NAME))
-				.lore(TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_PURCHASE_LORE,
+				.name(TranslationManager.string(this.player, this.isSelling ? Translations.GUI_CHECKOUT_ITEMS_SELL_NAME : Translations.GUI_CHECKOUT_ITEMS_PURCHASE_NAME))
+				.lore(TranslationManager.list(this.player, this.isSelling ? Translations.GUI_CHECKOUT_ITEMS_SELL_LORE : Translations.GUI_CHECKOUT_ITEMS_PURCHASE_LORE,
 						"left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK),
 						"right_click", TranslationManager.string(this.player, Translations.MOUSE_RIGHT_CLICK)
 				)).make(), click -> {
 
 			if (click.clickType == ClickType.LEFT) {
-				final TransactionResult transactionResult = this.checkoutItem.executePurchase(player);
+				final TransactionResult transactionResult = this.isSelling ? this.checkoutItem.executeSell(player) : this.checkoutItem.executePurchase(player);
 				click.manager.showGUI(click.player, new ShopContentsGUI(new ShopsMainGUI(null, click.player), click.player, this.shop));
 			}
 
@@ -92,26 +116,39 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 			}
 
 		});
-
-		drawPriceBreakdown();
-		applyBackExit();
 	}
 
-	private void drawSelectedItem() {
-		setItem(1, 4, this.checkoutItem.getItem().generateDisplayItem(ShopContentDisplayType.CHECKOUT, this.checkoutItem.getQuantity()));
+	private void drawSellToggleButton() {
+		setButton(getRows() - 1, 8, QuickItem
+				.of(this.isSelling ? CompMaterial.REDSTONE_TORCH : CompMaterial.TORCH)
+				.name(TranslationManager.string(Translations.GUI_CHECKOUT_ITEMS_TOGGLE_SELL_NAME))
+				.lore(TranslationManager.list(Translations.GUI_CHECKOUT_ITEMS_TOGGLE_SELL_LORE, "is_true", TranslationManager.string(!this.isSelling ? Translations.ENABLED : Translations.DISABLED)))
+				.make(), click -> {
+
+			if (!this.checkoutItem.getItem().isAllowSell()) {
+				Common.tell(click.player, TranslationManager.string(Translations.SELL_NOT_ALLOWED));
+				return;
+			}
+
+			this.isSelling = !this.isSelling;
+			drawSellToggleButton();
+			drawPriceBreakdown();
+			drawBuySellButton();
+		});
 	}
 
 	private void drawPriceBreakdown() {
-		final double subtotal = this.checkoutItem.getBuySubtotal(this.checkoutItem.getQuantity());
-		final double total = Taxer.getTaxedTotal(subtotal);
+		final double subtotal = this.isSelling ? this.checkoutItem.getSellSubtotal(this.checkoutItem.getQuantity()) : this.checkoutItem.getBuySubtotal(this.checkoutItem.getQuantity());
+		final double total = this.isSelling ? subtotal : Taxer.getTaxedTotal(subtotal);
 
 		final String numberFormatSub = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) subtotal + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(subtotal);
 		final String numberFormatTotal = this.checkoutItem.getItem().isCurrencyOfItem() ? (int) total + " " + this.checkoutItem.getItem().getCurrencyDisplayName() : NumberHelper.format(total);
 
-		List<String> base = TranslationManager.list(this.player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE,
+		List<String> base = TranslationManager.list(this.player, this.isSelling ? Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_SELL_LORE : Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE,
 				"checkout_item_qty", this.checkoutItem.getQuantity(),
 				"checkout_item_buy_subtotal", numberFormatSub,
-				"checkout_item_buy_total", numberFormatTotal
+				"checkout_item_buy_total", numberFormatTotal,
+				"checkout_item_sell_total", numberFormatTotal
 		);
 
 		VariableHelper.replaceVariable(base, "%checkout_tax_info%", Settings.TAX_ENABLED.getBoolean() ?

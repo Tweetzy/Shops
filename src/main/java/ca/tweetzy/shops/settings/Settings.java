@@ -21,6 +21,8 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry TAX_ENABLED = create("settings.tax.enabled", false).withComment("If true, will apply sales tax to the total when a user is buying an item");
 	public static ConfigEntry TAX_AMOUNT = create("settings.tax.percentage", 13.0).withComment("The tax percentage. By default it's 13%");
 	public static ConfigEntry TAX_SELL = create("settings.tax.tax on sell", false).withComment("If true, selling items to a shop will remove tax percentage");
+	public static ConfigEntry GLOBAL_GUI_CLICK_DELAY = create("settings.click delays.global", 1000).withComment("In milliseconds, how long should the delay between clicks be (set to -1 to disable)");
+	public static ConfigEntry SEND_CLICK_DELAY_MSG = create("settings.send click delay message", false).withComment("Should shops tell the player to slow down? Or just send nothing.");
 
 	/*
 	========================= GUI STUFF =========================
@@ -49,6 +51,19 @@ public final class Settings extends FlightSettings {
 			"slot:44 item:BLACK_STAINED_GLASS_PANE"
 	), "TBD");
 
+	public static ConfigEntry GUI_SHOPS_QUICK_SELL_DECORATIONS = create("gui.shops quick sell.decorations", List.of(
+			"slot:0-8 item:BLACK_STAINED_GLASS_PANE",
+			"slot:45-53 item:BLACK_STAINED_GLASS_PANE",
+			"slot:9 item:BLACK_STAINED_GLASS_PANE",
+			"slot:18 item:BLACK_STAINED_GLASS_PANE",
+			"slot:27 item:BLACK_STAINED_GLASS_PANE",
+			"slot:36 item:BLACK_STAINED_GLASS_PANE",
+			"slot:17 item:BLACK_STAINED_GLASS_PANE",
+			"slot:26 item:BLACK_STAINED_GLASS_PANE",
+			"slot:35 item:BLACK_STAINED_GLASS_PANE",
+			"slot:44 item:BLACK_STAINED_GLASS_PANE"
+	), "TBD");
+
 
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT = create("gui.layout control picker.items.exit.item", CompMaterial.BARRIER.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_PREV_PAGE = create("gui.layout control picker.items.prev page.item", CompMaterial.ARROW.name());
@@ -56,10 +71,13 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SEARCH = create("gui.layout control picker.items.search.item", CompMaterial.DARK_OAK_SIGN.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_FILTER = create("gui.layout control picker.items.filter.item", CompMaterial.REPEATER.name());
 	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_CART = create("gui.layout control picker.items.cart.item", CompMaterial.MINECART.name());
+	public static ConfigEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL = create("gui.layout control picker.items.sell.item", CompMaterial.ENDER_CHEST.name());
+
 
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_SEARCH = create("gui.shop contents.items.review.item", CompMaterial.DARK_OAK_SIGN.name());
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_FILTER = create("gui.shop contents.items.filter.item", CompMaterial.REPEATER.name());
 	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_CART = create("gui.shop contents.items.cart.item", CompMaterial.MINECART.name());
+	public static ConfigEntry GUI_SHOP_CONTENT_ITEMS_SELL = create("gui.shop contents.items.sell.item", CompMaterial.ENDER_CHEST.name());
 
 
 	public static ConfigEntry GUI_CHECKOUT_ITEMS_CHECKOUT = create("gui.checkout.items.checkout.item", CompMaterial.LIME_DYE.name());

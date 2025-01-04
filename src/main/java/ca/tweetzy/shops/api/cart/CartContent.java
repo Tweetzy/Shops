@@ -59,6 +59,7 @@ public interface CartContent {
 		if (totalFoundInInventory == 0)
 			return TransactionResult.PLAYER_DOES_NOT_HAVE_ITEM;
 
+
 		final int amountToSell = Math.min(getQuantity(), totalFoundInInventory);
 
 		final double subTotal = getSellSubtotal(amountToSell);

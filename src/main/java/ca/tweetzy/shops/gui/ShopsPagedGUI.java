@@ -4,6 +4,7 @@ import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.gui.template.BaseGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
@@ -27,10 +28,11 @@ public abstract class ShopsPagedGUI<T> extends BaseGUI {
 		this.parent = parent;
 		this.player = player;
 		this.items = items;
-	}
 
-	public ShopsPagedGUI(@NonNull final Player player, @NonNull String title, int rows, @NonNull List<T> items) {
-		this(null, player, title, rows, items);
+		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
+
+		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
+			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
 	}
 
 	@Override

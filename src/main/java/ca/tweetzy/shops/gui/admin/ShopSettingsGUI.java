@@ -4,6 +4,7 @@ import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.shops.Shops;
@@ -12,6 +13,7 @@ import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.layout.ShopLayoutEditorGUI;
+import ca.tweetzy.shops.impl.currency.ItemCurrency;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
@@ -29,6 +31,7 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 	public ShopSettingsGUI(@NonNull Player player, @NonNull final Shop shop) {
 		super(new ShopEditGUI(player, shop), player, TranslationManager.string(Translations.GUI_SHOP_SETTINGS_TITLE, "shop_id", shop.getId()), 6);
 		this.shop = shop;
+		setAcceptsItems(true);
 		draw();
 	}
 
@@ -48,7 +51,7 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 					if (material == null) return;
 
 					final ItemStack oldIcon = this.shop.getShopOptions().getDisplayIcon();
-					final ItemStack newIcon = material.parseItem();
+					final ItemStack newIcon = material;
 					assert newIcon != null;
 
 					this.shop.getShopOptions().setDisplayIcon(newIcon);
@@ -129,8 +132,33 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 		setButton(3, 4, QuickItem
 				.of(CompMaterial.CARTOGRAPHY_TABLE)
 				.name(TranslationManager.string(Translations.GUI_SHOP_SETTINGS_ITEMS_DECO_NAME))
-				.lore(TranslationManager.list(Translations.GUI_SHOP_SETTINGS_ITEMS_DECO_LORE))
-				.make(), click -> click.manager.showGUI(click.player, new ShopLayoutEditorGUI(click.player, this.shop)));
+				.lore(TranslationManager.list(Translations.GUI_SHOP_SETTINGS_ITEMS_DECO_LORE,
+						"left_click", TranslationManager.string(this.player, Translations.MOUSE_LEFT_CLICK),
+						"right_click", TranslationManager.string(this.player, Translations.MOUSE_RIGHT_CLICK)))
+				.make(), click -> {
+
+			if (click.clickType == ClickType.LEFT) {
+				click.manager.showGUI(click.player, new ShopLayoutEditorGUI(click.player, this.shop));
+				return;
+			}
+
+			if (click.clickType == ClickType.RIGHT) {
+				final ItemStack cursor = click.cursor;
+				if (cursor != null && cursor.getType() != CompMaterial.AIR.parseMaterial()) {
+					final ItemStack newBG = cursor.clone();
+					newBG.setAmount(1);
+					this.shop.getShopOptions().getShopDisplay().setBackgroundItem(newBG);
+				} else {
+					this.shop.getShopOptions().getShopDisplay().setBackgroundItem(QuickItem.of(CompMaterial.AIR).make());
+				}
+
+				this.shop.sync(result -> {
+					if (result == SynchronizeResult.SUCCESS)
+						Common.tell(click.player, TranslationManager.string(click.player, Translations.UPDATED_SHOP_BG));
+				});
+
+			}
+		});
 
 		// permission
 		setButton(3, 2, QuickItem

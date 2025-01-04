@@ -101,7 +101,7 @@ public final class ShopAddContentItemGUI extends ShopsBaseGUI {
 
 			if (click.clickType == ClickType.LEFT) {
 				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
-					this.itemContent.setItem(selected.parseItem());
+					this.itemContent.setItem(selected);
 					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, ShopAddContentItemGUI.this.shop, ShopAddContentItemGUI.this.itemContent, ShopAddContentItemGUI.this.isEditing));
 				}));
 			}

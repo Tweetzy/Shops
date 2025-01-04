@@ -5,6 +5,7 @@ import ca.tweetzy.shops.api.currency.AbstractCurrency;
 import ca.tweetzy.shops.api.manager.ListManager;
 import ca.tweetzy.shops.impl.currency.ItemCurrency;
 import ca.tweetzy.shops.impl.currency.VaultCurrency;
+import ca.tweetzy.shops.model.currency.EcoBitsEconomyLoader;
 import ca.tweetzy.shops.model.currency.FundsEconomyLoader;
 import ca.tweetzy.shops.model.currency.UltraEconomyLoader;
 import ca.tweetzy.shops.settings.Settings;
@@ -80,5 +81,8 @@ public final class CurrencyManager extends ListManager<AbstractCurrency> {
 
 		if (Bukkit.getServer().getPluginManager().isPluginEnabled("Funds"))
 			new FundsEconomyLoader().getCurrencies().forEach(this::add);
+
+		if (Bukkit.getServer().getPluginManager().isPluginEnabled("EcoBits"))
+			new EcoBitsEconomyLoader().getCurrencies().forEach(this::add);
 	}
 }

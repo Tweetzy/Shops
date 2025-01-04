@@ -26,6 +26,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ITEM_CANNOT_BE_AIR = create("error.item cannot be air", "&cYou cannot add air to the shop.");
 	public static TranslationEntry CHECKOUT_NOT_MIN_QTY = create("error.checkout is not min qty", "&cYou must buy at least &fx&e%shop_item_purchase_qty% &cof this item!");
 	public static TranslationEntry NOT_ALLOWED_TO_USE_SHOP = create("error.no shop permission", "&cYou are not allowed to use that shop");
+	public static TranslationEntry CLICKING_TOO_FAST	 = create("error.clicking too fast", "&cHey, you are clicking too fast, slow it down :)");
 
 	/*
 	=================== INFORMATIONAL ===================
@@ -33,8 +34,10 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry ADDED_ITEM_TO_SHOP = create("info.shop.add.item", "&aSuccessfully added &e%item_name% &ato &b%shop_id%");
 	public static TranslationEntry SHOP_IS_CLOSED = create("info.shop.closed", "&cThat shop is currently closed!");
 	public static TranslationEntry SHOP_DELETED = create("info.shop.deleted", "&aSuccessfully deleted that shop!");
+	public static TranslationEntry UPDATED_SHOP_BG = create("info.shop.updated background", "&aSuccessfully updated the shop background!");
 	public static TranslationEntry MONEY_ADD = create("info.money.add", "&f&l+ &a&l%currency%");
 	public static TranslationEntry MONEY_REMOVE = create("info.money.remove", "&f&l- &c&l%currency%");
+	public static TranslationEntry SELL_NOT_ALLOWED = create("info.checkout.sell not allowed", "&CThe sale of that item is not allowed!");
 
 
 
@@ -175,6 +178,22 @@ public final class Translations extends TranslationManager {
 			"&b&l%right_click% &7to add to cart"
 	);
 
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_SELL_NAME = create("gui.checkout.items.sell.name", "<GRADIENT:5CAEFF>&LConfirm Sell</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_SELL_LORE = create("gui.checkout.items.sell.lore",
+			"&e&l%left_click% &7to sell now",
+			"&b&l%right_click% &7to add to cart"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_TOGGLE_SELL_NAME = create("gui.checkout.items.toggle sell.name", "<GRADIENT:5CAEFF>&LToggle Sell/Buy</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_TOGGLE_SELL_LORE = create("gui.checkout.items.toggle sell.lore",
+			"&7Used to toggle sell/buy mode",
+			"",
+			"&7Buy Mode&f: %is_true%",
+			"",
+			"&e&lClick &7to toggle buy/sell mode"
+	);
+
+
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_NAME = create("gui.checkout.items.increment.name", "&a&l+%increment_value%");
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_INCR_LORE = create("gui.checkout.items.increment.lore", "&e&lClick &7to increment qty");
 
@@ -194,6 +213,16 @@ public final class Translations extends TranslationManager {
 			"",
 			"&A&LPurchase (Total)",
 			"&7Total&F: &a%checkout_item_buy_total%",
+			"",
+			"&8&m------------------------------"
+	);
+
+	public static final TranslationEntry GUI_CHECKOUT_ITEMS_BREAKDOWN_SELL_LORE = create("gui.checkout.items.sell breakdown.lore",
+			"&8&m------------------------------",
+			"&7Selected Quantity&F: &e%checkout_item_qty%",
+			"",
+			"&A&lSell (Total)",
+			"&7Total&F: &a%checkout_item_sell_total%",
 			"",
 			"&8&m------------------------------"
 	);
@@ -237,6 +266,13 @@ public final class Translations extends TranslationManager {
 	public static final TranslationEntry GUI_CHECKOUT_ITEMS_ITEM_CONTENT_DESC_INFO = create("gui.checkout.items.content.lore.description lore",
 			"&e%shop_item_description%"
 	);
+
+	public static final TranslationEntry GUI_SHOP_QUICK_SELL_TITLE = create("gui.shop quick sell.title", "%shop_name% &8> &7Quick Sell");
+	public static final TranslationEntry GUI_SHOP_QUICK_SELL_ITEMS_SELL_NAME = create("gui.shop quick sell.items.sell.name", "<GRADIENT:5CAEFF>&LSell Items</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_SHOP_QUICK_SELL_ITEMS_SELL_LORE = create("gui.shop quick sell.items.sell.lore",
+			"&e&lClick &7to confirm sell"
+	);
+
 
 	public static final TranslationEntry GUI_SHOP_EDIT_TITLE = create("gui.shop edit.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Edit &8> &e%shop_id%");
 
@@ -304,6 +340,14 @@ public final class Translations extends TranslationManager {
 			"&e&lClick &7to view your cart."
 	);
 
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_SELL_NAME = create("gui.shop contents.items.sell.name", "<GRADIENT:5CAEFF>&lSell Items</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_SHOP_CONTENTS_ITEMS_SELL_LORE = create("gui.shop contents.items.sell.lore",
+			"&7Opens a quick sell menu to drop",
+			"&7any items this shop accepts to sell.",
+			"",
+			"&e&lClick &7to sell items."
+	);
+
 	public static final TranslationEntry GUI_SHOP_CONTENTS_ITEMS_ITEM_CONTENT_BASE_LORE = create("gui.shop contents.items.content.lore.base lore",
 			"&8&m------------------------------",
 			"%shop_content_desc_info%",
@@ -366,7 +410,10 @@ public final class Translations extends TranslationManager {
 			"&7How the shop content will be positioned,",
 			"&7and any extra decoration items in the gui",
 			"",
-			"&e&lClick &7to edit the layout/decoration"
+			"&e&l%left_click% &7to edit the layout/decoration",
+			"&b&l%right_click% &7with item to set background",
+			"&7If you right click with nothing it will set",
+			"&7the background item to nothing (AIR)"
 	);
 
 	public static final TranslationEntry GUI_SHOP_SETTINGS_ITEMS_OPEN_NAME = create("gui.shop settings.items.open.name", "<GRADIENT:5CAEFF>&lOpen/Close Shop</GRADIENT:9F57FF>");
@@ -623,6 +670,11 @@ public final class Translations extends TranslationManager {
 			"&7items from other shops."
 	);
 
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_SELL_NAME = create("gui.layout editor.items.sell.name", "<GRADIENT:5CAEFF>&lSell</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_EDITOR_ITEMS_SELL_LORE = create("gui.layout editor.items.sell.lore",
+			"&7Used to quickly sell anything",
+			"&7that can be sold at this shop."
+	);
 
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_TITLE = create("gui.layout control picker.title", "&EShops &f- &7Select Layout Control");
 	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_EXIT_NAME = create("gui.layout control picker.items.exit.name", "<GRADIENT:5CAEFF>&lExit Button</GRADIENT:9F57FF>");
@@ -661,8 +713,14 @@ public final class Translations extends TranslationManager {
 			"&e&l%left_click% &7to select this control"
 	);
 
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL_NAME = create("gui.layout control picker.items.sell.name", "<GRADIENT:5CAEFF>&lSell Button</GRADIENT:9F57FF>");
+	public static TranslationEntry GUI_LAYOUT_CONTROL_PICKER_ITEMS_SELL_LORE = create("gui.layout control picker.items.sell.lore",
+			"&7Used to quickly sell items at this shop.",
+			"&e&l%left_click% &7to select this control"
+	);
+
 
 	public static void init() {
-		new Translations(Shops.getInstance()).setup();
+		new Translations(Shops.getInstance()).setup(Shops.getInstance());
 	}
 }

@@ -37,6 +37,10 @@ public interface ShopDisplay extends Jsonable {
 
 	void setCartButtonSlot(final int slot);
 
+	int getSellButtonSlot();
+
+	void setSellButtonSlot(final int slot);
+
 	List<Integer> getFillSlots();
 
 	void setFillSlots(final List<Integer> slots);

@@ -1,5 +1,6 @@
 package ca.tweetzy.shops.gui.user;
 
+import ca.tweetzy.flight.comp.enums.CompMaterial;
 import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.settings.TranslationManager;
@@ -34,18 +35,30 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 	private FilterOrder filterOrder;
 	private FilterType filterType;
 
-	public ShopContentsGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, final String search) {
+	private boolean fromSpawners;
+
+	public ShopContentsGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, final String search, final boolean fromSpawners) {
 		super(parent, player, shop.getDisplayName(), Math.max(2, shop.getShopOptions().getShopDisplay().getRows()), shop.getContent());
 		this.shop = shop;
 		this.cart = Shops.getCartManager().getOrAdd(player);
 		this.filterType = FilterType.NAME;
 		this.filterOrder = FilterOrder.ASCENDING;
 		this.search = search;
+		this.fromSpawners = fromSpawners;
+		// apply default item
+		final ItemStack bg = this.shop.getShopOptions().getShopDisplay().getBackgroundItem();
+
+		setDefaultItem(bg.getType() == CompMaterial.AIR.parseMaterial() ? null : QuickItem.bg(bg));
+
 		draw();
 	}
 
 	public ShopContentsGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop) {
-		this(parent, player, shop, null);
+		this(parent, player, shop, null, false);
+	}
+
+	public ShopContentsGUI(Gui parent, @NonNull Player player, @NonNull final Shop shop, final boolean fromSpawners) {
+		this(parent, player, shop, null, fromSpawners);
 	}
 
 	@Override
@@ -68,6 +81,9 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 		// decorations
 		this.shop.getShopOptions().getShopDisplay().getDecoration().forEach((slot, item) -> setItem(slot, QuickItem.bg(item)));
 
+		// cart
+		drawCart();
+
 		// search
 		setButton(this.shop.getShopOptions().getShopDisplay().getSearchButtonSlot(), QuickItem
 				.of(Settings.GUI_SHOP_CONTENT_ITEMS_SEARCH.getItemStack())
@@ -85,20 +101,24 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 
 					@Override
 					public boolean onResult(String string) {
-						click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, string));
+						click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, string, false));
 						return true;
 					}
 				};
 
 			if (click.clickType == ClickType.RIGHT)
-				click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, null));
+				click.manager.showGUI(click.player, new ShopContentsGUI(ShopContentsGUI.this.parent, click.player, ShopContentsGUI.this.shop, null, false));
 
 		});
 
-		// cart
-		drawCart();
+		if (!this.fromSpawners) {
+			// sell drop box
+			drawSell();
+		}
+
 		// filter
 		drawFilter();
+
 	}
 
 	private void drawFilter() {
@@ -126,6 +146,18 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 	}
 
 
+	private void drawSell() {
+		setButton(this.shop.getShopOptions().getShopDisplay().getSellButtonSlot(), QuickItem
+				.of(Settings.GUI_SHOP_CONTENT_ITEMS_SELL.getItemStack())
+				.name(TranslationManager.string(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SELL_NAME))
+				.lore(TranslationManager.list(this.player, Translations.GUI_SHOP_CONTENTS_ITEMS_SELL_LORE))
+				.make(), click -> {
+
+			click.manager.showGUI(click.player, new ShopQuickSellGUI(click.player, this.shop));
+		});
+	}
+
+
 	@Override
 	protected ItemStack makeDisplayItem(ShopContent content) {
 		return content.generateDisplayItem(ShopContentDisplayType.LIVE_SHOP);
@@ -134,7 +166,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 	@Override
 	protected void onClick(ShopContent content, GuiClickEvent click) {
 		if (click.clickType == ClickType.LEFT)
-			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, new CartItem(content, content.getMinimumPurchaseQty())));
+			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, new CartItem(content, content.getMinimumPurchaseQty()), this.fromSpawners));
 
 		if (click.clickType == ClickType.RIGHT) {
 			this.cart.addItem(content);

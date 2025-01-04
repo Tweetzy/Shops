@@ -65,7 +65,7 @@ public final class ShopEditGUI extends ShopsPagedGUI<ShopContent> {
 			// quick selector
 			if (click.clickType == ClickType.RIGHT)
 				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
-					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId(), selected), false));
+					click.manager.showGUI(click.player, new ShopAddContentItemGUI(click.player, this.shop, ItemShopContent.blank(this.shop.getId(), CompMaterial.matchCompMaterial(selected)), false));
 				}));
 
 		});
