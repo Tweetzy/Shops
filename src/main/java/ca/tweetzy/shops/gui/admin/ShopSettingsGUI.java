@@ -64,7 +64,7 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 
 			if (click.clickType == ClickType.RIGHT) {
 				final ItemStack cursor = click.cursor;
-				if (cursor != null && cursor.getType() != CompMaterial.AIR.parseMaterial()) {
+				if (cursor != null && cursor.getType() != CompMaterial.AIR.get()) {
 
 					final ItemStack oldIcon = this.shop.getShopOptions().getDisplayIcon();
 					final ItemStack newIcon = cursor.clone();
@@ -144,12 +144,12 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 
 			if (click.clickType == ClickType.RIGHT) {
 				final ItemStack cursor = click.cursor;
-				if (cursor != null && cursor.getType() != CompMaterial.AIR.parseMaterial()) {
+				if (cursor != null && cursor.getType() != CompMaterial.AIR.get()) {
 					final ItemStack newBG = cursor.clone();
 					newBG.setAmount(1);
 					this.shop.getShopOptions().getShopDisplay().setBackgroundItem(newBG);
 				} else {
-					this.shop.getShopOptions().getShopDisplay().setBackgroundItem(QuickItem.of(CompMaterial.AIR).make());
+					this.shop.getShopOptions().getShopDisplay().setBackgroundItem(QuickItem.of(CompMaterial.BARRIER).make());
 				}
 
 				this.shop.sync(result -> {

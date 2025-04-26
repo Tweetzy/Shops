@@ -25,7 +25,7 @@ public final class ItemShopContent extends AbstractShopContent {
 	}
 
 	public ItemShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack item, final int minPurchaseQty, final double buyPrice, final double sellPrice) {
-		this(id, shopId, item, minPurchaseQty, buyPrice, sellPrice, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.AIR.parseItem());
+		this(id, shopId, item, minPurchaseQty, buyPrice, sellPrice, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.BARRIER.parseItem());
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public final class ItemShopContent extends AbstractShopContent {
 				1,
 				1,
 				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
-				CompMaterial.AIR.parseItem()
+				CompMaterial.BARRIER.parseItem()
 		);
 	}
 
@@ -90,7 +90,7 @@ public final class ItemShopContent extends AbstractShopContent {
 				1,
 				1,
 				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
-				CompMaterial.AIR.parseItem()
+				CompMaterial.BARRIER.parseItem()
 		);
 	}
 

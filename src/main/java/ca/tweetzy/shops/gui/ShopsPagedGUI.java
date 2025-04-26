@@ -32,7 +32,9 @@ public abstract class ShopsPagedGUI<T> extends BaseGUI {
 		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
 
 		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
-			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
+			setClickDelayAction((lastClicked, delay, click) -> {
+				Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST));
+			});
 	}
 
 	@Override

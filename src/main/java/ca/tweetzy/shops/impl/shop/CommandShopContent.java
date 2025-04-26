@@ -39,7 +39,7 @@ public final class CommandShopContent extends AbstractShopContent {
 	}
 
 	public CommandShopContent(@NonNull final UUID id, @NonNull final String shopId, @NonNull final ItemStack icon, @NonNull final String name, @NonNull final String desc, @NonNull final String command, final int minPurchaseQty, final double price) {
-		this(id, shopId, icon, name, desc, command, minPurchaseQty, price, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.AIR.parseItem());
+		this(id, shopId, icon, name, desc, command, minPurchaseQty, price, Settings.CURRENCY_DEFAULT_SELECTED.getString(), CompMaterial.BARRIER.parseItem());
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public final class CommandShopContent extends AbstractShopContent {
 				1,
 				1,
 				Settings.CURRENCY_DEFAULT_SELECTED.getString(),
-				CompMaterial.AIR.parseItem()
+				CompMaterial.BARRIER.parseItem()
 		);
 	}
 

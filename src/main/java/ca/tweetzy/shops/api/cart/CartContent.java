@@ -55,6 +55,9 @@ public interface CartContent {
 			return TransactionResult.ERROR;
 		}
 
+		if (!getItem().isAllowSell())
+			return TransactionResult.ERROR;
+
 		final int totalFoundInInventory = PlayerUtil.getItemCountInPlayerInventory(player, itemShopContent.getItem());
 		if (totalFoundInInventory == 0)
 			return TransactionResult.PLAYER_DOES_NOT_HAVE_ITEM;
@@ -105,6 +108,9 @@ public interface CartContent {
 	}
 
 	default TransactionResult executePurchase(@NonNull final Player player) {
+		if (!getItem().isAllowBuy())
+			return TransactionResult.ERROR;
+
 		// check min qty first
 		if (getQuantity() < getItem().getMinimumPurchaseQty()) {
 			Common.tell(player, TranslationManager.string(player, Translations.CHECKOUT_NOT_MIN_QTY, "shop_item_purchase_qty", getItem().getMinimumPurchaseQty()));

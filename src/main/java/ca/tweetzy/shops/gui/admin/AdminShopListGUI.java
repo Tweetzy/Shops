@@ -60,7 +60,7 @@ public final class AdminShopListGUI extends ShopsPagedGUI<Shop> {
 
 			@Override
 			public boolean onResult(String string) {
-				string = ChatColor.stripColor(string.toLowerCase());
+				string = ChatColor.stripColor(string.toLowerCase()).replace(" ", "");
 
 				// a shop with that id already exists
 				if (Shops.getShopManager().isShopIdTaken(string)) {

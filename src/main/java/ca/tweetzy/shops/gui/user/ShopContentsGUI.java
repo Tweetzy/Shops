@@ -5,6 +5,7 @@ import ca.tweetzy.flight.gui.Gui;
 import ca.tweetzy.flight.gui.events.GuiClickEvent;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.ChatUtil;
+import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.input.TitleInput;
 import ca.tweetzy.shops.Shops;
@@ -48,7 +49,7 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 		// apply default item
 		final ItemStack bg = this.shop.getShopOptions().getShopDisplay().getBackgroundItem();
 
-		setDefaultItem(bg.getType() == CompMaterial.AIR.parseMaterial() ? null : QuickItem.bg(bg));
+		setDefaultItem((bg.getType() == CompMaterial.AIR.get() || bg.getType() == CompMaterial.BARRIER.get())? null : QuickItem.bg(bg));
 
 		draw();
 	}
@@ -165,8 +166,14 @@ public final class ShopContentsGUI extends ShopsPagedGUI<ShopContent> {
 
 	@Override
 	protected void onClick(ShopContent content, GuiClickEvent click) {
-		if (click.clickType == ClickType.LEFT)
+		if (click.clickType == ClickType.LEFT) {
+			if (!content.isAllowBuy()) {
+				Common.tell(click.player, TranslationManager.string(Translations.BUY_NOT_ALLOWED));
+				return;
+			}
+
 			click.manager.showGUI(click.player, new ShopCheckoutGUI(this, player, this.shop, new CartItem(content, content.getMinimumPurchaseQty()), this.fromSpawners));
+		}
 
 		if (click.clickType == ClickType.RIGHT) {
 			this.cart.addItem(content);

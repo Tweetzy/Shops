@@ -25,7 +25,9 @@ public abstract class ShopsBaseGUI extends BaseGUI {
 		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
 
 		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
-			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
+			setClickDelayAction((lastClicked, delay, click) -> {
+				Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST));
+			});
 	}
 
 	public ShopsBaseGUI(Gui parent, @NonNull final Player player, @NonNull String title) {
@@ -35,7 +37,9 @@ public abstract class ShopsBaseGUI extends BaseGUI {
 		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());
 
 		if (Settings.SEND_CLICK_DELAY_MSG.getBoolean())
-			setClickDelayAction(click -> Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST)));
+			setClickDelayAction((lastClicked, delay, click) -> {
+			Common.tell(click.player, TranslationManager.string(Translations.CLICKING_TOO_FAST));
+		});
 	}
 
 	@Override

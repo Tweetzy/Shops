@@ -19,7 +19,7 @@ public final class _7_ShopItemCurrencyMigration extends DataMigration {
 		try (Statement statement = connection.createStatement()) {
 			// shop item
 			statement.execute("ALTER TABLE " + tablePrefix + "shop_content ADD currency TEXT NOT NULL DEFAULT 'Vault/Vault'");
-			statement.execute("ALTER TABLE " + tablePrefix + "shop_content ADD currency_item TEXT NOT NULL DEFAULT '" + SerializeUtil.encodeItem(CompMaterial.AIR.parseItem()) + "'");
+			statement.execute("ALTER TABLE " + tablePrefix + "shop_content ADD currency_item TEXT NOT NULL DEFAULT '" + SerializeUtil.encodeItem(CompMaterial.BARRIER.parseItem()) + "'");
 		}
 	}
 }

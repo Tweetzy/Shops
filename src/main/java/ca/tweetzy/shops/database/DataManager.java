@@ -5,6 +5,8 @@ import ca.tweetzy.flight.database.Callback;
 import ca.tweetzy.flight.database.DataManagerAbstract;
 import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.UpdateCallback;
+import ca.tweetzy.flight.nbtapi.NbtApiException;
+import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.SerializeUtil;
 import ca.tweetzy.shops.api.Transaction;
 import ca.tweetzy.shops.api.shop.Shop;
@@ -277,7 +279,22 @@ public final class DataManager extends DataManagerAbstract {
 				final ResultSet resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					final ShopContent shopContent = extractServerShopContent(resultSet);
-					contents.add(shopContent);
+
+
+					if (shopContent.getCurrencyItem().getType() == CompMaterial.AIR.get()) {
+						try (PreparedStatement updateStatement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "shop_content SET currency_item = ? WHERE id = ?")) {
+							try {
+								updateStatement.setString(1, SerializeUtil.encodeItem(CompMaterial.BARRIER.parseItem()));
+								updateStatement.setString(2, resultSet.getString("id"));
+								updateStatement.executeUpdate();
+								shopContent.setCurrencyItem(CompMaterial.BARRIER.parseItem());
+								contents.add(shopContent);
+							} catch (NbtApiException ignored) {
+							}
+						}
+					} else {
+						contents.add(shopContent);
+					}
 				}
 
 				callback.accept(null, contents);
@@ -297,7 +314,22 @@ public final class DataManager extends DataManagerAbstract {
 				final ResultSet resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					final ShopContent shopContent = extractServerShopContent(resultSet);
-					contents.add(shopContent);
+
+					if (shopContent.getCurrencyItem().getType() == CompMaterial.AIR.get()) {
+						try (PreparedStatement updateStatement = connection.prepareStatement("UPDATE " + this.getTablePrefix() + "shop_content SET currency_item = ? WHERE id = ?")) {
+							try {
+								updateStatement.setString(1, SerializeUtil.encodeItem(CompMaterial.BARRIER.parseItem()));
+								updateStatement.setString(2, resultSet.getString("id"));
+								updateStatement.executeUpdate();
+								shopContent.setCurrencyItem(CompMaterial.BARRIER.parseItem());
+								contents.add(shopContent);
+
+							} catch (NbtApiException ignored) {
+							}
+						}
+					} else {
+						contents.add(shopContent);
+					}
 				}
 
 				callback.accept(null, contents);

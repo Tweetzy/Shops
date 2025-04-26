@@ -38,6 +38,7 @@ public final class Translations extends TranslationManager {
 	public static TranslationEntry MONEY_ADD = create("info.money.add", "&f&l+ &a&l%currency%");
 	public static TranslationEntry MONEY_REMOVE = create("info.money.remove", "&f&l- &c&l%currency%");
 	public static TranslationEntry SELL_NOT_ALLOWED = create("info.checkout.sell not allowed", "&CThe sale of that item is not allowed!");
+	public static TranslationEntry BUY_NOT_ALLOWED = create("info.checkout.buy not allowed", "&CThe purchase of that item is not allowed!");
 
 
 
