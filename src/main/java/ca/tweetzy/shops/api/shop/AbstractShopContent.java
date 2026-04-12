@@ -196,22 +196,22 @@ public abstract class AbstractShopContent implements ShopContent {
 			}
 
 			if (displayType == ShopContentDisplayType.LIVE_SHOP) {
-				replaceVariable(baseLore, "%shop_content_buy_info%", buyInfo, !this.allowBuy);
-				replaceVariable(baseLore, "%shop_content_sell_info%", sellInfo, !this.allowSell);
-				replaceVariable(baseLore, "%shop_content_purchase_qty_info%", minBuyInfo, !this.allowBuy);
-				replaceVariable(baseLore, "%shop_content_desc_info%", descInfo, descInfo == null);
+				baseLore = replaceVariable(baseLore, "%shop_content_buy_info%", buyInfo, !this.allowBuy);
+				baseLore = replaceVariable(baseLore, "%shop_content_sell_info%", sellInfo, !this.allowSell);
+				baseLore = replaceVariable(baseLore, "%shop_content_purchase_qty_info%", minBuyInfo, !this.allowBuy);
+				baseLore = replaceVariable(baseLore, "%shop_content_desc_info%", descInfo, descInfo == null);
 				genItem.lore(baseLore);
 			}
 
 			if (displayType == ShopContentDisplayType.CART || displayType == ShopContentDisplayType.CHECKOUT) {
-				replaceVariable(baseLore, "%shop_content_buy_info%", buyInfo, !this.allowBuy);
-				replaceVariable(baseLore, "%shop_content_sell_info%", sellInfo, !this.allowSell);
-				replaceVariable(baseLore, "%shop_content_purchase_qty_info%", minBuyInfo, !this.allowBuy);
+				baseLore = replaceVariable(baseLore, "%shop_content_buy_info%", buyInfo, !this.allowBuy);
+				baseLore = replaceVariable(baseLore, "%shop_content_sell_info%", sellInfo, !this.allowSell);
+				baseLore = replaceVariable(baseLore, "%shop_content_purchase_qty_info%", minBuyInfo, !this.allowBuy);
 
-				replaceVariable(baseLore, "%shop_content_buy_info_total%", buyInfoTotal, !this.allowBuy);
-				replaceVariable(baseLore, "%shop_content_sell_info_total%", sellInfoTotal, !this.allowSell);
+				baseLore = replaceVariable(baseLore, "%shop_content_buy_info_total%", buyInfoTotal, !this.allowBuy);
+				baseLore = replaceVariable(baseLore, "%shop_content_sell_info_total%", sellInfoTotal, !this.allowSell);
 
-				replaceVariable(baseLore, "%shop_content_desc_info%", descInfo, descInfo == null);
+				baseLore = replaceVariable(baseLore, "%shop_content_desc_info%", descInfo, descInfo == null);
 
 				genItem.lore(baseLore);
 			}

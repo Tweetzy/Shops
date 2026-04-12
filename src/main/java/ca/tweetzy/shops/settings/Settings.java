@@ -97,6 +97,12 @@ public final class Settings extends FlightSettings {
 	public static ConfigEntry GUI_CART_ITEMS_CHECKOUT = create("gui.cart.items.checkout.item", CompMaterial.LIME_DYE.name());
 	public static ConfigEntry GUI_CART_ITEMS_CLEAR = create("gui.cart.items.clear.item", CompMaterial.LAVA_BUCKET.name());
 
+	// Material / item picker (used for icons, content items, custom currency)
+	public static ConfigEntry GUI_MATERIAL_PICKER_BACKGROUND = create("gui.material picker.background", CompMaterial.BLACK_STAINED_GLASS_PANE.name()).withComment("Background fill for the item picker GUI");
+	public static ConfigEntry GUI_MATERIAL_PICKER_ITEMS_SEARCH = create("gui.material picker.items.search.item", CompMaterial.DARK_OAK_SIGN.name());
+	public static ConfigEntry GUI_MATERIAL_PICKER_ITEMS_RESET = create("gui.material picker.items.reset.item", CompMaterial.LAVA_BUCKET.name());
+	public static ConfigEntry GUI_MATERIAL_PICKER_ITEMS_AIR = create("gui.material picker.items.air.item", CompMaterial.WHITE_DYE.name());
+
 
 	public static void init() {
 		Shops.getCoreConfig().init();

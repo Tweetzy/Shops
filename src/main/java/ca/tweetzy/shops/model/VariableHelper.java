@@ -2,32 +2,36 @@ package ca.tweetzy.shops.model;
 
 import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class VariableHelper {
 
 	public static List<String> replaceVariable(@NonNull List<String> originalList, final String variable, Object replacement, boolean removeVariable) {
-		final int varIndex = originalList.indexOf(variable);
+		List<String> result = new ArrayList<>(originalList);
+		final int varIndex = result.indexOf(variable);
 
 		if (varIndex == -1) {
-			return originalList;
+			return result;
 		}
 
 		if (removeVariable) {
-			originalList.remove(varIndex);
-			return originalList;
+			result.remove(varIndex);
+			return result;
 		}
 
 		if (replacement instanceof String string) {
-			originalList.set(varIndex, string);
-			originalList.removeIf(line -> line.equalsIgnoreCase(variable));
+			result.set(varIndex, string);
+			result.removeIf(line -> line.equalsIgnoreCase(variable));
 		}
 
-		if (replacement instanceof List) {
-			originalList.addAll(varIndex, (List) replacement);
-			originalList.removeIf(line -> line.equalsIgnoreCase(variable));
+		if (replacement instanceof List<?> list) {
+			@SuppressWarnings("unchecked")
+			List<String> replacementList = (List<String>) list;
+			result.addAll(varIndex, replacementList);
+			result.removeIf(line -> line.equalsIgnoreCase(variable));
 		}
 
-		return originalList;
+		return result;
 	}
 }

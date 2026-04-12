@@ -31,7 +31,7 @@ public abstract class ShopsBaseGUI extends BaseGUI {
 	}
 
 	public ShopsBaseGUI(Gui parent, @NonNull final Player player, @NonNull String title) {
-		super(parent, title);
+		super(parent, title, 6);
 		this.player = player;
 
 		setGlobalClickDelay(Settings.GLOBAL_GUI_CLICK_DELAY.getInt());

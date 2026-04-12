@@ -14,10 +14,15 @@ import ca.tweetzy.shops.impl.manager.*;
 import ca.tweetzy.shops.listeners.ShopTransactionListener;
 import ca.tweetzy.shops.settings.Settings;
 import ca.tweetzy.shops.settings.Translations;
+import co.aikar.taskchain.BukkitTaskChainFactory;
+import co.aikar.taskchain.TaskChain;
+import co.aikar.taskchain.TaskChainFactory;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public final class Shops extends FlightPlugin {
+
+	private static TaskChainFactory taskChainFactory;
 
 	@SuppressWarnings("FieldCanBeLocal")
 	private DatabaseConnector databaseConnector;
@@ -41,6 +46,7 @@ public final class Shops extends FlightPlugin {
 		Translations.init();
 
 		Common.setPrefix(Settings.PREFIX.getStringOr("&8[&EShops&8]"));
+		taskChainFactory = BukkitTaskChainFactory.create(this);
 
 		// Set up the database if enabled
 		this.databaseConnector = new SQLiteConnector(this);
@@ -134,6 +140,11 @@ public final class Shops extends FlightPlugin {
 	public static Economy getEconomy() {
 		return getInstance().economy;
 	}
+
+	public static <T> TaskChain<T> newChain() {
+		return taskChainFactory.newChain();
+	}
+
 
 	// helpers
 	private void setupEconomy() {

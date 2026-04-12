@@ -118,6 +118,27 @@ public final class Translations extends TranslationManager {
 			"&7as the currency onto this icon."
 	);
 
+	// Material / item picker
+	public static final TranslationEntry GUI_MATERIAL_PICKER_TITLE = create("gui.material picker.title", "&eShops &f- &7Material Picker");
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_ITEM_NAME = create("gui.material picker.items.item.name", "<GRADIENT:5CAEFF>&L%item_name%</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_ITEM_LORE = create("gui.material picker.items.item.lore",
+			"&7Click to select this material."
+	);
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_SEARCH_NAME = create("gui.material picker.items.search.name", "<GRADIENT:5CAEFF>&LSearch</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_SEARCH_LORE = create("gui.material picker.items.search.lore",
+			"&7Click to search materials"
+	);
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_AIR_NAME = create("gui.material picker.items.air.name", "<GRADIENT:5CAEFF>&lNo Item</GRADIENT:9F57FF>");
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_AIR_LORE = create("gui.material picker.items.air.lore",
+			"&7Click to use no item (air)"
+	);
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_CLEAR_NAME = create("gui.material picker.items.clear.name", "&c&lClear Search");
+	public static final TranslationEntry GUI_MATERIAL_PICKER_ITEMS_CLEAR_LORE = create("gui.material picker.items.clear.lore",
+			"&7Click to clear your search"
+	);
+	public static final TranslationEntry PROMPT_MATERIAL_PICKER_TITLE = create("prompts.material picker.title", "<GRADIENT:5CAEFF>&lMaterial Search</GRADIENT:9F57FF>");
+	public static final TranslationEntry PROMPT_MATERIAL_PICKER_SUBTITLE = create("prompts.material picker.subtitle", "&fEnter keywords into chat to search");
+
 	public static final TranslationEntry GUI_CART_TITLE = create("gui.cart.title", "<GRADIENT:5CAEFF>&lShops</GRADIENT:9F57FF> &8> &7Your Cart");
 	public static final TranslationEntry GUI_CART_ITEMS_PURCHASE_NAME = create("gui.cart.items.checkout.name", "<GRADIENT:5CAEFF>&LConfirm Checkout</GRADIENT:9F57FF>");
 	public static final TranslationEntry GUI_CART_ITEMS_PURCHASE_LORE = create("gui.cart.items.checkout.lore",

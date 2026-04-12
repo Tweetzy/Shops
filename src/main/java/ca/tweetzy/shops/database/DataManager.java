@@ -5,7 +5,6 @@ import ca.tweetzy.flight.database.Callback;
 import ca.tweetzy.flight.database.DataManagerAbstract;
 import ca.tweetzy.flight.database.DatabaseConnector;
 import ca.tweetzy.flight.database.UpdateCallback;
-import ca.tweetzy.flight.nbtapi.NbtApiException;
 import ca.tweetzy.flight.utils.QuickItem;
 import ca.tweetzy.flight.utils.SerializeUtil;
 import ca.tweetzy.shops.api.Transaction;
@@ -289,7 +288,7 @@ public final class DataManager extends DataManagerAbstract {
 								updateStatement.executeUpdate();
 								shopContent.setCurrencyItem(CompMaterial.BARRIER.parseItem());
 								contents.add(shopContent);
-							} catch (NbtApiException ignored) {
+							} catch (Exception ignored) {
 							}
 						}
 					} else {
@@ -324,7 +323,7 @@ public final class DataManager extends DataManagerAbstract {
 								shopContent.setCurrencyItem(CompMaterial.BARRIER.parseItem());
 								contents.add(shopContent);
 
-							} catch (NbtApiException ignored) {
+							} catch (Exception ignored) {
 							}
 						}
 					} else {

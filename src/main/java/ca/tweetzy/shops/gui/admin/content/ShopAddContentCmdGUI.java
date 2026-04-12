@@ -1,7 +1,7 @@
 package ca.tweetzy.shops.gui.admin.content;
 
 import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
+import ca.tweetzy.shops.gui.selector.ItemSelectorGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.MathUtil;
@@ -103,7 +103,7 @@ public final class ShopAddContentCmdGUI extends ShopsBaseGUI {
 			}
 
 			if (click.clickType == ClickType.LEFT) {
-				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, "", (event, selected) -> {
+				click.manager.showGUI(click.player, new ItemSelectorGUI(this, click.player, false, (event, selected) -> {
 					this.commandShopContent.setIcon(selected);
 					click.manager.showGUI(click.player, new ShopAddContentCmdGUI(click.player, ShopAddContentCmdGUI.this.shop, ShopAddContentCmdGUI.this.commandShopContent, ShopAddContentCmdGUI.this.isEditing));
 				}));

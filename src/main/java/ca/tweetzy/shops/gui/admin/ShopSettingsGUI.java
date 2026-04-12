@@ -2,7 +2,7 @@ package ca.tweetzy.shops.gui.admin;
 
 import ca.tweetzy.flight.command.CommandManager;
 import ca.tweetzy.flight.comp.enums.CompMaterial;
-import ca.tweetzy.flight.gui.template.MaterialPickerGUI;
+import ca.tweetzy.shops.gui.selector.ItemSelectorGUI;
 import ca.tweetzy.flight.settings.TranslationManager;
 import ca.tweetzy.flight.utils.Common;
 import ca.tweetzy.flight.utils.QuickItem;
@@ -13,7 +13,6 @@ import ca.tweetzy.shops.api.shop.Shop;
 import ca.tweetzy.shops.commands.DynamicShopCommand;
 import ca.tweetzy.shops.gui.ShopsBaseGUI;
 import ca.tweetzy.shops.gui.admin.layout.ShopLayoutEditorGUI;
-import ca.tweetzy.shops.impl.currency.ItemCurrency;
 import ca.tweetzy.shops.settings.Translations;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
@@ -47,7 +46,7 @@ public final class ShopSettingsGUI extends ShopsBaseGUI {
 				.make(), click -> {
 
 			if (click.clickType == ClickType.LEFT) {
-				click.manager.showGUI(click.player, new MaterialPickerGUI(this, null, null, (event, material) -> {
+				click.manager.showGUI(click.player, new ItemSelectorGUI(this, click.player, false, (event, material) -> {
 					if (material == null) return;
 
 					final ItemStack oldIcon = this.shop.getShopOptions().getDisplayIcon();

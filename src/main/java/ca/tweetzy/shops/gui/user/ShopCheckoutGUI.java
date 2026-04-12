@@ -151,7 +151,7 @@ public final class ShopCheckoutGUI extends ShopsBaseGUI {
 				"checkout_item_sell_total", numberFormatTotal
 		);
 
-		VariableHelper.replaceVariable(base, "%checkout_tax_info%", Settings.TAX_ENABLED.getBoolean() ?
+		base = VariableHelper.replaceVariable(base, "%checkout_tax_info%", Settings.TAX_ENABLED.getBoolean() ?
 				TranslationManager.string(player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_HAS_TAX, "tax_rate", Settings.TAX_AMOUNT.getDouble())
 				:
 				TranslationManager.string(player, Translations.GUI_CHECKOUT_ITEMS_BREAKDOWN_LORE_NO_TAX), false);
